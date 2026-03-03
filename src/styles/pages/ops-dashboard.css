@@ -1,0 +1,271 @@
+/* ============================================
+   Petit Stay - Ops Pages Styles
+   ============================================ */
+
+/* Stats Grid */
+.ops-stats-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+  gap: 1rem;
+  margin-bottom: 1.5rem;
+}
+
+.ops-stat-card {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  padding: 1rem;
+  background: white;
+  border-radius: 12px;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.04);
+  border-left: 3px solid transparent;
+}
+
+.ops-stat-primary { border-left-color: var(--primary-500, #3b82f6); }
+.ops-stat-success { border-left-color: var(--success-500, #22c55e); }
+.ops-stat-warning { border-left-color: var(--warning-500, #f59e0b); }
+.ops-stat-gold { border-left-color: var(--gold-500, #c8a951); }
+.ops-stat-error { border-left-color: var(--error-500, #ef4444); }
+
+.ops-stat-icon {
+  width: 40px;
+  height: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 10px;
+  background: var(--bg-secondary, #f5f0eb);
+  color: var(--text-secondary, #666);
+}
+
+.ops-stat-value {
+  font-size: 1.25rem;
+  font-weight: 700;
+  color: var(--text-primary, #1a1a1a);
+}
+
+.ops-stat-label {
+  font-size: 0.75rem;
+  color: var(--text-secondary, #666);
+}
+
+/* Grid Layouts */
+.ops-grid-2 {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1.5rem;
+  margin-bottom: 1.5rem;
+}
+
+@media (max-width: 768px) {
+  .ops-grid-2 { grid-template-columns: 1fr; }
+  .ops-stats-grid { grid-template-columns: repeat(2, 1fr); }
+}
+
+/* Tables */
+.ops-table-wrapper {
+  overflow-x: auto;
+}
+
+.ops-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.875rem;
+}
+
+.ops-table th {
+  text-align: left;
+  padding: 0.75rem;
+  font-weight: 600;
+  color: var(--text-secondary, #666);
+  font-size: 0.75rem;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  border-bottom: 1px solid var(--border-light, #f0ece7);
+}
+
+.ops-table td {
+  padding: 0.75rem;
+  border-bottom: 1px solid var(--border-light, #f0ece7);
+  color: var(--text-primary, #1a1a1a);
+}
+
+.ops-table-total td {
+  border-top: 2px solid var(--border-light, #e0dbd5);
+  font-weight: 600;
+}
+
+.ops-hotel-name {
+  font-weight: 500;
+}
+
+.ops-amount-bold {
+  font-weight: 600;
+  color: var(--gold-600, #b8952f);
+}
+
+/* Card Grid */
+.ops-card-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  gap: 1rem;
+}
+
+/* Sitter Cards */
+.ops-sitter-card {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+.ops-sitter-header {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+.ops-sitter-name {
+  font-weight: 600;
+  margin-bottom: 0.25rem;
+}
+
+.ops-sitter-stats {
+  display: flex;
+  gap: 1rem;
+  font-size: 0.8125rem;
+  color: var(--text-secondary, #666);
+}
+
+.ops-sitter-certs {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.25rem;
+}
+
+.ops-sitter-actions {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding-top: 0.5rem;
+  border-top: 1px solid var(--border-light, #f0ece7);
+}
+
+/* Issues */
+.ops-issue-list {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+.ops-issue-item {
+  padding: 0.75rem;
+  border-radius: 8px;
+  background: var(--bg-secondary, #faf9f7);
+}
+
+.ops-issue-header {
+  display: flex;
+  gap: 0.5rem;
+  margin-bottom: 0.375rem;
+}
+
+.ops-issue-summary {
+  font-size: 0.875rem;
+  margin-bottom: 0.25rem;
+}
+
+.ops-issue-meta {
+  font-size: 0.75rem;
+  color: var(--text-tertiary, #999);
+}
+
+/* SLA */
+.ops-sla-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 1rem;
+}
+
+.ops-sla-item {
+  text-align: center;
+  padding: 1rem;
+  border-radius: 12px;
+  background: var(--bg-secondary, #faf9f7);
+}
+
+.ops-sla-value {
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: var(--text-primary, #1a1a1a);
+}
+
+.ops-sla-label {
+  font-size: 0.75rem;
+  color: var(--text-secondary, #666);
+  margin-top: 0.25rem;
+}
+
+/* Page */
+.ops-page {
+  padding: 0;
+}
+
+.ops-empty {
+  text-align: center;
+  padding: 2rem;
+  color: var(--text-secondary, #666);
+}
+
+/* Shared Page Layout (used across all ops pages) */
+.ops-dashboard .page-header,
+.ops-page .page-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+  margin-bottom: 1.5rem;
+  flex-wrap: wrap;
+  gap: 1rem;
+  padding-bottom: 1rem;
+  border-bottom: 1px solid var(--border-light, #f0ece7);
+}
+
+.ops-dashboard .page-title,
+.ops-page .page-title {
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: var(--text-primary, #1a1a1a);
+  margin-bottom: 0.25rem;
+}
+
+.ops-dashboard .page-subtitle,
+.ops-page .page-subtitle {
+  color: var(--text-secondary, #666);
+  font-size: 0.875rem;
+}
+
+.ops-dashboard .filters-row,
+.ops-page .filters-row {
+  display: grid;
+  grid-template-columns: 1fr 240px;
+  gap: 1rem;
+  margin-bottom: 1rem;
+}
+
+@media (max-width: 640px) {
+  .ops-dashboard .filters-row,
+  .ops-page .filters-row {
+    grid-template-columns: 1fr;
+  }
+}
+
+.ops-dashboard .booking-code,
+.ops-page .booking-code {
+  font-family: monospace;
+  font-weight: 600;
+  font-size: 0.8125rem;
+  color: var(--primary-600, #2563eb);
+}
+
+.text-xs { font-size: 0.75rem; }
+.text-muted { color: var(--text-tertiary, #999); }
+.sitter-cell { display: flex; align-items: center; gap: 0.5rem; }

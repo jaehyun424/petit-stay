@@ -11,6 +11,7 @@ import { ErrorBoundary } from './components/common/ErrorBoundary';
 import { HotelLayout } from './components/layout/HotelLayout';
 import { ParentLayout } from './components/layout/ParentLayout';
 import { SitterLayout } from './components/layout/SitterLayout';
+import { OpsLayout } from './components/layout/OpsLayout';
 import { DemoBanner } from './components/common/DemoBanner';
 import { BrandLogo } from './components/common/BrandLogo';
 import './index.css';
@@ -50,6 +51,18 @@ const SitterSchedule = lazy(() => import('./pages/sitter/Schedule'));
 const SitterActiveSession = lazy(() => import('./pages/sitter/ActiveSession'));
 const SitterEarnings = lazy(() => import('./pages/sitter/Earnings'));
 const SitterProfile = lazy(() => import('./pages/sitter/Profile'));
+
+// Guest (no auth required)
+const GuestPage = lazy(() => import('./pages/guest/GuestPage'));
+
+// Ops Console
+const OpsDashboard = lazy(() => import('./pages/ops/Dashboard'));
+const OpsReservations = lazy(() => import('./pages/ops/Reservations'));
+const OpsSitters = lazy(() => import('./pages/ops/SitterManagement'));
+const OpsHotels = lazy(() => import('./pages/ops/HotelManagement'));
+const OpsSettlements = lazy(() => import('./pages/ops/Settlements'));
+const OpsIssues = lazy(() => import('./pages/ops/Issues'));
+const OpsReports = lazy(() => import('./pages/ops/Reports'));
 
 // Common
 const NotificationInbox = lazy(() => import('./pages/common/NotificationInbox'));
@@ -92,7 +105,7 @@ function ProtectedRoute({ children, allowedRoles }: ProtectedRouteProps) {
     // Redirect to appropriate dashboard based on role
     const roleRedirects: Record<string, string> = {
       hotel_staff: '/hotel',
-      admin: '/hotel',
+      admin: '/ops',
       parent: '/parent',
       sitter: '/sitter',
     };
@@ -167,6 +180,27 @@ function AppRoutes() {
           <Route path="earnings" element={<SitterEarnings />} />
           <Route path="profile" element={<SitterProfile />} />
           <Route path="notifications" element={<NotificationInbox />} />
+        </Route>
+
+        {/* Guest Page (no auth required, token-based) */}
+        <Route path="/guest/:reservationId" element={<GuestPage />} />
+
+        {/* Ops Console Routes */}
+        <Route
+          path="/ops"
+          element={
+            <ProtectedRoute allowedRoles={['admin']}>
+              <OpsLayout />
+            </ProtectedRoute>
+          }
+        >
+          <Route index element={<OpsDashboard />} />
+          <Route path="reservations" element={<OpsReservations />} />
+          <Route path="sitters" element={<OpsSitters />} />
+          <Route path="hotels" element={<OpsHotels />} />
+          <Route path="settlements" element={<OpsSettlements />} />
+          <Route path="issues" element={<OpsIssues />} />
+          <Route path="reports" element={<OpsReports />} />
         </Route>
 
         {/* Landing Page */}

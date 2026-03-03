@@ -221,7 +221,7 @@ export interface EmergencyMedication {
 // ----------------------------------------
 // Booking Types
 // ----------------------------------------
-export type BookingStatus = 'pending' | 'confirmed' | 'in_progress' | 'completed' | 'cancelled' | 'no_show';
+export type BookingStatus = 'pending' | 'confirmed' | 'in_progress' | 'completed' | 'cancelled' | 'no_show' | 'pending_guest_consent' | 'pending_assignment' | 'sitter_assigned' | 'sitter_confirmed' | 'issue_reported';
 export type PaymentStatus = 'pending' | 'authorized' | 'captured' | 'refunded' | 'failed';
 export type PaymentMethodType = 'card' | 'hotel_billing';
 
@@ -255,6 +255,10 @@ export interface Booking {
   trustProtocol: TrustProtocolData;
   cancellation?: CancellationInfo;
   review?: ReviewData;
+  guestTokenId?: string;
+  guestConsent?: GuestConsent;
+  guestInfo?: { name: string; email: string; phone: string; nationality: string };
+  statusHistory?: { status: BookingStatus; timestamp: Date; changedBy: string }[];
   metadata: BookingMetadata;
   createdAt: Date;
   updatedAt: Date;
@@ -546,6 +550,66 @@ export interface Notification {
   body: string;
   data?: Record<string, unknown>;
   read: boolean;
+  createdAt: Date;
+}
+
+// ----------------------------------------
+// Guest Token Types
+// ----------------------------------------
+export interface GuestToken {
+  id: string;
+  bookingId: string;
+  hotelId: string;
+  token: string;
+  expiresAt: Date;
+  used: boolean;
+  usedAt?: Date;
+  createdAt: Date;
+}
+
+export interface GuestConsent {
+  agreedToTerms: boolean;
+  agreedToPrivacy: boolean;
+  agreedToLiability: boolean;
+  signatureDataUrl?: string;
+  consentedAt: Date;
+  ipAddress?: string;
+}
+
+// ----------------------------------------
+// Settlement Types
+// ----------------------------------------
+export type SettlementStatus = 'draft' | 'pending_approval' | 'approved' | 'paid';
+
+export interface Settlement {
+  id: string;
+  hotelId: string;
+  hotelName: string;
+  period: { start: Date; end: Date };
+  totalBookings: number;
+  totalRevenue: number;
+  commission: number;
+  commissionRate: number;
+  netPayout: number;
+  status: SettlementStatus;
+  approvedBy?: string;
+  approvedAt?: Date;
+  paidAt?: Date;
+  createdAt: Date;
+}
+
+export interface SitterPayout {
+  id: string;
+  sitterId: string;
+  sitterName: string;
+  period: { start: Date; end: Date };
+  totalSessions: number;
+  totalHours: number;
+  grossAmount: number;
+  deductions: number;
+  netPayout: number;
+  status: 'pending' | 'paid';
+  paidAt?: Date;
   createdAt: Date;
 }
 

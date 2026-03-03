@@ -26,7 +26,7 @@ export function LandingNav() {
       className={`landing-nav ${scrolled ? 'landing-nav-scrolled' : ''}`}
       initial={{ y: -80 }}
       animate={{ y: 0 }}
-      transition={{ duration: 0.6, ease: [0.25, 0.46, 0.45, 0.94] }}
+      transition={{ duration: 0.6, ease: [0.25, 0.46, 0.45, 0.94] as [number, number, number, number] }}
     >
       <div className="landing-nav-inner">
         <Link to="/" className="landing-nav-logo">

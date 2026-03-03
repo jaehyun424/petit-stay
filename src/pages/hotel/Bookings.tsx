@@ -62,13 +62,27 @@ export default function Bookings() {
         return Object.keys(errors).length === 0;
     };
 
+    const [guestLink, setGuestLink] = useState<string | null>(null);
+
     const handleCreateBooking = () => {
         if (!validateBookingForm()) return;
         const code = `KCP-${Date.now().toString(36).toUpperCase()}`;
+        const bookingId = `bk-${Date.now()}`;
+        const token = `tk-${Math.random().toString(36).slice(2, 10)}`;
+        const link = `${window.location.origin}/guest/${bookingId}?token=${token}&lang=en`;
+        setGuestLink(link);
         toast.success(t('booking.bookingConfirmed'), `${t('hotel.bookingCode')}: ${code}`);
         setShowNewBooking(false);
         setNewBookingForm({ guestName: '', room: '', date: '', time: '18:00', duration: '4', childrenCount: '1' });
         setFormErrors({});
+    };
+
+    const handleCopyLink = () => {
+        if (guestLink) {
+            navigator.clipboard.writeText(guestLink).then(() => {
+                toast.success('Link Copied', 'Guest page link copied to clipboard.');
+            });
+        }
     };
 
     // Assign sitter modal
@@ -82,10 +96,15 @@ export default function Bookings() {
     const STATUS_OPTIONS = [
         { value: '', label: t('common.allStatuses') },
         { value: 'pending', label: t('status.pending') },
+        { value: 'pending_guest_consent', label: t('status.pendingGuestConsent') },
+        { value: 'pending_assignment', label: t('status.pendingAssignment') },
+        { value: 'sitter_assigned', label: t('status.sitterAssigned') },
+        { value: 'sitter_confirmed', label: t('status.sitterConfirmed') },
         { value: 'confirmed', label: t('status.confirmed') },
         { value: 'in_progress', label: t('status.inProgress') },
         { value: 'completed', label: t('status.completed') },
         { value: 'cancelled', label: t('status.cancelled') },
+        { value: 'issue_reported', label: t('status.issueReported') },
     ];
 
     const [currentPage, setCurrentPage] = useState(1);
@@ -328,6 +347,26 @@ export default function Bookings() {
                         <p className="no-sitters-message">No available sitters</p>
                     )}
                 </div>
+            </Modal>
+
+            {/* Guest Link Modal */}
+            <Modal
+                isOpen={!!guestLink}
+                onClose={() => setGuestLink(null)}
+                title="Guest Page Link"
+                size="md"
+            >
+                {guestLink && (
+                    <div className="modal-form-stack">
+                        <p style={{ fontSize: '0.875rem', color: 'var(--text-secondary)' }}>
+                            Share this link with the hotel guest to complete their consent and payment:
+                        </p>
+                        <div style={{ padding: '0.75rem', background: 'var(--bg-secondary, #f5f0eb)', borderRadius: '8px', wordBreak: 'break-all', fontSize: '0.8125rem', fontFamily: 'monospace' }}>
+                            {guestLink}
+                        </div>
+                        <Button variant="gold" onClick={handleCopyLink}>Copy Link</Button>
+                    </div>
+                )}
             </Modal>
         </div>
     );

@@ -22,6 +22,7 @@ const DEMO_ACCOUNTS = [
   { email: 'hotel@demo.com', password: 'demo1234', roleKey: 'hotelStaff', label: 'Concierge' },
   { email: 'parent@demo.com', password: 'demo1234', roleKey: 'parent', label: 'Guest' },
   { email: 'sitter@demo.com', password: 'demo1234', roleKey: 'sitter', label: 'Specialist' },
+  { email: 'admin@demo.com', password: 'demo1234', roleKey: 'admin', label: 'Ops Admin' },
 ];
 
 // Firebase error code to friendly message mapping
@@ -51,7 +52,7 @@ const stagger = {
 
 const fadeUp = {
   hidden: { opacity: 0, y: 16 },
-  show: { opacity: 1, y: 0, transition: { duration: 0.4, ease: [0.25, 0.46, 0.45, 0.94] } },
+  show: { opacity: 1, y: 0, transition: { duration: 0.4, ease: [0.25, 0.46, 0.45, 0.94] as [number, number, number, number] } },
 };
 
 export default function LoginPage() {
@@ -85,7 +86,8 @@ export default function LoginPage() {
       await signIn(email, password);
       success('Welcome Back', 'Access granted to hospitality console.');
 
-      if (email.includes('hotel')) navigate('/hotel');
+      if (email.includes('admin')) navigate('/ops');
+      else if (email.includes('hotel')) navigate('/hotel');
       else if (email.includes('parent')) navigate('/parent');
       else if (email.includes('sitter')) navigate('/sitter');
       else navigate('/hotel');
@@ -214,7 +216,7 @@ export default function LoginPage() {
           {/* Demo Accounts */}
           <motion.div className="mt-8 border-t border-cream-300 pt-6" variants={fadeUp}>
             <p className="text-xs text-charcoal-400 text-center uppercase tracking-widest mb-4">Quick Access Simulation</p>
-            <div className="grid grid-cols-3 gap-2">
+            <div className="grid grid-cols-4 gap-2">
               {DEMO_ACCOUNTS.map((account) => (
                 <button
                   key={account.email}

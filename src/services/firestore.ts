@@ -58,6 +58,8 @@ const COLLECTIONS = {
     sitters: 'sitters',
     incidents: 'incidents',
     notifications: 'notifications',
+    guestTokens: 'guestTokens',
+    settlements: 'settlements',
 } as const;
 
 // ----------------------------------------
@@ -753,5 +755,121 @@ export const notificationService = {
         );
         const snapshot = await getDocs(q);
         return snapshot.size;
+    },
+};
+
+// ----------------------------------------
+// Guest Token Service
+// ----------------------------------------
+export const guestService = {
+    // Validate a guest token
+    async validateToken(token: string): Promise<{ bookingId: string; hotelId: string } | null> {
+        const q = query(
+            collection(db, COLLECTIONS.guestTokens),
+            where('token', '==', token),
+            where('used', '==', false),
+            limit(1)
+        );
+        const snapshot = await getDocs(q);
+        if (snapshot.empty) return null;
+
+        const data = snapshot.docs[0].data();
+        const expiresAt = data.expiresAt?.toDate?.() || new Date(data.expiresAt);
+        if (expiresAt < new Date()) return null;
+
+        return { bookingId: data.bookingId, hotelId: data.hotelId };
+    },
+
+    // Submit guest consent
+    async submitConsent(bookingId: string, consent: Record<string, unknown>): Promise<void> {
+        await updateDoc(doc(db, COLLECTIONS.bookings, bookingId), {
+            guestConsent: {
+                ...consent,
+                consentedAt: serverTimestamp(),
+            },
+            status: 'pending_assignment',
+            updatedAt: serverTimestamp(),
+        });
+    },
+
+    // Submit guest payment (dummy)
+    async submitPayment(bookingId: string, paymentData: Record<string, unknown>): Promise<void> {
+        await updateDoc(doc(db, COLLECTIONS.bookings, bookingId), {
+            'payment.status': 'authorized',
+            'payment.method': paymentData.method || 'card',
+            updatedAt: serverTimestamp(),
+        });
+    },
+
+    // Submit guest feedback
+    async submitFeedback(bookingId: string, rating: number, comment: string): Promise<void> {
+        const bookingDoc = await getDoc(doc(db, COLLECTIONS.bookings, bookingId));
+        if (!bookingDoc.exists()) return;
+
+        const booking = bookingDoc.data();
+        await setDoc(doc(collection(db, COLLECTIONS.reviews)), {
+            bookingId,
+            sitterId: booking.sitterId || '',
+            rating,
+            comment,
+            tags: [],
+            createdAt: serverTimestamp(),
+        });
+    },
+};
+
+// ----------------------------------------
+// Settlement Service
+// ----------------------------------------
+export const settlementService = {
+    // Get settlements (optionally filtered by hotel)
+    async getSettlements(hotelId?: string): Promise<Record<string, unknown>[]> {
+        let q;
+        if (hotelId) {
+            q = query(
+                collection(db, COLLECTIONS.settlements),
+                where('hotelId', '==', hotelId),
+                orderBy('createdAt', 'desc')
+            );
+        } else {
+            q = query(
+                collection(db, COLLECTIONS.settlements),
+                orderBy('createdAt', 'desc'),
+                limit(100)
+            );
+        }
+        const snapshot = await getDocs(q);
+        return snapshot.docs.map((d) => ({
+            id: d.id,
+            ...convertTimestamps(d.data()),
+        }));
+    },
+
+    // Create a settlement
+    async createSettlement(data: Record<string, unknown>): Promise<string> {
+        const ref = doc(collection(db, COLLECTIONS.settlements));
+        await setDoc(ref, {
+            ...data,
+            status: 'draft',
+            createdAt: serverTimestamp(),
+        });
+        return ref.id;
+    },
+
+    // Approve a settlement
+    async approveSettlement(settlementId: string, approvedBy: string): Promise<void> {
+        await updateDoc(doc(db, COLLECTIONS.settlements, settlementId), {
+            status: 'approved',
+            approvedBy,
+            approvedAt: serverTimestamp(),
+        });
+    },
+
+    // Mark settlement as paid
+    async markAsPaid(settlementId: string): Promise<void> {
+        await updateDoc(doc(db, COLLECTIONS.settlements, settlementId), {
+            status: 'paid',
+            paidAt: serverTimestamp(),
+        });
     },
 };

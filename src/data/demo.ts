@@ -29,7 +29,7 @@ export interface DemoBooking {
     parent: { name: string; phone: string };
     children: { name: string; age: number; allergies?: string[] }[];
     sitter: { name: string; tier: 'gold' | 'silver' } | null;
-    status: 'pending' | 'confirmed' | 'in_progress' | 'completed' | 'cancelled';
+    status: 'pending' | 'confirmed' | 'in_progress' | 'completed' | 'cancelled' | 'pending_guest_consent' | 'pending_assignment' | 'sitter_assigned' | 'sitter_confirmed';
     totalAmount: number;
 }
 
@@ -663,3 +663,121 @@ export const DEMO_INCIDENTS: DemoIncident[] = [
         childName: 'Mia',
     },
 ];
+
+// ----------------------------------------
+// Guest Tokens (demo)
+// ----------------------------------------
+export interface DemoGuestToken {
+    id: string;
+    bookingId: string;
+    token: string;
+    guestName: string;
+    room: string;
+    expiresAt: Date;
+    used: boolean;
+}
+
+export const DEMO_GUEST_TOKENS: DemoGuestToken[] = [
+    {
+        id: 'gt-1',
+        bookingId: 'demo-booking-1',
+        token: 'demo-token',
+        guestName: 'Sarah Johnson',
+        room: '2305',
+        expiresAt: new Date(Date.now() + 1000 * 60 * 60 * 24 * 7),
+        used: false,
+    },
+    {
+        id: 'gt-2',
+        bookingId: 'demo-booking-2',
+        token: 'demo-token-2',
+        guestName: 'Tanaka Yuki',
+        room: '1102',
+        expiresAt: new Date(Date.now() + 1000 * 60 * 60 * 24 * 3),
+        used: true,
+    },
+];
+
+// ----------------------------------------
+// Settlements (demo)
+// ----------------------------------------
+export interface DemoSettlement {
+    id: string;
+    hotelId: string;
+    hotelName: string;
+    period: string;
+    totalBookings: number;
+    totalRevenue: number;
+    commission: number;
+    commissionRate: number;
+    netPayout: number;
+    status: 'draft' | 'pending_approval' | 'approved' | 'paid';
+    createdAt: Date;
+}
+
+export const DEMO_SETTLEMENTS: DemoSettlement[] = [
+    {
+        id: 'stl-1',
+        hotelId: 'hotel-grand-hyatt',
+        hotelName: 'Grand Hyatt Seoul',
+        period: 'January 2026',
+        totalBookings: 62,
+        totalRevenue: 18600000,
+        commission: 2790000,
+        commissionRate: 15,
+        netPayout: 15810000,
+        status: 'paid',
+        createdAt: new Date('2026-02-01'),
+    },
+    {
+        id: 'stl-2',
+        hotelId: 'hotel-grand-hyatt',
+        hotelName: 'Grand Hyatt Seoul',
+        period: 'February 2026',
+        totalBookings: 58,
+        totalRevenue: 17400000,
+        commission: 2610000,
+        commissionRate: 15,
+        netPayout: 14790000,
+        status: 'approved',
+        createdAt: new Date('2026-03-01'),
+    },
+    {
+        id: 'stl-3',
+        hotelId: 'hotel-park-hyatt',
+        hotelName: 'Park Hyatt Busan',
+        period: 'February 2026',
+        totalBookings: 34,
+        totalRevenue: 10200000,
+        commission: 1530000,
+        commissionRate: 15,
+        netPayout: 8670000,
+        status: 'pending_approval',
+        createdAt: new Date('2026-03-01'),
+    },
+];
+
+// ----------------------------------------
+// Ops Dashboard Stats (demo)
+// ----------------------------------------
+export interface DemoOpsStats {
+    totalHotels: number;
+    totalActiveSitters: number;
+    totalBookingsThisMonth: number;
+    totalRevenueThisMonth: number;
+    avgSatisfaction: number;
+    openIssues: number;
+    pendingSettlements: number;
+    slaCompliance: number;
+}
+
+export const DEMO_OPS_STATS: DemoOpsStats = {
+    totalHotels: 3,
+    totalActiveSitters: 12,
+    totalBookingsThisMonth: 154,
+    totalRevenueThisMonth: 46200000,
+    avgSatisfaction: 4.8,
+    openIssues: 2,
+    pendingSettlements: 2,
+    slaCompliance: 97.5,
+};

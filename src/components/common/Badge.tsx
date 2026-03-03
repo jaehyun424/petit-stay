@@ -20,7 +20,7 @@ interface BadgeProps {
 }
 
 interface StatusBadgeProps {
-    status: 'pending' | 'confirmed' | 'in_progress' | 'completed' | 'cancelled' | 'no_show' | 'active' | 'emergency';
+    status: 'pending' | 'confirmed' | 'in_progress' | 'completed' | 'cancelled' | 'no_show' | 'active' | 'emergency' | 'pending_guest_consent' | 'pending_assignment' | 'sitter_assigned' | 'sitter_confirmed' | 'issue_reported';
 }
 
 interface TierBadgeProps {
@@ -65,6 +65,11 @@ const statusConfig: Record<StatusBadgeProps['status'], { variant: BadgeVariant; 
     cancelled: { variant: 'neutral', labelKey: 'status.cancelled' },
     no_show: { variant: 'error', labelKey: 'status.noShow' },
     emergency: { variant: 'error', labelKey: 'status.emergency' },
+    pending_guest_consent: { variant: 'warning', labelKey: 'status.pendingGuestConsent' },
+    pending_assignment: { variant: 'warning', labelKey: 'status.pendingAssignment' },
+    sitter_assigned: { variant: 'primary', labelKey: 'status.sitterAssigned' },
+    sitter_confirmed: { variant: 'success', labelKey: 'status.sitterConfirmed' },
+    issue_reported: { variant: 'error', labelKey: 'status.issueReported' },
 };
 
 export function StatusBadge({ status }: StatusBadgeProps) {

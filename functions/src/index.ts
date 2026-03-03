@@ -4,8 +4,10 @@
 
 import { onDocumentCreated, onDocumentUpdated } from "firebase-functions/v2/firestore";
 import { onSchedule } from "firebase-functions/v2/scheduler";
+import { onCall, HttpsError } from "firebase-functions/v2/https";
 import { initializeApp } from "firebase-admin/app";
 import { getFirestore, FieldValue, QueryDocumentSnapshot } from "firebase-admin/firestore";
+import * as crypto from "crypto";
 
 initializeApp();
 const db = getFirestore();
@@ -254,10 +256,10 @@ export const scheduledNoShowDetection = onSchedule(
     const now = new Date();
     const cutoff = new Date(now.getTime() - 30 * 60 * 1000); // 30 minutes ago
 
-    // Find confirmed bookings with scheduled start before cutoff
+    // Find sitter_confirmed bookings with scheduled start before cutoff
     const bookingsSnap = await db
       .collection("bookings")
-      .where("status", "==", "confirmed")
+      .where("status", "in", ["confirmed", "sitter_confirmed"])
       .where("scheduledStart", "<=", cutoff)
       .get();
 
@@ -396,6 +398,230 @@ export const scheduledCleanup = onSchedule(
 
     if (deleted > 0) {
       console.log(`scheduledCleanup: Deleted ${deleted} old read notifications.`);
+    }
+  }
+);
+
+// ----------------------------------------
+// generateGuestToken: Create a secure token for guest page access
+// ----------------------------------------
+export const generateGuestToken = onCall(async (request) => {
+  if (!request.auth) {
+    throw new HttpsError("unauthenticated", "Must be authenticated");
+  }
+
+  const { bookingId, hotelId } = request.data;
+  if (!bookingId || !hotelId) {
+    throw new HttpsError("invalid-argument", "bookingId and hotelId are required");
+  }
+
+  const token = crypto.randomBytes(32).toString("hex");
+  const expiresAt = new Date();
+  expiresAt.setDate(expiresAt.getDate() + 7); // 7-day expiry
+
+  const tokenRef = await db.collection("guestTokens").add({
+    bookingId,
+    hotelId,
+    token,
+    expiresAt,
+    used: false,
+    createdAt: FieldValue.serverTimestamp(),
+  });
+
+  // Update booking status to pending_guest_consent
+  await db.collection("bookings").doc(bookingId).update({
+    status: "pending_guest_consent",
+    guestTokenId: tokenRef.id,
+    updatedAt: FieldValue.serverTimestamp(),
+  });
+
+  const guestPageUrl = `https://petitstay.com/guest/${bookingId}?token=${token}`;
+
+  return { tokenId: tokenRef.id, token, guestPageUrl, expiresAt: expiresAt.toISOString() };
+});
+
+// ----------------------------------------
+// validateGuestToken: Validate token and return sanitized reservation data
+// ----------------------------------------
+export const validateGuestToken = onCall(async (request) => {
+  const { token } = request.data;
+  if (!token) {
+    throw new HttpsError("invalid-argument", "token is required");
+  }
+
+  const tokensSnap = await db
+    .collection("guestTokens")
+    .where("token", "==", token)
+    .limit(1)
+    .get();
+
+  if (tokensSnap.empty) {
+    throw new HttpsError("not-found", "Invalid token");
+  }
+
+  const tokenDoc = tokensSnap.docs[0];
+  const tokenData = tokenDoc.data();
+
+  const expiresAt = tokenData.expiresAt?.toDate?.() || new Date(tokenData.expiresAt);
+  if (expiresAt < new Date()) {
+    throw new HttpsError("deadline-exceeded", "Token has expired");
+  }
+
+  // Fetch booking data
+  const bookingSnap = await db.collection("bookings").doc(tokenData.bookingId).get();
+  if (!bookingSnap.exists) {
+    throw new HttpsError("not-found", "Booking not found");
+  }
+
+  const booking = bookingSnap.data()!;
+
+  // Return sanitized data (no sensitive info)
+  return {
+    bookingId: tokenData.bookingId,
+    hotelId: tokenData.hotelId,
+    confirmationCode: booking.confirmationCode || "",
+    schedule: booking.schedule || {},
+    children: (booking.children || []).map((c: { firstName: string; age: number }) => ({
+      name: c.firstName,
+      age: c.age,
+    })),
+    location: { roomNumber: booking.location?.roomNumber || "" },
+    pricing: { total: booking.pricing?.total || 0 },
+    status: booking.status,
+  };
+});
+
+// ----------------------------------------
+// onReservationStatusChange: Handle full status flow notifications
+// ----------------------------------------
+export const onReservationStatusChange = onDocumentUpdated(
+  "bookings/{bookingId}",
+  async (event) => {
+    const before = event.data?.before?.data();
+    const after = event.data?.after?.data();
+    if (!before || !after) return;
+    if (before.status === after.status) return;
+
+    const bookingId = event.params.bookingId;
+    const code = after.confirmationCode || bookingId;
+    const newStatus = after.status;
+
+    const promises: Promise<void>[] = [];
+
+    switch (newStatus) {
+      case "pending_assignment":
+        // Notify hotel staff that guest consent is complete
+        if (after.hotelId) {
+          const staffIds = await getHotelStaffIds(after.hotelId);
+          staffIds.forEach((staffId) => {
+            promises.push(
+              createNotification(staffId, "booking_confirmed", "Guest Consent Complete",
+                `Booking ${code}: Guest consent and payment received. Ready for sitter assignment.`,
+                { bookingId, hotelId: after.hotelId })
+            );
+          });
+        }
+        break;
+
+      case "sitter_assigned":
+        // Notify sitter they've been assigned
+        if (after.sitterId) {
+          promises.push(
+            createNotification(after.sitterId, "sitter_assigned", "New Assignment",
+              `You've been assigned to booking ${code}.`,
+              { bookingId })
+          );
+        }
+        break;
+
+      case "sitter_confirmed":
+        // Notify parent that sitter confirmed
+        if (after.parentId) {
+          promises.push(
+            createNotification(after.parentId, "booking_confirmed", "Sitter Confirmed",
+              `Your specialist has confirmed booking ${code}.`,
+              { bookingId })
+          );
+        }
+        break;
+
+      case "in_progress":
+        // Notify parent that care has started
+        if (after.parentId) {
+          promises.push(
+            createNotification(after.parentId, "care_started", "Care Session Started",
+              `Care session for booking ${code} has started.`,
+              { bookingId })
+          );
+        }
+        break;
+
+      case "completed":
+        // Handled by onSessionCompleted
+        break;
+    }
+
+    if (promises.length > 0) {
+      await Promise.all(promises);
+    }
+  }
+);
+
+// ----------------------------------------
+// calculateSettlement: Monthly settlement aggregation (1st of each month at 02:00 KST)
+// ----------------------------------------
+export const calculateSettlement = onSchedule(
+  { schedule: "0 2 1 * *", timeZone: "Asia/Seoul" },
+  async () => {
+    // Get previous month's date range
+    const now = new Date();
+    const startOfLastMonth = new Date(now.getFullYear(), now.getMonth() - 1, 1);
+    const endOfLastMonth = new Date(now.getFullYear(), now.getMonth(), 0, 23, 59, 59);
+
+    // Get all hotels
+    const hotelsSnap = await db.collection("hotels").get();
+
+    for (const hotelDoc of hotelsSnap.docs) {
+      const hotel = hotelDoc.data();
+      const hotelId = hotelDoc.id;
+
+      // Get completed bookings for this hotel in the period
+      const bookingsSnap = await db
+        .collection("bookings")
+        .where("hotelId", "==", hotelId)
+        .where("status", "==", "completed")
+        .where("completedAt", ">=", startOfLastMonth)
+        .where("completedAt", "<=", endOfLastMonth)
+        .get();
+
+      if (bookingsSnap.empty) continue;
+
+      let totalRevenue = 0;
+      bookingsSnap.docs.forEach((doc: QueryDocumentSnapshot) => {
+        const booking = doc.data();
+        totalRevenue += booking.pricing?.total || 0;
+      });
+
+      const commissionRate = hotel.commission || 15;
+      const commission = Math.round(totalRevenue * (commissionRate / 100));
+
+      await db.collection("settlements").add({
+        hotelId,
+        hotelName: hotel.name || hotelId,
+        period: {
+          start: startOfLastMonth,
+          end: endOfLastMonth,
+        },
+        totalBookings: bookingsSnap.size,
+        totalRevenue,
+        commission,
+        commissionRate,
+        netPayout: totalRevenue - commission,
+        status: "pending_approval",
+        createdAt: FieldValue.serverTimestamp(),
+      });
+
+      console.log(`Settlement created for ${hotel.name}: ${bookingsSnap.size} bookings, ${totalRevenue} revenue`);
     }
   }
 );

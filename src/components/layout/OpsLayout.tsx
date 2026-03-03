@@ -1,0 +1,123 @@
+// ============================================
+// Petit Stay - Ops Console Layout
+// ============================================
+
+import { useState } from 'react';
+import { NavLink, Outlet, useNavigate, useLocation } from 'react-router-dom';
+import { useTranslation } from 'react-i18next';
+import {
+  LayoutDashboard, Calendar, Users, Building2, Wallet, AlertTriangle,
+  BarChart3, Menu, Sun, Moon, LogOut,
+} from 'lucide-react';
+import { useAuth } from '../../contexts/AuthContext';
+import { useTheme } from '../../contexts/ThemeContext';
+import { IconButton } from '../common/Button';
+import { Avatar } from '../common/Avatar';
+import { BrandLogo } from '../common/BrandLogo';
+import { LanguageSwitcher } from '../common/LanguageSwitcher';
+import { PageTransition } from '../common/PageTransition';
+import { AnimatePresence } from 'framer-motion';
+import '../../styles/ops-layout.css';
+
+export function OpsLayout() {
+  const { user, signOut } = useAuth();
+  const { isDark, toggleTheme } = useTheme();
+  const navigate = useNavigate();
+  const { t } = useTranslation();
+  const location = useLocation();
+  const [sidebarCollapsed, setSidebarCollapsed] = useState(false);
+  const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+
+  const navItems = [
+    { to: '/ops', icon: <LayoutDashboard size={20} strokeWidth={1.75} />, labelKey: 'ops.dashboard', end: true },
+    { to: '/ops/reservations', icon: <Calendar size={20} strokeWidth={1.75} />, labelKey: 'ops.reservations' },
+    { to: '/ops/sitters', icon: <Users size={20} strokeWidth={1.75} />, labelKey: 'ops.sitterManagement' },
+    { to: '/ops/hotels', icon: <Building2 size={20} strokeWidth={1.75} />, labelKey: 'ops.hotelManagement' },
+    { to: '/ops/settlements', icon: <Wallet size={20} strokeWidth={1.75} />, labelKey: 'ops.settlements' },
+    { to: '/ops/issues', icon: <AlertTriangle size={20} strokeWidth={1.75} />, labelKey: 'ops.issues' },
+    { to: '/ops/reports', icon: <BarChart3 size={20} strokeWidth={1.75} />, labelKey: 'ops.reports' },
+  ];
+
+  const handleSignOut = async () => {
+    await signOut();
+    navigate('/login');
+  };
+
+  return (
+    <div className="ops-layout">
+      {mobileMenuOpen && (
+        <div className="sidebar-overlay" onClick={() => setMobileMenuOpen(false)} />
+      )}
+
+      <aside className={`sidebar ${sidebarCollapsed ? 'sidebar-collapsed' : ''} ${mobileMenuOpen ? 'sidebar-mobile-open' : ''}`}>
+        <div className="sidebar-header">
+          <div className="sidebar-logo">
+            <BrandLogo size="sm" />
+            {!sidebarCollapsed && <span className="logo-text">Petit<span className="text-gold">Stay</span> <span className="ops-badge">OPS</span></span>}
+          </div>
+          <IconButton
+            icon={<Menu size={20} strokeWidth={1.75} />}
+            onClick={() => setSidebarCollapsed(!sidebarCollapsed)}
+            aria-label="Toggle sidebar"
+            className="sidebar-toggle desktop-only"
+          />
+        </div>
+
+        <nav className="sidebar-nav">
+          {navItems.map((item) => (
+            <NavLink
+              key={item.to}
+              to={item.to}
+              end={item.end}
+              className={({ isActive }) =>
+                `sidebar-nav-item ${isActive ? 'sidebar-nav-item-active' : ''}`
+              }
+              onClick={() => setMobileMenuOpen(false)}
+            >
+              <span className="sidebar-nav-icon">{item.icon}</span>
+              {!sidebarCollapsed && <span className="sidebar-nav-label">{t(item.labelKey)}</span>}
+            </NavLink>
+          ))}
+        </nav>
+
+        <div className="sidebar-footer">
+          <IconButton
+            icon={isDark ? <Sun size={20} strokeWidth={1.75} /> : <Moon size={20} strokeWidth={1.75} />}
+            onClick={toggleTheme}
+            aria-label="Toggle theme"
+          />
+          <LanguageSwitcher />
+          <IconButton
+            icon={<LogOut size={20} strokeWidth={1.75} />}
+            onClick={handleSignOut}
+            aria-label="Sign out"
+          />
+        </div>
+      </aside>
+
+      <main className="main-content">
+        <header className="main-header">
+          <IconButton
+            icon={<Menu size={20} strokeWidth={1.75} />}
+            onClick={() => setMobileMenuOpen(true)}
+            aria-label="Open menu"
+            className="mobile-menu-btn"
+          />
+          <div className="header-spacer" />
+          <div className="header-user">
+            <span className="header-user-name">{user?.profile.firstName} {user?.profile.lastName}</span>
+            <Avatar name={`${user?.profile.firstName} ${user?.profile.lastName}`} size="sm" />
+          </div>
+        </header>
+
+        <div className="page-content">
+          <AnimatePresence mode="wait">
+            <PageTransition key={location.pathname}>
+              <Outlet />
+            </PageTransition>
+          </AnimatePresence>
+        </div>
+      </main>
+    </div>
+  );
+}

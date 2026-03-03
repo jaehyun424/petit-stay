@@ -78,6 +78,21 @@ const DEMO_USERS: Record<string, User> = {
         createdAt: new Date(),
         lastLoginAt: new Date(),
     },
+    'admin': {
+        id: 'demo-admin-1',
+        email: 'admin@demo.com',
+        role: 'admin',
+        profile: {
+            firstName: 'Admin',
+            lastName: 'Ops',
+            phone: '+82-2-000-0000',
+            phoneVerified: true,
+            preferredLanguage: 'en',
+        },
+        notifications: { push: true, email: true, sms: false },
+        createdAt: new Date(),
+        lastLoginAt: new Date(),
+    },
 };
 
 // ----------------------------------------
@@ -93,7 +108,7 @@ interface AuthContextType {
     signOut: () => Promise<void>;
     resetPassword: (email: string) => Promise<void>;
     updateUserProfile: (data: Partial<User['profile']>) => Promise<void>;
-    demoLogin: (role: 'hotel' | 'parent' | 'sitter') => void;
+    demoLogin: (role: 'hotel' | 'parent' | 'sitter' | 'admin') => void;
 }
 
 interface SignUpProfile {
@@ -152,7 +167,7 @@ export function AuthProvider({ children }: AuthProviderProps) {
     useEffect(() => {
         if (DEMO_MODE) {
             // Demo mode: check localStorage
-            const savedRole = localStorage.getItem('demo-user-role') as 'hotel' | 'parent' | 'sitter' | null;
+            const savedRole = localStorage.getItem('demo-user-role') as 'hotel' | 'parent' | 'sitter' | 'admin' | null;
             if (savedRole && DEMO_USERS[savedRole]) {
                 setUser(DEMO_USERS[savedRole]);
             }
@@ -187,7 +202,7 @@ export function AuthProvider({ children }: AuthProviderProps) {
     }, [fetchUserData]);
 
     // Demo login (for testing)
-    const demoLogin = useCallback((role: 'hotel' | 'parent' | 'sitter') => {
+    const demoLogin = useCallback((role: 'hotel' | 'parent' | 'sitter' | 'admin') => {
         if (!DEMO_MODE) {
             console.warn('Demo login is only available in demo mode');
             return;
@@ -205,7 +220,8 @@ export function AuthProvider({ children }: AuthProviderProps) {
         try {
             if (DEMO_MODE) {
                 await new Promise((r) => setTimeout(r, 500));
-                if (email.includes('hotel')) demoLogin('hotel');
+                if (email.includes('admin')) demoLogin('admin');
+                else if (email.includes('hotel')) demoLogin('hotel');
                 else if (email.includes('sitter')) demoLogin('sitter');
                 else demoLogin('parent');
                 return;
