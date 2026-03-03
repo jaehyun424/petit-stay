@@ -19,10 +19,10 @@ const LOGIN_POSTER = 'https://images.pexels.com/videos/7884081/pexels-photo-7884
 
 // Demo accounts for testing
 const DEMO_ACCOUNTS = [
-  { email: 'hotel@demo.com', password: 'demo1234', roleKey: 'hotelStaff', label: 'Concierge' },
-  { email: 'parent@demo.com', password: 'demo1234', roleKey: 'parent', label: 'Guest' },
-  { email: 'sitter@demo.com', password: 'demo1234', roleKey: 'sitter', label: 'Specialist' },
-  { email: 'admin@demo.com', password: 'demo1234', roleKey: 'admin', label: 'Ops Admin' },
+  { email: 'hotel@demo.com', password: 'demo1234', roleKey: 'hotelStaff', labelKey: 'auth.conciergeLabel' },
+  { email: 'parent@demo.com', password: 'demo1234', roleKey: 'parent', labelKey: 'auth.guestLabel' },
+  { email: 'sitter@demo.com', password: 'demo1234', roleKey: 'sitter', labelKey: 'auth.specialistLabel' },
+  { email: 'admin@demo.com', password: 'demo1234', roleKey: 'admin', labelKey: 'auth.opsAdminLabel' },
 ];
 
 // Firebase error code to friendly message mapping
@@ -84,7 +84,7 @@ export default function LoginPage() {
     setIsLoading(true);
     try {
       await signIn(email, password);
-      success('Welcome Back', 'Access granted to hospitality console.');
+      success(t('auth.welcomeBackToast'), t('auth.accessGranted'));
 
       if (email.includes('admin')) navigate('/ops');
       else if (email.includes('hotel')) navigate('/hotel');
@@ -92,7 +92,7 @@ export default function LoginPage() {
       else if (email.includes('sitter')) navigate('/sitter');
       else navigate('/hotel');
     } catch (err: unknown) {
-      error('Access Denied', mapFirebaseError(err, t));
+      error(t('auth.accessDenied'), mapFirebaseError(err, t));
     } finally {
       setIsLoading(false);
     }
@@ -113,6 +113,7 @@ export default function LoginPage() {
           muted
           loop
           playsInline
+          preload="none"
           poster={LOGIN_POSTER}
         >
           <source src={LOGIN_VIDEO} type="video/mp4" />
@@ -125,7 +126,7 @@ export default function LoginPage() {
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8, delay: 0.3 }}
           >
-            "Uncompromising care for your most important guests."
+            "{t('auth.videoQuote')}"
           </motion.h1>
           <motion.p
             className="visual-author"
@@ -133,7 +134,7 @@ export default function LoginPage() {
             animate={{ opacity: 1 }}
             transition={{ duration: 0.6, delay: 0.6 }}
           >
-            — Petit Stay Hospitality Standard
+            — {t('auth.hospitalityStandard')}
           </motion.p>
         </div>
       </div>
@@ -143,7 +144,7 @@ export default function LoginPage() {
         <div className="login-header">
           <Link to="/" className="back-to-home">
             <ArrowLeft size={16} />
-            Back to home
+            {t('auth.backToHome')}
           </Link>
           <div className="brand-logo">
             <span className="logo-text">Petit<span className="text-gold">Stay</span></span>
@@ -157,18 +158,18 @@ export default function LoginPage() {
           animate="show"
         >
           <motion.div className="text-center mb-8" variants={fadeUp}>
-            <h2 className="text-3xl font-serif mb-2">Concierge Access</h2>
-            <p className="text-charcoal-500">Please authenticate to access the console.</p>
+            <h2 className="text-3xl font-serif mb-2">{t('auth.conciergeAccess')}</h2>
+            <p className="text-charcoal-500">{t('auth.pleaseAuthenticate')}</p>
           </motion.div>
 
           <form onSubmit={handleSubmit} className="flex flex-col gap-4">
             <motion.div variants={fadeUp}>
               <Input
-                label="Email Access ID"
+                label={t('auth.emailAccessId')}
                 type="email"
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
-                placeholder="name@hotel.com"
+                placeholder={t('auth.loginEmailPlaceholder')}
                 error={errors.email}
                 autoComplete="email"
                 disabled={isLoading}
@@ -177,7 +178,7 @@ export default function LoginPage() {
 
             <motion.div variants={fadeUp}>
               <Input
-                label="Secure Password"
+                label={t('auth.securePassword')}
                 type={showPassword ? 'text' : 'password'}
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
@@ -212,14 +213,14 @@ export default function LoginPage() {
                 isLoading={isLoading}
                 disabled={isLoading}
               >
-                Sign In
+                {t('auth.signInButton')}
               </Button>
             </motion.div>
           </form>
 
           {/* Demo Accounts */}
           <motion.div className="mt-8 border-t border-cream-300 pt-6" variants={fadeUp}>
-            <p className="text-xs text-charcoal-400 text-center uppercase tracking-widest mb-4">Quick Access Simulation</p>
+            <p className="text-xs text-charcoal-400 text-center uppercase tracking-widest mb-4">{t('auth.quickAccessSimulation')}</p>
             <div className="grid grid-cols-4 gap-2">
               {DEMO_ACCOUNTS.map((account) => (
                 <button
@@ -229,7 +230,7 @@ export default function LoginPage() {
                   onClick={() => handleDemoLogin(account.email, account.password)}
                   disabled={isLoading}
                 >
-                  <span className="font-semibold text-xs">{account.label}</span>
+                  <span className="font-semibold text-xs">{t(account.labelKey)}</span>
                 </button>
               ))}
             </div>
@@ -237,14 +238,14 @@ export default function LoginPage() {
 
           <motion.div className="mt-8 text-center" variants={fadeUp}>
             <p className="text-sm text-charcoal-500">
-              Not a partner hotel yet? <Link to="/register" className="text-charcoal-900 border-b border-gold-500 pb-0.5 hover:text-gold-600">Request Partnership</Link>
+              {t('auth.notPartnerYet')} <Link to="/register" className="text-charcoal-900 border-b border-gold-500 pb-0.5 hover:text-gold-600">{t('auth.requestPartnership')}</Link>
             </p>
           </motion.div>
         </motion.div>
 
         <div className="login-footer">
             <LanguageSwitcher />
-            <p>&copy; 2026 Petit Stay. Tokyo &bull; Seoul &bull; Singapore.</p>
+            <p>&copy; {new Date().getFullYear()} {t('auth.footerText')}</p>
         </div>
       </div>
     </div>

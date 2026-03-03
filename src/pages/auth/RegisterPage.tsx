@@ -35,14 +35,16 @@ export default function RegisterPage() {
     const { t, i18n } = useTranslation();
 
     const ROLE_OPTIONS = [
-        { value: 'parent', label: 'Guest Family' },
-        { value: 'sitter', label: 'Childcare Specialist' },
-        { value: 'hotel_staff', label: 'Hotel Partner' },
+        { value: 'parent', label: t('auth.guestFamily') },
+        { value: 'sitter', label: t('auth.childcareSpecialist') },
+        { value: 'hotel_staff', label: t('auth.hotelPartner') },
     ];
 
     const LANGUAGE_OPTIONS = [
         { value: 'en', label: 'English' },
         { value: 'ko', label: '한국어' },
+        { value: 'ja', label: '日本語' },
+        { value: 'zh', label: '中文' },
     ];
 
     const [formData, setFormData] = useState({
@@ -89,7 +91,7 @@ export default function RegisterPage() {
                 lastName: formData.lastName,
                 preferredLanguage: formData.language as 'en' | 'ko' | 'ja' | 'zh',
             });
-            success('Account Created', 'Welcome to the Petit Stay network.');
+            success(t('auth.accountCreated'), t('auth.welcomeToNetwork'));
 
             const roleRedirects: Record<string, string> = {
                 parent: '/parent',
@@ -98,8 +100,8 @@ export default function RegisterPage() {
             };
             navigate(roleRedirects[formData.role] || '/login');
         } catch (err: unknown) {
-            const message = err instanceof Error ? err.message : 'Registration failed';
-            error('Error', message);
+            const message = err instanceof Error ? err.message : t('common.error');
+            error(t('common.error'), message);
         } finally {
             setIsLoading(false);
         }
@@ -115,6 +117,7 @@ export default function RegisterPage() {
                     muted
                     loop
                     playsInline
+                    preload="none"
                     poster={REGISTER_POSTER}
                 >
                     <source src={REGISTER_VIDEO} type="video/mp4" />
@@ -127,7 +130,7 @@ export default function RegisterPage() {
                         animate={{ opacity: 1, y: 0 }}
                         transition={{ duration: 0.8, delay: 0.3 }}
                     >
-                        Join the Standard of Excellence
+                        {t('auth.registerVisualTitle')}
                     </motion.h1>
                     <motion.ul
                         className="visual-list"
@@ -135,9 +138,9 @@ export default function RegisterPage() {
                         animate={{ opacity: 1 }}
                         transition={{ duration: 0.6, delay: 0.6 }}
                     >
-                        <li>Exclusive Hotel Partnerships</li>
-                        <li>Vetted Childcare Specialists</li>
-                        <li>Comprehensive Liability Coverage</li>
+                        <li>{t('auth.registerBullet1')}</li>
+                        <li>{t('auth.registerBullet2')}</li>
+                        <li>{t('auth.registerBullet3')}</li>
                     </motion.ul>
                 </div>
             </div>
@@ -147,7 +150,7 @@ export default function RegisterPage() {
                 <div className="login-header">
                     <Link to="/" className="back-to-home">
                         <ArrowLeft size={16} />
-                        Back to home
+                        {t('auth.backToHome')}
                     </Link>
                     <div className="brand-logo">
                         <span className="logo-text">Petit<span className="text-gold">Stay</span></span>
@@ -161,27 +164,27 @@ export default function RegisterPage() {
                     animate="show"
                 >
                     <motion.div className="text-center mb-6" variants={fadeUp}>
-                        <h2 className="text-2xl font-serif text-charcoal-900">Request Membership</h2>
-                        <p className="text-sm text-charcoal-500">Create your secure profile.</p>
+                        <h2 className="text-2xl font-serif text-charcoal-900">{t('auth.registerTitle')}</h2>
+                        <p className="text-sm text-charcoal-500">{t('auth.registerSubtitle')}</p>
                     </motion.div>
 
                     <form onSubmit={handleSubmit} className="flex flex-col gap-4">
                         <motion.div className="grid grid-cols-2 gap-4" variants={fadeUp}>
                             <Input
-                                label="First Name"
+                                label={t('auth.firstName')}
                                 name="firstName"
                                 value={formData.firstName}
                                 onChange={handleChange}
-                                placeholder="Given Name"
+                                placeholder={t('auth.firstNamePlaceholder')}
                                 error={errors.firstName}
                                 disabled={isLoading}
                             />
                             <Input
-                                label="Last Name"
+                                label={t('auth.lastName')}
                                 name="lastName"
                                 value={formData.lastName}
                                 onChange={handleChange}
-                                placeholder="Family Name"
+                                placeholder={t('auth.lastNamePlaceholder')}
                                 error={errors.lastName}
                                 disabled={isLoading}
                             />
@@ -189,12 +192,12 @@ export default function RegisterPage() {
 
                         <motion.div variants={fadeUp}>
                             <Input
-                                label="Email Address"
+                                label={t('auth.email')}
                                 type="email"
                                 name="email"
                                 value={formData.email}
                                 onChange={handleChange}
-                                placeholder="name@example.com"
+                                placeholder={t('auth.emailPlaceholder')}
                                 error={errors.email}
                                 disabled={isLoading}
                             />
@@ -202,12 +205,12 @@ export default function RegisterPage() {
 
                         <motion.div className="grid grid-cols-2 gap-4" variants={fadeUp}>
                             <Input
-                                label="Password"
+                                label={t('auth.password')}
                                 type={showPassword ? 'text' : 'password'}
                                 name="password"
                                 value={formData.password}
                                 onChange={handleChange}
-                                placeholder="Min 8 chars"
+                                placeholder={t('auth.passwordPlaceholder')}
                                 error={errors.password}
                                 disabled={isLoading}
                                 rightAddon={
@@ -222,12 +225,12 @@ export default function RegisterPage() {
                                 }
                             />
                             <Input
-                                label="Confirm"
+                                label={t('auth.confirmPlaceholder')}
                                 type={showPassword ? 'text' : 'password'}
                                 name="confirmPassword"
                                 value={formData.confirmPassword}
                                 onChange={handleChange}
-                                placeholder="Confirm"
+                                placeholder={t('auth.confirmPlaceholder')}
                                 error={errors.confirmPassword}
                                 disabled={isLoading}
                             />
@@ -235,14 +238,14 @@ export default function RegisterPage() {
 
                         <motion.div className="grid grid-cols-2 gap-4" variants={fadeUp}>
                             <Select
-                                label="Account Type"
+                                label={t('auth.accountType')}
                                 name="role"
                                 value={formData.role}
                                 onChange={handleChange}
                                 options={ROLE_OPTIONS}
                             />
                             <Select
-                                label="Language"
+                                label={t('auth.language')}
                                 name="language"
                                 value={formData.language}
                                 onChange={handleChange}
@@ -258,21 +261,21 @@ export default function RegisterPage() {
                                 isLoading={isLoading}
                                 disabled={isLoading}
                             >
-                                SUBMIT APPLICATION
+                                {t('auth.submitApplication')}
                             </Button>
                         </motion.div>
                     </form>
 
                     <motion.div className="mt-6 text-center" variants={fadeUp}>
                         <p className="text-sm text-charcoal-500">
-                            Already a member? <Link to="/login" className="text-charcoal-900 border-b border-gold-500 pb-0.5 hover:text-gold-600">Sign In</Link>
+                            {t('auth.alreadyMember')} <Link to="/login" className="text-charcoal-900 border-b border-gold-500 pb-0.5 hover:text-gold-600">{t('auth.signIn')}</Link>
                         </p>
                     </motion.div>
                 </motion.div>
 
                 <div className="login-footer">
                     <LanguageSwitcher />
-                    <p>&copy; 2026 Petit Stay. Tokyo &bull; Seoul &bull; Singapore.</p>
+                    <p>&copy; {new Date().getFullYear()} {t('auth.footerText')}</p>
                 </div>
             </div>
         </div>

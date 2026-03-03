@@ -1,34 +1,39 @@
+import { useTranslation, Trans } from 'react-i18next';
 import { InfoLayout } from './InfoLayout';
 
 export default function PressPage() {
+  const { t } = useTranslation();
+
   return (
-    <InfoLayout title="Press" subtitle="News and media resources.">
-      <h2>Recent News</h2>
+    <InfoLayout title={t('info.press.title')} subtitle={t('info.press.subtitle')}>
+      <h2>{t('info.press.recentNews')}</h2>
       <div className="info-card-grid">
         <div className="info-card">
-          <span className="info-tag">Launch</span>
-          <h3>Petit Stay Launches in Singapore</h3>
-          <p>Expanding premium in-hotel childcare to Southeast Asia with three flagship hotel partners.</p>
+          <span className="info-tag">{t('info.press.news1Tag')}</span>
+          <h3>{t('info.press.news1Title')}</h3>
+          <p>{t('info.press.news1Desc')}</p>
         </div>
         <div className="info-card">
-          <span className="info-tag">Partnership</span>
-          <h3>New Partnership with Luxury Hotel Group</h3>
-          <p>Petit Stay partners with a leading luxury hotel group to bring childcare to 12 properties across Asia.</p>
+          <span className="info-tag">{t('info.press.news2Tag')}</span>
+          <h3>{t('info.press.news2Title')}</h3>
+          <p>{t('info.press.news2Desc')}</p>
         </div>
       </div>
 
-      <h2>Media Kit</h2>
+      <h2>{t('info.press.mediaKit')}</h2>
       <p>
-        For logos, brand guidelines, and high-resolution images, please contact our
-        communications team at{' '}
-        <a href="mailto:press@petitstay.com">press@petitstay.com</a>.
+        <Trans i18nKey="info.press.mediaKitDesc">
+          For logos, brand guidelines, and high-resolution images, please contact our
+          communications team at <a href="mailto:press@petitstay.com">press@petitstay.com</a>.
+        </Trans>
       </p>
 
-      <h2>Press Inquiries</h2>
+      <h2>{t('info.press.inquiries')}</h2>
       <p>
-        Journalists and media professionals can reach us at{' '}
-        <a href="mailto:press@petitstay.com">press@petitstay.com</a>.
-        We aim to respond to all inquiries within 24 hours.
+        <Trans i18nKey="info.press.inquiriesDesc">
+          Journalists and media professionals can reach us at <a href="mailto:press@petitstay.com">press@petitstay.com</a>.
+          We aim to respond to all inquiries within 24 hours.
+        </Trans>
       </p>
     </InfoLayout>
   );

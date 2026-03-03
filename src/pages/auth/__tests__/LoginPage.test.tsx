@@ -4,11 +4,6 @@ import { mockAuthContext } from '../../../test/utils';
 // Need to import LoginPage after mocks are set up
 import LoginPage from '../LoginPage';
 
-// Mock the login-bg image
-vi.mock('../../../assets/login-bg.png', () => ({
-    default: 'test-login-bg.png',
-}));
-
 describe('LoginPage', () => {
     beforeEach(() => {
         vi.clearAllMocks();
@@ -16,23 +11,23 @@ describe('LoginPage', () => {
 
     it('renders login form', () => {
         render(<LoginPage />);
-        expect(screen.getByText('AUTHENTICATE')).toBeInTheDocument();
-        expect(screen.getByLabelText('Email Access ID')).toBeInTheDocument();
-        expect(screen.getByLabelText('Secure Password')).toBeInTheDocument();
+        expect(screen.getByText('auth.signInButton')).toBeInTheDocument();
+        expect(screen.getByLabelText('auth.emailAccessId')).toBeInTheDocument();
+        expect(screen.getByLabelText('auth.securePassword')).toBeInTheDocument();
     });
 
     it('shows demo account buttons', () => {
         render(<LoginPage />);
-        expect(screen.getByText('Concierge')).toBeInTheDocument();
-        expect(screen.getByText('Guest')).toBeInTheDocument();
-        expect(screen.getByText('Specialist')).toBeInTheDocument();
+        expect(screen.getByText('auth.conciergeLabel')).toBeInTheDocument();
+        expect(screen.getByText('auth.guestLabel')).toBeInTheDocument();
+        expect(screen.getByText('auth.specialistLabel')).toBeInTheDocument();
     });
 
     it('validates empty email', async () => {
         render(<LoginPage />);
 
         // Need to submit the form
-        const form = screen.getByText('AUTHENTICATE').closest('form')!;
+        const form = screen.getByText('auth.signInButton').closest('form')!;
         fireEvent.submit(form);
 
         await waitFor(() => {
@@ -43,47 +38,47 @@ describe('LoginPage', () => {
     it('validates invalid email format', async () => {
         render(<LoginPage />);
 
-        fireEvent.change(screen.getByLabelText('Email Access ID'), {
+        fireEvent.change(screen.getByLabelText('auth.emailAccessId'), {
             target: { value: 'notanemail' },
         });
-        fireEvent.change(screen.getByLabelText('Secure Password'), {
+        fireEvent.change(screen.getByLabelText('auth.securePassword'), {
             target: { value: 'password123' },
         });
 
-        const form = screen.getByText('AUTHENTICATE').closest('form')!;
+        const form = screen.getByText('auth.signInButton').closest('form')!;
         fireEvent.submit(form);
 
         await waitFor(() => {
-            expect(screen.getByText('Invalid email format')).toBeInTheDocument();
+            expect(screen.getByText('errors.invalidEmail')).toBeInTheDocument();
         });
     });
 
     it('validates short password', async () => {
         render(<LoginPage />);
 
-        fireEvent.change(screen.getByLabelText('Email Access ID'), {
+        fireEvent.change(screen.getByLabelText('auth.emailAccessId'), {
             target: { value: 'user@test.com' },
         });
-        fireEvent.change(screen.getByLabelText('Secure Password'), {
+        fireEvent.change(screen.getByLabelText('auth.securePassword'), {
             target: { value: '123' },
         });
-        fireEvent.click(screen.getByText('AUTHENTICATE'));
+        fireEvent.click(screen.getByText('auth.signInButton'));
 
         await waitFor(() => {
-            expect(screen.getByText('Minimum 6 characters')).toBeInTheDocument();
+            expect(screen.getByText('errors.passwordTooShort')).toBeInTheDocument();
         });
     });
 
     it('calls signIn with valid credentials', async () => {
         render(<LoginPage />);
 
-        fireEvent.change(screen.getByLabelText('Email Access ID'), {
+        fireEvent.change(screen.getByLabelText('auth.emailAccessId'), {
             target: { value: 'parent@demo.com' },
         });
-        fireEvent.change(screen.getByLabelText('Secure Password'), {
+        fireEvent.change(screen.getByLabelText('auth.securePassword'), {
             target: { value: 'demo1234' },
         });
-        fireEvent.click(screen.getByText('AUTHENTICATE'));
+        fireEvent.click(screen.getByText('auth.signInButton'));
 
         await waitFor(() => {
             expect(mockAuthContext.signIn).toHaveBeenCalledWith('parent@demo.com', 'demo1234');
@@ -93,17 +88,17 @@ describe('LoginPage', () => {
     it('fills credentials when demo button clicked', () => {
         render(<LoginPage />);
 
-        fireEvent.click(screen.getByText('Guest'));
+        fireEvent.click(screen.getByText('auth.guestLabel'));
 
-        expect(screen.getByLabelText('Email Access ID')).toHaveValue('parent@demo.com');
-        expect(screen.getByLabelText('Secure Password')).toHaveValue('demo1234');
+        expect(screen.getByLabelText('auth.emailAccessId')).toHaveValue('parent@demo.com');
+        expect(screen.getByLabelText('auth.securePassword')).toHaveValue('demo1234');
     });
 
     it('fills hotel credentials when concierge demo clicked', () => {
         render(<LoginPage />);
 
-        fireEvent.click(screen.getByText('Concierge'));
+        fireEvent.click(screen.getByText('auth.conciergeLabel'));
 
-        expect(screen.getByLabelText('Email Access ID')).toHaveValue('hotel@demo.com');
+        expect(screen.getByLabelText('auth.emailAccessId')).toHaveValue('hotel@demo.com');
     });
 });

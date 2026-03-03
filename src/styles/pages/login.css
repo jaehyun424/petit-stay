@@ -169,3 +169,39 @@
 .forgot-password-link:hover {
   color: var(--gold-600);
 }
+
+/* ============================================
+   Dark Mode
+   ============================================ */
+:root[data-theme="dark"] .login-container {
+  background-color: var(--cream-50);
+}
+
+:root[data-theme="dark"] .login-form-container {
+  background-color: var(--cream-50);
+  box-shadow: none;
+}
+
+:root[data-theme="dark"] .back-to-home {
+  color: var(--text-tertiary);
+}
+
+:root[data-theme="dark"] .back-to-home:hover {
+  color: var(--text-primary);
+}
+
+:root[data-theme="dark"] .demo-btn {
+  background: var(--bg-card);
+  border-color: var(--border-color);
+  color: var(--text-secondary);
+}
+
+:root[data-theme="dark"] .demo-btn:hover {
+  border-color: var(--gold-500);
+  color: var(--gold-400);
+  background: var(--glass-hover);
+}
+
+:root[data-theme="dark"] .login-footer {
+  color: var(--text-tertiary);
+}

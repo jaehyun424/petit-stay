@@ -2,11 +2,6 @@ import { render, screen, fireEvent, waitFor } from '../../../test/utils';
 
 import ForgotPasswordPage from '../ForgotPasswordPage';
 
-// Mock the login-bg image
-vi.mock('../../../assets/login-bg.png', () => ({
-    default: 'test-login-bg.png',
-}));
-
 // Mock firebase/auth
 vi.mock('firebase/auth', () => ({
     sendPasswordResetEmail: vi.fn(),
@@ -19,8 +14,8 @@ describe('ForgotPasswordPage', () => {
 
     it('renders forgot password form', () => {
         render(<ForgotPasswordPage />);
-        expect(screen.getByText('SEND RESET LINK')).toBeInTheDocument();
-        expect(screen.getByLabelText('Email Access ID')).toBeInTheDocument();
+        expect(screen.getByText('auth.sendResetLink')).toBeInTheDocument();
+        expect(screen.getByLabelText('auth.emailAccessId')).toBeInTheDocument();
     });
 
     it('shows back to login link', () => {
@@ -31,7 +26,7 @@ describe('ForgotPasswordPage', () => {
     it('validates empty email', async () => {
         render(<ForgotPasswordPage />);
 
-        const form = screen.getByText('SEND RESET LINK').closest('form')!;
+        const form = screen.getByText('auth.sendResetLink').closest('form')!;
         fireEvent.submit(form);
 
         await waitFor(() => {
@@ -42,41 +37,42 @@ describe('ForgotPasswordPage', () => {
     it('validates invalid email format', async () => {
         render(<ForgotPasswordPage />);
 
-        fireEvent.change(screen.getByLabelText('Email Access ID'), {
+        fireEvent.change(screen.getByLabelText('auth.emailAccessId'), {
             target: { value: 'notanemail' },
         });
 
-        const form = screen.getByText('SEND RESET LINK').closest('form')!;
+        const form = screen.getByText('auth.sendResetLink').closest('form')!;
         fireEvent.submit(form);
 
         await waitFor(() => {
-            expect(screen.getByText('Invalid email format')).toBeInTheDocument();
+            expect(screen.getByText('errors.invalidEmail')).toBeInTheDocument();
         });
     });
 
     it('shows success message after sending reset link in demo mode', async () => {
         render(<ForgotPasswordPage />);
 
-        fireEvent.change(screen.getByLabelText('Email Access ID'), {
+        fireEvent.change(screen.getByLabelText('auth.emailAccessId'), {
             target: { value: 'user@test.com' },
         });
-        fireEvent.click(screen.getByText('SEND RESET LINK'));
+        fireEvent.click(screen.getByText('auth.sendResetLink'));
 
         await waitFor(() => {
-            expect(screen.getByText('Check Your Email')).toBeInTheDocument();
+            expect(screen.getByText('auth.checkYourEmail')).toBeInTheDocument();
         });
     });
 
     it('displays the submitted email in the success message', async () => {
         render(<ForgotPasswordPage />);
 
-        fireEvent.change(screen.getByLabelText('Email Access ID'), {
+        fireEvent.change(screen.getByLabelText('auth.emailAccessId'), {
             target: { value: 'test@hotel.com' },
         });
-        fireEvent.click(screen.getByText('SEND RESET LINK'));
+        fireEvent.click(screen.getByText('auth.sendResetLink'));
 
         await waitFor(() => {
-            expect(screen.getByText('test@hotel.com')).toBeInTheDocument();
+            // After i18n, t('auth.resetEmailSent', { email }) returns the key 'auth.resetEmailSent'
+            expect(screen.getByText('auth.resetEmailSent')).toBeInTheDocument();
         });
     });
 });

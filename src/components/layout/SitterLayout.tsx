@@ -17,6 +17,7 @@ import { NotificationBell } from '../common/NotificationBell';
 import { PageTransition } from '../common/PageTransition';
 import { AnimatePresence } from 'framer-motion';
 import '../../styles/sitter-layout.css';
+import '../../styles/hotel-layout.css';
 
 export function SitterLayout() {
     const { user, signOut } = useAuth();

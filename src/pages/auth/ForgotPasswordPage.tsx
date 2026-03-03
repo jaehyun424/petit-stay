@@ -29,11 +29,11 @@ export default function ForgotPasswordPage() {
 
   const validate = () => {
     if (!email) {
-      setEmailError(t('auth.email', 'Email') + ' is required');
+      setEmailError(t('auth.email') + ' is required');
       return false;
     }
     if (!/\S+@\S+\.\S+/.test(email)) {
-      setEmailError('Invalid email format');
+      setEmailError(t('errors.invalidEmail', 'Invalid email format'));
       return false;
     }
     setEmailError('');
@@ -47,17 +47,16 @@ export default function ForgotPasswordPage() {
     setIsLoading(true);
     try {
       if (DEMO_MODE) {
-        // Simulate network delay in demo mode
         await new Promise((r) => setTimeout(r, 800));
-        success('Reset link sent', 'A password reset link has been sent to your email.');
+        success(t('auth.resetLinkSent'), t('auth.resetLinkSentDesc'));
       } else {
         await sendPasswordResetEmail(auth, email);
-        success('Reset link sent', 'A password reset link has been sent to your email.');
+        success(t('auth.resetLinkSent'), t('auth.resetLinkSentDesc'));
       }
       setIsSent(true);
     } catch (err: unknown) {
-      const message = err instanceof Error ? err.message : 'Failed to send reset email';
-      showError('Request Failed', message);
+      const message = err instanceof Error ? err.message : t('common.error');
+      showError(t('auth.requestFailed'), message);
     } finally {
       setIsLoading(false);
     }
@@ -73,14 +72,15 @@ export default function ForgotPasswordPage() {
           muted
           loop
           playsInline
+          preload="none"
           poster={FORGOT_POSTER}
         >
           <source src={FORGOT_VIDEO} type="video/mp4" />
         </video>
         <div className="visual-overlay" />
         <div className="visual-content">
-          <h1 className="visual-quote">"Uncompromising care for your most important guests."</h1>
-          <p className="visual-author">— Petit Stay Hospitality Standard</p>
+          <h1 className="visual-quote">"{t('auth.videoQuote')}"</h1>
+          <p className="visual-author">— {t('auth.hospitalityStandard')}</p>
         </div>
       </div>
 
@@ -89,7 +89,7 @@ export default function ForgotPasswordPage() {
         <div className="login-header">
           <Link to="/" className="back-to-home">
             <ArrowLeft size={16} />
-            Back to home
+            {t('auth.backToHome')}
           </Link>
           <div className="brand-logo">
             <span className="logo-text">Petit<span className="text-gold">Stay</span></span>
@@ -100,13 +100,13 @@ export default function ForgotPasswordPage() {
           {isSent ? (
             /* Success state */
             <div className="text-center">
-              <h2 className="text-3xl font-serif mb-2">Check Your Email</h2>
+              <h2 className="text-3xl font-serif mb-2">{t('auth.checkYourEmail')}</h2>
               <p className="text-charcoal-500 mb-8">
-                We've sent a password reset link to <strong>{email}</strong>. Please check your inbox and follow the instructions to reset your password.
+                {t('auth.resetEmailSent', { email })}
               </p>
               <Link to="/login">
                 <Button variant="primary" fullWidth>
-                  {t('auth.backToLogin', 'Back to Login')}
+                  {t('auth.backToLogin')}
                 </Button>
               </Link>
             </div>
@@ -115,20 +115,20 @@ export default function ForgotPasswordPage() {
             <>
               <div className="text-center mb-8">
                 <h2 className="text-3xl font-serif mb-2">
-                  {t('auth.forgotPassword', 'Forgot password?')}
+                  {t('auth.forgotPassword')}
                 </h2>
                 <p className="text-charcoal-500">
-                  Enter your email address and we'll send you a link to reset your password.
+                  {t('auth.resetDescription')}
                 </p>
               </div>
 
               <form onSubmit={handleSubmit} className="flex flex-col gap-4">
                 <Input
-                  label="Email Access ID"
+                  label={t('auth.emailAccessId')}
                   type="email"
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
-                  placeholder="name@hotel.com"
+                  placeholder={t('auth.loginEmailPlaceholder')}
                   error={emailError}
                   autoComplete="email"
                 />
@@ -140,16 +140,16 @@ export default function ForgotPasswordPage() {
                     fullWidth
                     isLoading={isLoading}
                   >
-                    SEND RESET LINK
+                    {t('auth.sendResetLink')}
                   </Button>
                 </div>
               </form>
 
               <div className="mt-8 text-center">
                 <p className="text-sm text-charcoal-500">
-                  Remember your password?{' '}
+                  {t('auth.rememberPassword')}{' '}
                   <Link to="/login" className="text-charcoal-900 border-b border-gold-500 pb-0.5 hover:text-gold-600">
-                    {t('auth.backToLogin', 'Back to Login')}
+                    {t('auth.backToLogin')}
                   </Link>
                 </p>
               </div>
@@ -159,7 +159,7 @@ export default function ForgotPasswordPage() {
 
         <div className="login-footer">
           <LanguageSwitcher />
-          <p>&copy; 2026 Petit Stay. Tokyo &bull; Seoul &bull; Singapore.</p>
+          <p>&copy; {new Date().getFullYear()} {t('auth.footerText')}</p>
         </div>
       </div>
     </div>

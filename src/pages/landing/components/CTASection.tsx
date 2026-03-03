@@ -17,6 +17,7 @@ export function CTASection() {
         muted
         loop
         playsInline
+        preload="none"
         poster={CTA_POSTER}
       >
         <source src={CTA_VIDEO} type="video/mp4" />

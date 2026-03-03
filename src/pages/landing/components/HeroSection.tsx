@@ -24,6 +24,7 @@ export function HeroSection() {
           muted
           loop
           playsInline
+          preload="none"
           poster={HERO_POSTER}
         >
           <source src={HERO_VIDEO} type="video/mp4" />

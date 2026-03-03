@@ -1,42 +1,28 @@
+import { useTranslation } from 'react-i18next';
 import { InfoLayout } from './InfoLayout';
 
 export default function AboutPage() {
-  return (
-    <InfoLayout title="About Petit Stay" subtitle="Premium in-hotel childcare, reimagined.">
-      <h2>Our Mission</h2>
-      <p>
-        Petit Stay connects luxury hotels with vetted, certified childcare specialists —
-        giving traveling families peace of mind and giving hotels a premium amenity that
-        delights guests and drives loyalty.
-      </p>
+  const { t } = useTranslation();
 
-      <h2>How We Work</h2>
-      <p>
-        Hotels partner with Petit Stay to offer on-demand babysitting through our concierge
-        platform. Guest families book through the hotel or directly via our app. Every
-        specialist is background-checked, first-aid certified, and trained in hospitality
-        service standards.
-      </p>
+  return (
+    <InfoLayout title={t('info.about.title')} subtitle={t('info.about.subtitle')}>
+      <h2>{t('info.about.missionTitle')}</h2>
+      <p>{t('info.about.missionDesc')}</p>
+
+      <h2>{t('info.about.howWeWorkTitle')}</h2>
+      <p>{t('info.about.howWeWorkDesc')}</p>
       <ul>
-        <li>Real-time session monitoring for parents</li>
-        <li>QR-based secure check-in and handoff</li>
-        <li>Multi-language support (English, Korean, Japanese, Chinese)</li>
-        <li>Comprehensive liability coverage on every booking</li>
+        <li>{t('info.about.bullet1')}</li>
+        <li>{t('info.about.bullet2')}</li>
+        <li>{t('info.about.bullet3')}</li>
+        <li>{t('info.about.bullet4')}</li>
       </ul>
 
-      <h2>Where We Operate</h2>
-      <p>
-        Petit Stay currently serves premium hotels across Asia-Pacific, with active
-        operations in Tokyo, Seoul, and Singapore. We are expanding to additional
-        markets throughout 2026.
-      </p>
+      <h2>{t('info.about.whereTitle')}</h2>
+      <p>{t('info.about.whereDesc')}</p>
 
-      <h2>Our Team</h2>
-      <p>
-        Founded by hospitality and childcare professionals, our team combines deep
-        experience in luxury hotel operations, early childhood education, and technology
-        platform design.
-      </p>
+      <h2>{t('info.about.teamTitle')}</h2>
+      <p>{t('info.about.teamDesc')}</p>
     </InfoLayout>
   );
 }

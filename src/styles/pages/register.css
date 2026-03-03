@@ -81,3 +81,15 @@
     max-width: 600px;
   }
 }
+
+/* ============================================
+   Dark Mode
+   ============================================ */
+:root[data-theme="dark"] .register-container {
+  background-color: var(--cream-50);
+}
+
+:root[data-theme="dark"] .register-form-container {
+  background-color: var(--cream-50);
+  box-shadow: none;
+}
