@@ -30,7 +30,7 @@ describe('ForgotPasswordPage', () => {
         fireEvent.submit(form);
 
         await waitFor(() => {
-            expect(screen.getByText('auth.email is required')).toBeInTheDocument();
+            expect(screen.getByText('validation.fieldRequired')).toBeInTheDocument();
         });
     });
 

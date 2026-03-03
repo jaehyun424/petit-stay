@@ -82,33 +82,32 @@
 
 .login-header {
   display: flex;
-  flex-direction: column;
+  align-items: center;
+  justify-content: space-between;
   gap: 1rem;
   margin-bottom: 2rem;
 }
 
-.back-to-home {
-  display: inline-flex;
-  align-items: center;
-  gap: 0.375rem;
-  font-size: 0.8125rem;
-  color: var(--charcoal-500);
-  text-decoration: none;
-  transition: color 0.2s;
-  font-family: var(--font-action);
-}
-
-.back-to-home:hover {
-  color: var(--charcoal-900);
-}
-
-.brand-logo {
+.login-header-right {
   display: flex;
   align-items: center;
   gap: 0.5rem;
+}
+
+.brand-logo-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  text-decoration: none;
   font-family: var(--font-serif);
   font-size: 1.5rem;
   font-weight: 700;
+  color: var(--charcoal-900);
+  transition: opacity 0.2s;
+}
+
+.brand-logo-link:hover {
+  opacity: 0.8;
 }
 
 .form-wrapper {
@@ -174,19 +173,15 @@
    Dark Mode
    ============================================ */
 :root[data-theme="dark"] .login-container {
-  background-color: var(--cream-50);
+  background-color: var(--bg-primary);
 }
 
 :root[data-theme="dark"] .login-form-container {
-  background-color: var(--cream-50);
+  background-color: var(--bg-primary);
   box-shadow: none;
 }
 
-:root[data-theme="dark"] .back-to-home {
-  color: var(--text-tertiary);
-}
-
-:root[data-theme="dark"] .back-to-home:hover {
+:root[data-theme="dark"] .brand-logo-link {
   color: var(--text-primary);
 }
 

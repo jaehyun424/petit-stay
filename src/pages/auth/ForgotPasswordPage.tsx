@@ -5,18 +5,18 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
-import { ArrowLeft } from 'lucide-react';
 import { useToast } from '../../contexts/ToastContext';
 import { Button } from '../../components/common/Button';
 import { Input } from '../../components/common/Input';
+import { BrandLogo } from '../../components/common/BrandLogo';
 import { LanguageSwitcher } from '../../components/common/LanguageSwitcher';
 import { DEMO_MODE } from '../../hooks/useDemo';
 import { sendPasswordResetEmail } from 'firebase/auth';
 import { auth } from '../../services/firebase';
 import '../../styles/pages/login.css';
 
-const FORGOT_VIDEO = 'https://videos.pexels.com/video-files/7884081/7884081-uhd_2560_1440_25fps.mp4';
-const FORGOT_POSTER = 'https://images.pexels.com/videos/7884081/pexels-photo-7884081.jpeg?auto=compress&cs=tinysrgb&w=1920';
+const FORGOT_VIDEO = 'https://videos.pexels.com/video-files/6010489/6010489-uhd_2560_1440_25fps.mp4';
+const FORGOT_POSTER = 'https://images.pexels.com/photos/1134176/pexels-photo-1134176.jpeg?auto=compress&cs=tinysrgb&w=1920';
 
 export default function ForgotPasswordPage() {
   const { success, error: showError } = useToast();
@@ -29,7 +29,7 @@ export default function ForgotPasswordPage() {
 
   const validate = () => {
     if (!email) {
-      setEmailError(t('auth.email') + ' is required');
+      setEmailError(t('validation.fieldRequired', { field: t('auth.email') }));
       return false;
     }
     if (!/\S+@\S+\.\S+/.test(email)) {
@@ -72,7 +72,7 @@ export default function ForgotPasswordPage() {
           muted
           loop
           playsInline
-          preload="none"
+          preload="auto"
           poster={FORGOT_POSTER}
         >
           <source src={FORGOT_VIDEO} type="video/mp4" />
@@ -87,12 +87,12 @@ export default function ForgotPasswordPage() {
       {/* Form Column (Right) */}
       <div className="login-form-container">
         <div className="login-header">
-          <Link to="/" className="back-to-home">
-            <ArrowLeft size={16} />
-            {t('auth.backToHome')}
-          </Link>
-          <div className="brand-logo">
+          <Link to="/" className="brand-logo-link">
+            <BrandLogo size="sm" />
             <span className="logo-text">Petit<span className="text-gold">Stay</span></span>
+          </Link>
+          <div className="login-header-right">
+            <LanguageSwitcher />
           </div>
         </div>
 
@@ -158,7 +158,6 @@ export default function ForgotPasswordPage() {
         </div>
 
         <div className="login-footer">
-          <LanguageSwitcher />
           <p>&copy; {new Date().getFullYear()} {t('auth.footerText')}</p>
         </div>
       </div>

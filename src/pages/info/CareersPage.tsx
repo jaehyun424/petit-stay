@@ -35,9 +35,7 @@ export default function CareersPage() {
 
       <h2>{t('info.careers.howToApply')}</h2>
       <p>
-        <Trans i18nKey="info.careers.applyEmail">
-          Send your resume and a brief note about why you are interested to <a href="mailto:careers@petitstay.com">careers@petitstay.com</a>. We review every application and aim to respond within five business days.
-        </Trans>
+        <Trans i18nKey="info.careers.applyEmail" components={{ a: <a href="mailto:careers@petitstay.com" /> }} />
       </p>
     </InfoLayout>
   );

@@ -4,7 +4,7 @@
 
 import { Link } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
-import { Calendar, ClipboardList, Baby, Building2, Star, User } from 'lucide-react';
+import { Calendar, ClipboardList, Baby, Building2, Star, User, Shield, Award } from 'lucide-react';
 import { Card, CardBody } from '../../components/common/Card';
 import { Button } from '../../components/common/Button';
 import { StatusBadge } from '../../components/common/Badge';
@@ -68,8 +68,40 @@ export default function Home() {
     <div className="parent-home animate-fade-in">
       {/* Welcome */}
       <div className="welcome-section">
-        <h1>{t('parent.greeting', { timeOfDay: getTimeOfDay(), name: user?.profile?.firstName || 'Guest' })} 👋</h1>
+        <h1>{t('parent.greeting', { timeOfDay: getTimeOfDay(), name: user?.profile?.firstName || 'Guest' })}</h1>
         <p>{t('parent.childcareHandled')}</p>
+      </div>
+
+      {/* Trust Indicators */}
+      <div className="trust-indicators">
+        <div className="trust-card">
+          <Building2 size={20} strokeWidth={1.75} />
+          <div>
+            <span className="trust-card-value">{t('parent.trustHotels', '120+')}</span>
+            <span className="trust-card-label">{t('parent.premiumHotels', 'Premium Hotels')}</span>
+          </div>
+        </div>
+        <div className="trust-card">
+          <Shield size={20} strokeWidth={1.75} />
+          <div>
+            <span className="trust-card-value">{t('parent.trustSpecialists', '500+')}</span>
+            <span className="trust-card-label">{t('parent.verifiedSpecialists', 'Verified Specialists')}</span>
+          </div>
+        </div>
+        <div className="trust-card">
+          <Award size={20} strokeWidth={1.75} />
+          <div>
+            <span className="trust-card-value">{t('parent.trustRating', '4.9')}</span>
+            <span className="trust-card-label">{t('parent.avgSatisfaction', 'Avg Satisfaction')}</span>
+          </div>
+        </div>
+        <div className="trust-card">
+          <Calendar size={20} strokeWidth={1.75} />
+          <div>
+            <span className="trust-card-value">{t('parent.trustSessions', '10K+')}</span>
+            <span className="trust-card-label">{t('parent.completedSessions', 'Completed Sessions')}</span>
+          </div>
+        </div>
       </div>
 
       {/* Quick Actions */}
@@ -108,84 +140,89 @@ export default function Home() {
         </div>
       </div>
 
-      {/* Upcoming Booking */}
-      {upcomingBooking ? (
-        <Card className="upcoming-card" variant="gold">
-          <CardBody>
-            <div className="upcoming-header">
-              <h3>{t('parent.upcomingBooking')}</h3>
-              <StatusBadge status={upcomingBooking.status} />
-            </div>
-            <div className="upcoming-details">
-              <span aria-hidden="true"><Calendar size={20} strokeWidth={1.75} /></span>
-              <span>{t('parent.tonight')} • {upcomingBooking.time}</span>
-              <div className="detail-row">
-                <span aria-hidden="true"><Building2 size={16} strokeWidth={1.75} /></span>
-                <span>{upcomingBooking.hotel} - {t('common.room')} {upcomingBooking.room}</span>
-              </div>
-              <div className="detail-row">
-                <span aria-hidden="true"><User size={16} strokeWidth={1.75} /></span>
-                <span>{upcomingBooking.sitter.name} <span aria-label={`rated ${upcomingBooking.sitter.rating} stars`}><Star size={14} strokeWidth={1.75} fill="currentColor" /> {upcomingBooking.sitter.rating}</span></span>
-              </div>
-              <div className="detail-row">
-                <span aria-hidden="true"><Baby size={16} strokeWidth={1.75} /></span>
-                <span>{upcomingBooking.childrenIds.length} {t('parent.children').toLowerCase()}</span>
-              </div>
-            </div>
-            <div className="upcoming-actions">
-              <Link to={`/parent/trust-checkin/${upcomingBooking.id}`}>
-                <Button variant="gold" fullWidth>
-                  {t('parent.trustCheckIn')}
-                </Button>
-              </Link>
-              <Link to={`/parent/qr/${upcomingBooking.id}`} style={{ marginTop: '0.5rem', display: 'block' }}>
-                <Button variant="secondary" fullWidth>
-                  {t('parent.showQRCode')}
-                </Button>
-              </Link>
-            </div>
-          </CardBody>
-        </Card>
-      ) : (
-        <EmptyState
-          icon={<Calendar size={20} strokeWidth={1.75} />}
-          title={t('parent.noUpcomingBookings', 'No upcoming bookings')}
-          description={t('parent.noUpcomingBookingsDesc', 'Book a trusted sitter for your next hotel stay.')}
-          action={
-            <Link to="/parent/book">
-              <Button variant="gold">{t('parent.bookNow', 'Book Now')}</Button>
-            </Link>
-          }
-        />
-      )}
-
-      {/* Recent Sessions */}
-      <div className="section animate-stagger">
-        <h2 className="section-title">{t('parent.recentSessions')}</h2>
-        {recentSessions.length > 0 ? (
-          recentSessions.map((session) => (
-            <Card key={session.id} className="session-card">
+      {/* Two-column grid wrapper for desktop */}
+      <div className="parent-home-grid">
+        {/* Upcoming Booking */}
+        <div>
+          {upcomingBooking ? (
+            <Card className="upcoming-card" variant="gold">
               <CardBody>
-                <div className="session-info">
-                  <div>
-                    <span className="session-date">{formatDate(session.date)}</span>
-                    <span className="session-hotel">{session.hotel}</span>
+                <div className="upcoming-header">
+                  <h3>{t('parent.upcomingBooking')}</h3>
+                  <StatusBadge status={upcomingBooking.status} />
+                </div>
+                <div className="upcoming-details">
+                  <span aria-hidden="true"><Calendar size={20} strokeWidth={1.75} /></span>
+                  <span>{t('parent.tonight')} • {upcomingBooking.time}</span>
+                  <div className="detail-row">
+                    <span aria-hidden="true"><Building2 size={16} strokeWidth={1.75} /></span>
+                    <span>{upcomingBooking.hotel} - {t('common.room')} {upcomingBooking.room}</span>
                   </div>
-                  <div className="session-meta">
-                    <span>{session.durationHours}h</span>
-                    <span aria-label={`${session.rating} star rating`}>{Array.from({ length: session.rating }, (_, i) => <Star key={i} size={14} strokeWidth={1.75} fill="currentColor" />)}</span>
+                  <div className="detail-row">
+                    <span aria-hidden="true"><User size={16} strokeWidth={1.75} /></span>
+                    <span>{upcomingBooking.sitter.name} <span aria-label={`rated ${upcomingBooking.sitter.rating} stars`}><Star size={14} strokeWidth={1.75} fill="currentColor" /> {upcomingBooking.sitter.rating}</span></span>
                   </div>
+                  <div className="detail-row">
+                    <span aria-hidden="true"><Baby size={16} strokeWidth={1.75} /></span>
+                    <span>{upcomingBooking.childrenIds.length} {t('parent.children').toLowerCase()}</span>
+                  </div>
+                </div>
+                <div className="upcoming-actions">
+                  <Link to={`/parent/trust-checkin/${upcomingBooking.id}`}>
+                    <Button variant="gold" fullWidth>
+                      {t('parent.trustCheckIn')}
+                    </Button>
+                  </Link>
+                  <Link to={`/parent/qr/${upcomingBooking.id}`} style={{ marginTop: '0.5rem', display: 'block' }}>
+                    <Button variant="secondary" fullWidth>
+                      {t('parent.showQRCode')}
+                    </Button>
+                  </Link>
                 </div>
               </CardBody>
             </Card>
-          ))
-        ) : (
-          <EmptyState
-            icon={<ClipboardList size={20} strokeWidth={1.75} />}
-            title={t('parent.noRecentSessions', 'No recent sessions')}
-            description={t('parent.noRecentSessionsDesc', 'Your completed sessions will appear here.')}
-          />
-        )}
+          ) : (
+            <EmptyState
+              icon={<Calendar size={20} strokeWidth={1.75} />}
+              title={t('parent.noUpcomingBookings', 'No upcoming bookings')}
+              description={t('parent.noUpcomingBookingsDesc', 'Book a trusted sitter for your next hotel stay.')}
+              action={
+                <Link to="/parent/book">
+                  <Button variant="gold">{t('parent.bookNow', 'Book Now')}</Button>
+                </Link>
+              }
+            />
+          )}
+        </div>
+
+        {/* Recent Sessions */}
+        <div className="section animate-stagger">
+          <h2 className="section-title">{t('parent.recentSessions')}</h2>
+          {recentSessions.length > 0 ? (
+            recentSessions.map((session) => (
+              <Card key={session.id} className="session-card">
+                <CardBody>
+                  <div className="session-info">
+                    <div>
+                      <span className="session-date">{formatDate(session.date)}</span>
+                      <span className="session-hotel">{session.hotel}</span>
+                    </div>
+                    <div className="session-meta">
+                      <span>{session.durationHours}h</span>
+                      <span aria-label={`${session.rating} star rating`}>{Array.from({ length: session.rating }, (_, i) => <Star key={i} size={14} strokeWidth={1.75} fill="currentColor" />)}</span>
+                    </div>
+                  </div>
+                </CardBody>
+              </Card>
+            ))
+          ) : (
+            <EmptyState
+              icon={<ClipboardList size={20} strokeWidth={1.75} />}
+              title={t('parent.noRecentSessions', 'No recent sessions')}
+              description={t('parent.noRecentSessionsDesc', 'Your completed sessions will appear here.')}
+            />
+          )}
+        </div>
       </div>
     </div>
   );

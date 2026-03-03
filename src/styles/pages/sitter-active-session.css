@@ -76,3 +76,14 @@
   flex-direction: column;
   gap: var(--space-4);
 }
+
+/* Desktop Layout */
+@media (min-width: 1024px) {
+  .active-session {
+    max-width: 100%;
+  }
+
+  .active-session .info-grid {
+    grid-template-columns: repeat(4, 1fr);
+  }
+}

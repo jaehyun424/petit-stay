@@ -5,12 +5,13 @@
 import React, { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
-import { Eye, EyeOff, ArrowLeft } from 'lucide-react';
+import { Eye, EyeOff } from 'lucide-react';
 import { motion } from 'framer-motion';
 import { useAuth } from '../../contexts/AuthContext';
 import { useToast } from '../../contexts/ToastContext';
 import { Button } from '../../components/common/Button';
 import { Input, Select } from '../../components/common/Input';
+import { BrandLogo } from '../../components/common/BrandLogo';
 import { LanguageSwitcher } from '../../components/common/LanguageSwitcher';
 import type { UserRole } from '../../types';
 import '../../styles/pages/register.css';
@@ -117,7 +118,7 @@ export default function RegisterPage() {
                     muted
                     loop
                     playsInline
-                    preload="none"
+                    preload="auto"
                     poster={REGISTER_POSTER}
                 >
                     <source src={REGISTER_VIDEO} type="video/mp4" />
@@ -148,12 +149,12 @@ export default function RegisterPage() {
             {/* Form Column (Right) */}
             <div className="register-form-container">
                 <div className="login-header">
-                    <Link to="/" className="back-to-home">
-                        <ArrowLeft size={16} />
-                        {t('auth.backToHome')}
-                    </Link>
-                    <div className="brand-logo">
+                    <Link to="/" className="brand-logo-link">
+                        <BrandLogo size="sm" />
                         <span className="logo-text">Petit<span className="text-gold">Stay</span></span>
+                    </Link>
+                    <div className="login-header-right">
+                        <LanguageSwitcher />
                     </div>
                 </div>
 
@@ -274,7 +275,6 @@ export default function RegisterPage() {
                 </motion.div>
 
                 <div className="login-footer">
-                    <LanguageSwitcher />
                     <p>&copy; {new Date().getFullYear()} {t('auth.footerText')}</p>
                 </div>
             </div>

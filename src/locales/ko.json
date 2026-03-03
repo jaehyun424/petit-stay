@@ -57,7 +57,8 @@
         "passwordMismatch": "비밀번호가 일치하지 않습니다",
         "dateRequired": "날짜를 선택해주세요",
         "pastDate": "과거 날짜는 선택할 수 없습니다",
-        "startTimeRequired": "시작 시간을 선택해주세요"
+        "startTimeRequired": "시작 시간을 선택해주세요",
+        "fieldRequired": "{{field}}은(는) 필수입니다"
     },
     "auth": {
         "welcomeBack": "다시 오신 것을 환영합니다",
@@ -194,7 +195,20 @@
         "contactSitter": "시터에게 연락",
         "emergencyCall119": "응급 전화 (119)",
         "returnHome": "홈으로 돌아가기",
-        "showQRCode": "QR 코드 보기"
+        "showQRCode": "QR 코드 보기",
+        "totalSessions": "세션",
+        "avgRating": "평균 평점",
+        "noUpcomingBookingsDesc": "다음 호텔 숙박을 위해 신뢰할 수 있는 시터를 예약하세요.",
+        "noRecentSessions": "최근 세션 없음",
+        "noRecentSessionsDesc": "완료된 세션이 여기에 표시됩니다.",
+        "trustHotels": "120+",
+        "premiumHotels": "프리미엄 호텔",
+        "trustSpecialists": "500+",
+        "verifiedSpecialists": "인증 전문가",
+        "trustRating": "4.9",
+        "avgSatisfaction": "평균 만족도",
+        "trustSessions": "10K+",
+        "completedSessions": "완료된 세션"
     },
     "booking": {
         "newBooking": "새 예약",

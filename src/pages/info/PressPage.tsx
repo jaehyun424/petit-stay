@@ -22,18 +22,12 @@ export default function PressPage() {
 
       <h2>{t('info.press.mediaKit')}</h2>
       <p>
-        <Trans i18nKey="info.press.mediaKitDesc">
-          For logos, brand guidelines, and high-resolution images, please contact our
-          communications team at <a href="mailto:press@petitstay.com">press@petitstay.com</a>.
-        </Trans>
+        <Trans i18nKey="info.press.mediaKitDesc" components={{ a: <a href="mailto:press@petitstay.com" /> }} />
       </p>
 
       <h2>{t('info.press.inquiries')}</h2>
       <p>
-        <Trans i18nKey="info.press.inquiriesDesc">
-          Journalists and media professionals can reach us at <a href="mailto:press@petitstay.com">press@petitstay.com</a>.
-          We aim to respond to all inquiries within 24 hours.
-        </Trans>
+        <Trans i18nKey="info.press.inquiriesDesc" components={{ a: <a href="mailto:press@petitstay.com" /> }} />
       </p>
     </InfoLayout>
   );

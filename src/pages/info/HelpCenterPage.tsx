@@ -36,10 +36,7 @@ export default function HelpCenterPage() {
 
       <h2>{t('info.help.contactTitle')}</h2>
       <p>
-        <Trans i18nKey="info.help.contactDesc">
-          Could not find what you were looking for? Reach out to our support team at <a href="mailto:support@petitstay.com">support@petitstay.com</a> or use the
-          in-app chat feature. We are available 24/7 during active sessions.
-        </Trans>
+        <Trans i18nKey="info.help.contactDesc" components={{ a: <a href="mailto:support@petitstay.com" /> }} />
       </p>
     </InfoLayout>
   );

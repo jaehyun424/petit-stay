@@ -75,3 +75,16 @@
 .day-count { display: block; font-size: var(--text-lg); font-weight: var(--font-bold); margin-top: var(--space-1); }
 
 .has-sessions .day-count { color: var(--primary-400); }
+
+/* Desktop Layout */
+@media (min-width: 1024px) {
+  .sitter-schedule {
+    max-width: 100%;
+  }
+
+  .sessions-list {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(340px, 1fr));
+    gap: var(--space-4);
+  }
+}

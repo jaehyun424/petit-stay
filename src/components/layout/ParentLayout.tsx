@@ -18,6 +18,14 @@ import { AnimatePresence } from 'framer-motion';
 import '../../styles/parent-layout.css';
 import '../../styles/hotel-layout.css';
 
+function getPageTitle(pathname: string, t: (key: string) => string): string {
+    if (pathname === '/parent') return t('nav.home');
+    if (pathname.includes('/parent/book')) return t('nav.book');
+    if (pathname.includes('/parent/history')) return t('nav.history');
+    if (pathname.includes('/parent/profile')) return t('nav.profile');
+    return t('nav.home');
+}
+
 export function ParentLayout() {
     const { user, signOut } = useAuth();
     const { isDark, toggleTheme } = useTheme();
@@ -120,14 +128,15 @@ export function ParentLayout() {
 
                 {/* Desktop top bar */}
                 <header className="parent-desktop-header">
-                    <IconButton
-                        icon={<Menu size={20} strokeWidth={1.75} />}
-                        onClick={() => setMobileMenuOpen(true)}
-                        aria-label="Open menu"
-                        className="mobile-menu-btn"
-                    />
+                    <h2 className="desktop-page-title">{getPageTitle(location.pathname, t)}</h2>
                     <div className="header-spacer" />
                     <div className="header-user">
+                        <LanguageSwitcher />
+                        <IconButton
+                            icon={isDark ? <Sun size={20} strokeWidth={1.75} /> : <Moon size={20} strokeWidth={1.75} />}
+                            onClick={toggleTheme}
+                            aria-label="Toggle theme"
+                        />
                         <NotificationBell />
                         <span className="header-user-name">{user?.profile.firstName} {user?.profile.lastName}</span>
                     </div>

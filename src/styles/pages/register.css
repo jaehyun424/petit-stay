@@ -86,10 +86,10 @@
    Dark Mode
    ============================================ */
 :root[data-theme="dark"] .register-container {
-  background-color: var(--cream-50);
+  background-color: var(--bg-primary);
 }
 
 :root[data-theme="dark"] .register-form-container {
-  background-color: var(--cream-50);
+  background-color: var(--bg-primary);
   box-shadow: none;
 }

@@ -290,3 +290,21 @@
 .earnings-page .mt-4 {
     margin-top: var(--space-4);
 }
+
+/* Desktop Layout */
+@media (min-width: 1024px) {
+    .earnings-page {
+        max-width: 100%;
+    }
+
+    .earnings-desktop-grid {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: var(--space-6);
+        align-items: start;
+    }
+
+    .earnings-page .stats-row {
+        grid-template-columns: repeat(4, 1fr);
+    }
+}

@@ -148,3 +148,17 @@
   width: 16px;
   height: 16px;
 }
+
+/* Desktop Layout */
+@media (min-width: 1024px) {
+  .profile-page {
+    max-width: 100%;
+  }
+
+  .profile-desktop-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: var(--space-6);
+    align-items: start;
+  }
+}

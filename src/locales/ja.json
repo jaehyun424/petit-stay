@@ -57,7 +57,8 @@
         "passwordMismatch": "パスワードが一致しません",
         "dateRequired": "日付を選択してください",
         "pastDate": "過去の日付は選択できません",
-        "startTimeRequired": "開始時間を選択してください"
+        "startTimeRequired": "開始時間を選択してください",
+        "fieldRequired": "{{field}}は必須です"
     },
     "auth": {
         "welcomeBack": "おかえりなさい",
@@ -194,7 +195,20 @@
         "contactSitter": "シッターに連絡",
         "emergencyCall119": "緊急通報 (119)",
         "returnHome": "ホームに戻る",
-        "showQRCode": "QRコードを表示"
+        "showQRCode": "QRコードを表示",
+        "totalSessions": "セッション",
+        "avgRating": "平均評価",
+        "noUpcomingBookingsDesc": "次のホテル滞在のために信頼できるシッターを予約しましょう。",
+        "noRecentSessions": "最近のセッションなし",
+        "noRecentSessionsDesc": "完了したセッションがここに表示されます。",
+        "trustHotels": "120+",
+        "premiumHotels": "プレミアムホテル",
+        "trustSpecialists": "500+",
+        "verifiedSpecialists": "認定スペシャリスト",
+        "trustRating": "4.9",
+        "avgSatisfaction": "平均満足度",
+        "trustSessions": "10K+",
+        "completedSessions": "完了セッション"
     },
     "booking": {
         "newBooking": "新規予約",

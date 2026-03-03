@@ -47,3 +47,16 @@
 .history-skeleton-fill {
   flex: 1;
 }
+
+/* Desktop Layout */
+@media (min-width: 1024px) {
+  .history-page {
+    max-width: 100%;
+  }
+
+  .history-list {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(360px, 1fr));
+    gap: var(--space-4);
+  }
+}

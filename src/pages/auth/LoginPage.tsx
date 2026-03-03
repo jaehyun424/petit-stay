@@ -5,17 +5,18 @@
 import React, { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
-import { Eye, EyeOff, ArrowLeft } from 'lucide-react';
+import { Eye, EyeOff } from 'lucide-react';
 import { motion } from 'framer-motion';
 import { useAuth } from '../../contexts/AuthContext';
 import { useToast } from '../../contexts/ToastContext';
 import { Button } from '../../components/common/Button';
 import { Input } from '../../components/common/Input';
+import { BrandLogo } from '../../components/common/BrandLogo';
 import { LanguageSwitcher } from '../../components/common/LanguageSwitcher';
 import '../../styles/pages/login.css';
 
-const LOGIN_VIDEO = 'https://videos.pexels.com/video-files/7884081/7884081-uhd_2560_1440_25fps.mp4';
-const LOGIN_POSTER = 'https://images.pexels.com/videos/7884081/pexels-photo-7884081.jpeg?auto=compress&cs=tinysrgb&w=1920';
+const LOGIN_VIDEO = 'https://videos.pexels.com/video-files/3209828/3209828-uhd_2560_1440_25fps.mp4';
+const LOGIN_POSTER = 'https://images.pexels.com/photos/258154/pexels-photo-258154.jpeg?auto=compress&cs=tinysrgb&w=1920';
 
 // Demo accounts for testing
 const DEMO_ACCOUNTS = [
@@ -69,9 +70,9 @@ export default function LoginPage() {
 
   const validate = () => {
     const newErrors: typeof errors = {};
-    if (!email) newErrors.email = t('auth.email') + ' is required';
+    if (!email) newErrors.email = t('validation.fieldRequired', { field: t('auth.email') });
     else if (!/\S+@\S+\.\S+/.test(email)) newErrors.email = t('errors.invalidEmail', 'Invalid email format');
-    if (!password) newErrors.password = t('auth.password') + ' is required';
+    if (!password) newErrors.password = t('validation.fieldRequired', { field: t('auth.password') });
     else if (password.length < 6) newErrors.password = t('errors.passwordTooShort', 'Minimum 6 characters');
     setErrors(newErrors);
     return Object.keys(newErrors).length === 0;
@@ -113,7 +114,7 @@ export default function LoginPage() {
           muted
           loop
           playsInline
-          preload="none"
+          preload="auto"
           poster={LOGIN_POSTER}
         >
           <source src={LOGIN_VIDEO} type="video/mp4" />
@@ -142,12 +143,12 @@ export default function LoginPage() {
       {/* Login Form Column (Right) */}
       <div className="login-form-container">
         <div className="login-header">
-          <Link to="/" className="back-to-home">
-            <ArrowLeft size={16} />
-            {t('auth.backToHome')}
-          </Link>
-          <div className="brand-logo">
+          <Link to="/" className="brand-logo-link">
+            <BrandLogo size="sm" />
             <span className="logo-text">Petit<span className="text-gold">Stay</span></span>
+          </Link>
+          <div className="login-header-right">
+            <LanguageSwitcher />
           </div>
         </div>
 
@@ -244,7 +245,6 @@ export default function LoginPage() {
         </motion.div>
 
         <div className="login-footer">
-            <LanguageSwitcher />
             <p>&copy; {new Date().getFullYear()} {t('auth.footerText')}</p>
         </div>
       </div>

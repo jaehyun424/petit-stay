@@ -19,6 +19,14 @@ import { AnimatePresence } from 'framer-motion';
 import '../../styles/sitter-layout.css';
 import '../../styles/hotel-layout.css';
 
+function getPageTitle(pathname: string, t: (key: string) => string): string {
+    if (pathname === '/sitter') return t('nav.schedule');
+    if (pathname.includes('/sitter/active')) return t('nav.active');
+    if (pathname.includes('/sitter/earnings')) return t('nav.earnings');
+    if (pathname.includes('/sitter/profile')) return t('nav.profile');
+    return t('nav.schedule');
+}
+
 export function SitterLayout() {
     const { user, signOut } = useAuth();
     const { isDark, toggleTheme } = useTheme();
@@ -96,9 +104,14 @@ export function SitterLayout() {
 
             {/* Main area */}
             <div className="sitter-main-area">
-                {/* Mobile header */}
+                {/* Mobile header - with hamburger menu */}
                 <header className="sitter-header">
                     <div className="sitter-header-left">
+                        <IconButton
+                            icon={<Menu size={20} strokeWidth={1.75} />}
+                            onClick={() => setMobileMenuOpen(true)}
+                            aria-label="Open menu"
+                        />
                         <BrandLogo size="sm" />
                         <span className="sitter-header-brand">Petit<span className="text-gold">Stay</span></span>
                     </div>
@@ -116,14 +129,15 @@ export function SitterLayout() {
 
                 {/* Desktop header */}
                 <header className="sitter-desktop-header">
-                    <IconButton
-                        icon={<Menu size={20} strokeWidth={1.75} />}
-                        onClick={() => setMobileMenuOpen(true)}
-                        aria-label="Open menu"
-                        className="mobile-menu-btn"
-                    />
+                    <h2 className="desktop-page-title">{getPageTitle(location.pathname, t)}</h2>
                     <div className="header-spacer" />
                     <div className="header-user">
+                        <LanguageSwitcher />
+                        <IconButton
+                            icon={isDark ? <Sun size={20} strokeWidth={1.75} /> : <Moon size={20} strokeWidth={1.75} />}
+                            onClick={toggleTheme}
+                            aria-label="Toggle theme"
+                        />
                         <TierBadge tier="gold" showLabel={false} />
                         <NotificationBell />
                         <span className="header-user-name">{user?.profile.firstName} {user?.profile.lastName}</span>

@@ -31,7 +31,7 @@ describe('LoginPage', () => {
         fireEvent.submit(form);
 
         await waitFor(() => {
-            expect(screen.getByText('auth.email is required')).toBeInTheDocument();
+            expect(screen.getAllByText('validation.fieldRequired').length).toBeGreaterThanOrEqual(1);
         });
     });
 

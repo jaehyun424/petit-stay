@@ -57,7 +57,8 @@
         "passwordMismatch": "Passwords do not match",
         "dateRequired": "Date is required",
         "pastDate": "Cannot select a past date",
-        "startTimeRequired": "Start time is required"
+        "startTimeRequired": "Start time is required",
+        "fieldRequired": "{{field}} is required"
     },
     "auth": {
         "welcomeBack": "Welcome Back",
@@ -194,7 +195,20 @@
         "contactSitter": "Contact Sitter",
         "emergencyCall119": "Emergency Call (119)",
         "returnHome": "Return Home",
-        "showQRCode": "Show QR Code"
+        "showQRCode": "Show QR Code",
+        "totalSessions": "Sessions",
+        "avgRating": "Avg Rating",
+        "noUpcomingBookingsDesc": "Book a trusted sitter for your next hotel stay.",
+        "noRecentSessions": "No recent sessions",
+        "noRecentSessionsDesc": "Your completed sessions will appear here.",
+        "trustHotels": "120+",
+        "premiumHotels": "Premium Hotels",
+        "trustSpecialists": "500+",
+        "verifiedSpecialists": "Verified Specialists",
+        "trustRating": "4.9",
+        "avgSatisfaction": "Avg Satisfaction",
+        "trustSessions": "10K+",
+        "completedSessions": "Completed Sessions"
     },
     "booking": {
         "newBooking": "New Booking",

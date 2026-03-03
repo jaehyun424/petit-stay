@@ -57,7 +57,8 @@
         "passwordMismatch": "密码不一致",
         "dateRequired": "请选择日期",
         "pastDate": "不能选择过去的日期",
-        "startTimeRequired": "请选择开始时间"
+        "startTimeRequired": "请选择开始时间",
+        "fieldRequired": "{{field}}为必填项"
     },
     "auth": {
         "welcomeBack": "欢迎回来",
@@ -194,7 +195,20 @@
         "contactSitter": "联系看护人",
         "emergencyCall119": "紧急电话 (119)",
         "returnHome": "返回首页",
-        "showQRCode": "显示QR码"
+        "showQRCode": "显示QR码",
+        "totalSessions": "会话",
+        "avgRating": "平均评分",
+        "noUpcomingBookingsDesc": "为您的下次酒店入住预订值得信赖的看护人。",
+        "noRecentSessions": "没有最近的会话",
+        "noRecentSessionsDesc": "已完成的会话将在此处显示。",
+        "trustHotels": "120+",
+        "premiumHotels": "优质酒店",
+        "trustSpecialists": "500+",
+        "verifiedSpecialists": "认证专家",
+        "trustRating": "4.9",
+        "avgSatisfaction": "平均满意度",
+        "trustSessions": "10K+",
+        "completedSessions": "已完成会话"
     },
     "booking": {
         "newBooking": "新建预约",
