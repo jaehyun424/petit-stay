@@ -1,0 +1,206 @@
+/* ============================================
+   Petit Stay - Info Pages Shared Styles
+   ============================================ */
+
+.info-page {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+.info-hero {
+  background: linear-gradient(135deg, var(--charcoal-900) 0%, var(--charcoal-800) 100%);
+  padding: 6rem 2rem 3rem;
+  text-align: center;
+}
+
+.info-hero h1 {
+  font-family: var(--font-serif);
+  font-size: 2.5rem;
+  color: white;
+  margin-bottom: 0.75rem;
+}
+
+.info-hero p {
+  font-family: var(--font-action);
+  color: var(--gold-400);
+  font-size: 1rem;
+  letter-spacing: 0.03em;
+  max-width: 600px;
+  margin: 0 auto;
+}
+
+.info-content {
+  flex: 1;
+  max-width: 800px;
+  width: 100%;
+  margin: 0 auto;
+  padding: 3rem 2rem 4rem;
+}
+
+.info-content h2 {
+  font-family: var(--font-serif);
+  font-size: 1.5rem;
+  color: var(--charcoal-900);
+  margin: 2.5rem 0 1rem;
+}
+
+.info-content h2:first-child {
+  margin-top: 0;
+}
+
+.info-content p {
+  font-size: 0.9375rem;
+  line-height: 1.7;
+  color: var(--charcoal-600);
+  margin-bottom: 1rem;
+}
+
+.info-content ul, .info-content ol {
+  padding-left: 1.5rem;
+  margin-bottom: 1rem;
+}
+
+.info-content li {
+  font-size: 0.9375rem;
+  line-height: 1.7;
+  color: var(--charcoal-600);
+  margin-bottom: 0.5rem;
+}
+
+.info-content a {
+  color: var(--gold-600);
+  text-decoration: underline;
+}
+
+.info-content a:hover {
+  color: var(--gold-700);
+}
+
+/* Cards grid for careers, press */
+.info-card-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 1.25rem;
+  margin: 1.5rem 0;
+}
+
+@media (min-width: 640px) {
+  .info-card-grid {
+    grid-template-columns: 1fr 1fr;
+  }
+}
+
+.info-card {
+  background: white;
+  border: 1px solid var(--cream-300);
+  border-radius: 12px;
+  padding: 1.5rem;
+}
+
+.info-card h3 {
+  font-family: var(--font-serif);
+  font-size: 1.125rem;
+  color: var(--charcoal-900);
+  margin-bottom: 0.5rem;
+}
+
+.info-card p {
+  font-size: 0.875rem;
+  margin-bottom: 0;
+}
+
+.info-card .info-tag {
+  display: inline-block;
+  font-size: 0.6875rem;
+  font-weight: 600;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  color: var(--gold-600);
+  background: var(--gold-100);
+  padding: 0.25rem 0.625rem;
+  border-radius: 999px;
+  margin-bottom: 0.75rem;
+}
+
+/* FAQ accordion */
+.info-faq {
+  margin: 1.5rem 0;
+}
+
+.info-faq details {
+  border-bottom: 1px solid var(--cream-300);
+}
+
+.info-faq summary {
+  padding: 1rem 0;
+  font-weight: 600;
+  font-size: 0.9375rem;
+  color: var(--charcoal-900);
+  cursor: pointer;
+  list-style: none;
+}
+
+.info-faq summary::before {
+  content: '+';
+  display: inline-block;
+  width: 1.5rem;
+  font-weight: 400;
+  color: var(--gold-500);
+}
+
+.info-faq details[open] summary::before {
+  content: '\2212';
+}
+
+.info-faq details p {
+  padding: 0 0 1rem 1.5rem;
+}
+
+/* Legal pages */
+.info-legal-date {
+  font-size: 0.8125rem;
+  color: var(--charcoal-400);
+  margin-bottom: 2rem;
+  font-style: italic;
+}
+
+/* Dark mode */
+:root[data-theme="dark"] .info-hero {
+  background: linear-gradient(135deg, #111 0%, #1a1a1a 100%);
+}
+
+:root[data-theme="dark"] .info-content h2 {
+  color: var(--cream-100);
+}
+
+:root[data-theme="dark"] .info-content p,
+:root[data-theme="dark"] .info-content li {
+  color: var(--charcoal-400);
+}
+
+:root[data-theme="dark"] .info-card {
+  background: var(--charcoal-800);
+  border-color: var(--charcoal-700);
+}
+
+:root[data-theme="dark"] .info-card h3 {
+  color: var(--cream-100);
+}
+
+:root[data-theme="dark"] .info-faq summary {
+  color: var(--cream-100);
+}
+
+:root[data-theme="dark"] .info-faq details {
+  border-color: var(--charcoal-700);
+}
+
+@media (min-width: 768px) {
+  .info-hero {
+    padding: 8rem 2rem 4rem;
+  }
+  .info-hero h1 {
+    font-size: 3rem;
+  }
+}

@@ -5,7 +5,7 @@
 import React, { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
-import { Eye, EyeOff } from 'lucide-react';
+import { Eye, EyeOff, ArrowLeft } from 'lucide-react';
 import { motion } from 'framer-motion';
 import { useAuth } from '../../contexts/AuthContext';
 import { useToast } from '../../contexts/ToastContext';
@@ -15,8 +15,8 @@ import { LanguageSwitcher } from '../../components/common/LanguageSwitcher';
 import type { UserRole } from '../../types';
 import '../../styles/pages/register.css';
 
-const REGISTER_VIDEO = 'https://videos.pexels.com/video-files/3209297/3209297-uhd_2560_1440_25fps.mp4';
-const REGISTER_POSTER = 'https://images.pexels.com/photos/3661351/pexels-photo-3661351.jpeg?auto=compress&cs=tinysrgb&w=1920';
+const REGISTER_VIDEO = 'https://videos.pexels.com/video-files/3209211/3209211-uhd_2560_1440_25fps.mp4';
+const REGISTER_POSTER = 'https://images.pexels.com/photos/3209045/pexels-photo-3209045.jpeg?auto=compress&cs=tinysrgb&w=1920';
 
 const stagger = {
   hidden: {},
@@ -145,10 +145,13 @@ export default function RegisterPage() {
             {/* Form Column (Right) */}
             <div className="register-form-container">
                 <div className="login-header">
+                    <Link to="/" className="back-to-home">
+                        <ArrowLeft size={16} />
+                        Back to home
+                    </Link>
                     <div className="brand-logo">
                         <span className="logo-text">Petit<span className="text-gold">Stay</span></span>
                     </div>
-                    <LanguageSwitcher />
                 </div>
 
                 <motion.div
@@ -198,27 +201,26 @@ export default function RegisterPage() {
                         </motion.div>
 
                         <motion.div className="grid grid-cols-2 gap-4" variants={fadeUp}>
-                            <div className="password-field-wrapper">
-                                <Input
-                                    label="Password"
-                                    type={showPassword ? 'text' : 'password'}
-                                    name="password"
-                                    value={formData.password}
-                                    onChange={handleChange}
-                                    placeholder="Min 8 chars"
-                                    error={errors.password}
-                                    disabled={isLoading}
-                                />
-                                <button
-                                    type="button"
-                                    className="password-toggle"
-                                    onClick={() => setShowPassword(!showPassword)}
-                                    aria-label={showPassword ? 'Hide password' : 'Show password'}
-                                    tabIndex={-1}
-                                >
-                                    {showPassword ? <EyeOff size={20} strokeWidth={1.75} /> : <Eye size={20} strokeWidth={1.75} />}
-                                </button>
-                            </div>
+                            <Input
+                                label="Password"
+                                type={showPassword ? 'text' : 'password'}
+                                name="password"
+                                value={formData.password}
+                                onChange={handleChange}
+                                placeholder="Min 8 chars"
+                                error={errors.password}
+                                disabled={isLoading}
+                                rightAddon={
+                                    <button
+                                        type="button"
+                                        onClick={() => setShowPassword(!showPassword)}
+                                        aria-label={showPassword ? 'Hide password' : 'Show password'}
+                                        tabIndex={-1}
+                                    >
+                                        {showPassword ? <EyeOff size={20} strokeWidth={1.75} /> : <Eye size={20} strokeWidth={1.75} />}
+                                    </button>
+                                }
+                            />
                             <Input
                                 label="Confirm"
                                 type={showPassword ? 'text' : 'password'}
@@ -267,6 +269,11 @@ export default function RegisterPage() {
                         </p>
                     </motion.div>
                 </motion.div>
+
+                <div className="login-footer">
+                    <LanguageSwitcher />
+                    <p>&copy; 2026 Petit Stay. Tokyo &bull; Seoul &bull; Singapore.</p>
+                </div>
             </div>
         </div>
     );

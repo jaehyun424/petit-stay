@@ -269,3 +269,57 @@
 .text-xs { font-size: 0.75rem; }
 .text-muted { color: var(--text-tertiary, #999); }
 .sitter-cell { display: flex; align-items: center; gap: 0.5rem; }
+
+/* Dark Mode Overrides */
+:root[data-theme="dark"] .ops-stat-card {
+  background: var(--bg-card, #252525);
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.2);
+}
+
+:root[data-theme="dark"] .ops-stat-value {
+  color: var(--text-primary, #e8e8e8);
+}
+
+:root[data-theme="dark"] .ops-stat-icon {
+  background: #333;
+}
+
+:root[data-theme="dark"] .ops-issue-item {
+  background: #2a2a2a;
+}
+
+:root[data-theme="dark"] .ops-sla-item {
+  background: #2a2a2a;
+}
+
+:root[data-theme="dark"] .ops-sla-value {
+  color: var(--text-primary, #e8e8e8);
+}
+
+:root[data-theme="dark"] .ops-table th {
+  color: var(--text-secondary, #b0b0b0);
+  border-bottom-color: var(--border-light, #333);
+}
+
+:root[data-theme="dark"] .ops-table td {
+  color: var(--text-primary, #e8e8e8);
+  border-bottom-color: var(--border-light, #333);
+}
+
+:root[data-theme="dark"] .ops-table-total td {
+  border-top-color: var(--border-light, #444);
+}
+
+:root[data-theme="dark"] .ops-dashboard .page-header,
+:root[data-theme="dark"] .ops-page .page-header {
+  border-bottom-color: var(--border-light, #333);
+}
+
+:root[data-theme="dark"] .ops-dashboard .page-title,
+:root[data-theme="dark"] .ops-page .page-title {
+  color: var(--text-primary, #e8e8e8);
+}
+
+:root[data-theme="dark"] .ops-sitter-actions {
+  border-top-color: var(--border-light, #333);
+}

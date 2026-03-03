@@ -1,5 +1,11 @@
 <svg xmlns="http://www.w3.org/2000/svg" width="512" height="512" viewBox="0 0 512 512">
-  <rect width="512" height="512" rx="80" fill="#F4EBD9"/>
-  <text x="256" y="280" font-size="200" text-anchor="middle" font-family="serif">👶</text>
-  <text x="256" y="400" font-size="56" text-anchor="middle" font-family="Playfair Display, serif" font-weight="600" fill="#2D2D2D">Petit Stay</text>
+  <rect x="21" y="21" width="470" height="470" rx="106" fill="url(#g)"/>
+  <path d="M170 384V128h91c30 0 52.4 7.5 68.4 22.4 16 15 24 35.2 24 60.8 0 25.6-8 45.8-24 60.8-16 14.9-38.4 22.4-68.4 22.4H218v89.6H170z M218 256h43c16 0 27.8-4.3 36.2-11.8 8.6-8.4 12.8-19.2 12.8-33.2s-4.2-24.8-12.8-33.2C288.8 170.3 277 166 261 166H218v90z" fill="white"/>
+  <path d="M363 107l9.6 19.2 21.3 3.2-16 15.5 4.3 21.3L363 156l-19.2 10.2 4.3-21.3-16-15.5 21.3-3.2z" fill="white" opacity="0.85"/>
+  <defs>
+    <linearGradient id="g" x1="0" y1="0" x2="512" y2="512">
+      <stop offset="0%" stop-color="#D3B167"/>
+      <stop offset="100%" stop-color="#9E8047"/>
+    </linearGradient>
+  </defs>
 </svg>

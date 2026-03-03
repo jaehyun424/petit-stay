@@ -5,7 +5,7 @@
 import React, { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
-import { Eye, EyeOff } from 'lucide-react';
+import { Eye, EyeOff, ArrowLeft } from 'lucide-react';
 import { motion } from 'framer-motion';
 import { useAuth } from '../../contexts/AuthContext';
 import { useToast } from '../../contexts/ToastContext';
@@ -14,8 +14,8 @@ import { Input } from '../../components/common/Input';
 import { LanguageSwitcher } from '../../components/common/LanguageSwitcher';
 import '../../styles/pages/login.css';
 
-const LOGIN_VIDEO = 'https://videos.pexels.com/video-files/3209211/3209211-uhd_2560_1440_25fps.mp4';
-const LOGIN_POSTER = 'https://images.pexels.com/photos/3209045/pexels-photo-3209045.jpeg?auto=compress&cs=tinysrgb&w=1920';
+const LOGIN_VIDEO = 'https://videos.pexels.com/video-files/7884081/7884081-uhd_2560_1440_25fps.mp4';
+const LOGIN_POSTER = 'https://images.pexels.com/videos/7884081/pexels-photo-7884081.jpeg?auto=compress&cs=tinysrgb&w=1920';
 
 // Demo accounts for testing
 const DEMO_ACCOUNTS = [
@@ -141,10 +141,13 @@ export default function LoginPage() {
       {/* Login Form Column (Right) */}
       <div className="login-form-container">
         <div className="login-header">
+          <Link to="/" className="back-to-home">
+            <ArrowLeft size={16} />
+            Back to home
+          </Link>
           <div className="brand-logo">
             <span className="logo-text">Petit<span className="text-gold">Stay</span></span>
           </div>
-          <LanguageSwitcher />
         </div>
 
         <motion.div
@@ -172,7 +175,7 @@ export default function LoginPage() {
               />
             </motion.div>
 
-            <motion.div className="password-field-wrapper" variants={fadeUp}>
+            <motion.div variants={fadeUp}>
               <Input
                 label="Secure Password"
                 type={showPassword ? 'text' : 'password'}
@@ -182,16 +185,17 @@ export default function LoginPage() {
                 error={errors.password}
                 autoComplete="current-password"
                 disabled={isLoading}
+                rightAddon={
+                  <button
+                    type="button"
+                    onClick={() => setShowPassword(!showPassword)}
+                    aria-label={showPassword ? 'Hide password' : 'Show password'}
+                    tabIndex={-1}
+                  >
+                    {showPassword ? <EyeOff size={20} strokeWidth={1.75} /> : <Eye size={20} strokeWidth={1.75} />}
+                  </button>
+                }
               />
-              <button
-                type="button"
-                className="password-toggle"
-                onClick={() => setShowPassword(!showPassword)}
-                aria-label={showPassword ? 'Hide password' : 'Show password'}
-                tabIndex={-1}
-              >
-                {showPassword ? <EyeOff size={20} strokeWidth={1.75} /> : <Eye size={20} strokeWidth={1.75} />}
-              </button>
             </motion.div>
 
             <motion.div style={{ display: 'flex', justifyContent: 'flex-end', marginTop: '0.25rem' }} variants={fadeUp}>
@@ -239,6 +243,7 @@ export default function LoginPage() {
         </motion.div>
 
         <div className="login-footer">
+            <LanguageSwitcher />
             <p>&copy; 2026 Petit Stay. Tokyo &bull; Seoul &bull; Singapore.</p>
         </div>
       </div>

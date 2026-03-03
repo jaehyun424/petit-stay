@@ -19,7 +19,7 @@ export default function NotFound() {
             <p className="not-found-desc">
                 {t('notFound.description')}
             </p>
-            <Link to="/login">
+            <Link to="/">
                 <Button variant="gold">{t('notFound.goHome')}</Button>
             </Link>
         </div>

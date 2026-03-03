@@ -5,6 +5,7 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
+import { ArrowLeft } from 'lucide-react';
 import { useToast } from '../../contexts/ToastContext';
 import { Button } from '../../components/common/Button';
 import { Input } from '../../components/common/Input';
@@ -12,8 +13,10 @@ import { LanguageSwitcher } from '../../components/common/LanguageSwitcher';
 import { DEMO_MODE } from '../../hooks/useDemo';
 import { sendPasswordResetEmail } from 'firebase/auth';
 import { auth } from '../../services/firebase';
-import loginBg from '../../assets/login-bg.png';
 import '../../styles/pages/login.css';
+
+const FORGOT_VIDEO = 'https://videos.pexels.com/video-files/7884081/7884081-uhd_2560_1440_25fps.mp4';
+const FORGOT_POSTER = 'https://images.pexels.com/videos/7884081/pexels-photo-7884081.jpeg?auto=compress&cs=tinysrgb&w=1920';
 
 export default function ForgotPasswordPage() {
   const { success, error: showError } = useToast();
@@ -62,8 +65,18 @@ export default function ForgotPasswordPage() {
 
   return (
     <div className="login-container login-page">
-      {/* Visual Column (Left - Image) */}
-      <div className="login-visual" style={{ backgroundImage: `url(${loginBg})` }}>
+      {/* Visual Column (Left - Video) */}
+      <div className="login-visual">
+        <video
+          className="login-visual-video"
+          autoPlay
+          muted
+          loop
+          playsInline
+          poster={FORGOT_POSTER}
+        >
+          <source src={FORGOT_VIDEO} type="video/mp4" />
+        </video>
         <div className="visual-overlay" />
         <div className="visual-content">
           <h1 className="visual-quote">"Uncompromising care for your most important guests."</h1>
@@ -74,10 +87,13 @@ export default function ForgotPasswordPage() {
       {/* Form Column (Right) */}
       <div className="login-form-container">
         <div className="login-header">
+          <Link to="/" className="back-to-home">
+            <ArrowLeft size={16} />
+            Back to home
+          </Link>
           <div className="brand-logo">
             <span className="logo-text">Petit<span className="text-gold">Stay</span></span>
           </div>
-          <LanguageSwitcher />
         </div>
 
         <div className="form-wrapper">
@@ -142,6 +158,7 @@ export default function ForgotPasswordPage() {
         </div>
 
         <div className="login-footer">
+          <LanguageSwitcher />
           <p>&copy; 2026 Petit Stay. Tokyo &bull; Seoul &bull; Singapore.</p>
         </div>
       </div>

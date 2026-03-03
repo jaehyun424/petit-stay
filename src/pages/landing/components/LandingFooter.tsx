@@ -23,15 +23,15 @@ export function LandingFooter() {
           </div>
           <div className="landing-footer-col">
             <h4>{t('landing.footerCompany')}</h4>
-            <Link to="/">{t('landing.footerAbout')}</Link>
-            <Link to="/">{t('landing.footerCareers')}</Link>
-            <Link to="/">{t('landing.footerPress')}</Link>
+            <Link to="/about">{t('landing.footerAbout')}</Link>
+            <Link to="/careers">{t('landing.footerCareers')}</Link>
+            <Link to="/press">{t('landing.footerPress')}</Link>
           </div>
           <div className="landing-footer-col">
             <h4>{t('landing.footerSupport')}</h4>
-            <Link to="/">{t('landing.footerHelp')}</Link>
-            <Link to="/">{t('landing.footerPrivacy')}</Link>
-            <Link to="/">{t('landing.footerTerms')}</Link>
+            <Link to="/help">{t('landing.footerHelp')}</Link>
+            <Link to="/privacy">{t('landing.footerPrivacy')}</Link>
+            <Link to="/terms">{t('landing.footerTerms')}</Link>
           </div>
         </div>
       </div>

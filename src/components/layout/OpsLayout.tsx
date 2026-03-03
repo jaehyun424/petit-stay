@@ -17,6 +17,7 @@ import { BrandLogo } from '../common/BrandLogo';
 import { LanguageSwitcher } from '../common/LanguageSwitcher';
 import { PageTransition } from '../common/PageTransition';
 import { AnimatePresence } from 'framer-motion';
+import '../../styles/hotel-layout.css';
 import '../../styles/ops-layout.css';
 
 export function OpsLayout() {
@@ -53,7 +54,7 @@ export function OpsLayout() {
         <div className="sidebar-header">
           <div className="sidebar-logo">
             <BrandLogo size="sm" />
-            {!sidebarCollapsed && <span className="logo-text">Petit<span className="text-gold">Stay</span> <span className="ops-badge">OPS</span></span>}
+            {!sidebarCollapsed && <span className="sidebar-logo-text">Petit<span className="text-gold">Stay</span> <span className="ops-badge">OPS</span></span>}
           </div>
           <IconButton
             icon={<Menu size={20} strokeWidth={1.75} />}

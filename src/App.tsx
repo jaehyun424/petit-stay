@@ -67,6 +67,14 @@ const OpsReports = lazy(() => import('./pages/ops/Reports'));
 // Common
 const NotificationInbox = lazy(() => import('./pages/common/NotificationInbox'));
 
+// Info Pages
+const AboutPage = lazy(() => import('./pages/info/AboutPage'));
+const CareersPage = lazy(() => import('./pages/info/CareersPage'));
+const PressPage = lazy(() => import('./pages/info/PressPage'));
+const HelpCenterPage = lazy(() => import('./pages/info/HelpCenterPage'));
+const PrivacyPage = lazy(() => import('./pages/info/PrivacyPage'));
+const TermsPage = lazy(() => import('./pages/info/TermsPage'));
+
 // 404
 const NotFound = lazy(() => import('./pages/NotFound'));
 
@@ -202,6 +210,14 @@ function AppRoutes() {
           <Route path="issues" element={<OpsIssues />} />
           <Route path="reports" element={<OpsReports />} />
         </Route>
+
+        {/* Info Pages */}
+        <Route path="/about" element={<AboutPage />} />
+        <Route path="/careers" element={<CareersPage />} />
+        <Route path="/press" element={<PressPage />} />
+        <Route path="/help" element={<HelpCenterPage />} />
+        <Route path="/privacy" element={<PrivacyPage />} />
+        <Route path="/terms" element={<TermsPage />} />
 
         {/* Landing Page */}
         <Route path="/" element={<LandingPage />} />

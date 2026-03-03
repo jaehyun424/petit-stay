@@ -14,6 +14,7 @@ interface InputProps extends Omit<React.InputHTMLAttributes<HTMLInputElement>, '
     size?: 'sm' | 'md' | 'lg';
     icon?: React.ReactNode;
     iconPosition?: 'left' | 'right';
+    rightAddon?: React.ReactNode;
 }
 
 interface TextareaProps extends React.TextareaHTMLAttributes<HTMLTextAreaElement> {
@@ -40,6 +41,7 @@ export const Input = forwardRef<HTMLInputElement, InputProps>(({
     size = 'md',
     icon,
     iconPosition = 'left',
+    rightAddon,
     className = '',
     id,
     ...props
@@ -53,6 +55,7 @@ export const Input = forwardRef<HTMLInputElement, InputProps>(({
         size === 'sm' ? 'form-input-sm' : size === 'lg' ? 'form-input-lg' : '',
         error ? 'form-input-error' : '',
         hasIcon ? `form-input-icon-${iconPosition}` : '',
+        rightAddon ? 'form-input-has-addon' : '',
         className,
     ].filter(Boolean).join(' ');
 
@@ -75,6 +78,9 @@ export const Input = forwardRef<HTMLInputElement, InputProps>(({
                 />
                 {icon && iconPosition === 'right' && (
                     <span className="form-input-icon form-input-icon-right">{icon}</span>
+                )}
+                {rightAddon && (
+                    <span className="form-input-addon-right">{rightAddon}</span>
                 )}
             </div>
             {error && <span className="form-error">{error}</span>}

@@ -64,7 +64,7 @@ export function HotelLayout() {
         <div className="sidebar-header">
           <div className="sidebar-logo">
             <BrandLogo size="sm" />
-            {!sidebarCollapsed && <span className="logo-text">Petit<span className="text-gold">Stay</span></span>}
+            {!sidebarCollapsed && <span className="sidebar-logo-text">Petit<span className="text-gold">Stay</span></span>}
           </div>
           <IconButton
             icon={<Menu size={20} strokeWidth={1.75} />}
