@@ -32,6 +32,22 @@ export default function HelpCenterPage() {
           <summary>{t('info.help.q6')}</summary>
           <p>{t('info.help.a6')}</p>
         </details>
+        <details>
+          <summary>{t('info.help.q7')}</summary>
+          <p>{t('info.help.a7')}</p>
+        </details>
+        <details>
+          <summary>{t('info.help.q8')}</summary>
+          <p>{t('info.help.a8')}</p>
+        </details>
+        <details>
+          <summary>{t('info.help.q9')}</summary>
+          <p>{t('info.help.a9')}</p>
+        </details>
+        <details>
+          <summary>{t('info.help.q10')}</summary>
+          <p>{t('info.help.a10')}</p>
+        </details>
       </div>
 
       <h2>{t('info.help.contactTitle')}</h2>

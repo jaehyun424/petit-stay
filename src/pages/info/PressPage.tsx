@@ -18,6 +18,16 @@ export default function PressPage() {
           <h3>{t('info.press.news2Title')}</h3>
           <p>{t('info.press.news2Desc')}</p>
         </div>
+        <div className="info-card">
+          <span className="info-tag">{t('info.press.news3Tag')}</span>
+          <h3>{t('info.press.news3Title')}</h3>
+          <p>{t('info.press.news3Desc')}</p>
+        </div>
+        <div className="info-card">
+          <span className="info-tag">{t('info.press.news4Tag')}</span>
+          <h3>{t('info.press.news4Title')}</h3>
+          <p>{t('info.press.news4Desc')}</p>
+        </div>
       </div>
 
       <h2>{t('info.press.mediaKit')}</h2>

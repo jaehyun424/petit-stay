@@ -28,6 +28,9 @@ export default function PrivacyPage() {
 
       <h2>{t('info.privacy.section7Title')}</h2>
       <p>{t('info.privacy.section7Content')}</p>
+
+      <h2>{t('info.privacy.section8Title')}</h2>
+      <p>{t('info.privacy.section8Content')}</p>
     </InfoLayout>
   );
 }
