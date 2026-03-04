@@ -30,28 +30,53 @@ export default defineConfig({
     react(),
     VitePWA({
       registerType: 'autoUpdate',
-      includeAssets: ['icons/icon-192.svg', 'icons/icon-512.svg'],
+      includeAssets: ['icons/*.svg'],
       manifest: false, // Use public/manifest.json
       workbox: {
         globPatterns: ['**/*.{js,css,html,svg,png,woff2}'],
         // Exclude large vendor chunks from precache
         globIgnores: ['**/pdf-*.js', '**/qr-*.js', '**/recharts-*.js'],
         maximumFileSizeToCacheInBytes: 3 * 1024 * 1024,
+        navigateFallback: '/index.html',
+        navigateFallbackDenylist: [/^\/api\//],
         runtimeCaching: [
+          // NetworkFirst for Firebase/Firestore API calls
           {
             urlPattern: /^https:\/\/firestore\.googleapis\.com\/.*/i,
             handler: 'NetworkFirst',
             options: {
               cacheName: 'firebase-api',
-              expiration: { maxEntries: 50, maxAgeSeconds: 300 },
+              networkTimeoutSeconds: 10,
+              expiration: { maxEntries: 100, maxAgeSeconds: 5 * 60 },
+              cacheableResponse: { statuses: [0, 200] },
             },
           },
+          {
+            urlPattern: /^https:\/\/identitytoolkit\.googleapis\.com\/.*/i,
+            handler: 'NetworkFirst',
+            options: {
+              cacheName: 'firebase-auth',
+              networkTimeoutSeconds: 10,
+              expiration: { maxEntries: 10, maxAgeSeconds: 60 },
+            },
+          },
+          {
+            urlPattern: /^https:\/\/fcm\.googleapis\.com\/.*/i,
+            handler: 'NetworkFirst',
+            options: {
+              cacheName: 'firebase-fcm',
+              networkTimeoutSeconds: 10,
+              expiration: { maxEntries: 20, maxAgeSeconds: 60 },
+            },
+          },
+          // CacheFirst for Google Fonts
           {
             urlPattern: /^https:\/\/fonts\.googleapis\.com\/.*/i,
             handler: 'CacheFirst',
             options: {
               cacheName: 'google-fonts-stylesheets',
               expiration: { maxEntries: 10, maxAgeSeconds: 60 * 60 * 24 * 365 },
+              cacheableResponse: { statuses: [0, 200] },
             },
           },
           {
@@ -60,14 +85,37 @@ export default defineConfig({
             options: {
               cacheName: 'google-fonts-webfonts',
               expiration: { maxEntries: 30, maxAgeSeconds: 60 * 60 * 24 * 365 },
+              cacheableResponse: { statuses: [0, 200] },
             },
           },
+          // CacheFirst for Firebase Storage images
           {
             urlPattern: /^https:\/\/firebasestorage\.googleapis\.com\/.*/i,
             handler: 'CacheFirst',
             options: {
               cacheName: 'firebase-storage-images',
               expiration: { maxEntries: 100, maxAgeSeconds: 60 * 60 * 24 * 30 },
+              cacheableResponse: { statuses: [0, 200] },
+            },
+          },
+          // CacheFirst for static image assets
+          {
+            urlPattern: /\.(?:png|jpg|jpeg|svg|gif|webp|ico)$/i,
+            handler: 'CacheFirst',
+            options: {
+              cacheName: 'images',
+              expiration: { maxEntries: 60, maxAgeSeconds: 30 * 24 * 60 * 60 },
+              cacheableResponse: { statuses: [0, 200] },
+            },
+          },
+          // StaleWhileRevalidate for CDN resources
+          {
+            urlPattern: /^https:\/\/cdn\..*/i,
+            handler: 'StaleWhileRevalidate',
+            options: {
+              cacheName: 'cdn-resources',
+              expiration: { maxEntries: 30, maxAgeSeconds: 7 * 24 * 60 * 60 },
+              cacheableResponse: { statuses: [0, 200] },
             },
           },
         ],
