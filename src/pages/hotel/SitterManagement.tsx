@@ -83,7 +83,7 @@ export default function SitterManagement() {
           <Card className="sitter-card" aria-label={`Sitter: ${sitter.name}`}>
             <CardBody>
               <div className="sitter-header">
-                <Avatar name={sitter.name} size="xl" variant={sitter.tier === 'gold' ? 'gold' : 'default'} />
+                <Avatar src={sitter.avatar} name={sitter.name} size="xl" variant={sitter.tier === 'gold' ? 'gold' : 'default'} />
                 <div className="sitter-info">
                   <h3 className="sitter-name">{sitter.name}</h3>
                   <TierBadge tier={sitter.tier} />
@@ -166,7 +166,7 @@ export default function SitterManagement() {
         {profileSitter && (
           <div className="modal-form-stack">
             <div className="modal-profile-header">
-              <Avatar name={profileSitter.name} size="xl" variant={profileSitter.tier === 'gold' ? 'gold' : 'default'} />
+              <Avatar src={profileSitter.avatar} name={profileSitter.name} size="xl" variant={profileSitter.tier === 'gold' ? 'gold' : 'default'} />
               <div>
                 <h3 className="modal-profile-name">{profileSitter.name}</h3>
                 <TierBadge tier={profileSitter.tier} />

@@ -203,10 +203,11 @@ export default function Bookings() {
                                         <td>
                                             {booking.sitter ? (
                                                 <div className="sitter-cell">
-                                                    <Avatar name={booking.sitter.name} size="sm" />
+                                                    <Avatar src={booking.sitter.avatar} name={booking.sitter.name} size="sm" variant={booking.sitter.tier === 'gold' ? 'gold' : 'default'} />
                                                     <div>
                                                         <span className="sitter-name">{booking.sitter.name}</span>
                                                         <TierBadge tier={booking.sitter.tier} />
+                                                        {booking.sitter.hotelVerified && <Badge variant="success" size="sm">Hotel Verified</Badge>}
                                                     </div>
                                                 </div>
                                             ) : (
@@ -254,7 +255,7 @@ export default function Bookings() {
                                 <div className="booking-mobile-footer">
                                     {booking.sitter && (
                                         <div className="sitter-cell">
-                                            <Avatar name={booking.sitter.name} size="sm" />
+                                            <Avatar src={booking.sitter.avatar} name={booking.sitter.name} size="sm" variant={booking.sitter.tier === 'gold' ? 'gold' : 'default'} />
                                             <span className="sitter-name">{booking.sitter.name}</span>
                                         </div>
                                     )}
@@ -338,12 +339,15 @@ export default function Bookings() {
                 <div className="modal-form-stack-sm">
                     {sitters.filter((s) => s.availability === 'Available').map((sitter) => (
                         <div key={sitter.id} className="sitter-option-row" onClick={() => handleAssignSitter(sitter.name)}>
-                            <Avatar name={sitter.name} size="sm" />
+                            <Avatar src={sitter.avatar} name={sitter.name} size="sm" variant={sitter.tier === 'gold' ? 'gold' : 'default'} />
                             <div className="sitter-option-info">
                                 <div className="sitter-option-name">{sitter.name}</div>
                                 <div className="sitter-option-detail">{sitter.languages.join(', ')}</div>
                             </div>
-                            <TierBadge tier={sitter.tier} />
+                            <div style={{ display: 'flex', alignItems: 'center', gap: '4px' }}>
+                                <TierBadge tier={sitter.tier} />
+                                {sitter.hotelVerified && <Badge variant="success" size="sm">Hotel Verified</Badge>}
+                            </div>
                         </div>
                     ))}
                     {sitters.filter((s) => s.availability === 'Available').length === 0 && (

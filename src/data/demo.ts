@@ -8,22 +8,49 @@ import type { DashboardStats } from '../types';
 // ----------------------------------------
 // Date helpers for relative demo dates
 // ----------------------------------------
+const now = new Date();
+
 function daysFromNow(days: number): string {
-    const d = new Date();
+    const d = new Date(now);
     d.setDate(d.getDate() + days);
     return d.toISOString().split('T')[0];
 }
 
+function daysAgo(n: number): Date {
+    const d = new Date(now);
+    d.setDate(d.getDate() - n);
+    return d;
+}
+
+function monthsAgo(n: number): Date {
+    const d = new Date(now);
+    d.setMonth(d.getMonth() - n);
+    return d;
+}
+
 function formatDateLabel(days: number): string {
-    const d = new Date();
+    const d = new Date(now);
     d.setDate(d.getDate() + days);
     return d.toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' });
 }
 
 function formatShortDate(days: number): string {
-    const d = new Date();
+    const d = new Date(now);
     d.setDate(d.getDate() + days);
     return d.toLocaleDateString('en-US', { month: 'short', day: 'numeric' });
+}
+
+function dynamicWeekday(offsetFromToday: number): string {
+    const d = new Date(now);
+    d.setDate(d.getDate() + offsetFromToday);
+    const day = d.toLocaleDateString('en-US', { weekday: 'short' });
+    const date = d.getDate();
+    return `${day} ${date}`;
+}
+
+/** Generate a ui-avatars URL */
+function avatarUrl(name: string): string {
+    return `https://ui-avatars.com/api/?name=${encodeURIComponent(name)}&background=C5A059&color=fff&size=80`;
 }
 
 // ----------------------------------------
@@ -31,10 +58,10 @@ function formatShortDate(days: number): string {
 // ----------------------------------------
 export const DEMO_DASHBOARD_STATS: DashboardStats = {
     todayBookings: 5,
-    activeNow: 3,
-    completedToday: 2,
-    todayRevenue: 1680000,
-    safetyDays: 127,
+    activeNow: 2,
+    completedToday: 3,
+    todayRevenue: 900000,
+    safetyDays: 94,
     pendingBookings: 1,
 };
 
@@ -49,7 +76,7 @@ export interface DemoBooking {
     room: string;
     parent: { name: string; phone: string };
     children: { name: string; age: number; allergies?: string[] }[];
-    sitter: { name: string; tier: 'gold' | 'silver' } | null;
+    sitter: { name: string; tier: 'gold' | 'silver'; avatar?: string; hotelVerified?: boolean } | null;
     status: 'pending' | 'confirmed' | 'in_progress' | 'completed' | 'cancelled' | 'pending_guest_consent' | 'pending_assignment' | 'sitter_assigned' | 'sitter_confirmed';
     totalAmount: number;
 }
@@ -63,7 +90,7 @@ export const DEMO_HOTEL_BOOKINGS: DemoBooking[] = [
         room: '2305',
         parent: { name: 'Sarah Johnson', phone: '+1 555-0123' },
         children: [{ name: 'Emma', age: 5, allergies: ['peanuts'] }],
-        sitter: { name: 'Kim Minjung', tier: 'gold' },
+        sitter: { name: 'Kim Minjung', tier: 'gold', avatar: avatarUrl('Kim Minjung'), hotelVerified: true },
         status: 'confirmed',
         totalAmount: 300000,
     },
@@ -74,8 +101,8 @@ export const DEMO_HOTEL_BOOKINGS: DemoBooking[] = [
         time: '19:00 - 23:00',
         room: '1102',
         parent: { name: 'Tanaka Yuki', phone: '+81 90-1234-5678' },
-        children: [{ name: 'Sota', age: 3 }, { name: 'Yui', age: 6 }],
-        sitter: { name: 'Park Sooyeon', tier: 'gold' },
+        children: [{ name: 'Yui', age: 4 }, { name: 'Haeun', age: 6 }],
+        sitter: { name: 'Park Sooyeon', tier: 'gold', avatar: avatarUrl('Park Sooyeon'), hotelVerified: true },
         status: 'in_progress',
         totalAmount: 450000,
     },
@@ -85,8 +112,8 @@ export const DEMO_HOTEL_BOOKINGS: DemoBooking[] = [
         date: daysFromNow(0),
         time: '20:00 - 24:00',
         room: '3501',
-        parent: { name: 'Michael Chen', phone: '+86 138-0000-0000' },
-        children: [{ name: 'Lucas', age: 4 }],
+        parent: { name: 'Zhang Meihua', phone: '+86 138-0000-0000' },
+        children: [{ name: 'Xiaoming', age: 3 }],
         sitter: null,
         status: 'pending',
         totalAmount: 300000,
@@ -97,11 +124,23 @@ export const DEMO_HOTEL_BOOKINGS: DemoBooking[] = [
         date: daysFromNow(-1),
         time: '17:00 - 21:00',
         room: '2108',
-        parent: { name: 'Emily Davis', phone: '+1 555-0456' },
-        children: [{ name: 'Oliver', age: 7 }],
-        sitter: { name: 'Lee Jihye', tier: 'silver' },
+        parent: { name: 'Maria Garcia', phone: '+34 612-345-678' },
+        children: [{ name: 'Lucas', age: 7 }],
+        sitter: { name: 'Lee Jihye', tier: 'silver', avatar: avatarUrl('Lee Jihye'), hotelVerified: true },
         status: 'completed',
         totalAmount: 240000,
+    },
+    {
+        id: '5',
+        confirmationCode: 'KCP-2026-0046',
+        date: daysFromNow(1),
+        time: '18:00 - 22:00',
+        room: '1801',
+        parent: { name: 'Lee Sujin', phone: '+82 10-9876-5432' },
+        children: [{ name: 'Emma', age: 5 }],
+        sitter: { name: 'Sato Haruka', tier: 'gold', avatar: avatarUrl('Sato Haruka'), hotelVerified: true },
+        status: 'confirmed',
+        totalAmount: 360000,
     },
 ];
 
@@ -126,10 +165,10 @@ export interface DemoActiveSession {
 export const DEMO_ACTIVE_SESSIONS: DemoActiveSession[] = [
     {
         id: '1',
-        sitter: { name: 'Park Sooyeon', avatar: null, tier: 'gold' },
+        sitter: { name: 'Park Sooyeon', avatar: avatarUrl('Park Sooyeon'), tier: 'gold' },
         room: '1102',
-        children: [{ name: 'Sota', age: 3 }, { name: 'Yui', age: 6 }],
-        childrenText: 'Sota (3), Yui (6)',
+        children: [{ name: 'Yui', age: 4 }, { name: 'Haeun', age: 6 }],
+        childrenText: 'Yui (4), Haeun (6)',
         startTime: '19:00',
         elapsed: '2h 15m',
         lastUpdate: '2 min ago',
@@ -145,40 +184,21 @@ export const DEMO_ACTIVE_SESSIONS: DemoActiveSession[] = [
     },
     {
         id: '2',
-        sitter: { name: 'Lee Jihye', avatar: null, tier: 'silver' },
-        room: '2201',
-        children: [{ name: 'Mia', age: 5 }],
-        childrenText: 'Mia (5)',
-        startTime: '18:30',
-        elapsed: '2h 45m',
-        lastUpdate: '5 min ago',
+        sitter: { name: 'Kim Minjung', avatar: avatarUrl('Kim Minjung'), tier: 'gold' },
+        room: '2305',
+        children: [{ name: 'Emma', age: 5 }],
+        childrenText: 'Emma (5)',
+        startTime: '18:00',
+        elapsed: '3h 15m',
+        lastUpdate: '1 min ago',
         lastActivity: 'Drawing and coloring',
         activities: [
-            { time: '21:05', activity: 'Drawing and coloring', type: 'play' },
-            { time: '20:00', activity: 'Snack time - Cookie', type: 'food' },
-            { time: '18:45', activity: 'Trust check-in completed', type: 'checkin' },
-            { time: '18:30', activity: 'Session started', type: 'start' },
+            { time: '21:10', activity: 'Drawing and coloring', type: 'play' },
+            { time: '20:00', activity: 'Snack time - Juice & cookies', type: 'food' },
+            { time: '18:30', activity: 'Trust check-in completed', type: 'checkin' },
+            { time: '18:00', activity: 'Session started', type: 'start' },
         ],
         vitals: { mood: 'calm', energy: 'medium' },
-        status: 'active',
-    },
-    {
-        id: '3',
-        sitter: { name: 'Choi Yuna', avatar: null, tier: 'gold' },
-        room: '1508',
-        children: [{ name: 'Noah', age: 7 }],
-        childrenText: 'Noah (7)',
-        startTime: '17:00',
-        elapsed: '4h 15m',
-        lastUpdate: '1 min ago',
-        lastActivity: 'Reading books',
-        activities: [
-            { time: '21:12', activity: 'Reading books', type: 'education' },
-            { time: '20:00', activity: 'Dinner - Ordered room service', type: 'food' },
-            { time: '19:00', activity: 'Homework assistance', type: 'education' },
-            { time: '17:15', activity: 'Trust check-in completed', type: 'checkin' },
-        ],
-        vitals: { mood: 'focused', energy: 'medium' },
         status: 'active',
     },
 ];
@@ -197,6 +217,8 @@ export interface DemoSitter {
     availability: string;
     hourlyRate: number;
     safetyDays: number;
+    avatar?: string;
+    hotelVerified?: boolean;
 }
 
 export const DEMO_SITTERS: DemoSitter[] = [
@@ -204,49 +226,71 @@ export const DEMO_SITTERS: DemoSitter[] = [
         id: '1',
         name: 'Kim Minjung',
         tier: 'gold',
-        rating: 4.9,
+        rating: 4.95,
         sessionsCompleted: 247,
         languages: ['Korean', 'English', 'Japanese'],
         certifications: ['CPR', 'First Aid', 'Child Psychology'],
         availability: 'Available',
-        hourlyRate: 75000,
+        hourlyRate: 90000,
         safetyDays: 365,
+        avatar: avatarUrl('Kim Minjung'),
+        hotelVerified: true,
     },
     {
         id: '2',
         name: 'Park Sooyeon',
         tier: 'gold',
-        rating: 4.8,
+        rating: 4.88,
         sessionsCompleted: 189,
         languages: ['Korean', 'English'],
         certifications: ['CPR', 'First Aid'],
         availability: 'In Session',
         hourlyRate: 75000,
         safetyDays: 280,
+        avatar: avatarUrl('Park Sooyeon'),
+        hotelVerified: true,
     },
     {
         id: '3',
-        name: 'Lee Jihye',
-        tier: 'silver',
-        rating: 4.7,
-        sessionsCompleted: 95,
-        languages: ['Korean', 'Chinese'],
-        certifications: ['CPR', 'First Aid'],
+        name: 'Sato Haruka',
+        tier: 'gold',
+        rating: 4.92,
+        sessionsCompleted: 312,
+        languages: ['Japanese', 'English', 'Korean'],
+        certifications: ['CPR', 'First Aid', 'Child Development'],
         availability: 'Available',
-        hourlyRate: 60000,
-        safetyDays: 95,
+        hourlyRate: 90000,
+        safetyDays: 450,
+        avatar: avatarUrl('Sato Haruka'),
+        hotelVerified: true,
     },
     {
         id: '4',
-        name: 'Choi Yuna',
-        tier: 'gold',
-        rating: 4.9,
-        sessionsCompleted: 312,
-        languages: ['Korean', 'English', 'Chinese'],
-        certifications: ['CPR', 'First Aid', 'Child Development'],
+        name: 'Chen Wei',
+        tier: 'silver',
+        rating: 4.78,
+        sessionsCompleted: 95,
+        languages: ['Chinese', 'English', 'Korean'],
+        certifications: ['CPR', 'First Aid'],
+        availability: 'Available',
+        hourlyRate: 60000,
+        safetyDays: 120,
+        avatar: avatarUrl('Chen Wei'),
+        hotelVerified: true,
+    },
+    {
+        id: '5',
+        name: 'Lee Jihye',
+        tier: 'silver',
+        rating: 4.72,
+        sessionsCompleted: 134,
+        languages: ['Korean', 'Chinese'],
+        certifications: ['CPR', 'First Aid'],
         availability: 'In Session',
-        hourlyRate: 90000,
-        safetyDays: 450,
+        hourlyRate: 60000,
+        safetyDays: 185,
+        avatar: avatarUrl('Lee Jihye'),
+        hotelVerified: true,
     },
 ];
 
@@ -260,8 +304,10 @@ export interface DemoHotelOption {
 
 export const DEMO_HOTELS: DemoHotelOption[] = [
     { value: 'grand-hyatt-seoul', label: 'Grand Hyatt Seoul' },
-    { value: 'park-hyatt-busan', label: 'Park Hyatt Busan' },
+    { value: 'the-shilla-seoul', label: 'The Shilla Seoul' },
+    { value: 'signiel-seoul', label: 'Signiel Seoul' },
     { value: 'four-seasons-seoul', label: 'Four Seasons Seoul' },
+    { value: 'park-hyatt-busan', label: 'Park Hyatt Busan' },
 ];
 
 // ----------------------------------------
@@ -277,6 +323,7 @@ export interface DemoChild {
 
 export const DEMO_CHILDREN: DemoChild[] = [
     { id: '1', name: 'Emma', age: 5, allergies: ['peanuts'], gender: 'female' },
+    { id: '2', name: 'Lucas', age: 7, allergies: [], gender: 'male' },
 ];
 
 // ----------------------------------------
@@ -289,7 +336,7 @@ export interface DemoUpcomingBooking {
     time: string;
     hotel: string;
     room: string;
-    sitter: { name: string; rating: number };
+    sitter: { name: string; rating: number; avatar?: string };
     childrenIds: string[];
     status: 'confirmed' | 'pending';
 }
@@ -301,7 +348,7 @@ export const DEMO_UPCOMING_BOOKING: DemoUpcomingBooking = {
     time: '18:00 - 22:00',
     hotel: 'Grand Hyatt Seoul',
     room: '2305',
-    sitter: { name: 'Kim Minjung', rating: 4.9 },
+    sitter: { name: 'Kim Minjung', rating: 4.95, avatar: avatarUrl('Kim Minjung') },
     childrenIds: ['1'],
     status: 'confirmed',
 };
@@ -315,6 +362,7 @@ export interface DemoHistoryItem {
     time: string;
     hotel: string;
     sitter: string;
+    sitterAvatar?: string;
     duration: string;
     amount: number;
     rating: number;
@@ -322,9 +370,11 @@ export interface DemoHistoryItem {
 }
 
 export const DEMO_HISTORY: DemoHistoryItem[] = [
-    { id: '1', date: formatDateLabel(-1), time: '18:00-22:00', hotel: 'Grand Hyatt Seoul', sitter: 'Kim Minjung', duration: '4h', amount: 300000, rating: 5, status: 'completed' },
-    { id: '2', date: formatDateLabel(-6), time: '19:00-23:00', hotel: 'Grand Hyatt Seoul', sitter: 'Park Sooyeon', duration: '4h', amount: 300000, rating: 5, status: 'completed' },
-    { id: '3', date: formatDateLabel(-14), time: '20:00-23:00', hotel: 'Park Hyatt Busan', sitter: 'Lee Jihye', duration: '3h', amount: 180000, rating: 4, status: 'completed' },
+    { id: '1', date: formatDateLabel(-1), time: '18:00-22:00', hotel: 'Grand Hyatt Seoul', sitter: 'Kim Minjung', sitterAvatar: avatarUrl('Kim Minjung'), duration: '4h', amount: 360000, rating: 5, status: 'completed' },
+    { id: '2', date: formatDateLabel(-4), time: '19:00-23:00', hotel: 'The Shilla Seoul', sitter: 'Park Sooyeon', sitterAvatar: avatarUrl('Park Sooyeon'), duration: '4h', amount: 300000, rating: 5, status: 'completed' },
+    { id: '3', date: formatDateLabel(-7), time: '17:00-21:00', hotel: 'Grand Hyatt Seoul', sitter: 'Sato Haruka', sitterAvatar: avatarUrl('Sato Haruka'), duration: '4h', amount: 360000, rating: 0, status: 'completed' },
+    { id: '4', date: formatDateLabel(-10), time: '20:00-23:00', hotel: 'Signiel Seoul', sitter: 'Chen Wei', sitterAvatar: avatarUrl('Chen Wei'), duration: '3h', amount: 180000, rating: 4, status: 'completed' },
+    { id: '5', date: formatDateLabel(-14), time: '18:00-22:00', hotel: 'Four Seasons Seoul', sitter: 'Lee Jihye', sitterAvatar: avatarUrl('Lee Jihye'), duration: '4h', amount: 240000, rating: 0, status: 'completed' },
 ];
 
 // ----------------------------------------
@@ -339,8 +389,9 @@ export interface DemoRecentSession {
 }
 
 export const DEMO_RECENT_SESSIONS: DemoRecentSession[] = [
-    { id: '1', date: new Date(Date.now() - 1000 * 60 * 60 * 24 * 6), hotel: 'Grand Hyatt Seoul', durationHours: 4, rating: 5 },
-    { id: '2', date: new Date(Date.now() - 1000 * 60 * 60 * 24 * 14), hotel: 'Park Hyatt Busan', durationHours: 3, rating: 5 },
+    { id: '1', date: daysAgo(1), hotel: 'Grand Hyatt Seoul', durationHours: 4, rating: 5 },
+    { id: '2', date: daysAgo(4), hotel: 'The Shilla Seoul', durationHours: 4, rating: 5 },
+    { id: '3', date: daysAgo(7), hotel: 'Grand Hyatt Seoul', durationHours: 4, rating: 5 },
 ];
 
 // ----------------------------------------
@@ -393,6 +444,7 @@ export interface DemoLiveSession {
     sitterName: string;
     sitterTier: 'gold' | 'silver';
     sitterLanguages: string;
+    sitterAvatar?: string;
     elapsedTime: string;
 }
 
@@ -400,7 +452,8 @@ export const DEMO_LIVE_SESSION: DemoLiveSession = {
     sitterId: 'demo-sitter-1',
     sitterName: 'Kim Minjung',
     sitterTier: 'gold',
-    sitterLanguages: 'English/Korean',
+    sitterLanguages: 'English/Korean/Japanese',
+    sitterAvatar: avatarUrl('Kim Minjung'),
     elapsedTime: '2h 15m',
 };
 
@@ -423,8 +476,8 @@ export interface DemoSitterSession {
 }
 
 export const DEMO_TODAY_SESSIONS: DemoSitterSession[] = [
-    { id: '1', time: '19:00 - 23:00', room: '1102', hotel: 'Grand Hyatt Seoul', children: [{ name: 'Sota', age: 3 }, { name: 'Yui', age: 6, allergies: ['dairy'] }], status: 'confirmed' },
-    { id: '2', time: '20:00 - 24:00', room: '3501', hotel: 'Grand Hyatt Seoul', children: [{ name: 'Lucas', age: 4, allergies: ['peanuts'] }], status: 'pending' },
+    { id: '1', time: '19:00 - 23:00', room: '1102', hotel: 'Grand Hyatt Seoul', children: [{ name: 'Yui', age: 4 }, { name: 'Haeun', age: 6, allergies: ['dairy'] }], status: 'confirmed' },
+    { id: '2', time: '20:00 - 24:00', room: '3501', hotel: 'Grand Hyatt Seoul', children: [{ name: 'Xiaoming', age: 3, allergies: ['peanuts'] }], status: 'pending' },
 ];
 
 export interface DemoWeekDay {
@@ -433,13 +486,13 @@ export interface DemoWeekDay {
 }
 
 export const DEMO_WEEK_SCHEDULE: DemoWeekDay[] = [
-    { date: 'Mon 20', sessions: 2 },
-    { date: 'Tue 21', sessions: 1 },
-    { date: 'Wed 22', sessions: 0 },
-    { date: 'Thu 23', sessions: 2 },
-    { date: 'Fri 24', sessions: 3 },
-    { date: 'Sat 25', sessions: 4 },
-    { date: 'Sun 26', sessions: 2 },
+    { date: dynamicWeekday(0), sessions: 2 },
+    { date: dynamicWeekday(1), sessions: 1 },
+    { date: dynamicWeekday(2), sessions: 0 },
+    { date: dynamicWeekday(3), sessions: 2 },
+    { date: dynamicWeekday(4), sessions: 3 },
+    { date: dynamicWeekday(5), sessions: 4 },
+    { date: dynamicWeekday(6), sessions: 2 },
 ];
 
 // ----------------------------------------
@@ -455,7 +508,7 @@ export interface DemoSitterStats {
 
 export const DEMO_SITTER_STATS: DemoSitterStats = {
     totalSessions: 247,
-    avgRating: 4.9,
+    avgRating: 4.87,
     safetyDays: 365,
     onTimeRate: '98%',
     tier: 'gold',
@@ -490,7 +543,7 @@ export interface DemoActiveSessionInfo {
 
 export const DEMO_ACTIVE_SESSION_INFO: DemoActiveSessionInfo = {
     room: '1102',
-    children: 'Sota (3), Yui (6)',
+    children: 'Yui (4), Haeun (6)',
     parent: 'Tanaka Yuki',
     endTime: '23:00',
     elapsedTime: '2h 15m',
@@ -509,12 +562,14 @@ export interface DemoSitterProfile {
     onTimeRate: string;
     certifications: string[];
     languages: { flag: string; name: string; level: string }[];
+    avatar?: string;
+    hotelVerified?: boolean;
 }
 
 export const DEMO_SITTER_PROFILE: DemoSitterProfile = {
     name: 'Kim Minjung',
     tier: 'gold',
-    rating: 4.9,
+    rating: 4.95,
     reviewCount: 247,
     totalSessions: 247,
     safetyDays: 365,
@@ -525,6 +580,8 @@ export const DEMO_SITTER_PROFILE: DemoSitterProfile = {
         { flag: '🇺🇸', name: 'English', level: 'Fluent' },
         { flag: '🇯🇵', name: 'Japanese', level: 'Basic' },
     ],
+    avatar: avatarUrl('Kim Minjung'),
+    hotelVerified: true,
 };
 
 // ----------------------------------------
@@ -573,7 +630,7 @@ export const DEMO_REVIEWS: DemoReview[] = [
         rating: 5,
         comment: 'Wonderful experience! Emma had so much fun with arts and crafts. Minjung was incredibly attentive and professional.',
         tags: ['professional', 'creative', 'attentive'],
-        createdAt: new Date(Date.now() - 1000 * 60 * 60 * 24 * 5),
+        createdAt: daysAgo(5),
     },
     {
         id: 'r2',
@@ -585,23 +642,35 @@ export const DEMO_REVIEWS: DemoReview[] = [
         rating: 5,
         comment: 'Both kids loved their time. Great communication throughout with photos and updates.',
         tags: ['communicative', 'fun', 'safe'],
-        createdAt: new Date(Date.now() - 1000 * 60 * 60 * 24 * 12),
+        createdAt: daysAgo(12),
         response: {
-            message: 'Thank you so much! Sota and Yui are wonderful children. I enjoyed our time together!',
-            createdAt: new Date(Date.now() - 1000 * 60 * 60 * 24 * 11),
+            message: 'Thank you so much! Yui and Haeun are wonderful children. I enjoyed our time together!',
+            createdAt: daysAgo(11),
         },
     },
     {
         id: 'r3',
         bookingId: '4',
-        sitterId: 'demo-sitter-3',
+        sitterId: 'demo-sitter-5',
         sitterName: 'Lee Jihye',
-        parentId: 'demo-parent-3',
-        parentName: 'Emily Davis',
+        parentId: 'demo-parent-5',
+        parentName: 'Maria Garcia',
         rating: 4,
-        comment: 'Good session overall. Oliver had a nice time. Would book again.',
+        comment: 'Good session overall. Lucas had a nice time. Would book again.',
         tags: ['professional', 'punctual'],
-        createdAt: new Date(Date.now() - 1000 * 60 * 60 * 24 * 20),
+        createdAt: daysAgo(14),
+    },
+    {
+        id: 'r4',
+        bookingId: '5',
+        sitterId: 'demo-sitter-4',
+        sitterName: 'Chen Wei',
+        parentId: 'demo-parent-4',
+        parentName: 'Zhang Meihua',
+        rating: 5,
+        comment: 'Xiaoming really enjoyed the Mandarin storytime. Chen Wei is so patient and warm.',
+        tags: ['attentive', 'communicative', 'safe'],
+        createdAt: daysAgo(10),
     },
 ];
 
@@ -639,7 +708,7 @@ export const DEMO_SITTER_AVAILABILITY = {
 };
 
 // ----------------------------------------
-// Sitter Documents (demo)
+// Sitter Documents (demo) — dynamic dates
 // ----------------------------------------
 export interface DemoDocument {
     id: string;
@@ -650,8 +719,8 @@ export interface DemoDocument {
 }
 
 export const DEMO_SITTER_DOCUMENTS: DemoDocument[] = [
-    { id: 'doc1', name: 'CPR_Certification_2024.pdf', url: 'https://demo.petitstay.com/docs/cpr.pdf', uploadedAt: new Date('2024-03-15'), size: 245760 },
-    { id: 'doc2', name: 'First_Aid_Certificate.pdf', url: 'https://demo.petitstay.com/docs/firstaid.pdf', uploadedAt: new Date('2024-06-01'), size: 189440 },
+    { id: 'doc1', name: 'CPR_Certification_2025.pdf', url: 'https://demo.petitstay.com/docs/cpr.pdf', uploadedAt: monthsAgo(6), size: 245760 },
+    { id: 'doc2', name: 'First_Aid_Certificate.pdf', url: 'https://demo.petitstay.com/docs/firstaid.pdf', uploadedAt: monthsAgo(3), size: 189440 },
 ];
 
 // ----------------------------------------
@@ -675,9 +744,9 @@ export const DEMO_INCIDENTS: DemoIncident[] = [
         category: 'injury',
         summary: 'Minor scratch while playing in the kids room.',
         status: 'resolved',
-        reportedAt: new Date(Date.now() - 1000 * 60 * 60 * 24 * 3),
+        reportedAt: daysAgo(3),
         sitterName: 'Lee Jihye',
-        childName: 'Oliver',
+        childName: 'Lucas',
     },
     {
         id: '2',
@@ -685,9 +754,9 @@ export const DEMO_INCIDENTS: DemoIncident[] = [
         category: 'complaint',
         summary: 'Parent requested earlier end time.',
         status: 'closed',
-        reportedAt: new Date(Date.now() - 1000 * 60 * 60 * 24 * 10),
+        reportedAt: daysAgo(10),
         sitterName: 'Park Sooyeon',
-        childName: 'Mia',
+        childName: 'Haeun',
     },
 ];
 
@@ -726,7 +795,7 @@ export const DEMO_GUEST_TOKENS: DemoGuestToken[] = [
 ];
 
 // ----------------------------------------
-// Settlements (demo)
+// Settlements (demo) — dynamic months
 // ----------------------------------------
 export interface DemoSettlement {
     id: string;
@@ -742,50 +811,56 @@ export interface DemoSettlement {
     createdAt: Date;
 }
 
+function monthLabel(monthsBack: number): string {
+    const d = new Date(now);
+    d.setMonth(d.getMonth() - monthsBack);
+    return d.toLocaleDateString('en-US', { month: 'long', year: 'numeric' });
+}
+
 export const DEMO_SETTLEMENTS: DemoSettlement[] = [
     {
         id: 'stl-1',
         hotelId: 'hotel-grand-hyatt',
         hotelName: 'Grand Hyatt Seoul',
-        period: 'January 2026',
+        period: monthLabel(2),
         totalBookings: 62,
         totalRevenue: 18600000,
         commission: 2790000,
         commissionRate: 15,
         netPayout: 15810000,
         status: 'paid',
-        createdAt: new Date('2026-02-01'),
+        createdAt: monthsAgo(1),
     },
     {
         id: 'stl-2',
         hotelId: 'hotel-grand-hyatt',
         hotelName: 'Grand Hyatt Seoul',
-        period: 'February 2026',
+        period: monthLabel(1),
         totalBookings: 58,
         totalRevenue: 17400000,
         commission: 2610000,
         commissionRate: 15,
         netPayout: 14790000,
         status: 'approved',
-        createdAt: new Date('2026-03-01'),
+        createdAt: monthsAgo(0),
     },
     {
         id: 'stl-3',
-        hotelId: 'hotel-park-hyatt',
-        hotelName: 'Park Hyatt Busan',
-        period: 'February 2026',
+        hotelId: 'hotel-the-shilla',
+        hotelName: 'The Shilla Seoul',
+        period: monthLabel(1),
         totalBookings: 34,
         totalRevenue: 10200000,
         commission: 1530000,
         commissionRate: 15,
         netPayout: 8670000,
         status: 'pending_approval',
-        createdAt: new Date('2026-03-01'),
+        createdAt: monthsAgo(0),
     },
 ];
 
 // ----------------------------------------
-// Ops Dashboard Stats (demo)
+// Ops Dashboard Stats (demo) — realistic
 // ----------------------------------------
 export interface DemoOpsStats {
     totalHotels: number;
@@ -799,11 +874,11 @@ export interface DemoOpsStats {
 }
 
 export const DEMO_OPS_STATS: DemoOpsStats = {
-    totalHotels: 3,
+    totalHotels: 5,
     totalActiveSitters: 12,
-    totalBookingsThisMonth: 154,
-    totalRevenueThisMonth: 46200000,
-    avgSatisfaction: 4.8,
+    totalBookingsThisMonth: 47,
+    totalRevenueThisMonth: 8460000,
+    avgSatisfaction: 4.87,
     openIssues: 2,
     pendingSettlements: 2,
     slaCompliance: 97.5,
@@ -822,9 +897,11 @@ export interface DemoOpsHotel {
 }
 
 export const DEMO_OPS_HOTELS: DemoOpsHotel[] = [
-    { id: 'hotel-grand-hyatt', name: 'Grand Hyatt Seoul', tier: 'luxury', bookingsThisMonth: 62, revenue: 18600000, commission: 2790000 },
-    { id: 'hotel-park-hyatt', name: 'Park Hyatt Busan', tier: 'luxury', bookingsThisMonth: 34, revenue: 10200000, commission: 1530000 },
-    { id: 'hotel-four-seasons', name: 'Four Seasons Seoul', tier: 'premium', bookingsThisMonth: 58, revenue: 17400000, commission: 2610000 },
+    { id: 'hotel-grand-hyatt', name: 'Grand Hyatt Seoul', tier: 'luxury', bookingsThisMonth: 16, revenue: 2961000, commission: 444150 },
+    { id: 'hotel-the-shilla', name: 'The Shilla Seoul', tier: 'luxury', bookingsThisMonth: 12, revenue: 2115000, commission: 317250 },
+    { id: 'hotel-signiel', name: 'Signiel Seoul', tier: 'luxury', bookingsThisMonth: 9, revenue: 1692000, commission: 253800 },
+    { id: 'hotel-four-seasons', name: 'Four Seasons Seoul', tier: 'premium', bookingsThisMonth: 7, revenue: 1269000, commission: 190350 },
+    { id: 'hotel-park-hyatt', name: 'Park Hyatt Busan', tier: 'premium', bookingsThisMonth: 3, revenue: 423000, commission: 63450 },
 ];
 
 // ----------------------------------------
@@ -849,13 +926,20 @@ export interface DemoMonthlyChart {
     amount: number;
 }
 
+/** Monthly revenue chart — growth trend */
+function recentMonthLabel(monthsBack: number): string {
+    const d = new Date(now);
+    d.setMonth(d.getMonth() - monthsBack);
+    return d.toLocaleDateString('en-US', { month: 'short' });
+}
+
 export const DEMO_MONTHLY_CHART: DemoMonthlyChart[] = [
-    { month: 'Oct', amount: 2100000 },
-    { month: 'Nov', amount: 1950000 },
-    { month: 'Dec', amount: 2550000 },
-    { month: 'Jan', amount: 2400000 },
-    { month: 'Feb', amount: 2725000 },
-    { month: 'Mar', amount: 2725000 },
+    { month: recentMonthLabel(5), amount: 3200000 },
+    { month: recentMonthLabel(4), amount: 4800000 },
+    { month: recentMonthLabel(3), amount: 6200000 },
+    { month: recentMonthLabel(2), amount: 7500000 },
+    { month: recentMonthLabel(1), amount: 8400000 },
+    { month: recentMonthLabel(0), amount: 9000000 },
 ];
 
 export interface DemoRecentPayment {
@@ -868,10 +952,10 @@ export interface DemoRecentPayment {
 }
 
 export const DEMO_RECENT_PAYMENTS: DemoRecentPayment[] = [
-    { id: '1', date: formatShortDate(-2), hotel: 'Grand Hyatt Seoul', hours: 4, amount: 300000, status: 'paid' },
-    { id: '2', date: formatShortDate(-4), hotel: 'Grand Hyatt Seoul', hours: 3, amount: 225000, status: 'paid' },
-    { id: '3', date: formatShortDate(-7), hotel: 'Park Hyatt Busan', hours: 5, amount: 375000, status: 'paid' },
-    { id: '4', date: formatShortDate(-9), hotel: 'Grand Hyatt Seoul', hours: 4, amount: 300000, status: 'paid' },
+    { id: '1', date: formatShortDate(-1), hotel: 'Grand Hyatt Seoul', hours: 4, amount: 360000, status: 'paid' },
+    { id: '2', date: formatShortDate(-4), hotel: 'The Shilla Seoul', hours: 4, amount: 300000, status: 'paid' },
+    { id: '3', date: formatShortDate(-7), hotel: 'Grand Hyatt Seoul', hours: 4, amount: 360000, status: 'paid' },
+    { id: '4', date: formatShortDate(-9), hotel: 'Signiel Seoul', hours: 3, amount: 270000, status: 'paid' },
     { id: '5', date: formatShortDate(-11), hotel: 'Four Seasons Seoul', hours: 3, amount: 225000, status: 'pending' },
 ];
 
@@ -883,7 +967,9 @@ export interface DemoHotelBreakdown {
 }
 
 export const DEMO_HOTEL_BREAKDOWN: DemoHotelBreakdown[] = [
-    { hotel: 'Grand Hyatt Seoul', sessions: 9, amount: 1800000, percentage: 66 },
-    { hotel: 'Park Hyatt Busan', sessions: 3, amount: 600000, percentage: 22 },
-    { hotel: 'Four Seasons Seoul', sessions: 2, amount: 325000, percentage: 12 },
+    { hotel: 'Grand Hyatt Seoul', sessions: 9, amount: 2700000, percentage: 35 },
+    { hotel: 'The Shilla Seoul', sessions: 6, amount: 1800000, percentage: 25 },
+    { hotel: 'Signiel Seoul', sessions: 5, amount: 1350000, percentage: 20 },
+    { hotel: 'Four Seasons Seoul', sessions: 4, amount: 1125000, percentage: 15 },
+    { hotel: 'Park Hyatt Busan', sessions: 1, amount: 375000, percentage: 5 },
 ];

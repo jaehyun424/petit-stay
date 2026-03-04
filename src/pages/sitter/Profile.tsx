@@ -118,7 +118,7 @@ export default function Profile() {
             <Card variant="gold">
                 <CardBody>
                     <div className="profile-header">
-                        <Avatar name={profile.name} size="xl" variant="gold" />
+                        <Avatar src={profile.avatar} name={profile.name} size="xl" variant="gold" />
                         <div className="profile-info">
                             <h2>{profile.name}</h2>
                             <TierBadge tier={profile.tier} />

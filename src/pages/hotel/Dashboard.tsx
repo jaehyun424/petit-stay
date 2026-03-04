@@ -234,10 +234,11 @@ export default function Dashboard() {
                     <div className="booking-item-sitter">
                       {booking.sitter ? (
                         <>
-                          <Avatar name={booking.sitter.name} size="sm" variant={booking.sitter.tier === 'gold' ? 'gold' : 'default'} />
+                          <Avatar src={booking.sitter.avatar} name={booking.sitter.name} size="sm" variant={booking.sitter.tier === 'gold' ? 'gold' : 'default'} />
                           <div className="sitter-info">
                             <span className="sitter-name">{booking.sitter.name}</span>
                             <TierBadge tier={booking.sitter.tier} />
+                            {booking.sitter.hotelVerified && <Badge variant="success" size="sm">Hotel Verified</Badge>}
                           </div>
                         </>
                       ) : (
@@ -279,7 +280,7 @@ export default function Dashboard() {
                 activeSessions.map((session) => (
                   <div key={session.id} className="live-item">
                     <div className="live-item-header">
-                      <Avatar name={session.sitter.name} size="sm" variant={session.sitter.tier === 'gold' ? 'gold' : 'default'} />
+                      <Avatar src={session.sitter.avatar ?? undefined} name={session.sitter.name} size="sm" variant={session.sitter.tier === 'gold' ? 'gold' : 'default'} />
                       <div className="live-item-info">
                         <span className="live-item-name">{session.sitter.name}</span>
                         <span className="live-item-room">{t('common.room')} {session.room}</span>
