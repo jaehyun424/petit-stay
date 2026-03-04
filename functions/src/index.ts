@@ -19,6 +19,7 @@ import {
   getUserLocale,
   sendPaymentLinkSMS as sendPaymentLinkSMSService,
 } from "./notifications";
+import { app as apiApp } from "./api";
 
 // Stripe secret key (stored in Firebase secrets)
 const stripeSecretKey = defineSecret("STRIPE_SECRET_KEY");
@@ -1173,3 +1174,8 @@ export const sendPaymentLinkSMS = onCall(
     return { success: true };
   }
 );
+
+// ----------------------------------------
+// OTA/PMS REST API (Express)
+// ----------------------------------------
+export const api = onRequest(apiApp);
