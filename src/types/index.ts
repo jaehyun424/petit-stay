@@ -701,6 +701,25 @@ export interface ApiError {
 }
 
 // ----------------------------------------
+// API Key Types (for OTA/PMS integration)
+// ----------------------------------------
+export type ApiKeyPermission = 'bookings:read' | 'bookings:write' | 'hotels:read' | 'availability:read' | 'webhooks:receive';
+
+export interface ApiKey {
+  id: string;
+  key: string;
+  hotelId: string;
+  secret: string;
+  name: string;
+  permissions: ApiKeyPermission[];
+  rateLimit: number;
+  active: boolean;
+  createdAt: Date;
+  updatedAt?: Date;
+  lastUsedAt?: Date;
+}
+
+// ----------------------------------------
 // Form & UI Types
 // ----------------------------------------
 export interface SelectOption {
