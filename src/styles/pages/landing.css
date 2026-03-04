@@ -155,6 +155,108 @@
   color: var(--text-secondary);
 }
 
+/* Solutions Dropdown (Desktop) */
+.landing-nav-dropdown-wrap {
+  position: relative;
+}
+
+.landing-nav-dropdown-trigger {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  background: none;
+  border: none;
+  color: rgba(255, 255, 255, 0.8);
+  font-family: var(--font-action);
+  font-size: 0.875rem;
+  letter-spacing: 0.03em;
+  cursor: pointer;
+  transition: color 0.2s;
+  padding: 0;
+}
+
+.landing-nav-dropdown-trigger:hover {
+  color: white;
+}
+
+.landing-nav-scrolled .landing-nav-dropdown-trigger {
+  color: var(--text-secondary);
+}
+
+.landing-nav-scrolled .landing-nav-dropdown-trigger:hover {
+  color: var(--text-primary);
+}
+
+.landing-nav-dropdown {
+  position: absolute;
+  top: calc(100% + 12px);
+  left: 50%;
+  transform: translateX(-50%);
+  min-width: 180px;
+  background: white;
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-lg);
+  border: 1px solid rgba(0, 0, 0, 0.06);
+  padding: 0.5rem 0;
+  z-index: 200;
+}
+
+[data-theme="dark"] .landing-nav-dropdown {
+  background: var(--bg-card);
+  border-color: var(--border-color);
+}
+
+.landing-nav-dropdown a {
+  display: block;
+  padding: 0.625rem 1.25rem;
+  font-family: var(--font-action);
+  font-size: 0.875rem;
+  color: var(--text-secondary);
+  text-decoration: none;
+  transition: all 0.15s;
+}
+
+.landing-nav-dropdown a:hover {
+  background: var(--cream-100);
+  color: var(--text-primary);
+}
+
+[data-theme="dark"] .landing-nav-dropdown a:hover {
+  background: var(--glass-hover);
+}
+
+/* Mobile solutions sub-menu */
+.landing-nav-mobile-solutions {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  padding-left: 1rem;
+}
+
+.landing-nav-mobile-solutions-label {
+  font-family: var(--font-action);
+  font-size: 0.75rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: rgba(255, 255, 255, 0.4);
+}
+
+.landing-nav-scrolled .landing-nav-mobile-solutions-label {
+  color: var(--text-tertiary);
+}
+
+.landing-nav-mobile-solutions a {
+  font-family: var(--font-action);
+  font-size: 0.9375rem;
+  color: rgba(255, 255, 255, 0.8);
+  text-decoration: none;
+  padding: 0.25rem 0;
+}
+
+.landing-nav-scrolled .landing-nav-mobile-solutions a {
+  color: var(--text-secondary);
+}
+
 @media (min-width: 768px) {
   .landing-nav-links { display: flex; }
   .landing-nav-mobile-toggle { display: none; }
@@ -474,6 +576,7 @@
   display: grid;
   grid-template-columns: 1fr;
   gap: 2rem;
+  align-items: stretch;
 }
 
 @media (min-width: 640px) {
@@ -488,6 +591,9 @@
   border: 1px solid var(--border-color);
   transition: all 0.3s;
   position: relative;
+  display: flex;
+  flex-direction: column;
+  height: 100%;
 }
 
 .step-card:hover {

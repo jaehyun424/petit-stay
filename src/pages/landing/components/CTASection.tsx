@@ -33,11 +33,11 @@ export function CTASection() {
         </ScrollReveal>
         <ScrollReveal delay={0.3}>
           <div className="cta-actions">
-            <Link to="/register" className="hero-btn-primary">
+            <Link to="/solutions/hotels" className="hero-btn-primary">
               {t('landing.ctaPartnerBtn')}
               <ArrowRight size={18} />
             </Link>
-            <Link to="/register" className="hero-btn-secondary">
+            <Link to="/solutions/families" className="hero-btn-secondary">
               {t('landing.ctaFamilyBtn')}
             </Link>
           </div>

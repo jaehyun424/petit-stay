@@ -3,9 +3,9 @@ import { ScrollReveal } from './ScrollReveal';
 import { ShieldCheck, Baby, Monitor } from 'lucide-react';
 
 const FEATURE_IMAGES = [
-  'https://images.pexels.com/photos/3662667/pexels-photo-3662667.jpeg?auto=compress&cs=tinysrgb&w=800',
-  'https://images.pexels.com/photos/271624/pexels-photo-271624.jpeg?auto=compress&cs=tinysrgb&w=800',
-  'https://images.pexels.com/photos/4145354/pexels-photo-4145354.jpeg?auto=compress&cs=tinysrgb&w=800',
+  'https://images.pexels.com/photos/3807517/pexels-photo-3807517.jpeg?auto=compress&cs=tinysrgb&w=800',
+  'https://images.pexels.com/photos/8363093/pexels-photo-8363093.jpeg?auto=compress&cs=tinysrgb&w=800',
+  'https://images.pexels.com/photos/3760790/pexels-photo-3760790.jpeg?auto=compress&cs=tinysrgb&w=800',
 ];
 
 const features = [

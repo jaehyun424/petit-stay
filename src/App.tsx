@@ -75,6 +75,11 @@ const HelpCenterPage = lazy(() => import('./pages/info/HelpCenterPage'));
 const PrivacyPage = lazy(() => import('./pages/info/PrivacyPage'));
 const TermsPage = lazy(() => import('./pages/info/TermsPage'));
 
+// Solutions Pages
+const ForHotelsPage = lazy(() => import('./pages/solutions/ForHotelsPage'));
+const ForFamiliesPage = lazy(() => import('./pages/solutions/ForFamiliesPage'));
+const ForSpecialistsPage = lazy(() => import('./pages/solutions/ForSpecialistsPage'));
+
 // 404
 const NotFound = lazy(() => import('./pages/NotFound'));
 
@@ -210,6 +215,11 @@ function AppRoutes() {
           <Route path="issues" element={<OpsIssues />} />
           <Route path="reports" element={<OpsReports />} />
         </Route>
+
+        {/* Solutions Pages */}
+        <Route path="/solutions/hotels" element={<ForHotelsPage />} />
+        <Route path="/solutions/families" element={<ForFamiliesPage />} />
+        <Route path="/solutions/specialists" element={<ForSpecialistsPage />} />
 
         {/* Info Pages */}
         <Route path="/about" element={<AboutPage />} />

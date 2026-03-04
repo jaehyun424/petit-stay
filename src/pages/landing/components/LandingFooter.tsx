@@ -17,10 +17,10 @@ export function LandingFooter() {
 
         <div className="landing-footer-links">
           <div className="landing-footer-col">
-            <h4>{t('landing.footerProduct')}</h4>
-            <Link to="/register">{t('landing.footerForHotels')}</Link>
-            <Link to="/register">{t('landing.footerForFamilies')}</Link>
-            <Link to="/register">{t('landing.footerForSitters')}</Link>
+            <h4>{t('solutions.navSolutions')}</h4>
+            <Link to="/solutions/hotels">{t('solutions.navForHotels')}</Link>
+            <Link to="/solutions/families">{t('solutions.navForFamilies')}</Link>
+            <Link to="/solutions/specialists">{t('solutions.navForSpecialists')}</Link>
           </div>
           <div className="landing-footer-col">
             <h4>{t('landing.footerCompany')}</h4>
@@ -38,7 +38,7 @@ export function LandingFooter() {
       </div>
 
       <div className="landing-footer-bottom">
-        <p>&copy; 2026 Petit Stay. {t('landing.footerCopyright')}</p>
+        <p>&copy; 2026 Petit Stay Inc. Tokyo &middot; Seoul</p>
       </div>
     </footer>
   );
