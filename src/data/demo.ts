@@ -9,12 +9,12 @@ import type { DashboardStats } from '../types';
 // Hotel Dashboard Stats
 // ----------------------------------------
 export const DEMO_DASHBOARD_STATS: DashboardStats = {
-    todayBookings: 12,
+    todayBookings: 5,
     activeNow: 3,
-    completedToday: 8,
-    todayRevenue: 4850000,
+    completedToday: 2,
+    todayRevenue: 1680000,
     safetyDays: 127,
-    pendingBookings: 4,
+    pendingBookings: 1,
 };
 
 // ----------------------------------------
@@ -396,8 +396,8 @@ export interface DemoSitterSession {
 }
 
 export const DEMO_TODAY_SESSIONS: DemoSitterSession[] = [
-    { id: '1', time: '19:00 - 23:00', room: '1102', hotel: 'Grand Hyatt', children: ['Sota (3)', 'Yui (6)'], status: 'confirmed' },
-    { id: '2', time: '20:00 - 24:00', room: '3501', hotel: 'Grand Hyatt', children: ['Lucas (4)'], status: 'pending' },
+    { id: '1', time: '19:00 - 23:00', room: '1102', hotel: 'Grand Hyatt Seoul', children: ['Sota (3)', 'Yui (6)'], status: 'confirmed' },
+    { id: '2', time: '20:00 - 24:00', room: '3501', hotel: 'Grand Hyatt Seoul', children: ['Lucas (4)'], status: 'pending' },
 ];
 
 export interface DemoWeekDay {
@@ -798,4 +798,65 @@ export const DEMO_OPS_HOTELS: DemoOpsHotel[] = [
     { id: 'hotel-grand-hyatt', name: 'Grand Hyatt Seoul', tier: 'luxury', bookingsThisMonth: 62, revenue: 18600000, commission: 2790000 },
     { id: 'hotel-park-hyatt', name: 'Park Hyatt Busan', tier: 'luxury', bookingsThisMonth: 34, revenue: 10200000, commission: 1530000 },
     { id: 'hotel-four-seasons', name: 'Four Seasons Seoul', tier: 'premium', bookingsThisMonth: 58, revenue: 17400000, commission: 2610000 },
+];
+
+// ----------------------------------------
+// Sitter Earnings (used by Sitter Earnings)
+// ----------------------------------------
+export interface DemoEarnings {
+    thisMonth: number;
+    lastMonth: number;
+    pending: number;
+    totalSessions: number;
+}
+
+export const DEMO_EARNINGS: DemoEarnings = {
+    thisMonth: 2450000,
+    lastMonth: 2180000,
+    pending: 350000,
+    totalSessions: 14,
+};
+
+export interface DemoMonthlyChart {
+    month: string;
+    amount: number;
+}
+
+export const DEMO_MONTHLY_CHART: DemoMonthlyChart[] = [
+    { month: 'Sep', amount: 1800000 },
+    { month: 'Oct', amount: 2100000 },
+    { month: 'Nov', amount: 1950000 },
+    { month: 'Dec', amount: 2400000 },
+    { month: 'Jan', amount: 2180000 },
+    { month: 'Feb', amount: 2450000 },
+];
+
+export interface DemoRecentPayment {
+    id: string;
+    date: string;
+    hotel: string;
+    hours: number;
+    amount: number;
+    status: 'paid' | 'pending';
+}
+
+export const DEMO_RECENT_PAYMENTS: DemoRecentPayment[] = [
+    { id: '1', date: 'Feb 10', hotel: 'Grand Hyatt Seoul', hours: 4, amount: 280000, status: 'paid' },
+    { id: '2', date: 'Feb 8', hotel: 'Grand Hyatt Seoul', hours: 3, amount: 210000, status: 'paid' },
+    { id: '3', date: 'Feb 5', hotel: 'Park Hyatt Busan', hours: 5, amount: 350000, status: 'paid' },
+    { id: '4', date: 'Feb 3', hotel: 'Grand Hyatt Seoul', hours: 4, amount: 280000, status: 'paid' },
+    { id: '5', date: 'Feb 1', hotel: 'Four Seasons Seoul', hours: 3, amount: 225000, status: 'pending' },
+];
+
+export interface DemoHotelBreakdown {
+    hotel: string;
+    sessions: number;
+    amount: number;
+    percentage: number;
+}
+
+export const DEMO_HOTEL_BREAKDOWN: DemoHotelBreakdown[] = [
+    { hotel: 'Grand Hyatt Seoul', sessions: 9, amount: 1680000, percentage: 69 },
+    { hotel: 'Park Hyatt Busan', sessions: 3, amount: 525000, percentage: 21 },
+    { hotel: 'Four Seasons Seoul', sessions: 2, amount: 245000, percentage: 10 },
 ];

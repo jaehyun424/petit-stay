@@ -169,16 +169,17 @@ export default function Reports() {
     }, [sitters]);
 
     // Format helpers
-    const formatCurrency = (amount: number) => `\u20A9${amount.toLocaleString()}`;
+    const formatCurrency = (amount: number) =>
+        new Intl.NumberFormat('ko-KR', { style: 'currency', currency: 'KRW', maximumFractionDigits: 0 }).format(amount);
 
     const formatCompact = (amount: number) => {
         if (amount >= 1000000) {
-            return `\u20A9${(amount / 1000000).toFixed(1)}M`;
+            return `${formatCurrency(Math.round(amount / 1000000))}M`;
         }
         if (amount >= 1000) {
-            return `\u20A9${(amount / 1000).toFixed(0)}K`;
+            return `${formatCurrency(Math.round(amount / 1000))}K`;
         }
-        return `\u20A9${amount.toLocaleString()}`;
+        return formatCurrency(amount);
     };
 
     // Export handler — real CSV download

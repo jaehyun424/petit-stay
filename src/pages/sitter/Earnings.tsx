@@ -11,58 +11,23 @@ import { Button } from '../../components/common/Button';
 import { Badge } from '../../components/common/Badge';
 import { Skeleton } from '../../components/common/Skeleton';
 import '../../styles/pages/sitter-earnings.css';
-
-// ----------------------------------------
-// Demo Data
-// ----------------------------------------
-const DEMO_EARNINGS = {
-    thisMonth: 2450000,
-    lastMonth: 2180000,
-    pending: 350000,
-    totalSessions: 14,
-};
-
-const DEMO_MONTHLY_CHART = [
-    { month: 'Sep', amount: 1800000 },
-    { month: 'Oct', amount: 2100000 },
-    { month: 'Nov', amount: 1950000 },
-    { month: 'Dec', amount: 2400000 },
-    { month: 'Jan', amount: 2180000 },
-    { month: 'Feb', amount: 2450000 },
-];
-
-const DEMO_RECENT_PAYMENTS: Payment[] = [
-    { id: '1', date: 'Feb 10', hotel: 'Grand Hyatt Seoul', hours: 4, amount: 280000, status: 'paid' },
-    { id: '2', date: 'Feb 8', hotel: 'Grand Hyatt Seoul', hours: 3, amount: 210000, status: 'paid' },
-    { id: '3', date: 'Feb 5', hotel: 'Park Hyatt Busan', hours: 5, amount: 350000, status: 'paid' },
-    { id: '4', date: 'Feb 3', hotel: 'Grand Hyatt Seoul', hours: 4, amount: 280000, status: 'paid' },
-    { id: '5', date: 'Feb 1', hotel: 'Four Seasons Seoul', hours: 3, amount: 225000, status: 'pending' },
-];
-
-const DEMO_HOTEL_BREAKDOWN = [
-    { hotel: 'Grand Hyatt Seoul', sessions: 9, amount: 1680000, percentage: 69 },
-    { hotel: 'Park Hyatt Busan', sessions: 3, amount: 525000, percentage: 21 },
-    { hotel: 'Four Seasons Seoul', sessions: 2, amount: 245000, percentage: 10 },
-];
+import {
+    DEMO_EARNINGS,
+    DEMO_MONTHLY_CHART,
+    DEMO_RECENT_PAYMENTS,
+    DEMO_HOTEL_BREAKDOWN,
+} from '../../data/demo';
 
 // ----------------------------------------
 // Types
 // ----------------------------------------
 type PeriodFilter = 'this_month' | 'last_3_months' | 'all_time';
 
-interface Payment {
-    id: string;
-    date: string;
-    hotel: string;
-    hours: number;
-    amount: number;
-    status: 'paid' | 'pending';
-}
-
 // ----------------------------------------
 // Helpers
 // ----------------------------------------
-const formatCurrency = (amount: number) => `₩${amount.toLocaleString()}`;
+const formatCurrency = (amount: number) =>
+    new Intl.NumberFormat('ko-KR', { style: 'currency', currency: 'KRW', maximumFractionDigits: 0 }).format(amount);
 
 const growthPercent = (current: number, previous: number) =>
     Math.round(((current - previous) / previous) * 100);

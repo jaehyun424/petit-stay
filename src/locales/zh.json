@@ -146,7 +146,7 @@
         "requestFailed": "请求失败",
         "footerText": "Petit Stay. 东京 · 首尔 · 新加坡.",
         "tagline": "高端酒店儿童托管基础设施",
-        "copyright": "\u00a9 2025 Petit Stay. All rights reserved."
+        "copyright": "\u00a9 2026 Petit Stay. All rights reserved."
     },
     "nav": {
         "home": "首页",
@@ -574,7 +574,7 @@
         "namePlaceholder": "例：张明",
         "languagesPlaceholder": "例：中文、英语",
         "certificationsPlaceholder": "例：CPR、急救",
-        "hourlyRateKRW": "时薪 (CNY)",
+        "hourlyRateKRW": "时薪 (KRW)",
         "ratePlaceholder": "例：150",
         "addSitter": "添加看护人",
         "sitterRating": "评分：",
