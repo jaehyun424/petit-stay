@@ -655,8 +655,62 @@
 }
 
 /* ----------------------------------------
-   Responsive
+   Mobile Touch Targets & Responsive
    ---------------------------------------- */
+@media (max-width: 380px) {
+  .guest-container {
+    padding: 0.5rem 0;
+  }
+
+  .guest-title {
+    font-size: var(--text-xl);
+  }
+
+  .guest-card {
+    padding: 1rem;
+    border-radius: var(--radius-lg);
+  }
+
+  .guest-step-label {
+    font-size: 9px;
+    max-width: 48px;
+  }
+
+  .guest-step-circle {
+    width: 28px;
+    height: 28px;
+    font-size: 11px;
+  }
+
+  .guest-step-connector {
+    margin-top: 13px;
+    min-width: 12px;
+  }
+}
+
+/* Ensure all interactive elements meet 44x44px touch target */
+.guest-btn {
+  min-height: 44px;
+}
+
+.guest-consent-btn {
+  min-height: 48px;
+}
+
+.guest-input,
+.guest-textarea {
+  min-height: 44px;
+  font-size: 16px; /* Prevents iOS zoom on focus */
+}
+
+/* Safe area insets for notched devices */
+.guest-page {
+  padding-top: max(1rem, env(safe-area-inset-top));
+  padding-bottom: max(1rem, env(safe-area-inset-bottom));
+  padding-left: max(1rem, env(safe-area-inset-left));
+  padding-right: max(1rem, env(safe-area-inset-right));
+}
+
 @media (min-width: 640px) {
   .guest-page {
     padding: 2rem;
