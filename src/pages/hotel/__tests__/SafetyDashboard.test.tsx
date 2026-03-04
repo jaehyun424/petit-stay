@@ -47,6 +47,14 @@ vi.mock('../../../hooks/useHotel', () => ({
     }),
 }));
 
+vi.mock('../../../hooks/useAuditLog', () => ({
+    useAllAuditLogs: () => ({
+        entries: [],
+        isLoading: false,
+        error: null,
+    }),
+}));
+
 import { render, screen } from '../../../test/utils';
 import SafetyDashboard from '../SafetyDashboard';
 
