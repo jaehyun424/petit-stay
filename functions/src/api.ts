@@ -3,8 +3,9 @@
 // Express-based API router for external integrations
 // ============================================
 
-import express, { Request, Response, NextFunction } from "express";
-import cors from "cors";
+import * as express from "express";
+import { Request, Response, NextFunction } from "express";
+import * as cors from "cors";
 import * as crypto from "crypto";
 import { getFirestore, FieldValue } from "firebase-admin/firestore";
 
