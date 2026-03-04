@@ -51,6 +51,7 @@ const SitterSchedule = lazy(() => import('./pages/sitter/Schedule'));
 const SitterActiveSession = lazy(() => import('./pages/sitter/ActiveSession'));
 const SitterEarnings = lazy(() => import('./pages/sitter/Earnings'));
 const SitterProfile = lazy(() => import('./pages/sitter/Profile'));
+const SitterOnboarding = lazy(() => import('./pages/sitter/Onboarding'));
 
 // Guest (no auth required)
 const GuestPage = lazy(() => import('./pages/guest/GuestPage'));
@@ -192,6 +193,7 @@ function AppRoutes() {
           <Route path="active" element={<SitterActiveSession />} />
           <Route path="earnings" element={<SitterEarnings />} />
           <Route path="profile" element={<SitterProfile />} />
+          <Route path="onboarding" element={<SitterOnboarding />} />
           <Route path="notifications" element={<NotificationInbox />} />
         </Route>
 
