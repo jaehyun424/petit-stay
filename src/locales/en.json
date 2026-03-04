@@ -225,7 +225,13 @@
     "reviewSubmitted": "Review Submitted",
     "thankYouFeedback": "Thank you for your feedback!",
     "noBookingsYet": "No bookings yet",
-    "noRatingsYet": "No ratings yet"
+    "noRatingsYet": "No ratings yet",
+    "noActiveSession": "No active session",
+    "noActiveSessionDesc": "There is no active care session at the moment.",
+    "sessionHotel": "Josun Palace Seoul",
+    "sessionRoom": "Suite 1201",
+    "startedAt": "Started",
+    "sessionStartTime": "6:00 PM"
   },
   "booking": {
     "newBooking": "New Booking",
@@ -388,7 +394,11 @@
     "checkInComplete": "Check-in Complete",
     "sessionStarted": "Care session has officially started.",
     "checkInFailed": "Check-in Failed",
-    "pleaseRetry": "Please try again."
+    "pleaseRetry": "Please try again.",
+    "step1Label": "Medical",
+    "step2Label": "Emergency",
+    "step3Label": "Consent",
+    "fillAllFields": "Please fill in all required fields."
   },
   "status": {
     "pending": "Pending",
@@ -664,7 +674,9 @@
     "timeLabel": "Time",
     "noBooking": "No booking found to generate a QR code.",
     "noActiveBooking": "No active booking",
-    "goBack": "Go Back"
+    "goBack": "Go Back",
+    "codeCopied": "Code Copied",
+    "copyCode": "Copy booking code"
   },
   "profile": {
     "identityVerification": "Identity Verification",

@@ -225,7 +225,13 @@
     "reviewSubmitted": "评价已提交",
     "thankYouFeedback": "感谢您的反馈！",
     "noBookingsYet": "暂无预约",
-    "noRatingsYet": "暂无评分"
+    "noRatingsYet": "暂无评分",
+    "noActiveSession": "无活跃会话",
+    "noActiveSessionDesc": "目前没有进行中的看护会话。",
+    "sessionHotel": "朝鲜宫殿首尔",
+    "sessionRoom": "套房1201",
+    "startedAt": "开始",
+    "sessionStartTime": "下午6:00"
   },
   "booking": {
     "newBooking": "新建预约",
@@ -388,7 +394,11 @@
     "checkInComplete": "签到完成",
     "sessionStarted": "看护服务已正式开始。",
     "checkInFailed": "签到失败",
-    "pleaseRetry": "请重试。"
+    "pleaseRetry": "请重试。",
+    "step1Label": "健康",
+    "step2Label": "紧急联系",
+    "step3Label": "同意",
+    "fillAllFields": "请填写所有必填项。"
   },
   "status": {
     "pending": "待处理",
@@ -664,7 +674,9 @@
     "timeLabel": "时间",
     "noBooking": "没有可生成QR码的预约。",
     "noActiveBooking": "无活跃预约",
-    "goBack": "返回"
+    "goBack": "返回",
+    "codeCopied": "代码已复制",
+    "copyCode": "复制预约代码"
   },
   "profile": {
     "identityVerification": "身份验证",

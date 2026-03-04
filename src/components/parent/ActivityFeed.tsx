@@ -1,5 +1,6 @@
 
 import { useTranslation } from 'react-i18next';
+import { Palette, Utensils, Moon, FileText, Camera } from 'lucide-react';
 import { Card, CardBody } from '../common/Card';
 
 export interface ActivityLog {
@@ -13,6 +14,14 @@ export interface ActivityLog {
         subtext?: string;
     };
 }
+
+const TYPE_ICON: Record<string, typeof Palette> = {
+    status: Palette,
+    meal: Utensils,
+    nap: Moon,
+    checkin: FileText,
+    photo: Camera,
+};
 
 interface ActivityFeedProps {
     logs: ActivityLog[];
@@ -32,56 +41,61 @@ export function ActivityFeed({ logs, className = '' }: ActivityFeedProps) {
 
     return (
         <div className={`activity-feed ${className}`}>
-            {logs.map((log, index) => (
-                <div key={log.id} className="feed-item">
-                    {/* Time Column */}
-                    <div className="feed-time">
-                        <span className="time-text">
-                            {log.timestamp.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}
-                        </span>
-                    </div>
+            {logs.map((log, index) => {
+                const Icon = TYPE_ICON[log.type] || FileText;
+                return (
+                    <div key={log.id} className="feed-item">
+                        {/* Time Column */}
+                        <div className="feed-time">
+                            <span className="time-text">
+                                {log.timestamp.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}
+                            </span>
+                        </div>
 
-                    {/* Timeline Line/Node */}
-                    <div className="feed-timeline">
-                        <div className={`timeline-node node-${log.type}`} />
-                        {index !== logs.length - 1 && <div className="timeline-line" />}
-                    </div>
+                        {/* Timeline Line/Node */}
+                        <div className="feed-timeline">
+                            <div className={`timeline-node node-${log.type}`}>
+                                <Icon size={10} strokeWidth={2} />
+                            </div>
+                            {index !== logs.length - 1 && <div className="timeline-line" />}
+                        </div>
 
-                    {/* Content Card */}
-                    <div className="feed-content">
-                        {log.type === 'photo' && log.metadata?.photoUrl ? (
-                            <Card className="mb-4 overflow-hidden" padding="none">
-                                <img
-                                    src={log.metadata.photoUrl}
-                                    alt={t('activityFeed.activityUpdate')}
-                                    className="w-full h-48 object-cover"
-                                />
-                                <div className="p-3 bg-white">
-                                    <p className="text-charcoal-900 font-medium text-sm">{log.content}</p>
-                                </div>
-                            </Card>
-                        ) : (
-                            <Card className="mb-4" padding="sm">
-                                <CardBody>
-                                    <div className="flex justify-between items-start">
-                                        <div>
-                                            <p className="text-charcoal-900 font-medium text-sm">{log.content}</p>
-                                            {log.metadata?.subtext && (
-                                                <p className="text-charcoal-500 text-xs mt-1">{log.metadata.subtext}</p>
+                        {/* Content Card */}
+                        <div className="feed-content">
+                            {log.type === 'photo' && log.metadata?.photoUrl ? (
+                                <Card className="mb-4 overflow-hidden" padding="none">
+                                    <img
+                                        src={log.metadata.photoUrl}
+                                        alt={t('activityFeed.activityUpdate')}
+                                        className="w-full h-48 object-cover"
+                                    />
+                                    <div className="p-3 bg-white">
+                                        <p className="text-charcoal-900 font-medium text-sm">{log.content}</p>
+                                    </div>
+                                </Card>
+                            ) : (
+                                <Card className="mb-4" padding="sm">
+                                    <CardBody>
+                                        <div className="flex justify-between items-start">
+                                            <div>
+                                                <p className="text-charcoal-900 font-medium text-sm">{log.content}</p>
+                                                {log.metadata?.subtext && (
+                                                    <p className="text-charcoal-500 text-xs mt-1">{log.metadata.subtext}</p>
+                                                )}
+                                            </div>
+                                            {log.metadata?.mood && (
+                                                <span className="text-xl" role="img" aria-label="mood">
+                                                    {log.metadata.mood}
+                                                </span>
                                             )}
                                         </div>
-                                        {log.metadata?.mood && (
-                                            <span className="text-xl" role="img" aria-label="mood">
-                                                {log.metadata.mood}
-                                            </span>
-                                        )}
-                                    </div>
-                                </CardBody>
-                            </Card>
-                        )}
+                                    </CardBody>
+                                </Card>
+                            )}
+                        </div>
                     </div>
-                </div>
-            ))}
+                );
+            })}
 
             <style>{`
                 .activity-feed {
@@ -118,24 +132,29 @@ export function ActivityFeed({ logs, className = '' }: ActivityFeedProps) {
                 }
 
                 .timeline-node {
-                    width: 12px;
-                    height: 12px;
+                    width: 22px;
+                    height: 22px;
                     border-radius: 50%;
                     background: white;
                     border: 2px solid var(--charcoal-300);
                     z-index: 2;
                     margin-top: 0.25rem;
+                    display: flex;
+                    align-items: center;
+                    justify-content: center;
+                    color: var(--charcoal-500);
                 }
 
-                .node-photo { border-color: var(--gold-500); background: var(--gold-500); }
-                .node-meal { border-color: #10B981; } /* Emerald */
-                .node-nap { border-color: #8B5CF6; } /* Violet */
-                .node-incident { border-color: #EF4444; } /* Red */
-                .node-checkin { border-color: var(--charcoal-900); background: var(--charcoal-900); }
+                .node-photo { border-color: var(--gold-500); background: var(--gold-500); color: white; }
+                .node-meal { border-color: #10B981; color: #10B981; }
+                .node-nap { border-color: #8B5CF6; color: #8B5CF6; }
+                .node-incident { border-color: #EF4444; color: #EF4444; }
+                .node-checkin { border-color: var(--charcoal-900); background: var(--charcoal-900); color: white; }
+                .node-status { border-color: var(--gold-400); color: var(--gold-500); }
 
                 .timeline-line {
                     position: absolute;
-                    top: 1rem;
+                    top: 1.5rem;
                     bottom: -1rem; /* Connect to next node */
                     width: 1px;
                     background: var(--cream-300);

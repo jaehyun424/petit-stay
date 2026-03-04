@@ -90,6 +90,45 @@
   color: var(--success-600);
 }
 
+/* Session Info Card */
+.session-info-card {
+  margin-bottom: var(--space-4);
+}
+
+.session-info-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: var(--space-3);
+  padding: var(--space-2) 0;
+}
+
+.session-info-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--space-1);
+  text-align: center;
+  color: var(--charcoal-500);
+}
+
+.session-info-label {
+  font-size: var(--text-xs);
+  color: var(--charcoal-400);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+.session-info-value {
+  font-size: var(--text-sm);
+  font-weight: var(--font-semibold);
+  color: var(--charcoal-900);
+}
+
+.emergency-call-link {
+  display: block;
+  text-decoration: none;
+}
+
 /* Sitter Profile Mini */
 .sitter-profile-card {
   margin-bottom: var(--space-6);

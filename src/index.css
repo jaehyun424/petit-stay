@@ -1439,6 +1439,9 @@ p {
 .qr-detail-row { display: flex; justify-content: space-between; align-items: center; font-size: var(--text-sm); }
 .qr-detail-label { color: var(--text-tertiary); text-transform: uppercase; font-size: var(--text-xs); letter-spacing: 0.05em; font-weight: var(--font-medium); }
 .qr-detail-value { font-weight: var(--font-semibold); }
+.qr-detail-copyable { display: flex; align-items: center; gap: var(--space-2); }
+.qr-copy-btn { background: none; border: 1px solid var(--cream-300); border-radius: var(--radius-md); padding: 0.25rem; cursor: pointer; color: var(--charcoal-500); transition: all 0.2s; display: flex; align-items: center; justify-content: center; min-width: 28px; min-height: 28px; }
+.qr-copy-btn:hover { color: var(--gold-500); border-color: var(--gold-400); }
 .qr-back-link { text-decoration: none; }
 .qr-empty { text-align: center; padding: var(--space-8); }
 .qr-empty-icon { font-size: 3rem; display: block; margin-bottom: var(--space-4); }

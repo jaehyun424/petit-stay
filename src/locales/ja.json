@@ -225,7 +225,13 @@
     "reviewSubmitted": "レビュー送信済み",
     "thankYouFeedback": "フィードバックありがとうございます！",
     "noBookingsYet": "まだ予約がありません",
-    "noRatingsYet": "まだ評価がありません"
+    "noRatingsYet": "まだ評価がありません",
+    "noActiveSession": "アクティブなセッションなし",
+    "noActiveSessionDesc": "現在進行中のケアセッションはありません。",
+    "sessionHotel": "ジョソンパレスソウル",
+    "sessionRoom": "スイート1201",
+    "startedAt": "開始",
+    "sessionStartTime": "午後6:00"
   },
   "booking": {
     "newBooking": "新規予約",
@@ -388,7 +394,11 @@
     "checkInComplete": "チェックイン完了",
     "sessionStarted": "ケアセッションが正式に開始されました。",
     "checkInFailed": "チェックイン失敗",
-    "pleaseRetry": "もう一度お試しください。"
+    "pleaseRetry": "もう一度お試しください。",
+    "step1Label": "健康",
+    "step2Label": "緊急連絡",
+    "step3Label": "同意",
+    "fillAllFields": "すべての必須項目を入力してください。"
   },
   "status": {
     "pending": "保留中",
@@ -664,7 +674,9 @@
     "timeLabel": "時間",
     "noBooking": "QRコードを生成する予約がありません。",
     "noActiveBooking": "アクティブな予約なし",
-    "goBack": "戻る"
+    "goBack": "戻る",
+    "codeCopied": "コードをコピーしました",
+    "copyCode": "予約コードをコピー"
   },
   "profile": {
     "identityVerification": "本人確認",

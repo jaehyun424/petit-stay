@@ -3,11 +3,12 @@
 import { useState } from 'react';
 import { useParams, Link } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
-import { MessageCircle } from 'lucide-react';
+import { MessageCircle, Building2, DoorOpen, Clock } from 'lucide-react';
 import { Card } from '../../components/common/Card';
 import { Button, IconButton } from '../../components/common/Button';
 import { Avatar } from '../../components/common/Avatar';
 import { TierBadge } from '../../components/common/Badge';
+import { EmptyState } from '../../components/common/EmptyState';
 import { ActivityFeed } from '../../components/parent/ActivityFeed';
 import type { ActivityLog } from '../../components/parent/ActivityFeed';
 import { ChatPanel } from '../../components/common/ChatPanel';
@@ -19,8 +20,22 @@ export default function LiveStatus() {
     const { id } = useParams();
     const { t } = useTranslation();
     useAuth();
-    const { logs, sessionInfo } = useLiveStatus(id);
+    const { logs, sessionInfo, isLoading } = useLiveStatus(id);
     const [chatOpen, setChatOpen] = useState(false);
+
+    if (!isLoading && !id && logs.length === 0) {
+        return (
+            <div className="live-status-page">
+                <div className="live-status-container">
+                    <EmptyState
+                        icon={<Clock size={20} strokeWidth={1.75} />}
+                        title={t('parent.noActiveSession')}
+                        description={t('parent.noActiveSessionDesc')}
+                    />
+                </div>
+            </div>
+        );
+    }
 
     return (
         <div className="live-status-page">
@@ -46,6 +61,27 @@ export default function LiveStatus() {
                         <span className="status-elapsed" aria-live="polite">{sessionInfo.elapsedTime}</span>
                     </div>
                 </div>
+
+                {/* Session Info */}
+                <Card className="session-info-card" padding="sm">
+                    <div className="session-info-grid">
+                        <div className="session-info-item">
+                            <Building2 size={14} strokeWidth={1.75} />
+                            <span className="session-info-label">{t('qr.hotelLabel')}</span>
+                            <span className="session-info-value">{t('parent.sessionHotel')}</span>
+                        </div>
+                        <div className="session-info-item">
+                            <DoorOpen size={14} strokeWidth={1.75} />
+                            <span className="session-info-label">{t('qr.roomLabel')}</span>
+                            <span className="session-info-value">{t('parent.sessionRoom')}</span>
+                        </div>
+                        <div className="session-info-item">
+                            <Clock size={14} strokeWidth={1.75} />
+                            <span className="session-info-label">{t('parent.startedAt')}</span>
+                            <span className="session-info-value">{t('parent.sessionStartTime')}</span>
+                        </div>
+                    </div>
+                </Card>
 
                 {/* Sitter Profile (Mini) */}
                 <Card className="sitter-profile-card" padding="sm">
@@ -81,13 +117,14 @@ export default function LiveStatus() {
                     <Button variant="gold" fullWidth onClick={() => setChatOpen(true)}>
                         {t('parent.contactSitter')}
                     </Button>
-                    <Button
-                        variant="danger"
-                        fullWidth
-                        onClick={() => window.location.href = 'tel:119'}
-                    >
-                        {t('parent.emergencyCall119')}
-                    </Button>
+                    <a href="tel:119" className="emergency-call-link">
+                        <Button
+                            variant="danger"
+                            fullWidth
+                        >
+                            {t('parent.emergencyCall119')}
+                        </Button>
+                    </a>
                     <Link to="/parent" className="return-home-link">
                         <Button variant="secondary" fullWidth>
                             {t('parent.returnHome')}

@@ -225,7 +225,13 @@
     "reviewSubmitted": "리뷰 제출됨",
     "thankYouFeedback": "피드백 감사합니다!",
     "noBookingsYet": "아직 예약이 없습니다",
-    "noRatingsYet": "아직 평점이 없습니다"
+    "noRatingsYet": "아직 평점이 없습니다",
+    "noActiveSession": "활성 세션 없음",
+    "noActiveSessionDesc": "현재 진행 중인 돌봄 세션이 없습니다.",
+    "sessionHotel": "조선 팰리스 서울",
+    "sessionRoom": "스위트 1201",
+    "startedAt": "시작",
+    "sessionStartTime": "오후 6:00"
   },
   "booking": {
     "newBooking": "새 예약",
@@ -388,7 +394,11 @@
     "checkInComplete": "체크인 완료",
     "sessionStarted": "돌봄 세션이 공식적으로 시작되었습니다.",
     "checkInFailed": "체크인 실패",
-    "pleaseRetry": "다시 시도해주세요."
+    "pleaseRetry": "다시 시도해주세요.",
+    "step1Label": "건강",
+    "step2Label": "비상연락",
+    "step3Label": "동의",
+    "fillAllFields": "모든 필수 항목을 입력해주세요."
   },
   "status": {
     "pending": "대기 중",
@@ -664,7 +674,9 @@
     "timeLabel": "시간",
     "noBooking": "QR 코드를 생성할 예약이 없습니다.",
     "noActiveBooking": "활성 예약 없음",
-    "goBack": "뒤로 가기"
+    "goBack": "뒤로 가기",
+    "codeCopied": "코드 복사됨",
+    "copyCode": "예약 코드 복사"
   },
   "profile": {
     "identityVerification": "신원 확인",

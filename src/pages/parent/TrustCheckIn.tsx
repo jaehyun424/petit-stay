@@ -1,7 +1,8 @@
 import { useState, useRef, useEffect } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
-import { Info } from 'lucide-react';
+import { motion, AnimatePresence } from 'framer-motion';
+import { Shield, Phone, PenTool, Check, Info } from 'lucide-react';
 import { Card, CardBody } from '../../components/common/Card';
 import { Button } from '../../components/common/Button';
 import { Input } from '../../components/common/Input';
@@ -14,6 +15,26 @@ import { storageService } from '../../services/storage';
 import { bookingService, sessionService } from '../../services/firestore';
 import '../../styles/pages/parent-trust-checkin.css';
 
+const STEP_ICONS = [Shield, Phone, PenTool] as const;
+
+const easing: [number, number, number, number] = [0.25, 0.46, 0.45, 0.94];
+const slideVariants = {
+    enter: (dir: number) => ({
+        x: dir > 0 ? 40 : -40,
+        opacity: 0,
+    }),
+    center: {
+        x: 0,
+        opacity: 1,
+        transition: { duration: 0.3, ease: easing },
+    },
+    exit: (dir: number) => ({
+        x: dir > 0 ? -40 : 40,
+        opacity: 0,
+        transition: { duration: 0.2 },
+    }),
+};
+
 export default function TrustCheckIn() {
     const navigate = useNavigate();
     const { bookingId } = useParams<{ bookingId: string }>();
@@ -24,6 +45,7 @@ export default function TrustCheckIn() {
     const stepHeadingRef = useRef<HTMLHeadingElement>(null);
 
     const [step, setStep] = useState(1);
+    const [direction, setDirection] = useState(1);
 
     // Focus the step heading when step changes
     useEffect(() => {
@@ -41,15 +63,40 @@ export default function TrustCheckIn() {
 
     const [isSubmitting, setIsSubmitting] = useState(false);
 
+    const stepLabels = [
+        t('trustCheckin.step1Label'),
+        t('trustCheckin.step2Label'),
+        t('trustCheckin.step3Label'),
+    ];
+
+    const validateStep = (): boolean => {
+        if (step === 1) {
+            if (!formData.allergies.trim()) {
+                error(t('trustCheckin.actionRequired'), t('trustCheckin.fillAllFields'));
+                return false;
+            }
+        }
+        if (step === 2) {
+            if (!formData.emergencyName.trim() || !formData.emergencyContact.trim()) {
+                error(t('trustCheckin.actionRequired'), t('trustCheckin.fillAllFields'));
+                return false;
+            }
+        }
+        return true;
+    };
+
     const handleNext = () => {
+        if (!validateStep()) return;
         if (step === 3 && !formData.rulesAccepted) {
             error(t('trustCheckin.actionRequired'), t('trustCheckin.acceptProtocols'));
             return;
         }
+        setDirection(1);
         setStep((prev) => prev + 1);
     };
 
     const handleBack = () => {
+        setDirection(-1);
         setStep((prev) => prev - 1);
     };
 
@@ -210,17 +257,67 @@ export default function TrustCheckIn() {
                 <div className="trust-checkin-header">
                     <h1 className="trust-checkin-title">{t('trustCheckin.careHandover')}</h1>
                     <div className="trust-checkin-steps">
-                        {[1, 2, 3].map(i => (
-                            <div key={i} className={`step-indicator ${step >= i ? 'step-indicator-active' : 'step-indicator-inactive'}`} />
-                        ))}
+                        {[1, 2, 3].map(i => {
+                            const Icon = STEP_ICONS[i - 1];
+                            const completed = step > i;
+                            const active = step === i;
+                            return (
+                                <div
+                                    key={i}
+                                    className={`step-indicator-icon ${completed ? 'step-completed' : active ? 'step-active' : 'step-pending'}`}
+                                >
+                                    <span className="step-icon-circle">
+                                        {completed
+                                            ? <Check size={16} strokeWidth={2.5} />
+                                            : <Icon size={16} strokeWidth={1.75} />}
+                                    </span>
+                                    <span className="step-icon-label">{stepLabels[i - 1]}</span>
+                                </div>
+                            );
+                        })}
                     </div>
                 </div>
 
                 <Card className="checkin-card" padding="lg">
                     <CardBody>
-                        {step === 1 && renderStep1_Medical()}
-                        {step === 2 && renderStep2_Emergency()}
-                        {step === 3 && renderStep3_Rules()}
+                        <AnimatePresence mode="wait" custom={direction}>
+                            {step === 1 && (
+                                <motion.div
+                                    key="step1"
+                                    custom={direction}
+                                    variants={slideVariants}
+                                    initial="enter"
+                                    animate="center"
+                                    exit="exit"
+                                >
+                                    {renderStep1_Medical()}
+                                </motion.div>
+                            )}
+                            {step === 2 && (
+                                <motion.div
+                                    key="step2"
+                                    custom={direction}
+                                    variants={slideVariants}
+                                    initial="enter"
+                                    animate="center"
+                                    exit="exit"
+                                >
+                                    {renderStep2_Emergency()}
+                                </motion.div>
+                            )}
+                            {step === 3 && (
+                                <motion.div
+                                    key="step3"
+                                    custom={direction}
+                                    variants={slideVariants}
+                                    initial="enter"
+                                    animate="center"
+                                    exit="exit"
+                                >
+                                    {renderStep3_Rules()}
+                                </motion.div>
+                            )}
+                        </AnimatePresence>
 
                         <div className="checkin-card-footer">
                             {step > 1 ? (

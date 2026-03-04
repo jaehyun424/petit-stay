@@ -1,14 +1,11 @@
-// ============================================
-// Petit Stay - Parent QR Display Page
-// Full-screen QR code for hotel check-in
-// ============================================
-
 import { useParams, Link } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
+import { Copy } from 'lucide-react';
 import { BookingQR } from '../../components/common/BookingQR';
 import { Button } from '../../components/common/Button';
 import { useAuth } from '../../contexts/AuthContext';
 import { useParentBookings } from '../../hooks/useBookings';
+import { useToast } from '../../contexts/ToastContext';
 import { Skeleton } from '../../components/common/Skeleton';
 
 export default function QRDisplay() {
@@ -16,6 +13,16 @@ export default function QRDisplay() {
     const { t } = useTranslation();
     const { user } = useAuth();
     const { upcomingBooking, isLoading } = useParentBookings(user?.id);
+    const toast = useToast();
+
+    const handleCopyCode = async (code: string) => {
+        try {
+            await navigator.clipboard.writeText(code);
+            toast.success(t('qr.codeCopied'), code);
+        } catch {
+            toast.error(t('common.error'));
+        }
+    };
 
     if (isLoading) {
         return (
@@ -67,7 +74,16 @@ export default function QRDisplay() {
                 <div className="qr-display-details">
                     <div className="qr-detail-row">
                         <span className="qr-detail-label">{t('qr.bookingLabel')}</span>
-                        <span className="qr-detail-value">{booking.confirmationCode}</span>
+                        <span className="qr-detail-value qr-detail-copyable">
+                            {booking.confirmationCode}
+                            <button
+                                className="qr-copy-btn"
+                                onClick={() => handleCopyCode(booking.confirmationCode)}
+                                aria-label={t('qr.copyCode')}
+                            >
+                                <Copy size={14} strokeWidth={1.75} />
+                            </button>
+                        </span>
                     </div>
                     <div className="qr-detail-row">
                         <span className="qr-detail-label">{t('qr.hotelLabel')}</span>
