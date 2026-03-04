@@ -10,6 +10,15 @@ import { initializeApp } from "firebase-admin/app";
 import { getFirestore, FieldValue, QueryDocumentSnapshot } from "firebase-admin/firestore";
 import * as crypto from "crypto";
 import Stripe from "stripe";
+import {
+  sendgridApiKey,
+  twilioAccountSid,
+  twilioAuthToken,
+  twilioPhoneNumber,
+  notifyUser,
+  getUserLocale,
+  sendPaymentLinkSMS as sendPaymentLinkSMSService,
+} from "./notifications";
 
 // Stripe secret key (stored in Firebase secrets)
 const stripeSecretKey = defineSecret("STRIPE_SECRET_KEY");
@@ -290,6 +299,51 @@ export const onBookingCreated = onDocumentCreated(
           { bookingId, hotelId }
         )
       );
+
+      // Send email + SMS booking confirmation to parent
+      try {
+        const locale = await getUserLocale(booking.parentId);
+        const hotelDoc = await db.collection("hotels").doc(hotelId).get();
+        const hotelName = hotelDoc.data()?.name || "";
+        const scheduleDate = booking.schedule?.date?.toDate?.()
+          ? booking.schedule.date.toDate().toISOString().split("T")[0]
+          : "";
+
+        const bookingData = {
+          confirmationCode: code,
+          hotelName,
+          date: scheduleDate,
+          startTime: booking.schedule?.startTime || "",
+          endTime: booking.schedule?.endTime || "",
+          childrenNames: (booking.children || []).map((c: { firstName: string }) => c.firstName),
+          total: booking.pricing?.total || 0,
+          currency: "KRW",
+        };
+
+        // Build email template inline (mirrors src/services/emailTemplates.ts logic)
+        const subjectMap: Record<string, string> = {
+          en: `Booking Confirmed — Petit Stay`,
+          ko: `예약 확인 — Petit Stay`,
+          ja: `予約確認 — Petit Stay`,
+          zh: `预约确认 — Petit Stay`,
+        };
+        const smsMap: Record<string, string> = {
+          en: `[Petit Stay] Your booking ${code} is confirmed! Hotel: ${hotelName}, Date: ${scheduleDate}`,
+          ko: `[Petit Stay] 예약 ${code}이(가) 확인되었습니다! 호텔: ${hotelName}, 날짜: ${scheduleDate}`,
+          ja: `[Petit Stay] ご予約 ${code} が確認されました！ホテル: ${hotelName}, 日付: ${scheduleDate}`,
+          zh: `[Petit Stay] 您的预约 ${code} 已确认！酒店: ${hotelName}, 日期: ${scheduleDate}`,
+        };
+
+        const emailTemplate = {
+          subject: subjectMap[locale] || subjectMap.en,
+          html: `<h2>${subjectMap[locale] || subjectMap.en}</h2><p>Code: ${bookingData.confirmationCode}</p><p>Hotel: ${bookingData.hotelName}</p><p>Date: ${bookingData.date} ${bookingData.startTime} — ${bookingData.endTime}</p>`,
+          text: `${subjectMap[locale] || subjectMap.en}\nCode: ${bookingData.confirmationCode}\nHotel: ${bookingData.hotelName}\nDate: ${bookingData.date} ${bookingData.startTime} — ${bookingData.endTime}`,
+        };
+
+        await notifyUser(booking.parentId, emailTemplate, smsMap[locale] || smsMap.en);
+      } catch (err) {
+        console.error("Failed to send booking confirmation email/SMS:", err);
+      }
     }
 
     await Promise.all(notifyPromises);
@@ -321,6 +375,62 @@ export const onSessionCompleted = onDocumentUpdated(
         "Your care session has been completed. Please leave a review for your sitter.",
         { sessionId, bookingId: after.bookingId || "" }
       );
+
+      // Send care completed email + SMS + review request
+      try {
+        const locale = await getUserLocale(parentId);
+        const completedSmsMap: Record<string, string> = {
+          en: `[Petit Stay] Your care session is complete! Please leave a review in the app.`,
+          ko: `[Petit Stay] 돌봄 세션이 완료되었습니다! 앱에서 리뷰를 남겨주세요.`,
+          ja: `[Petit Stay] ケアセッションが完了しました！アプリでレビューをお願いします。`,
+          zh: `[Petit Stay] 看护服务已完成！请在应用中留下评价。`,
+        };
+        const completedSubjectMap: Record<string, string> = {
+          en: `Care Session Completed — Petit Stay`,
+          ko: `돌봄 세션 완료 — Petit Stay`,
+          ja: `ケアセッション完了 — Petit Stay`,
+          zh: `看护服务已完成 — Petit Stay`,
+        };
+        const reviewSubjectMap: Record<string, string> = {
+          en: `How was your experience? — Petit Stay`,
+          ko: `경험은 어떠셨나요? — Petit Stay`,
+          ja: `ご利用はいかがでしたか？ — Petit Stay`,
+          zh: `您的体验如何？ — Petit Stay`,
+        };
+
+        const bookingId = after.bookingId || "";
+        const reviewUrl = `https://petit-stay.web.app/parent/bookings/${bookingId}#review`;
+
+        // Care completed notification
+        await notifyUser(
+          parentId,
+          {
+            subject: completedSubjectMap[locale] || completedSubjectMap.en,
+            html: `<h2>${completedSubjectMap[locale] || completedSubjectMap.en}</h2><p>Session ID: ${sessionId}</p>`,
+            text: `${completedSubjectMap[locale] || completedSubjectMap.en}\nSession: ${sessionId}`,
+          },
+          completedSmsMap[locale] || completedSmsMap.en
+        );
+
+        // Review request (sent as a separate email after a short delay concept — sent immediately for simplicity)
+        const reviewCtaMap: Record<string, string> = {
+          en: "Leave a Review",
+          ko: "리뷰 작성하기",
+          ja: "レビューを書く",
+          zh: "撰写评价",
+        };
+        await notifyUser(
+          parentId,
+          {
+            subject: reviewSubjectMap[locale] || reviewSubjectMap.en,
+            html: `<h2>${reviewSubjectMap[locale] || reviewSubjectMap.en}</h2><p><a href="${reviewUrl}">${reviewCtaMap[locale] || reviewCtaMap.en}</a></p>`,
+            text: `${reviewSubjectMap[locale] || reviewSubjectMap.en}\n${reviewCtaMap[locale] || reviewCtaMap.en}: ${reviewUrl}`,
+          },
+          null
+        );
+      } catch (err) {
+        console.error("Failed to send care completed email/SMS:", err);
+      }
     }
 
     // Notify the sitter that the session is recorded as complete
@@ -1036,5 +1146,30 @@ export const onStripeWebhook = onRequest(
     }
 
     res.status(200).json({ received: true });
+  }
+);
+
+// ----------------------------------------
+// sendPaymentLinkSMS: Callable function to send payment link via SMS
+// ----------------------------------------
+export const sendPaymentLinkSMS = onCall(
+  { secrets: [twilioAccountSid, twilioAuthToken, twilioPhoneNumber] },
+  async (request) => {
+    if (!request.auth) {
+      throw new HttpsError("unauthenticated", "Must be authenticated");
+    }
+
+    const { phone, paymentUrl, locale } = request.data;
+    if (!phone || !paymentUrl) {
+      throw new HttpsError("invalid-argument", "phone and paymentUrl are required");
+    }
+
+    const success = await sendPaymentLinkSMSService(phone, paymentUrl, locale || "en");
+
+    if (!success) {
+      throw new HttpsError("internal", "Failed to send SMS");
+    }
+
+    return { success: true };
   }
 );
