@@ -18,9 +18,13 @@ import { useAuth } from '../../contexts/AuthContext';
 import { useToast } from '../../contexts/ToastContext';
 import { useHotelBookings } from '../../hooks/useBookings';
 import { useHotelSitters } from '../../hooks/useSitters';
+import { paymentService } from '../../services/payment';
+import { bookingService } from '../../services/firestore';
 import type { DemoBooking } from '../../data/demo';
 import { formatCurrency } from '../../utils/format';
 import '../../styles/pages/hotel-bookings.css';
+
+const DEMO_MODE = import.meta.env.VITE_DEMO_MODE === 'true';
 
 // Icons
 const SearchIcon = () => (
@@ -67,17 +71,106 @@ export default function Bookings() {
 
     const [guestLink, setGuestLink] = useState<string | null>(null);
 
-    const handleCreateBooking = () => {
+    const [isCreating, setIsCreating] = useState(false);
+
+    const handleCreateBooking = async () => {
         if (!validateBookingForm()) return;
-        const code = `KCP-${Date.now().toString(36).toUpperCase()}`;
-        const bookingId = `bk-${Date.now()}`;
-        const token = `tk-${Math.random().toString(36).slice(2, 10)}`;
-        const link = `${window.location.origin}/guest/${bookingId}?token=${token}&lang=en`;
-        setGuestLink(link);
-        toast.success(t('booking.bookingConfirmed'), `${t('hotel.bookingCode')}: ${code}`);
-        setShowNewBooking(false);
-        setNewBookingForm({ guestName: '', room: '', date: '', time: '18:00', duration: '4', childrenCount: '1' });
-        setFormErrors({});
+        setIsCreating(true);
+
+        try {
+            if (DEMO_MODE) {
+                // Demo mode: generate a fake link
+                const code = `KCP-${Date.now().toString(36).toUpperCase()}`;
+                const bookingId = `bk-${Date.now()}`;
+                const token = `tk-${Math.random().toString(36).slice(2, 10)}`;
+                const link = `${window.location.origin}/guest/${bookingId}?token=${token}&lang=en`;
+                setGuestLink(link);
+                toast.success(t('booking.bookingConfirmed'), `${t('hotel.bookingCode')}: ${code}`);
+            } else {
+                // Real mode: create booking in Firestore, then generate payment link
+                const hotelId = user?.hotelId || '';
+                const duration = parseInt(newBookingForm.duration);
+                const baseRate = 75000; // ₩75,000/hr default
+                const total = baseRate * duration;
+
+                const bookingId = await bookingService.createBooking({
+                    hotelId,
+                    parentId: '',
+                    confirmationCode: `KCP-${new Date().getFullYear()}-${Math.random().toString(36).slice(2, 6).toUpperCase()}`,
+                    status: 'pending_guest_consent',
+                    schedule: {
+                        date: new Date(newBookingForm.date),
+                        startTime: newBookingForm.time,
+                        endTime: `${parseInt(newBookingForm.time) + duration}:00`,
+                        duration,
+                        timezone: 'Asia/Seoul',
+                    },
+                    location: {
+                        type: 'room',
+                        roomNumber: newBookingForm.room,
+                    },
+                    children: [],
+                    requirements: {
+                        sitterTier: 'any',
+                        preferredLanguages: ['en'],
+                    },
+                    pricing: {
+                        baseRate,
+                        hours: duration,
+                        baseTotal: total,
+                        nightSurcharge: 0,
+                        holidaySurcharge: 0,
+                        goldSurcharge: 0,
+                        subtotal: total,
+                        commission: Math.round(total * 0.15),
+                        total,
+                    },
+                    payment: {
+                        status: 'pending',
+                        method: 'card',
+                    },
+                    trustProtocol: {
+                        safeWord: Math.random().toString(36).slice(2, 8).toUpperCase(),
+                    },
+                    guestInfo: {
+                        name: newBookingForm.guestName,
+                        email: '',
+                        phone: '',
+                        nationality: '',
+                    },
+                    metadata: {
+                        source: 'concierge',
+                    },
+                });
+
+                // Generate payment link via Stripe
+                try {
+                    const paymentUrl = await paymentService.generatePaymentLink({
+                        bookingId,
+                        hotelId,
+                        amount: total,
+                        currency: 'krw',
+                        description: `Petit Stay Childcare - ${newBookingForm.guestName}`,
+                    });
+                    setGuestLink(paymentUrl);
+                } catch {
+                    // Fallback to guest page link without Stripe (e.g., Stripe not configured)
+                    const link = `${window.location.origin}/guest/${bookingId}`;
+                    setGuestLink(link);
+                }
+
+                toast.success(t('booking.bookingConfirmed'), `${t('hotel.bookingCode')}: ${bookingId.slice(0, 12)}`);
+            }
+
+            setShowNewBooking(false);
+            setNewBookingForm({ guestName: '', room: '', date: '', time: '18:00', duration: '4', childrenCount: '1' });
+            setFormErrors({});
+        } catch (err: unknown) {
+            const message = err instanceof Error ? err.message : t('common.error');
+            toast.error(t('common.error'), message);
+        } finally {
+            setIsCreating(false);
+        }
     };
 
     const handleCopyLink = () => {
@@ -315,7 +408,7 @@ export default function Bookings() {
                 footer={
                     <>
                         <Button variant="secondary" onClick={() => { setShowNewBooking(false); setFormErrors({}); }}>{t('common.cancel')}</Button>
-                        <Button variant="gold" onClick={handleCreateBooking} disabled={!newBookingForm.guestName.trim() || !newBookingForm.room.trim() || !newBookingForm.date}>{t('common.confirm')}</Button>
+                        <Button variant="gold" onClick={handleCreateBooking} disabled={isCreating || !newBookingForm.guestName.trim() || !newBookingForm.room.trim() || !newBookingForm.date} isLoading={isCreating}>{t('common.confirm')}</Button>
                     </>
                 }
             >

@@ -77,7 +77,7 @@ function StatCard({ icon, label, value, subValue, color, to }: StatCardProps) {
 export default function Dashboard() {
   const { t } = useTranslation();
   const { user } = useAuth();
-  const { bookings: todayBookings, stats, isLoading: bookingsLoading, error: bookingsError, retry: retryBookings } = useHotelBookings(user?.hotelId);
+  const { bookings: todayBookings, stats, isLoading: bookingsLoading, error: bookingsError, retry: retryBookings, createBooking } = useHotelBookings(user?.hotelId);
   const { sessions: activeSessions, isLoading: sessionsLoading, error: sessionsError, retry: retrySessions } = useHotelSessions(user?.hotelId);
   const { sitters } = useHotelSitters(user?.hotelId);
   const toast = useToast();
@@ -102,13 +102,68 @@ export default function Dashboard() {
     return Object.keys(errors).length === 0;
   };
 
-  const handleCreateBooking = () => {
+  const handleCreateBooking = async () => {
     if (!validateBookingForm()) return;
     const code = `KCP-${Date.now().toString(36).toUpperCase()}`;
-    toast.success(t('booking.bookingConfirmed'), `${t('hotel.bookingCode')}: ${code}`);
-    setShowNewBooking(false);
-    setNewBookingForm({ guestName: '', room: '', date: '', time: '18:00', duration: '4', childrenCount: '1' });
-    setFormErrors({});
+    const startHour = parseInt(newBookingForm.time.split(':')[0], 10);
+    const durationHrs = parseInt(newBookingForm.duration, 10);
+    const endHour = startHour + durationHrs;
+    const endTime = `${String(endHour).padStart(2, '0')}:00`;
+    const baseRate = 75000;
+    const total = baseRate * durationHrs;
+
+    try {
+      await createBooking({
+        hotelId: user?.hotelId || '',
+        parentId: '',
+        confirmationCode: code,
+        status: 'pending',
+        schedule: {
+          date: new Date(newBookingForm.date),
+          startTime: newBookingForm.time,
+          endTime,
+          duration: durationHrs,
+          timezone: 'Asia/Seoul',
+        },
+        location: {
+          type: 'room',
+          roomNumber: newBookingForm.room,
+        },
+        children: Array.from({ length: parseInt(newBookingForm.childrenCount, 10) }, (_, i) => ({
+          childId: `child-${i}`,
+          firstName: '',
+          age: 0,
+        })),
+        requirements: {
+          sitterTier: 'any',
+          preferredLanguages: ['en'],
+        },
+        pricing: {
+          baseRate,
+          hours: durationHrs,
+          baseTotal: total,
+          nightSurcharge: 0,
+          holidaySurcharge: 0,
+          goldSurcharge: 0,
+          subtotal: total,
+          commission: Math.round(total * 0.15),
+          total,
+        },
+        payment: { status: 'pending', method: 'card' },
+        trustProtocol: {
+          safeWord: Math.random().toString(36).slice(2, 8).toUpperCase(),
+        },
+        guestInfo: { name: newBookingForm.guestName, email: '', phone: '', nationality: '' },
+        metadata: { source: 'concierge' },
+      } as Omit<import('../../types').Booking, 'id' | 'createdAt' | 'updatedAt'>);
+      toast.success(t('booking.bookingConfirmed'), `${t('hotel.bookingCode')}: ${code}`);
+      setShowNewBooking(false);
+      setNewBookingForm({ guestName: '', room: '', date: '', time: '18:00', duration: '4', childrenCount: '1' });
+      setFormErrors({});
+    } catch (err) {
+      console.error('Failed to create booking:', err);
+      toast.error(t('common.error'), t('booking.createFailed', 'Failed to create booking'));
+    }
   };
 
   // Assign sitter modal

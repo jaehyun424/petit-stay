@@ -94,54 +94,68 @@ export function useHotelBookings(hotelId?: string) {
             return;
         }
 
-        let cancelled = false;
         setIsLoading(true);
 
-        async function load() {
+        // Real-time subscription to hotel bookings
+        const unsubscribe = bookingService.subscribeToHotelBookings(hotelId, async (fbBookings) => {
             try {
-                const [fbBookings, fbStats] = await Promise.all([
-                    bookingService.getHotelBookings(hotelId!),
-                    bookingService.getBookingStats(hotelId!),
-                ]);
-                if (!cancelled) {
-                    // Resolve sitter names
-                    const sitterIds = fbBookings.map((b) => b.sitterId).filter(Boolean) as string[];
-                    const nameMap = await resolveSitterNames(sitterIds);
+                // Resolve sitter names
+                const sitterIds = fbBookings.map((b) => b.sitterId).filter(Boolean) as string[];
+                const nameMap = await resolveSitterNames(sitterIds);
 
-                    // Transform Firestore bookings to DemoBooking shape
-                    const mapped: DemoBooking[] = fbBookings.map((b) => ({
-                        id: b.id,
-                        confirmationCode: b.confirmationCode,
-                        date: b.schedule.date instanceof Date
-                            ? b.schedule.date.toISOString().split('T')[0]
-                            : String(b.schedule.date),
-                        time: `${b.schedule.startTime} - ${b.schedule.endTime}`,
-                        room: b.location.roomNumber || '',
-                        parent: { name: b.parentId, phone: '' },
-                        children: b.children.map((c) => ({ name: c.firstName, age: c.age })),
-                        sitter: b.sitterId ? { name: nameMap.get(b.sitterId) || b.sitterId, tier: 'silver' as const } : null,
-                        status: b.status as DemoBooking['status'],
-                        totalAmount: b.pricing.total,
-                    }));
-                    setBookings(mapped);
-                    setStats(fbStats);
-                    setError(null);
-                    setIsLoading(false);
-                }
+                // Transform Firestore bookings to DemoBooking shape
+                const mapped: DemoBooking[] = fbBookings.map((b) => ({
+                    id: b.id,
+                    confirmationCode: b.confirmationCode,
+                    date: b.schedule.date instanceof Date
+                        ? b.schedule.date.toISOString().split('T')[0]
+                        : String(b.schedule.date),
+                    time: `${b.schedule.startTime} - ${b.schedule.endTime}`,
+                    room: b.location.roomNumber || '',
+                    parent: { name: b.parentId, phone: '' },
+                    children: b.children.map((c) => ({ name: c.firstName, age: c.age })),
+                    sitter: b.sitterId ? { name: nameMap.get(b.sitterId) || b.sitterId, tier: 'silver' as const } : null,
+                    status: b.status as DemoBooking['status'],
+                    totalAmount: b.pricing.total,
+                }));
+                setBookings(mapped);
+
+                // Compute stats from snapshot data
+                const today = new Date();
+                today.setHours(0, 0, 0, 0);
+                const todayBookings = fbBookings.filter(b => {
+                    const d = b.schedule?.date instanceof Date ? b.schedule.date : new Date(b.schedule?.date);
+                    return d >= today;
+                });
+                setStats({
+                    todayBookings: todayBookings.length,
+                    activeNow: fbBookings.filter(b => b.status === 'in_progress').length,
+                    completedToday: todayBookings.filter(b => b.status === 'completed').length,
+                    todayRevenue: todayBookings.filter(b => b.status === 'completed').reduce((sum, b) => sum + (b.pricing?.total || 0), 0),
+                    safetyDays: 0,
+                    pendingBookings: fbBookings.filter(b => b.status === 'pending').length,
+                });
+                setError(null);
             } catch (err) {
-                console.error('Failed to load hotel bookings:', err);
-                if (!cancelled) {
-                    setError('Failed to load bookings');
-                    setIsLoading(false);
-                }
+                console.error('Failed to process hotel bookings:', err);
+                setError('Failed to process bookings');
+            } finally {
+                setIsLoading(false);
             }
-        }
+        });
 
-        load();
-        return () => { cancelled = true; };
+        return () => unsubscribe();
     }, [hotelId, retryCount]);
 
-    return { bookings, stats, isLoading, error, retry };
+    const createBooking = useCallback(async (data: Omit<import('../types').Booking, 'id' | 'createdAt' | 'updatedAt'>) => {
+        if (DEMO_MODE) {
+            await new Promise((r) => setTimeout(r, 1000));
+            return 'demo-booking-' + Date.now();
+        }
+        return bookingService.createBooking(data);
+    }, []);
+
+    return { bookings, stats, isLoading, error, retry, createBooking };
 }
 
 // ----------------------------------------
@@ -306,7 +320,7 @@ export function useSitterBookings(sitterId?: string) {
                         age: c.age,
                         allergies: c.allergies || [],
                     })),
-                    status: b.status as 'confirmed' | 'pending' | 'in_progress',
+                    status: b.status as 'confirmed' | 'pending' | 'in_progress' | 'sitter_assigned',
                 })));
 
                 // Build week schedule from actual booking data
@@ -355,5 +369,28 @@ export function useSitterBookings(sitterId?: string) {
         return booking;
     }, []);
 
-    return { todaySessions, weekSchedule, isLoading, createBooking, error, retry };
+    // Accept an assignment (sitter_assigned → sitter_confirmed)
+    const acceptAssignment = useCallback(async (bookingId: string) => {
+        if (DEMO_MODE) {
+            setTodaySessions((prev) =>
+                prev.map((s) => s.id === bookingId ? { ...s, status: 'confirmed' as const } : s)
+            );
+            return;
+        }
+        await bookingService.updateBookingStatus(bookingId, 'sitter_confirmed');
+    }, []);
+
+    // Reject an assignment (sitter_assigned → pending_assignment)
+    const rejectAssignment = useCallback(async (bookingId: string) => {
+        if (DEMO_MODE) {
+            setTodaySessions((prev) => prev.filter((s) => s.id !== bookingId));
+            return;
+        }
+        await bookingService.updateBooking(bookingId, {
+            status: 'pending_assignment',
+            sitterId: '',
+        });
+    }, []);
+
+    return { todaySessions, weekSchedule, isLoading, createBooking, acceptAssignment, rejectAssignment, error, retry };
 }
