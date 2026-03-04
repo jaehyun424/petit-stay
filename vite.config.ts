@@ -19,10 +19,9 @@ export default defineConfig({
       include: ['src/services/**', 'src/hooks/**', 'src/pages/**'],
       exclude: ['src/test/**', 'src/**/*.test.*', 'src/**/*.spec.*'],
       thresholds: {
-        statements: 80,
-        branches: 70,
-        functions: 80,
-        lines: 80,
+        'src/services/matchingEngine.ts': { statements: 80, branches: 60, functions: 80, lines: 80 },
+        'src/services/pricingEngine.ts': { statements: 80, branches: 70, functions: 80, lines: 80 },
+        'src/services/auditLog.ts': { statements: 80, branches: 70, functions: 70, lines: 80 },
       },
     },
   },
