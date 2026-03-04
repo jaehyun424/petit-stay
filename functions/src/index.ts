@@ -4,10 +4,16 @@
 
 import { onDocumentCreated, onDocumentUpdated } from "firebase-functions/v2/firestore";
 import { onSchedule } from "firebase-functions/v2/scheduler";
-import { onCall, HttpsError } from "firebase-functions/v2/https";
+import { onCall, onRequest, HttpsError } from "firebase-functions/v2/https";
+import { defineSecret } from "firebase-functions/params";
 import { initializeApp } from "firebase-admin/app";
 import { getFirestore, FieldValue, QueryDocumentSnapshot } from "firebase-admin/firestore";
 import * as crypto from "crypto";
+import Stripe from "stripe";
+
+// Stripe secret key (stored in Firebase secrets)
+const stripeSecretKey = defineSecret("STRIPE_SECRET_KEY");
+const stripeWebhookSecret = defineSecret("STRIPE_WEBHOOK_SECRET");
 
 initializeApp();
 const db = getFirestore();
@@ -623,5 +629,213 @@ export const calculateSettlement = onSchedule(
 
       console.log(`Settlement created for ${hotel.name}: ${bookingsSnap.size} bookings, ${totalRevenue} revenue`);
     }
+  }
+);
+
+// ----------------------------------------
+// createStripeCheckoutSession: Generate a Stripe Checkout Session for a booking
+// Called from the frontend payment service
+// ----------------------------------------
+export const createStripeCheckoutSession = onCall(
+  { secrets: [stripeSecretKey] },
+  async (request) => {
+    if (!request.auth) {
+      throw new HttpsError("unauthenticated", "Must be authenticated");
+    }
+
+    const { bookingId, hotelId, amount, currency, guestEmail, description, locale } = request.data;
+    if (!bookingId || !amount) {
+      throw new HttpsError("invalid-argument", "bookingId and amount are required");
+    }
+
+    const stripe = new Stripe(stripeSecretKey.value(), { apiVersion: "2026-02-25.clover" });
+
+    // Determine base URL for success/cancel redirects
+    const baseUrl = "https://petit-stay.web.app";
+
+    const session = await stripe.checkout.sessions.create({
+      payment_method_types: ["card"],
+      mode: "payment",
+      customer_email: guestEmail || undefined,
+      locale: (locale as Stripe.Checkout.SessionCreateParams.Locale) || "auto",
+      line_items: [
+        {
+          price_data: {
+            currency: currency || "krw",
+            unit_amount: amount,
+            product_data: {
+              name: description || "Petit Stay Childcare Service",
+              description: `Booking: ${bookingId}`,
+            },
+          },
+          quantity: 1,
+        },
+      ],
+      metadata: {
+        bookingId,
+        hotelId: hotelId || "",
+      },
+      success_url: `${baseUrl}/guest/${bookingId}?payment=success`,
+      cancel_url: `${baseUrl}/guest/${bookingId}?payment=cancelled`,
+    });
+
+    // Store the Stripe session ID on the booking
+    await db.collection("bookings").doc(bookingId).update({
+      "payment.stripeSessionId": session.id,
+      "payment.status": "pending",
+      updatedAt: FieldValue.serverTimestamp(),
+    });
+
+    return {
+      sessionId: session.id,
+      url: session.url || "",
+    };
+  }
+);
+
+// ----------------------------------------
+// getPaymentStatus: Query payment status for a booking
+// ----------------------------------------
+export const getPaymentStatus = onCall(async (request) => {
+  const { bookingId } = request.data;
+  if (!bookingId) {
+    throw new HttpsError("invalid-argument", "bookingId is required");
+  }
+
+  const bookingSnap = await db.collection("bookings").doc(bookingId).get();
+  if (!bookingSnap.exists) {
+    throw new HttpsError("not-found", "Booking not found");
+  }
+
+  const booking = bookingSnap.data()!;
+  const payment = booking.payment || {};
+
+  return {
+    status: payment.status || "pending",
+    transactionId: payment.transactionId || undefined,
+    paidAt: payment.paidAt ? payment.paidAt.toDate().toISOString() : undefined,
+  };
+});
+
+// ----------------------------------------
+// onStripeWebhook: Handle Stripe webhook events
+// Updates booking.payment.status on successful payment
+// ----------------------------------------
+export const onStripeWebhook = onRequest(
+  { secrets: [stripeSecretKey, stripeWebhookSecret] },
+  async (req, res) => {
+    if (req.method !== "POST") {
+      res.status(405).send("Method Not Allowed");
+      return;
+    }
+
+    const stripe = new Stripe(stripeSecretKey.value(), { apiVersion: "2026-02-25.clover" });
+    const sig = req.headers["stripe-signature"];
+
+    if (!sig) {
+      res.status(400).send("Missing stripe-signature header");
+      return;
+    }
+
+    let event: Stripe.Event;
+    try {
+      event = stripe.webhooks.constructEvent(
+        req.rawBody,
+        sig,
+        stripeWebhookSecret.value()
+      );
+    } catch (err) {
+      console.error("Stripe webhook signature verification failed:", err);
+      res.status(400).send("Webhook signature verification failed");
+      return;
+    }
+
+    // Handle the event
+    switch (event.type) {
+      case "checkout.session.completed": {
+        const session = event.data.object as Stripe.Checkout.Session;
+        const bookingId = session.metadata?.bookingId;
+
+        if (bookingId) {
+          await db.collection("bookings").doc(bookingId).update({
+            "payment.status": "captured",
+            "payment.transactionId": session.payment_intent as string || session.id,
+            "payment.paidAt": FieldValue.serverTimestamp(),
+            "payment.method": "card",
+            updatedAt: FieldValue.serverTimestamp(),
+          });
+
+          // Notify hotel staff about successful payment
+          const bookingSnap = await db.collection("bookings").doc(bookingId).get();
+          if (bookingSnap.exists) {
+            const booking = bookingSnap.data()!;
+            const code = booking.confirmationCode || bookingId;
+
+            if (booking.hotelId) {
+              const staffIds = await getHotelStaffIds(booking.hotelId);
+              await Promise.all(
+                staffIds.map((staffId) =>
+                  createNotification(
+                    staffId,
+                    "payment_received",
+                    "Payment Received",
+                    `Payment for booking ${code} has been completed.`,
+                    { bookingId, hotelId: booking.hotelId }
+                  )
+                )
+              );
+            }
+          }
+
+          console.log(`Payment captured for booking ${bookingId}`);
+        }
+        break;
+      }
+
+      case "checkout.session.expired": {
+        const session = event.data.object as Stripe.Checkout.Session;
+        const bookingId = session.metadata?.bookingId;
+
+        if (bookingId) {
+          await db.collection("bookings").doc(bookingId).update({
+            "payment.status": "failed",
+            updatedAt: FieldValue.serverTimestamp(),
+          });
+          console.log(`Payment session expired for booking ${bookingId}`);
+        }
+        break;
+      }
+
+      case "charge.refunded": {
+        const charge = event.data.object as Stripe.Charge;
+        const paymentIntent = charge.payment_intent as string;
+
+        if (paymentIntent) {
+          // Find booking by transaction ID
+          const bookingsSnap = await db
+            .collection("bookings")
+            .where("payment.transactionId", "==", paymentIntent)
+            .limit(1)
+            .get();
+
+          if (!bookingsSnap.empty) {
+            const bookingDoc = bookingsSnap.docs[0];
+            await bookingDoc.ref.update({
+              "payment.status": "refunded",
+              "payment.refundedAt": FieldValue.serverTimestamp(),
+              "payment.refundAmount": charge.amount_refunded,
+              updatedAt: FieldValue.serverTimestamp(),
+            });
+            console.log(`Refund processed for booking ${bookingDoc.id}`);
+          }
+        }
+        break;
+      }
+
+      default:
+        console.log(`Unhandled Stripe event type: ${event.type}`);
+    }
+
+    res.status(200).json({ received: true });
   }
 );
