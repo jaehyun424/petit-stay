@@ -71,8 +71,19 @@ export interface Hotel {
   settings: HotelSettings;
   stats: HotelStats;
   slaMetrics: SLAMetrics;
+  branding?: HotelBranding;
   createdAt: Date;
   updatedAt: Date;
+}
+
+export interface HotelBranding {
+  primaryColor?: string;
+  secondaryColor?: string;
+  accentColor?: string;
+  logo?: string;
+  logoUrl?: string;
+  fontFamily?: string;
+  tagline?: string;
 }
 
 export interface HotelSettings {
