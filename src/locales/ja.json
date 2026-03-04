@@ -1512,5 +1512,24 @@
     "status_active": "有効",
     "status_claimed": "請求済み",
     "status_expired": "期限切れ"
+  },
+  "branding": {
+    "title": "ブランディング",
+    "subtitle": "ホテルブランディングをカスタマイズ",
+    "logo": "ブランドロゴ",
+    "uploadLogo": "ロゴアップロード",
+    "logoUploaded": "ロゴがアップロードされました",
+    "logoUploadFailed": "ロゴのアップロードに失敗しました",
+    "primaryColor": "プライマリカラー",
+    "secondaryColor": "セカンダリカラー",
+    "accentColor": "アクセントカラー",
+    "fontFamily": "フォント",
+    "tagline": "タグライン",
+    "taglinePlaceholder": "ホテルのタグラインを入力",
+    "livePreview": "ライブプレビュー",
+    "previewBookings": "予約",
+    "previewActive": "アクティブ",
+    "previewRating": "評価",
+    "previewNewBooking": "新規予約"
   }
 }

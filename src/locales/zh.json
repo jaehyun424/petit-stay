@@ -1512,5 +1512,24 @@
     "status_active": "有效",
     "status_claimed": "已理赔",
     "status_expired": "已过期"
+  },
+  "branding": {
+    "title": "品牌设置",
+    "subtitle": "自定义酒店品牌形象",
+    "logo": "品牌标志",
+    "uploadLogo": "上传标志",
+    "logoUploaded": "标志上传成功",
+    "logoUploadFailed": "标志上传失败",
+    "primaryColor": "主色调",
+    "secondaryColor": "辅助色",
+    "accentColor": "强调色",
+    "fontFamily": "字体",
+    "tagline": "标语",
+    "taglinePlaceholder": "输入酒店标语",
+    "livePreview": "实时预览",
+    "previewBookings": "预订",
+    "previewActive": "进行中",
+    "previewRating": "评分",
+    "previewNewBooking": "新预订"
   }
 }

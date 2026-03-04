@@ -1512,5 +1512,24 @@
     "status_active": "Active",
     "status_claimed": "Claimed",
     "status_expired": "Expired"
+  },
+  "branding": {
+    "title": "Branding",
+    "subtitle": "Customize your hotel branding",
+    "logo": "Brand Logo",
+    "uploadLogo": "Upload Logo",
+    "logoUploaded": "Logo uploaded successfully",
+    "logoUploadFailed": "Failed to upload logo",
+    "primaryColor": "Primary Color",
+    "secondaryColor": "Secondary Color",
+    "accentColor": "Accent Color",
+    "fontFamily": "Font Family",
+    "tagline": "Tagline",
+    "taglinePlaceholder": "Enter your hotel tagline",
+    "livePreview": "Live Preview",
+    "previewBookings": "Bookings",
+    "previewActive": "Active",
+    "previewRating": "Rating",
+    "previewNewBooking": "New Booking"
   }
 }

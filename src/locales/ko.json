@@ -1512,5 +1512,24 @@
     "status_active": "활성",
     "status_claimed": "청구됨",
     "status_expired": "만료"
+  },
+  "branding": {
+    "title": "브랜딩",
+    "subtitle": "호텔 브랜딩을 맞춤 설정하세요",
+    "logo": "브랜드 로고",
+    "uploadLogo": "로고 업로드",
+    "logoUploaded": "로고가 업로드되었습니다",
+    "logoUploadFailed": "로고 업로드에 실패했습니다",
+    "primaryColor": "기본 색상",
+    "secondaryColor": "보조 색상",
+    "accentColor": "강조 색상",
+    "fontFamily": "글꼴",
+    "tagline": "태그라인",
+    "taglinePlaceholder": "호텔 태그라인을 입력하세요",
+    "livePreview": "실시간 미리보기",
+    "previewBookings": "예약",
+    "previewActive": "진행중",
+    "previewRating": "평점",
+    "previewNewBooking": "새 예약"
   }
 }
