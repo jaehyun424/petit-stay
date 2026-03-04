@@ -590,10 +590,10 @@ p {
 }
 
 /* Explicit skeleton sizes to prevent CLS */
-.skeleton-text { height: 1rem; width: 60%; }
-.skeleton-title { height: 1.5rem; width: 40%; }
-.skeleton-avatar { width: 40px; height: 40px; border-radius: 50%; }
-.skeleton-card { height: 120px; width: 100%; }
+.skeleton-block-text { height: 1rem; width: 60%; }
+.skeleton-block-title { height: 1.5rem; width: 40%; }
+.skeleton-block-avatar { width: 40px; height: 40px; border-radius: 50%; }
+.skeleton-block-card { height: 120px; width: 100%; }
 
 /* ----------------------------------------
    10. Animations
