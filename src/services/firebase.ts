@@ -7,6 +7,7 @@ import { initializeApp, type FirebaseApp } from 'firebase/app';
 import { getAuth, connectAuthEmulator, type Auth } from 'firebase/auth';
 import { getFirestore, connectFirestoreEmulator, type Firestore } from 'firebase/firestore';
 import { getStorage, connectStorageEmulator, type FirebaseStorage } from 'firebase/storage';
+import { getFunctions, connectFunctionsEmulator, type Functions } from 'firebase/functions';
 
 // Firebase configuration from environment variables
 const firebaseConfig = {
@@ -24,6 +25,7 @@ let app: FirebaseApp | undefined;
 let auth: Auth = { currentUser: null } as unknown as Auth;
 let db: Firestore = {} as unknown as Firestore;
 let storage: FirebaseStorage = {} as unknown as FirebaseStorage;
+let functions: Functions = {} as unknown as Functions;
 
 if (firebaseConfig.apiKey) {
     try {
@@ -31,12 +33,14 @@ if (firebaseConfig.apiKey) {
         auth = getAuth(app);
         db = getFirestore(app);
         storage = getStorage(app);
+        functions = getFunctions(app);
 
         // Connect to emulators in development (optional)
         if (import.meta.env.DEV && import.meta.env.VITE_USE_EMULATORS === 'true') {
             connectAuthEmulator(auth, 'http://localhost:9099');
             connectFirestoreEmulator(db, 'localhost', 8080);
             connectStorageEmulator(storage, 'localhost', 9199);
+            connectFunctionsEmulator(functions, 'localhost', 5001);
         }
 
         // Load Analytics only in production
@@ -52,13 +56,15 @@ if (firebaseConfig.apiKey) {
         auth = { currentUser: null } as unknown as Auth;
         db = {} as unknown as Firestore;
         storage = {} as unknown as FirebaseStorage;
+        functions = {} as unknown as Functions;
     }
 } else {
     console.warn('Firebase configuration missing. Using mock services.');
     auth = { currentUser: null } as unknown as Auth;
     db = {} as unknown as Firestore;
     storage = {} as unknown as FirebaseStorage;
+    functions = {} as unknown as Functions;
 }
 
-export { auth, db, storage };
+export { auth, db, storage, functions };
 export default app;
