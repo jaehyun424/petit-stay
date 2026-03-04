@@ -1,0 +1,678 @@
+openapi: 3.0.3
+info:
+  title: Petit Stay OTA/PMS Integration API
+  description: |
+    REST API for hotel PMS and OTA systems to integrate with Petit Stay childcare platform.
+
+    ## Authentication
+    All requests require two headers:
+    - `x-api-key`: Your API key (provided during onboarding)
+    - `x-signature`: HMAC-SHA256 signature of `{timestamp}.{body}` using your API secret
+    - `x-timestamp`: Unix timestamp (seconds). Requests older than 5 minutes are rejected.
+
+    ## Rate Limiting
+    Default: 60 requests/minute per API key. Rate limit headers are included in every response:
+    - `X-RateLimit-Limit`: Max requests per window
+    - `X-RateLimit-Remaining`: Remaining requests
+    - `Retry-After`: Seconds until reset (only on 429 responses)
+
+    ## Scoping
+    API keys are scoped to a specific hotel. Requests to resources outside scope return 403.
+  version: 1.0.0
+  contact:
+    name: Petit Stay API Support
+    email: api-support@petitstay.com
+
+servers:
+  - url: https://us-central1-petit-stay.cloudfunctions.net/api
+    description: Production
+  - url: http://localhost:5001/petit-stay/us-central1/api
+    description: Local emulator
+
+security:
+  - apiKeyAuth: []
+    hmacSignature: []
+
+paths:
+  /api/v1/hotels:
+    get:
+      summary: List hotels
+      description: Returns hotels accessible by the API key. Scoped keys return only their hotel.
+      operationId: listHotels
+      tags: [Hotels]
+      responses:
+        '200':
+          description: List of hotels
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HotelListResponse'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '429':
+          $ref: '#/components/responses/RateLimited'
+
+  /api/v1/hotels/{hotelId}:
+    get:
+      summary: Get hotel details
+      operationId: getHotel
+      tags: [Hotels]
+      parameters:
+        - name: hotelId
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Hotel details
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HotelResponse'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '404':
+          $ref: '#/components/responses/NotFound'
+
+  /api/v1/availability:
+    get:
+      summary: Check sitter availability
+      description: Returns available time slots and sitter counts for a given date.
+      operationId: checkAvailability
+      tags: [Availability]
+      parameters:
+        - name: hotelId
+          in: query
+          required: true
+          schema:
+            type: string
+        - name: date
+          in: query
+          required: true
+          schema:
+            type: string
+            format: date
+          example: '2026-03-10'
+        - name: startTime
+          in: query
+          schema:
+            type: string
+          example: '09:00'
+        - name: endTime
+          in: query
+          schema:
+            type: string
+          example: '17:00'
+        - name: sitterTier
+          in: query
+          schema:
+            type: string
+            enum: [any, gold]
+      responses:
+        '200':
+          description: Availability data
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AvailabilityResponse'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+
+  /api/v1/bookings:
+    get:
+      summary: List bookings
+      description: Returns paginated bookings for the hotel. Supports date filtering.
+      operationId: listBookings
+      tags: [Bookings]
+      parameters:
+        - name: hotelId
+          in: query
+          schema:
+            type: string
+        - name: page
+          in: query
+          schema:
+            type: integer
+            default: 1
+        - name: pageSize
+          in: query
+          schema:
+            type: integer
+            default: 20
+            maximum: 100
+        - name: dateFrom
+          in: query
+          schema:
+            type: string
+            format: date
+        - name: dateTo
+          in: query
+          schema:
+            type: string
+            format: date
+      responses:
+        '200':
+          description: Paginated bookings
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BookingListResponse'
+
+    post:
+      summary: Create booking from PMS
+      operationId: createBooking
+      tags: [Bookings]
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CreateBookingRequest'
+            example:
+              hotelId: hotel_abc123
+              parentName: Jane Smith
+              parentEmail: jane@example.com
+              parentPhone: '+821012345678'
+              schedule:
+                date: '2026-03-15'
+                startTime: '14:00'
+                endTime: '18:00'
+              location:
+                type: room
+                roomNumber: '1205'
+              children:
+                - firstName: Emma
+                  age: 4
+                - firstName: Tom
+                  age: 2
+                  allergies: ['dairy']
+              requirements:
+                sitterTier: gold
+                preferredLanguages: ['en', 'ko']
+              externalReference: PMS-2026-00456
+      responses:
+        '201':
+          description: Booking created
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BookingResponse'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+
+  /api/v1/bookings/{bookingId}:
+    get:
+      summary: Get booking details
+      operationId: getBooking
+      tags: [Bookings]
+      parameters:
+        - name: bookingId
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Booking details
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BookingResponse'
+        '404':
+          $ref: '#/components/responses/NotFound'
+
+    patch:
+      summary: Update booking
+      description: |
+        Update booking status or details. Status transitions are validated:
+        - pending -> confirmed, cancelled
+        - confirmed -> cancelled, in_progress
+        - sitter_assigned -> sitter_confirmed, cancelled
+        - sitter_confirmed -> in_progress, cancelled
+        - in_progress -> completed
+      operationId: updateBooking
+      tags: [Bookings]
+      parameters:
+        - name: bookingId
+          in: path
+          required: true
+          schema:
+            type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UpdateBookingRequest'
+            example:
+              status: confirmed
+      responses:
+        '200':
+          description: Updated booking
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BookingResponse'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+
+  /api/v1/webhooks/pms:
+    post:
+      summary: Receive PMS webhook events
+      description: |
+        Endpoint for PMS systems to push real-time events. Supported events:
+        - `check_in`: Guest checks into hotel
+        - `check_out`: Guest checks out
+        - `booking_cancelled`: PMS-side cancellation
+        - `room_change`: Guest moves to different room
+      operationId: receivePmsWebhook
+      tags: [Webhooks]
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/WebhookEvent'
+            examples:
+              check_in:
+                summary: Guest check-in
+                value:
+                  event: check_in
+                  timestamp: '2026-03-10T15:00:00Z'
+                  data:
+                    guestName: Jane Smith
+                    roomNumber: '1205'
+                    checkInDate: '2026-03-10'
+                    checkOutDate: '2026-03-13'
+                    guestEmail: jane@example.com
+                    numberOfChildren: 2
+              room_change:
+                summary: Room change
+                value:
+                  event: room_change
+                  timestamp: '2026-03-11T10:00:00Z'
+                  data:
+                    guestName: Jane Smith
+                    oldRoom: '1205'
+                    newRoom: '1302'
+      responses:
+        '200':
+          description: Webhook processed
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    type: object
+                    properties:
+                      received:
+                        type: boolean
+                      event:
+                        type: string
+                      processed:
+                        type: boolean
+
+components:
+  securitySchemes:
+    apiKeyAuth:
+      type: apiKey
+      in: header
+      name: x-api-key
+      description: API key provided during onboarding
+    hmacSignature:
+      type: apiKey
+      in: header
+      name: x-signature
+      description: HMAC-SHA256 of "{x-timestamp}.{request_body}" using API secret
+
+  schemas:
+    ApiHotel:
+      type: object
+      properties:
+        id:
+          type: string
+        name:
+          type: string
+        tier:
+          type: string
+          enum: [luxury, premium, standard]
+        address:
+          type: string
+        contactEmail:
+          type: string
+        contactPhone:
+          type: string
+        timezone:
+          type: string
+        currency:
+          type: string
+        settings:
+          type: object
+          properties:
+            autoAssign:
+              type: boolean
+            maxAdvanceBookingDays:
+              type: integer
+            minBookingHours:
+              type: integer
+            cancellationPolicy:
+              type: string
+
+    ApiBooking:
+      type: object
+      properties:
+        id:
+          type: string
+        hotelId:
+          type: string
+        confirmationCode:
+          type: string
+        status:
+          type: string
+          enum: [pending, confirmed, in_progress, completed, cancelled, no_show, pending_guest_consent, pending_assignment, sitter_assigned, sitter_confirmed]
+        schedule:
+          type: object
+          properties:
+            date:
+              type: string
+              format: date
+            startTime:
+              type: string
+            endTime:
+              type: string
+            duration:
+              type: number
+            timezone:
+              type: string
+        location:
+          type: object
+          properties:
+            type:
+              type: string
+            roomNumber:
+              type: string
+        children:
+          type: array
+          items:
+            type: object
+            properties:
+              firstName:
+                type: string
+              age:
+                type: integer
+              allergies:
+                type: array
+                items:
+                  type: string
+        pricing:
+          type: object
+          properties:
+            baseRate:
+              type: number
+            hours:
+              type: number
+            total:
+              type: number
+            currency:
+              type: string
+        sitterId:
+          type: string
+        createdAt:
+          type: string
+          format: date-time
+        updatedAt:
+          type: string
+          format: date-time
+
+    CreateBookingRequest:
+      type: object
+      required: [hotelId, schedule, children]
+      properties:
+        hotelId:
+          type: string
+        parentName:
+          type: string
+        parentEmail:
+          type: string
+          format: email
+        parentPhone:
+          type: string
+        schedule:
+          type: object
+          required: [date, startTime, endTime]
+          properties:
+            date:
+              type: string
+              format: date
+            startTime:
+              type: string
+            endTime:
+              type: string
+            timezone:
+              type: string
+        location:
+          type: object
+          properties:
+            type:
+              type: string
+              enum: [room, kids_room]
+            roomNumber:
+              type: string
+        children:
+          type: array
+          minItems: 1
+          items:
+            type: object
+            required: [firstName, age]
+            properties:
+              firstName:
+                type: string
+              age:
+                type: integer
+              allergies:
+                type: array
+                items:
+                  type: string
+        requirements:
+          type: object
+          properties:
+            sitterTier:
+              type: string
+              enum: [any, gold]
+            preferredLanguages:
+              type: array
+              items:
+                type: string
+            specialRequests:
+              type: string
+        externalReference:
+          type: string
+
+    UpdateBookingRequest:
+      type: object
+      properties:
+        status:
+          type: string
+          enum: [confirmed, cancelled]
+        schedule:
+          type: object
+          properties:
+            date:
+              type: string
+              format: date
+            startTime:
+              type: string
+            endTime:
+              type: string
+        location:
+          type: object
+          properties:
+            roomNumber:
+              type: string
+        cancellation:
+          type: object
+          properties:
+            reason:
+              type: string
+            cancelledBy:
+              type: string
+              enum: [hotel, parent, system]
+
+    WebhookEvent:
+      type: object
+      required: [event, data]
+      properties:
+        event:
+          type: string
+          enum: [check_in, check_out, booking_created, booking_cancelled, room_change, guest_update]
+        timestamp:
+          type: string
+          format: date-time
+        data:
+          type: object
+        externalReference:
+          type: string
+
+    AvailabilitySlot:
+      type: object
+      properties:
+        startTime:
+          type: string
+        endTime:
+          type: string
+        availableSitters:
+          type: integer
+        tiers:
+          type: object
+          properties:
+            gold:
+              type: integer
+            silver:
+              type: integer
+
+    Pagination:
+      type: object
+      properties:
+        page:
+          type: integer
+        pageSize:
+          type: integer
+        total:
+          type: integer
+        totalPages:
+          type: integer
+
+    ErrorResponse:
+      type: object
+      properties:
+        error:
+          type: object
+          properties:
+            code:
+              type: string
+            message:
+              type: string
+            details:
+              type: object
+        requestId:
+          type: string
+        timestamp:
+          type: string
+          format: date-time
+
+    HotelListResponse:
+      type: object
+      properties:
+        data:
+          type: array
+          items:
+            $ref: '#/components/schemas/ApiHotel'
+        pagination:
+          $ref: '#/components/schemas/Pagination'
+
+    HotelResponse:
+      type: object
+      properties:
+        data:
+          $ref: '#/components/schemas/ApiHotel'
+        requestId:
+          type: string
+        timestamp:
+          type: string
+
+    AvailabilityResponse:
+      type: object
+      properties:
+        data:
+          type: object
+          properties:
+            hotelId:
+              type: string
+            date:
+              type: string
+            slots:
+              type: array
+              items:
+                $ref: '#/components/schemas/AvailabilitySlot'
+        requestId:
+          type: string
+        timestamp:
+          type: string
+
+    BookingListResponse:
+      type: object
+      properties:
+        data:
+          type: array
+          items:
+            $ref: '#/components/schemas/ApiBooking'
+        pagination:
+          $ref: '#/components/schemas/Pagination'
+
+    BookingResponse:
+      type: object
+      properties:
+        data:
+          $ref: '#/components/schemas/ApiBooking'
+        requestId:
+          type: string
+        timestamp:
+          type: string
+
+  responses:
+    BadRequest:
+      description: Invalid request parameters
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorResponse'
+    Unauthorized:
+      description: Missing or invalid authentication
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorResponse'
+    Forbidden:
+      description: API key does not have access to this resource
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorResponse'
+    NotFound:
+      description: Resource not found
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorResponse'
+    RateLimited:
+      description: Too many requests
+      headers:
+        Retry-After:
+          schema:
+            type: integer
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorResponse'

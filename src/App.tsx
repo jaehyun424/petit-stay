@@ -13,6 +13,7 @@ import { ParentLayout } from './components/layout/ParentLayout';
 import { SitterLayout } from './components/layout/SitterLayout';
 import { OpsLayout } from './components/layout/OpsLayout';
 import { DemoBanner } from './components/common/DemoBanner';
+import { InstallBanner } from './components/common/InstallBanner';
 import { BrandLogo } from './components/common/BrandLogo';
 import './index.css';
 
@@ -253,6 +254,7 @@ function App() {
             <ToastProvider>
               <AppRoutes />
               <DemoBanner />
+              <InstallBanner />
             </ToastProvider>
           </AuthProvider>
         </ErrorBoundary>
