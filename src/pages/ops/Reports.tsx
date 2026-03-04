@@ -37,10 +37,10 @@ export default function OpsReports() {
               <table className="ops-table">
                 <thead>
                   <tr>
-                    <th>Hotel</th>
-                    <th>Revenue</th>
-                    <th>Commission</th>
-                    <th>Net</th>
+                    <th>{t('ops.hotel')}</th>
+                    <th>{t('ops.revenue')}</th>
+                    <th>{t('ops.commission')}</th>
+                    <th>{t('ops.net')}</th>
                   </tr>
                 </thead>
                 <tbody>
@@ -53,7 +53,7 @@ export default function OpsReports() {
                     </tr>
                   ))}
                   <tr className="ops-table-total">
-                    <td><strong>Total</strong></td>
+                    <td><strong>{t('ops.total')}</strong></td>
                     <td><strong>{formatCurrency(totalRevenue)}</strong></td>
                     <td><strong>{formatCurrency(totalCommission)}</strong></td>
                     <td className="ops-amount-bold"><strong>{formatCurrency(totalRevenue - totalCommission)}</strong></td>

@@ -47,12 +47,12 @@ export default function ActiveSession() {
                 return;
             }
         }
-        success(t('activeSession.activityLogged'), 'Your activity update has been recorded.');
+        success(t('activeSession.activityLogged'), t('activeSession.activityRecorded'));
     };
 
     const handleAddPhoto = async () => {
         if (DEMO_MODE) {
-            success(t('activeSession.photoAdded'), 'Photo has been uploaded.');
+            success(t('activeSession.photoAdded'), t('activeSession.photoUploaded'));
             return;
         }
         fileInputRef.current?.click();
@@ -69,10 +69,10 @@ export default function ActiveSession() {
                 description: 'Photo uploaded',
                 mediaUrl: photoUrl,
             });
-            success(t('activeSession.photoAdded'), 'Photo has been uploaded.');
+            success(t('activeSession.photoAdded'), t('activeSession.photoUploaded'));
         } catch (err) {
             console.error('Failed to upload photo:', err);
-            error('Upload Failed', 'Could not upload photo.');
+            error(t('activeSession.uploadFailed'), t('activeSession.uploadFailedDesc'));
         }
         e.target.value = '';
     };
@@ -91,12 +91,12 @@ export default function ActiveSession() {
                 return;
             }
         }
-        success(t('activeSession.snackLogged'), 'Snack has been recorded.');
+        success(t('activeSession.snackLogged'), t('activeSession.snackRecorded'));
     };
 
     const completeSession = async () => {
         if (DEMO_MODE) {
-            success(t('activeSession.sessionComplete'), 'The care session has been completed.');
+            success(t('activeSession.sessionComplete'), t('activeSession.sessionCompletedDesc'));
             navigate('/sitter');
             return;
         }
@@ -105,11 +105,11 @@ export default function ActiveSession() {
             await sessionService.endSession(sessionId);
             // Also update booking status if we have bookingId info
             await bookingService.updateBookingStatus(sessionId, 'completed');
-            success(t('activeSession.sessionComplete'), 'The care session has been completed.');
+            success(t('activeSession.sessionComplete'), t('activeSession.sessionCompletedDesc'));
             navigate('/sitter');
         } catch (err) {
             console.error('Failed to complete session:', err);
-            error('Error', 'Could not complete session.');
+            error(t('common.error'), t('activeSession.sessionCompleteFailed'));
         }
     };
 

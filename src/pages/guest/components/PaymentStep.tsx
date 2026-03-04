@@ -33,7 +33,7 @@ export function PaymentStep({ totalAmount, onNext, onBack }: PaymentStepProps) {
           <input
             type="text"
             className="guest-input"
-            placeholder="4242 4242 4242 4242"
+            placeholder={t('guest.cardNumberPlaceholder')}
             maxLength={19}
             value={form.cardNumber}
             onChange={(e) => setForm({ ...form, cardNumber: e.target.value.replace(/\D/g, '').slice(0, 16) })}
@@ -45,7 +45,7 @@ export function PaymentStep({ totalAmount, onNext, onBack }: PaymentStepProps) {
             <input
               type="text"
               className="guest-input"
-              placeholder="MM/YY"
+              placeholder={t('guest.expiryPlaceholder')}
               maxLength={5}
               value={form.expiry}
               onChange={(e) => setForm({ ...form, expiry: e.target.value })}
@@ -56,7 +56,7 @@ export function PaymentStep({ totalAmount, onNext, onBack }: PaymentStepProps) {
             <input
               type="text"
               className="guest-input"
-              placeholder="123"
+              placeholder={t('guest.cvvPlaceholder')}
               maxLength={4}
               value={form.cvv}
               onChange={(e) => setForm({ ...form, cvv: e.target.value.replace(/\D/g, '').slice(0, 4) })}
@@ -68,7 +68,7 @@ export function PaymentStep({ totalAmount, onNext, onBack }: PaymentStepProps) {
           <input
             type="text"
             className="guest-input"
-            placeholder="JOHN DOE"
+            placeholder={t('guest.cardHolderPlaceholder')}
             value={form.holder}
             onChange={(e) => setForm({ ...form, holder: e.target.value })}
           />

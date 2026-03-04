@@ -183,19 +183,19 @@ export default function Reports() {
 
     // Export handler — real CSV download
     const handleExport = () => {
-        const headers = ['Period', 'Revenue', 'Bookings'];
+        const headers = [t('reports.period'), t('reports.revenue'), t('nav.bookings')];
         const rows = chartData.map((d) => [d.label, String(d.revenue), String(d.bookings)]);
-        const sitterHeaders = ['Sitter', 'Tier', 'Rating', 'Sessions', 'Safety Days'];
+        const sitterHeaders = [t('reports.sitter'), t('reports.tier'), t('reports.rating'), t('reports.sessionCount'), t('reports.safetyScore')];
         const sitterRows = sitters.map((s) => [s.name, s.tier, String(s.rating), String(s.sessionsCompleted), String(s.safetyDays)]);
 
         const csvContent = [
             `Report: ${PERIOD_LABELS[period]}`,
             '',
-            'Revenue Data',
+            t('reports.revenueData'),
             headers.join(','),
             ...rows.map((r) => r.join(',')),
             '',
-            'Sitter Performance',
+            t('reports.sitterPerformanceCSV'),
             sitterHeaders.join(','),
             ...sitterRows.map((r) => r.join(',')),
         ].join('\n');
@@ -208,7 +208,7 @@ export default function Reports() {
         link.click();
         URL.revokeObjectURL(url);
 
-        success('Export Complete', 'CSV report has been downloaded.');
+        success(t('reports.exportComplete'), t('reports.csvDownloaded'));
     };
 
     // ----------------------------------------

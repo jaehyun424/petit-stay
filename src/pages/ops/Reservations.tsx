@@ -66,7 +66,7 @@ export default function OpsReservations() {
                       <span className="booking-code">{booking.confirmationCode}</span>
                       <br /><span className="text-xs text-muted">{booking.date} {booking.time}</span>
                     </td>
-                    <td>{booking.parent.name}<br /><span className="text-xs text-muted">Room {booking.room}</span></td>
+                    <td>{booking.parent.name}<br /><span className="text-xs text-muted">{t('common.room')} {booking.room}</span></td>
                     <td>
                       {booking.sitter ? (
                         <div className="sitter-cell">
@@ -74,7 +74,7 @@ export default function OpsReservations() {
                           <span>{booking.sitter.name}</span>
                           <TierBadge tier={booking.sitter.tier} />
                         </div>
-                      ) : <span className="text-muted">Unassigned</span>}
+                      ) : <span className="text-muted">{t('ops.unassigned')}</span>}
                     </td>
                     <td><StatusBadge status={booking.status} /></td>
                     <td>{formatCurrency(booking.totalAmount)}</td>

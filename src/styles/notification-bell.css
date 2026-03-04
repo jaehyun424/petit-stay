@@ -97,7 +97,7 @@
 }
 
 .notification-mark-all:hover {
-    background: rgba(79, 70, 187, 0.08);
+    background: rgba(197, 160, 89, 0.08);
 }
 
 /* List */
@@ -132,7 +132,7 @@
 }
 
 .notification-unread {
-    background: rgba(79, 70, 187, 0.04);
+    background: rgba(197, 160, 89, 0.04);
 }
 
 .notification-item-content {
@@ -174,5 +174,5 @@
 
 /* Dark mode adjustments */
 :root[data-theme="dark"] .notification-unread {
-    background: rgba(79, 70, 187, 0.08);
+    background: rgba(197, 160, 89, 0.08);
 }

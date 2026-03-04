@@ -71,7 +71,7 @@
 .upcoming-card {
   margin-bottom: 3rem;
   border: 1px solid var(--gold-200) !important;
-  background: linear-gradient(to bottom right, #FFFAF0, var(--bg-card)) !important;
+  background: linear-gradient(to bottom right, var(--gold-100), var(--bg-card)) !important;
   position: relative;
   overflow: hidden;
 }
@@ -193,7 +193,7 @@
 
 /* Dark mode overrides */
 :root[data-theme="dark"] .upcoming-card {
-  background: linear-gradient(to bottom right, #2A2518, var(--bg-card)) !important;
+  background: linear-gradient(to bottom right, var(--sidebar-bg-start), var(--bg-card)) !important;
   border-color: var(--gold-600) !important;
 }
 

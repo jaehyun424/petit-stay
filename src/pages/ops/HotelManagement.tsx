@@ -27,7 +27,7 @@ export default function OpsHotelManagement() {
               <thead>
                 <tr>
                   <th>{t('common.name')}</th>
-                  <th>Tier</th>
+                  <th>{t('ops.tier')}</th>
                   <th>{t('ops.monthlyBookings')}</th>
                   <th>{t('ops.monthlyRevenue')}</th>
                   <th>{t('ops.commissionRate')}</th>

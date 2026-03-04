@@ -38,7 +38,7 @@ export default function LiveMonitor() {
   };
 
   const handleEmergencyConfirm = () => {
-    toast.warning('Emergency Protocol Activated', 'All sitters have been notified. Hotel security has been alerted.');
+    toast.warning(t('liveMonitor.emergencyActivated'), t('liveMonitor.emergencyActivatedDesc'));
     setShowEmergency(false);
   };
 

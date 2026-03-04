@@ -217,7 +217,7 @@ export default function Booking() {
                                 name="room"
                                 value={formData.room}
                                 onChange={handleInputChange}
-                                placeholder="e.g., 2305"
+                                placeholder={t('booking.roomPlaceholder')}
                             />
                             <Input
                                 label={t('common.date')}
@@ -325,26 +325,26 @@ export default function Booking() {
                             {/* Pricing Breakdown */}
                             <div className="pricing-breakdown">
                                 <div className="summary-row">
-                                    <span>Base rate (₩{calculatePricing().baseRate.toLocaleString()} × {calculatePricing().hours}h)</span>
-                                    <span>₩{calculatePricing().baseTotal.toLocaleString()}</span>
+                                    <span>{t('booking.baseRate')} ({new Intl.NumberFormat('ko-KR', { style: 'currency', currency: 'KRW', maximumFractionDigits: 0 }).format(calculatePricing().baseRate)} × {calculatePricing().hours}h)</span>
+                                    <span>{new Intl.NumberFormat('ko-KR', { style: 'currency', currency: 'KRW', maximumFractionDigits: 0 }).format(calculatePricing().baseTotal)}</span>
                                 </div>
                                 {calculatePricing().additionalChildCharge > 0 && (
                                     <div className="summary-row">
-                                        <span>Additional child ({calculatePricing().childrenCount - 1} × ₩20,000/h)</span>
-                                        <span>₩{calculatePricing().additionalChildCharge.toLocaleString()}</span>
+                                        <span>{t('booking.additionalChild')} ({calculatePricing().childrenCount - 1} × {new Intl.NumberFormat('ko-KR', { style: 'currency', currency: 'KRW', maximumFractionDigits: 0 }).format(20000)}/h)</span>
+                                        <span>{new Intl.NumberFormat('ko-KR', { style: 'currency', currency: 'KRW', maximumFractionDigits: 0 }).format(calculatePricing().additionalChildCharge)}</span>
                                     </div>
                                 )}
                                 {calculatePricing().nightSurcharge > 0 && (
                                     <div className="summary-row">
-                                        <span>Night surcharge (after 22:00)</span>
-                                        <span>₩{calculatePricing().nightSurcharge.toLocaleString()}</span>
+                                        <span>{t('booking.nightSurcharge')}</span>
+                                        <span>{new Intl.NumberFormat('ko-KR', { style: 'currency', currency: 'KRW', maximumFractionDigits: 0 }).format(calculatePricing().nightSurcharge)}</span>
                                     </div>
                                 )}
                             </div>
 
                             <div className="summary-row total">
                                 <span>{t('booking.totalCost')}</span>
-                                <span className="price">₩{calculatePrice().toLocaleString()}</span>
+                                <span className="price">{new Intl.NumberFormat('ko-KR', { style: 'currency', currency: 'KRW', maximumFractionDigits: 0 }).format(calculatePrice())}</span>
                             </div>
                         </div>
                         <p className="terms-note">

@@ -208,7 +208,9 @@
         "trustRating": "4.9",
         "avgSatisfaction": "平均满意度",
         "trustSessions": "10K+",
-        "completedSessions": "已完成会话"
+        "completedSessions": "已完成会话",
+        "reviewSubmitted": "评价已提交",
+        "thankYouFeedback": "感谢您的反馈！"
     },
     "booking": {
         "newBooking": "新建预约",
@@ -236,7 +238,10 @@
         "reviewBooking": "请确认预约信息",
         "bookingDetails": "预约详情",
         "totalCost": "总费用",
-        "roomPlaceholder": "例：2305"
+        "roomPlaceholder": "例：2305",
+        "baseRate": "基本费用",
+        "additionalChild": "额外儿童",
+        "nightSurcharge": "夜间附加费（22:00后）"
     },
     "sitter": {
         "todaySchedule": "今日日程",
@@ -321,7 +326,8 @@
         "todaysBookings": "今日预约",
         "upcomingAndInProgress": "即将到来和进行中的预约",
         "started": "已开始",
-        "energy": "精力"
+        "energy": "精力",
+        "guestNamePlaceholder": "例：张明"
     },
     "trustCheckin": {
         "trustProtocol": "信任协议签到",
@@ -353,7 +359,15 @@
         "emergencyPhone": "紧急联系电话",
         "emsInfo": "如遇危及生命的紧急情况，我们将首先拨打119，然后立即通知您。",
         "firstAidConsent": "我授权看护人在必要时进行基本急救，并确认孩子没有未公开的传染性疾病。",
-        "parentSignature": "家长/监护人签名"
+        "parentSignature": "家长/监护人签名",
+        "actionRequired": "需要操作",
+        "acceptProtocols": "请接受安全规程。",
+        "signatureRequired": "需要签名",
+        "signToAcknowledge": "请签名以确认看护交接。",
+        "checkInComplete": "签到完成",
+        "sessionStarted": "看护服务已正式开始。",
+        "checkInFailed": "签到失败",
+        "pleaseRetry": "请重试。"
     },
     "status": {
         "pending": "待处理",
@@ -556,7 +570,8 @@
         "sitterRate": "时薪：",
         "sitterAvailability": "可用：",
         "noUnassignedBookings": "没有未分配的预约",
-        "assignSitterToBooking": "将{{name}}分配到预约"
+        "assignSitterToBooking": "将{{name}}分配到预约",
+        "noAvailableSitters": "没有可用的看护人"
     },
     "liveMonitor": {
         "noActiveSessions": "没有进行中的服务",
@@ -672,7 +687,10 @@
         "noDocuments": "暂无上传文件",
         "female": "女",
         "male": "男",
-        "otherGender": "其他"
+        "otherGender": "其他",
+        "cardNumberPlaceholder": "**** **** **** ****",
+        "expiryPlaceholder": "MM/YY",
+        "cardHolderPlaceholder": "持卡人姓名"
     },
     "notifications": {
         "inbox": "通知收件箱",
@@ -708,7 +726,14 @@
         "photoAdded": "照片已添加",
         "snackLogged": "零食已记录",
         "sessionComplete": "服务完成",
-        "uploadPhoto": "上传活动照片"
+        "uploadPhoto": "上传活动照片",
+        "activityRecorded": "活动更新已记录。",
+        "photoUploaded": "照片已上传。",
+        "uploadFailed": "上传失败",
+        "uploadFailedDesc": "无法上传照片。",
+        "snackRecorded": "零食已记录。",
+        "sessionCompletedDesc": "看护服务已完成。",
+        "sessionCompleteFailed": "无法完成服务。"
     },
     "landing": {
         "navFeatures": "特色",
@@ -815,7 +840,11 @@
         "loading": "正在加载您的预约...",
         "nextStep": "继续",
         "previousStep": "返回",
-        "languageLabel": "语言"
+        "languageLabel": "语言",
+        "cardNumberPlaceholder": "4242 4242 4242 4242",
+        "expiryPlaceholder": "MM/YY",
+        "cvvPlaceholder": "123",
+        "cardHolderPlaceholder": "张三"
     },
     "ops": {
         "title": "运营控制台",
@@ -864,7 +893,22 @@
         "allHotels": "所有酒店",
         "allStatuses": "所有状态",
         "filterByHotel": "按酒店筛选",
-        "filterByStatus": "按状态筛选"
+        "filterByStatus": "按状态筛选",
+        "hotel": "酒店",
+        "bookings": "预约",
+        "commission": "佣金",
+        "netPayout": "净支付",
+        "tier": "等级",
+        "id": "ID",
+        "severity": "严重性",
+        "category": "类别",
+        "summary": "摘要",
+        "sitter": "看护人",
+        "status": "状态",
+        "revenue": "营收",
+        "net": "净额",
+        "total": "合计",
+        "unassigned": "未分配"
     },
     "info": {
         "about": {

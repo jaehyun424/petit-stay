@@ -847,8 +847,8 @@ p {
 }
 
 :root[data-theme="dark"] body {
-  color: #E8E8E8;
-  background-color: #1E1E1E;
+  color: var(--text-primary);
+  background-color: var(--bg-primary);
 }
 
 :root[data-theme="dark"] body::before {
@@ -861,39 +861,39 @@ p {
 :root[data-theme="dark"] h4,
 :root[data-theme="dark"] h5,
 :root[data-theme="dark"] h6 {
-  color: #E8E8E8;
+  color: var(--text-primary);
 }
 
 :root[data-theme="dark"] p {
-  color: #B0B0B0;
+  color: var(--text-secondary);
 }
 
 /* Dark mode - Buttons */
 :root[data-theme="dark"] .btn-primary {
-  background-color: #E8E8E8;
-  color: #1E1E1E;
+  background-color: var(--charcoal-900);
+  color: var(--bg-primary);
 }
 :root[data-theme="dark"] .btn-primary:hover:not(:disabled) {
-  background-color: #D0D0D0;
+  background-color: var(--charcoal-800);
 }
 
 :root[data-theme="dark"] .btn-secondary {
-  border-color: #4A4A4A;
-  color: #E8E8E8;
+  border-color: var(--cream-400);
+  color: var(--text-primary);
 }
 :root[data-theme="dark"] .btn-secondary:hover:not(:disabled) {
-  border-color: #808080;
+  border-color: var(--charcoal-500);
   background-color: rgba(255, 255, 255, 0.05);
 }
 
 :root[data-theme="dark"] .btn-ghost:hover:not(:disabled) {
-  background-color: #2A2A2A;
+  background-color: var(--cream-200);
 }
 
 /* Dark mode - Cards */
 :root[data-theme="dark"] .card {
-  background-color: #252525;
-  border-color: #3A3A3A;
+  background-color: var(--bg-card);
+  border-color: var(--border-color);
 }
 
 :root[data-theme="dark"] .card-gold {
@@ -906,16 +906,16 @@ p {
 :root[data-theme="dark"] .form-select,
 :root[data-theme="dark"] .form-textarea,
 :root[data-theme="dark"] .input {
-  background: #1A1A1A;
-  border-color: #3A3A3A;
-  color: #E8E8E8;
+  background: var(--cream-50);
+  border-color: var(--border-color);
+  color: var(--text-primary);
 }
 
 :root[data-theme="dark"] .form-input:focus,
 :root[data-theme="dark"] .form-select:focus,
 :root[data-theme="dark"] .form-textarea:focus,
 :root[data-theme="dark"] .input:focus {
-  background: #252525;
+  background: var(--bg-secondary);
   border-color: var(--gold-500);
 }
 
@@ -925,26 +925,26 @@ p {
 }
 
 :root[data-theme="dark"] .modal {
-  background: #252525;
+  background: var(--bg-secondary);
 }
 
 /* Dark mode - Toast */
 :root[data-theme="dark"] .toast {
-  background: #2A2A2A;
+  background: var(--cream-200);
 }
 
 /* Dark mode - Skeleton */
 :root[data-theme="dark"] .skeleton {
-  background: #3A3A3A;
+  background: var(--cream-300);
 }
 
 /* Dark mode - utility overrides */
 :root[data-theme="dark"] .bg-white {
-  background-color: #252525;
+  background-color: var(--bg-secondary);
 }
 
 :root[data-theme="dark"] .bg-cream {
-  background-color: #1E1E1E;
+  background-color: var(--bg-primary);
 }
 
 /* ----------------------------------------

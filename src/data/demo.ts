@@ -781,3 +781,21 @@ export const DEMO_OPS_STATS: DemoOpsStats = {
     pendingSettlements: 2,
     slaCompliance: 97.5,
 };
+
+// ----------------------------------------
+// Ops Hotels (used by Ops Dashboard)
+// ----------------------------------------
+export interface DemoOpsHotel {
+    id: string;
+    name: string;
+    tier: string;
+    bookingsThisMonth: number;
+    revenue: number;
+    commission: number;
+}
+
+export const DEMO_OPS_HOTELS: DemoOpsHotel[] = [
+    { id: 'hotel-grand-hyatt', name: 'Grand Hyatt Seoul', tier: 'luxury', bookingsThisMonth: 62, revenue: 18600000, commission: 2790000 },
+    { id: 'hotel-park-hyatt', name: 'Park Hyatt Busan', tier: 'luxury', bookingsThisMonth: 34, revenue: 10200000, commission: 1530000 },
+    { id: 'hotel-four-seasons', name: 'Four Seasons Seoul', tier: 'premium', bookingsThisMonth: 58, revenue: 17400000, commission: 2610000 },
+];

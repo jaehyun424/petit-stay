@@ -5,7 +5,7 @@
 
 .guest-page {
   min-height: 100vh;
-  background: linear-gradient(135deg, #faf9f7 0%, #f5f0eb 100%);
+  background: linear-gradient(135deg, var(--cream-50) 0%, var(--bg-secondary) 100%);
   padding: 1rem;
 }
 
@@ -456,7 +456,7 @@
 
 /* Dark Mode Overrides */
 :root[data-theme="dark"] .guest-page {
-  background: linear-gradient(135deg, #1a1a1a 0%, #252525 100%);
+  background: linear-gradient(135deg, var(--cream-50) 0%, var(--bg-secondary) 100%);
 }
 
 :root[data-theme="dark"] .guest-brand,
@@ -486,13 +486,13 @@
 }
 
 :root[data-theme="dark"] .guest-input {
-  background: #2a2a2a;
+  background: var(--cream-200);
   border-color: var(--border-light, #444);
   color: var(--text-primary, #e8e8e8);
 }
 
 :root[data-theme="dark"] .guest-textarea {
-  background: #2a2a2a;
+  background: var(--cream-200);
   border-color: var(--border-light, #444);
   color: var(--text-primary, #e8e8e8);
 }
@@ -503,7 +503,7 @@
 }
 
 :root[data-theme="dark"] .guest-btn-secondary:hover:not(:disabled) {
-  background: #333;
+  background: var(--border-light);
 }
 
 :root[data-theme="dark"] .guest-signature-pad {
@@ -511,19 +511,19 @@
 }
 
 :root[data-theme="dark"] .guest-payment-total {
-  background: #2a2a2a;
+  background: var(--cream-200);
 }
 
 :root[data-theme="dark"] .guest-confirmation-code {
-  background: #2a2a2a;
+  background: var(--cream-200);
 }
 
 :root[data-theme="dark"] .guest-step-circle {
-  background: #3a3a3a;
+  background: var(--cream-300);
 }
 
 :root[data-theme="dark"] .guest-step-line {
-  background: #3a3a3a;
+  background: var(--cream-300);
 }
 
 :root[data-theme="dark"] .guest-consent-item {

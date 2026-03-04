@@ -25,10 +25,10 @@ const LANGUAGES = [
     { code: 'zh', label: '中文', flag: '🇨🇳' },
 ];
 
-const GENDER_OPTIONS = [
-    { value: 'female', label: 'Female' },
-    { value: 'male', label: 'Male' },
-    { value: 'other', label: 'Other' },
+const getGenderOptions = (t: (key: string) => string) => [
+    { value: 'female', label: t('profile.female') },
+    { value: 'male', label: t('profile.male') },
+    { value: 'other', label: t('profile.otherGender') },
 ];
 
 const GENDER_AVATAR: Record<string, string> = {
@@ -335,7 +335,7 @@ export default function Profile() {
                         value={childForm.name}
                         onChange={(e) => setChildForm((f) => ({ ...f, name: e.target.value }))}
                         error={formErrors.name}
-                        placeholder="e.g. Emma"
+                        placeholder={t('profile.namePlaceholder')}
                     />
                     <Input
                         label={t('common.age')}
@@ -345,13 +345,13 @@ export default function Profile() {
                         value={childForm.age}
                         onChange={(e) => setChildForm((f) => ({ ...f, age: e.target.value }))}
                         error={formErrors.age}
-                        placeholder="e.g. 5"
+                        placeholder={t('profile.agePlaceholder')}
                     />
                     <Select
                         label={t('common.gender') || 'Gender'}
                         value={childForm.gender}
                         onChange={(e) => setChildForm((f) => ({ ...f, gender: e.target.value as 'male' | 'female' | 'other' }))}
-                        options={GENDER_OPTIONS}
+                        options={getGenderOptions(t)}
                     />
                     <Input
                         label={t('common.allergies') || 'Allergies'}
@@ -457,19 +457,19 @@ export default function Profile() {
                                 label={t('profile.cardNumber')}
                                 value={cardForm.number}
                                 onChange={(e) => setCardForm({ ...cardForm, number: e.target.value })}
-                                placeholder="**** **** **** ****"
+                                placeholder={t('profile.cardNumberPlaceholder')}
                             />
                             <Input
                                 label={t('profile.expiry')}
                                 value={cardForm.expiry}
                                 onChange={(e) => setCardForm({ ...cardForm, expiry: e.target.value })}
-                                placeholder="MM/YY"
+                                placeholder={t('profile.expiryPlaceholder')}
                             />
                             <Input
                                 label={t('profile.cardHolder')}
                                 value={cardForm.holder}
                                 onChange={(e) => setCardForm({ ...cardForm, holder: e.target.value })}
-                                placeholder="Card holder name"
+                                placeholder={t('profile.cardHolderPlaceholder')}
                             />
                             <div style={{ display: 'flex', gap: '0.5rem', marginTop: '0.5rem' }}>
                                 <Button variant="secondary" onClick={() => setShowAddCard(false)} fullWidth>{t('common.cancel')}</Button>

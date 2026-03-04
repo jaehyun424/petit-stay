@@ -20,7 +20,7 @@ export default function History() {
     const { t } = useTranslation();
     const { user } = useAuth();
     const { history, isLoading } = useParentBookings(user?.id);
-    const formatCurrency = (amount: number) => `₩${amount.toLocaleString()}`;
+    const formatCurrency = (amount: number) => new Intl.NumberFormat('ko-KR', { style: 'currency', currency: 'KRW', maximumFractionDigits: 0 }).format(amount);
     const [currentPage, setCurrentPage] = useState(1);
     const { totalPages, getPageItems } = usePagination(history, 10);
     const paginatedHistory = getPageItems(currentPage);
@@ -119,7 +119,7 @@ export default function History() {
                         sitterId: '',
                         ...review,
                     });
-                    toast.success('Review Submitted', 'Thank you for your feedback!');
+                    toast.success(t('parent.reviewSubmitted'), t('parent.thankYouFeedback'));
                 }}
             />
         </div>

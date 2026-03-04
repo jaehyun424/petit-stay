@@ -32,6 +32,8 @@ import type {
     TimelineEvent,
     ReviewData,
     DashboardStats,
+    Settlement,
+    GuestConsent,
 } from '../types';
 
 // Activity log shape in Firestore (activityLogs collection)
@@ -65,18 +67,18 @@ const COLLECTIONS = {
 // ----------------------------------------
 // Helper Functions
 // ----------------------------------------
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
-const convertTimestamps = <T extends Record<string, any>>(data: T): T => {
-    const converted = { ...data };
+interface FirestoreTimestamp { toDate: () => Date }
+const convertTimestamps = <T extends Record<string, unknown>>(data: T): T => {
+    const converted = { ...data } as Record<string, unknown>;
     for (const key in converted) {
         const value = converted[key];
-        if (value && typeof value === 'object' && 'toDate' in value && typeof value.toDate === 'function') {
-            converted[key] = value.toDate();
+        if (value && typeof value === 'object' && 'toDate' in value && typeof (value as FirestoreTimestamp).toDate === 'function') {
+            converted[key] = (value as FirestoreTimestamp).toDate();
         } else if (typeof value === 'object' && value !== null && !Array.isArray(value)) {
-            converted[key] = convertTimestamps(value);
+            converted[key] = convertTimestamps(value as Record<string, unknown>);
         }
     }
-    return converted;
+    return converted as T;
 };
 
 // ----------------------------------------
@@ -557,7 +559,7 @@ export const reviewService = {
     },
 
     // Create a review
-    async createReview(review: Record<string, unknown>): Promise<string> {
+    async createReview(review: Omit<ReviewData, 'createdAt'> & { bookingId: string; sitterId: string; parentId?: string }): Promise<string> {
         const reviewRef = doc(collection(db, COLLECTIONS.reviews));
         await setDoc(reviewRef, {
             ...review,
@@ -781,7 +783,7 @@ export const guestService = {
     },
 
     // Submit guest consent
-    async submitConsent(bookingId: string, consent: Record<string, unknown>): Promise<void> {
+    async submitConsent(bookingId: string, consent: Omit<GuestConsent, 'consentedAt'>): Promise<void> {
         await updateDoc(doc(db, COLLECTIONS.bookings, bookingId), {
             guestConsent: {
                 ...consent,
@@ -793,7 +795,7 @@ export const guestService = {
     },
 
     // Submit guest payment (dummy)
-    async submitPayment(bookingId: string, paymentData: Record<string, unknown>): Promise<void> {
+    async submitPayment(bookingId: string, paymentData: { method?: string; transactionId?: string }): Promise<void> {
         await updateDoc(doc(db, COLLECTIONS.bookings, bookingId), {
             'payment.status': 'authorized',
             'payment.method': paymentData.method || 'card',
@@ -823,7 +825,7 @@ export const guestService = {
 // ----------------------------------------
 export const settlementService = {
     // Get settlements (optionally filtered by hotel)
-    async getSettlements(hotelId?: string): Promise<Record<string, unknown>[]> {
+    async getSettlements(hotelId?: string): Promise<Settlement[]> {
         let q;
         if (hotelId) {
             q = query(
@@ -842,11 +844,11 @@ export const settlementService = {
         return snapshot.docs.map((d) => ({
             id: d.id,
             ...convertTimestamps(d.data()),
-        }));
+        })) as Settlement[];
     },
 
     // Create a settlement
-    async createSettlement(data: Record<string, unknown>): Promise<string> {
+    async createSettlement(data: Omit<Settlement, 'id' | 'status' | 'createdAt'>): Promise<string> {
         const ref = doc(collection(db, COLLECTIONS.settlements));
         await setDoc(ref, {
             ...data,

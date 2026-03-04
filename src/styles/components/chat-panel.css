@@ -100,8 +100,8 @@
 }
 
 :root[data-theme="dark"] .chat-message-other .chat-bubble {
-  background: #333;
-  color: #E8E8E8;
+  background: var(--border-light);
+  color: var(--text-primary);
 }
 
 .chat-message-emergency .chat-bubble {
@@ -151,9 +151,9 @@
 }
 
 :root[data-theme="dark"] .chat-input {
-  background: #1A1A1A;
-  border-color: #3A3A3A;
-  color: #E8E8E8;
+  background: var(--cream-50);
+  border-color: var(--border-color);
+  color: var(--text-primary);
 }
 
 .chat-input:focus {

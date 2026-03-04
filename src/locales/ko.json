@@ -208,7 +208,9 @@
         "trustRating": "4.9",
         "avgSatisfaction": "평균 만족도",
         "trustSessions": "10K+",
-        "completedSessions": "완료된 세션"
+        "completedSessions": "완료된 세션",
+        "reviewSubmitted": "리뷰 제출됨",
+        "thankYouFeedback": "피드백 감사합니다!"
     },
     "booking": {
         "newBooking": "새 예약",
@@ -236,7 +238,10 @@
         "reviewBooking": "예약 내용을 확인하세요",
         "bookingDetails": "예약 상세",
         "totalCost": "총 비용",
-        "roomPlaceholder": "예: 2305"
+        "roomPlaceholder": "예: 2305",
+        "baseRate": "기본 요금",
+        "additionalChild": "추가 아동",
+        "nightSurcharge": "야간 할증 (22:00 이후)"
     },
     "sitter": {
         "todaySchedule": "오늘 일정",
@@ -321,7 +326,8 @@
         "todaysBookings": "오늘의 예약",
         "upcomingAndInProgress": "예정 및 진행 중인 예약",
         "started": "시작됨",
-        "energy": "에너지"
+        "energy": "에너지",
+        "guestNamePlaceholder": "예: 김서연"
     },
     "trustCheckin": {
         "trustProtocol": "신뢰 프로토콜 체크인",
@@ -353,7 +359,15 @@
         "emergencyPhone": "비상 전화번호",
         "emsInfo": "생명이 위급한 상황에서는 먼저 119에 연락한 후 즉시 보호자에게 연락합니다.",
         "firstAidConsent": "시터가 필요 시 기본 응급 처치를 하도록 허가하며, 아이에게 미공개 전염성 질환이 없음을 확인합니다.",
-        "parentSignature": "부모/보호자 서명"
+        "parentSignature": "부모/보호자 서명",
+        "actionRequired": "조치 필요",
+        "acceptProtocols": "안전 규약에 동의해주세요.",
+        "signatureRequired": "서명 필요",
+        "signToAcknowledge": "돌봄 인계를 확인하기 위해 서명해주세요.",
+        "checkInComplete": "체크인 완료",
+        "sessionStarted": "돌봄 세션이 공식적으로 시작되었습니다.",
+        "checkInFailed": "체크인 실패",
+        "pleaseRetry": "다시 시도해주세요."
     },
     "status": {
         "pending": "대기 중",
@@ -556,7 +570,8 @@
         "sitterRate": "시급:",
         "sitterAvailability": "근무 가능:",
         "noUnassignedBookings": "미배정 예약이 없습니다",
-        "assignSitterToBooking": "{{name}}을(를) 예약에 배정"
+        "assignSitterToBooking": "{{name}}을(를) 예약에 배정",
+        "noAvailableSitters": "가용 시터가 없습니다"
     },
     "liveMonitor": {
         "noActiveSessions": "진행 중인 세션 없음",
@@ -672,7 +687,10 @@
         "noDocuments": "업로드된 서류가 없습니다",
         "female": "여자",
         "male": "남자",
-        "otherGender": "기타"
+        "otherGender": "기타",
+        "cardNumberPlaceholder": "**** **** **** ****",
+        "expiryPlaceholder": "MM/YY",
+        "cardHolderPlaceholder": "카드 소유자 이름"
     },
     "notifications": {
         "inbox": "알림 인박스",
@@ -708,7 +726,14 @@
         "photoAdded": "사진 추가됨",
         "snackLogged": "간식 기록됨",
         "sessionComplete": "세션 완료",
-        "uploadPhoto": "활동 사진 업로드"
+        "uploadPhoto": "활동 사진 업로드",
+        "activityRecorded": "활동 업데이트가 기록되었습니다.",
+        "photoUploaded": "사진이 업로드되었습니다.",
+        "uploadFailed": "업로드 실패",
+        "uploadFailedDesc": "사진을 업로드할 수 없습니다.",
+        "snackRecorded": "간식이 기록되었습니다.",
+        "sessionCompletedDesc": "돌봄 세션이 완료되었습니다.",
+        "sessionCompleteFailed": "세션을 완료할 수 없습니다."
     },
     "landing": {
         "navFeatures": "서비스",
@@ -815,7 +840,11 @@
         "loading": "예약을 불러오는 중...",
         "nextStep": "계속",
         "previousStep": "뒤로",
-        "languageLabel": "언어"
+        "languageLabel": "언어",
+        "cardNumberPlaceholder": "4242 4242 4242 4242",
+        "expiryPlaceholder": "MM/YY",
+        "cvvPlaceholder": "123",
+        "cardHolderPlaceholder": "홍길동"
     },
     "ops": {
         "title": "운영 콘솔",
@@ -864,7 +893,22 @@
         "allHotels": "전체 호텔",
         "allStatuses": "전체 상태",
         "filterByHotel": "호텔별 필터",
-        "filterByStatus": "상태별 필터"
+        "filterByStatus": "상태별 필터",
+        "hotel": "호텔",
+        "bookings": "예약",
+        "commission": "수수료",
+        "netPayout": "순 지급액",
+        "tier": "등급",
+        "id": "ID",
+        "severity": "심각도",
+        "category": "카테고리",
+        "summary": "요약",
+        "sitter": "시터",
+        "status": "상태",
+        "revenue": "매출",
+        "net": "순액",
+        "total": "합계",
+        "unassigned": "미배정"
     },
     "info": {
         "about": {

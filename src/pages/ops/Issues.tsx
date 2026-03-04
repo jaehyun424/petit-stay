@@ -26,12 +26,12 @@ export default function OpsIssues() {
               <table className="ops-table">
                 <thead>
                   <tr>
-                    <th>ID</th>
-                    <th>Severity</th>
-                    <th>Category</th>
-                    <th>Summary</th>
-                    <th>Sitter</th>
-                    <th>Status</th>
+                    <th>{t('ops.id')}</th>
+                    <th>{t('ops.severity')}</th>
+                    <th>{t('ops.category')}</th>
+                    <th>{t('ops.summary')}</th>
+                    <th>{t('ops.sitter')}</th>
+                    <th>{t('ops.status')}</th>
                     <th></th>
                   </tr>
                 </thead>

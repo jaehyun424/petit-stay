@@ -46,7 +46,7 @@ function getSeverityColor(severity: string): string {
         case 'low': return 'var(--success-500)';
         case 'medium': return 'var(--warning-500)';
         case 'high': return 'var(--error-500)';
-        case 'critical': return '#dc2626';
+        case 'critical': return 'var(--error-600, #dc2626)';
         default: return 'var(--text-tertiary)';
     }
 }
@@ -177,7 +177,7 @@ export default function SafetyDashboard() {
             toast.success(t('safety.incidentReported'), t('safety.reportedSuccess'));
             closeModal();
         } catch {
-            toast.error('Failed', t('safety.reportFailed'));
+            toast.error(t('common.failed'), t('safety.reportFailed'));
         } finally {
             setIsSubmitting(false);
         }
@@ -188,7 +188,7 @@ export default function SafetyDashboard() {
             await updateIncidentStatus(incidentId, newStatus);
             toast.success(t('safety.statusUpdated'), t('safety.statusChangedTo', { status: newStatus }));
         } catch {
-            toast.error('Failed', t('safety.statusUpdateFailed'));
+            toast.error(t('common.failed'), t('safety.statusUpdateFailed'));
         }
     };
 
@@ -315,7 +315,7 @@ export default function SafetyDashboard() {
                         </Button>
                     }
                 >
-                    <CardTitle subtitle={`${incidents.length} total incidents on record`}>
+                    <CardTitle subtitle={t('safety.totalIncidentsOnRecord', { count: incidents.length })}>
                         {t('safety.incidentHistory')}
                     </CardTitle>
                 </CardHeader>
@@ -348,7 +348,7 @@ export default function SafetyDashboard() {
                             <p>
                                 {activeFilter === 'all'
                                     ? t('safety.noIncidentsDesc')
-                                    : `No ${activeFilter} incidents found.`}
+                                    : t('safety.noFilteredIncidents', { filter: activeFilter })}
                             </p>
                         </div>
                     ) : (

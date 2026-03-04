@@ -64,8 +64,8 @@
 }
 
 .verify-item.verified {
-    background: linear-gradient(to right, #F0FDF4, var(--bg-card));
-    border-color: #BBF7D0;
+    background: linear-gradient(to right, var(--success-bg), var(--bg-card));
+    border-color: var(--success-500);
 }
 
 .verify-icon { font-size: 1.25rem; }
@@ -86,7 +86,7 @@
 }
 
 .verify-check {
-    color: #10B981;
+    color: var(--success-500);
     font-weight: bold;
 }
 
@@ -96,8 +96,8 @@
 }
 
 :root[data-theme="dark"] .verify-item.verified {
-  background: linear-gradient(to right, #1A2E22, var(--bg-card));
-  border-color: #2D5A3E;
+  background: linear-gradient(to right, var(--success-50), var(--bg-card));
+  border-color: var(--success-600);
 }
 
 /* Reviews Section */

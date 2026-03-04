@@ -35,12 +35,12 @@ export default function OpsSettlements() {
             <table className="ops-table">
               <thead>
                 <tr>
-                  <th>Hotel</th>
+                  <th>{t('ops.hotel')}</th>
                   <th>{t('ops.settlementPeriod')}</th>
-                  <th>Bookings</th>
+                  <th>{t('ops.bookings')}</th>
                   <th>{t('ops.monthlyRevenue')}</th>
-                  <th>Commission</th>
-                  <th>Net Payout</th>
+                  <th>{t('ops.commission')}</th>
+                  <th>{t('ops.netPayout')}</th>
                   <th>{t('ops.settlementStatus')}</th>
                   <th></th>
                 </tr>

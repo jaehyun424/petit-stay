@@ -342,12 +342,12 @@ export function useSitterBookings(sitterId?: string) {
         return () => { cancelled = true; };
     }, [sitterId, retryCount]);
 
-    const createBooking = useCallback(async (data: Record<string, unknown>) => {
+    const createBooking = useCallback(async (data: Omit<import('../types').Booking, 'id' | 'createdAt' | 'updatedAt'>) => {
         if (DEMO_MODE) {
             await new Promise((r) => setTimeout(r, 1000));
             return 'demo-booking-' + Date.now();
         }
-        const booking = await bookingService.createBooking(data as never);
+        const booking = await bookingService.createBooking(data);
         return booking;
     }, []);
 

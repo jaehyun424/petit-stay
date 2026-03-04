@@ -252,7 +252,7 @@
 }
 
 :root[data-theme="dark"] .header-user {
-  border-left-color: #3A3A3A;
+  border-left-color: var(--border-color);
 }
 
 .header-user-name {

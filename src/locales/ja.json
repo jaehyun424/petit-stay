@@ -208,7 +208,9 @@
         "trustRating": "4.9",
         "avgSatisfaction": "平均満足度",
         "trustSessions": "10K+",
-        "completedSessions": "完了セッション"
+        "completedSessions": "完了セッション",
+        "reviewSubmitted": "レビュー送信済み",
+        "thankYouFeedback": "フィードバックありがとうございます！"
     },
     "booking": {
         "newBooking": "新規予約",
@@ -236,7 +238,10 @@
         "reviewBooking": "予約内容をご確認ください",
         "bookingDetails": "予約詳細",
         "totalCost": "合計金額",
-        "roomPlaceholder": "例：2305"
+        "roomPlaceholder": "例：2305",
+        "baseRate": "基本料金",
+        "additionalChild": "追加のお子様",
+        "nightSurcharge": "夜間割増（22:00以降）"
     },
     "sitter": {
         "todaySchedule": "本日のスケジュール",
@@ -321,7 +326,8 @@
         "todaysBookings": "本日の予約",
         "upcomingAndInProgress": "予定中および進行中の予約",
         "started": "開始済み",
-        "energy": "エネルギー"
+        "energy": "エネルギー",
+        "guestNamePlaceholder": "例：田中太郎"
     },
     "trustCheckin": {
         "trustProtocol": "トラストプロトコル チェックイン",
@@ -353,7 +359,15 @@
         "emergencyPhone": "緊急連絡先電話番号",
         "emsInfo": "生命に関わる緊急事態では、まず119に連絡し、その後すぐに保護者に連絡します。",
         "firstAidConsent": "シッターが必要に応じて基本的な応急処置を行うことを許可し、お子様に未申告の感染症がないことを確認します。",
-        "parentSignature": "保護者署名"
+        "parentSignature": "保護者署名",
+        "actionRequired": "対応が必要です",
+        "acceptProtocols": "安全プロトコルに同意してください。",
+        "signatureRequired": "署名が必要です",
+        "signToAcknowledge": "ケアの引き継ぎを確認するために署名してください。",
+        "checkInComplete": "チェックイン完了",
+        "sessionStarted": "ケアセッションが正式に開始されました。",
+        "checkInFailed": "チェックイン失敗",
+        "pleaseRetry": "もう一度お試しください。"
     },
     "status": {
         "pending": "保留中",
@@ -556,7 +570,8 @@
         "sitterRate": "時給：",
         "sitterAvailability": "対応可能：",
         "noUnassignedBookings": "未割り当ての予約はありません",
-        "assignSitterToBooking": "{{name}}を予約に割り当て"
+        "assignSitterToBooking": "{{name}}を予約に割り当て",
+        "noAvailableSitters": "対応可能なシッターがいません"
     },
     "liveMonitor": {
         "noActiveSessions": "進行中のセッションなし",
@@ -672,7 +687,10 @@
         "noDocuments": "書類がアップロードされていません",
         "female": "女性",
         "male": "男性",
-        "otherGender": "その他"
+        "otherGender": "その他",
+        "cardNumberPlaceholder": "**** **** **** ****",
+        "expiryPlaceholder": "MM/YY",
+        "cardHolderPlaceholder": "カード名義人"
     },
     "notifications": {
         "inbox": "通知インボックス",
@@ -708,7 +726,14 @@
         "photoAdded": "写真が追加されました",
         "snackLogged": "おやつが記録されました",
         "sessionComplete": "セッション完了",
-        "uploadPhoto": "活動写真をアップロード"
+        "uploadPhoto": "活動写真をアップロード",
+        "activityRecorded": "活動の更新が記録されました。",
+        "photoUploaded": "写真がアップロードされました。",
+        "uploadFailed": "アップロード失敗",
+        "uploadFailedDesc": "写真をアップロードできませんでした。",
+        "snackRecorded": "おやつが記録されました。",
+        "sessionCompletedDesc": "ケアセッションが完了しました。",
+        "sessionCompleteFailed": "セッションを完了できませんでした。"
     },
     "landing": {
         "navFeatures": "特徴",
@@ -815,7 +840,11 @@
         "loading": "予約を読み込み中...",
         "nextStep": "次へ",
         "previousStep": "戻る",
-        "languageLabel": "言語"
+        "languageLabel": "言語",
+        "cardNumberPlaceholder": "4242 4242 4242 4242",
+        "expiryPlaceholder": "MM/YY",
+        "cvvPlaceholder": "123",
+        "cardHolderPlaceholder": "山田太郎"
     },
     "ops": {
         "title": "運営コンソール",
@@ -864,7 +893,22 @@
         "allHotels": "全ホテル",
         "allStatuses": "全ステータス",
         "filterByHotel": "ホテルで絞り込み",
-        "filterByStatus": "ステータスで絞り込み"
+        "filterByStatus": "ステータスで絞り込み",
+        "hotel": "ホテル",
+        "bookings": "予約",
+        "commission": "手数料",
+        "netPayout": "純支払額",
+        "tier": "ティア",
+        "id": "ID",
+        "severity": "重大度",
+        "category": "カテゴリー",
+        "summary": "概要",
+        "sitter": "シッター",
+        "status": "ステータス",
+        "revenue": "売上",
+        "net": "純額",
+        "total": "合計",
+        "unassigned": "未割り当て"
     },
     "info": {
         "about": {

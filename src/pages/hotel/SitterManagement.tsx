@@ -32,7 +32,7 @@ export default function SitterManagement() {
   const [newSitterForm, setNewSitterForm] = useState({ name: '', languages: '', certifications: '', hourlyRate: '' });
 
   const handleAddSitter = () => {
-    toast.success('Sitter Added', `${newSitterForm.name} has been registered.`);
+    toast.success(t('sitterMgmt.sitterAdded'), t('sitterMgmt.sitterRegistered', { name: newSitterForm.name }));
     setShowAddSitter(false);
     setNewSitterForm({ name: '', languages: '', certifications: '', hourlyRate: '' });
   };
@@ -45,7 +45,7 @@ export default function SitterManagement() {
   const unassignedBookings = bookings.filter((b) => !b.sitter && (b.status === 'pending' || b.status === 'confirmed'));
 
   const handleAssignToBooking = (bookingCode: string, sitterName: string) => {
-    toast.success('Sitter Assigned', `${sitterName} → ${bookingCode}`);
+    toast.success(t('sitterMgmt.sitterAssignedToast'), `${sitterName} → ${bookingCode}`);
     setAssignSitter(null);
   };
   const formatCurrency = (amount: number) => {

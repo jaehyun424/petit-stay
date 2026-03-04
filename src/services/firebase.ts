@@ -3,10 +3,10 @@
 // Real Firebase Integration
 // ============================================
 
-import { initializeApp } from 'firebase/app';
-import { getAuth, connectAuthEmulator } from 'firebase/auth';
-import { getFirestore, connectFirestoreEmulator } from 'firebase/firestore';
-import { getStorage, connectStorageEmulator } from 'firebase/storage';
+import { initializeApp, type FirebaseApp } from 'firebase/app';
+import { getAuth, connectAuthEmulator, type Auth } from 'firebase/auth';
+import { getFirestore, connectFirestoreEmulator, type Firestore } from 'firebase/firestore';
+import { getStorage, connectStorageEmulator, type FirebaseStorage } from 'firebase/storage';
 
 // Firebase configuration from environment variables
 const firebaseConfig = {
@@ -20,14 +20,10 @@ const firebaseConfig = {
 };
 
 // Initialize Firebase
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
-let app: any;
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
-let auth: any;
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
-let db: any;
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
-let storage: any;
+let app: FirebaseApp | undefined;
+let auth: Auth = { currentUser: null } as unknown as Auth;
+let db: Firestore = {} as unknown as Firestore;
+let storage: FirebaseStorage = {} as unknown as FirebaseStorage;
 
 if (firebaseConfig.apiKey) {
     try {
@@ -53,17 +49,15 @@ if (firebaseConfig.apiKey) {
         }
     } catch (error) {
         console.warn('Firebase initialization failed:', error);
-        // Mock services to prevent crash
-        auth = { currentUser: null };
-        db = {};
-        storage = {};
+        auth = { currentUser: null } as unknown as Auth;
+        db = {} as unknown as Firestore;
+        storage = {} as unknown as FirebaseStorage;
     }
 } else {
     console.warn('Firebase configuration missing. Using mock services.');
-    // Mock services to prevent crash
-    auth = { currentUser: null };
-    db = {};
-    storage = {};
+    auth = { currentUser: null } as unknown as Auth;
+    db = {} as unknown as Firestore;
+    storage = {} as unknown as FirebaseStorage;
 }
 
 export { auth, db, storage };

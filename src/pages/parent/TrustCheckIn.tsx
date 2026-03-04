@@ -43,7 +43,7 @@ export default function TrustCheckIn() {
 
     const handleNext = () => {
         if (step === 3 && !formData.rulesAccepted) {
-            error('Action Required', 'Please accept the safety protocols.');
+            error(t('trustCheckin.actionRequired'), t('trustCheckin.acceptProtocols'));
             return;
         }
         setStep((prev) => prev + 1);
@@ -55,7 +55,7 @@ export default function TrustCheckIn() {
 
     const handleSubmit = async () => {
         if (signatureRef.current?.isEmpty()) {
-            error('Signature Required', 'Please sign to acknowledge transfer of care.');
+            error(t('trustCheckin.signatureRequired'), t('trustCheckin.signToAcknowledge'));
             return;
         }
 
@@ -120,11 +120,11 @@ export default function TrustCheckIn() {
                 }
             }
 
-            success('Check-in Complete', 'Care session has officially started.');
+            success(t('trustCheckin.checkInComplete'), t('trustCheckin.sessionStarted'));
             navigate('/parent');
         } catch (err) {
             console.error('Check-in failed:', err);
-            error('Check-in Failed', 'Please try again.');
+            error(t('trustCheckin.checkInFailed'), t('trustCheckin.pleaseRetry'));
         } finally {
             setIsSubmitting(false);
         }

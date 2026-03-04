@@ -3,8 +3,8 @@
   align-items: center;
   justify-content: space-between;
   padding: var(--space-3) var(--space-4);
-  background-color: #fef2f2;
-  border: 1px solid #fecaca;
+  background-color: var(--error-50);
+  border: 1px solid var(--error-200);
   border-radius: var(--radius-md);
   margin-bottom: var(--space-4);
 }
@@ -20,7 +20,7 @@
 }
 
 .error-banner-message {
-  color: #991b1b;
+  color: var(--error-600);
   font-size: var(--text-sm);
 }
 
@@ -33,23 +33,23 @@
 .error-banner-retry {
   padding: var(--space-1) var(--space-3);
   font-size: var(--text-sm);
-  color: #991b1b;
+  color: var(--error-600);
   background: transparent;
-  border: 1px solid #fecaca;
+  border: 1px solid var(--error-200);
   border-radius: var(--radius-sm);
   cursor: pointer;
   transition: background-color 0.2s;
 }
 
 .error-banner-retry:hover {
-  background-color: #fee2e2;
+  background-color: var(--error-bg);
 }
 
 .error-banner-dismiss {
   padding: var(--space-1);
   background: transparent;
   border: none;
-  color: #991b1b;
+  color: var(--error-600);
   cursor: pointer;
   font-size: var(--text-sm);
   line-height: 1;

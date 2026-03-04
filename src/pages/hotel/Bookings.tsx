@@ -80,7 +80,7 @@ export default function Bookings() {
     const handleCopyLink = () => {
         if (guestLink) {
             navigator.clipboard.writeText(guestLink).then(() => {
-                toast.success('Link Copied', 'Guest page link copied to clipboard.');
+                toast.success(t('hotel.linkCopied'), t('hotel.guestLinkCopied'));
             });
         }
     };
@@ -273,7 +273,7 @@ export default function Bookings() {
             <Modal
                 isOpen={!!selectedBooking}
                 onClose={() => setSelectedBooking(null)}
-                title={`Booking ${selectedBooking?.confirmationCode}`}
+                title={`${t('nav.bookings')} ${selectedBooking?.confirmationCode}`}
                 size="lg"
             >
                 {selectedBooking && (
@@ -288,8 +288,8 @@ export default function Bookings() {
                             <h4>{t('hotel.childrenInfo')}</h4>
                             {selectedBooking.children.map((child, i) => (
                                 <p key={i}>
-                                    {child.name} ({child.age} years)
-                                    {'allergies' in child && child.allergies && ` - Allergies: ${child.allergies.join(', ')}`}
+                                    {child.name} ({child.age} {t('common.yearsOldShort', 'y')})
+                                    {'allergies' in child && child.allergies && ` - ${t('common.allergies')}: ${child.allergies.join(', ')}`}
                                 </p>
                             ))}
                         </div>
@@ -316,7 +316,7 @@ export default function Bookings() {
                 }
             >
                 <div className="modal-form-stack">
-                    <Input label={t('hotel.guestInfo')} value={newBookingForm.guestName} onChange={(e) => { setNewBookingForm({ ...newBookingForm, guestName: e.target.value }); if (formErrors.guestName) setFormErrors((prev) => { const { guestName: _, ...rest } = prev; return rest; }); }} placeholder="e.g. Sarah Johnson" error={formErrors.guestName} />
+                    <Input label={t('hotel.guestInfo')} value={newBookingForm.guestName} onChange={(e) => { setNewBookingForm({ ...newBookingForm, guestName: e.target.value }); if (formErrors.guestName) setFormErrors((prev) => { const { guestName: _, ...rest } = prev; return rest; }); }} placeholder={t('hotel.guestNamePlaceholder')} error={formErrors.guestName} />
                     <Input label={t('common.room')} value={newBookingForm.room} onChange={(e) => { setNewBookingForm({ ...newBookingForm, room: e.target.value }); if (formErrors.room) setFormErrors((prev) => { const { room: _, ...rest } = prev; return rest; }); }} placeholder={t('booking.roomPlaceholder')} error={formErrors.room} />
                     <Input label={t('common.date')} type="date" value={newBookingForm.date} onChange={(e) => { setNewBookingForm({ ...newBookingForm, date: e.target.value }); if (formErrors.date) setFormErrors((prev) => { const { date: _, ...rest } = prev; return rest; }); }} min={new Date().toISOString().split('T')[0]} error={formErrors.date} />
                     <Select label={t('booking.startTime')} value={newBookingForm.time} onChange={(e) => setNewBookingForm({ ...newBookingForm, time: e.target.value })} options={[{ value: '18:00', label: '18:00' }, { value: '19:00', label: '19:00' }, { value: '20:00', label: '20:00' }, { value: '21:00', label: '21:00' }]} />
@@ -344,7 +344,7 @@ export default function Bookings() {
                         </div>
                     ))}
                     {sitters.filter((s) => s.availability === 'Available').length === 0 && (
-                        <p className="no-sitters-message">No available sitters</p>
+                        <p className="no-sitters-message">{t('sitterMgmt.noAvailableSitters')}</p>
                     )}
                 </div>
             </Modal>
@@ -353,18 +353,18 @@ export default function Bookings() {
             <Modal
                 isOpen={!!guestLink}
                 onClose={() => setGuestLink(null)}
-                title="Guest Page Link"
+                title={t('hotel.guestPageLink')}
                 size="md"
             >
                 {guestLink && (
                     <div className="modal-form-stack">
                         <p style={{ fontSize: '0.875rem', color: 'var(--text-secondary)' }}>
-                            Share this link with the hotel guest to complete their consent and payment:
+                            {t('hotel.shareLinkDesc')}
                         </p>
                         <div style={{ padding: '0.75rem', background: 'var(--bg-secondary, #f5f0eb)', borderRadius: '8px', wordBreak: 'break-all', fontSize: '0.8125rem', fontFamily: 'monospace' }}>
                             {guestLink}
                         </div>
-                        <Button variant="gold" onClick={handleCopyLink}>Copy Link</Button>
+                        <Button variant="gold" onClick={handleCopyLink}>{t('hotel.copyLink')}</Button>
                     </div>
                 )}
             </Modal>

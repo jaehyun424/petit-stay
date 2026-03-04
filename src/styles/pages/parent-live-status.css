@@ -29,8 +29,8 @@
 
 /* Status Banner */
 .status-pulse-card {
-  background: linear-gradient(to right, #DEF7EC, #ECFDF5);
-  border: 1px solid #A7F3D0;
+  background: linear-gradient(to right, var(--success-bg), var(--success-50));
+  border: 1px solid var(--success-500);
   border-radius: 12px;
   padding: 1rem 1.5rem;
   box-shadow: 0 4px 6px -1px rgba(16, 185, 129, 0.1);
@@ -162,8 +162,8 @@
 
 /* Dark mode */
 :root[data-theme="dark"] .status-pulse-card {
-  background: linear-gradient(to right, #1A2E22, #1E2E25);
-  border-color: #2D5A3E;
+  background: linear-gradient(to right, var(--success-50), var(--success-50));
+  border-color: var(--success-600);
 }
 
 :root[data-theme="dark"] .activity-feed-card {

@@ -208,7 +208,9 @@
         "trustRating": "4.9",
         "avgSatisfaction": "Avg Satisfaction",
         "trustSessions": "10K+",
-        "completedSessions": "Completed Sessions"
+        "completedSessions": "Completed Sessions",
+        "reviewSubmitted": "Review Submitted",
+        "thankYouFeedback": "Thank you for your feedback!"
     },
     "booking": {
         "newBooking": "New Booking",
@@ -236,7 +238,10 @@
         "reviewBooking": "Review your booking",
         "bookingDetails": "Booking Details",
         "totalCost": "Total Cost",
-        "roomPlaceholder": "e.g., 2305"
+        "roomPlaceholder": "e.g., 2305",
+        "baseRate": "Base rate",
+        "additionalChild": "Additional child",
+        "nightSurcharge": "Night surcharge (after 22:00)"
     },
     "sitter": {
         "todaySchedule": "Today's Schedule",
@@ -321,7 +326,8 @@
         "todaysBookings": "Today's Bookings",
         "upcomingAndInProgress": "Upcoming and in-progress bookings",
         "started": "Started",
-        "energy": "energy"
+        "energy": "energy",
+        "guestNamePlaceholder": "e.g. Sarah Johnson"
     },
     "trustCheckin": {
         "trustProtocol": "Trust Protocol Check-In",
@@ -353,7 +359,15 @@
         "emergencyPhone": "Emergency Phone Number",
         "emsInfo": "In case of a life-threatening emergency, we will contact EMS (119) first, then you immediately.",
         "firstAidConsent": "I authorize the Sitter to administer basic first aid if necessary and confirm that my child has no undisclosed contagious conditions.",
-        "parentSignature": "Parent/Guardian Signature"
+        "parentSignature": "Parent/Guardian Signature",
+        "actionRequired": "Action Required",
+        "acceptProtocols": "Please accept the safety protocols.",
+        "signatureRequired": "Signature Required",
+        "signToAcknowledge": "Please sign to acknowledge transfer of care.",
+        "checkInComplete": "Check-in Complete",
+        "sessionStarted": "Care session has officially started.",
+        "checkInFailed": "Check-in Failed",
+        "pleaseRetry": "Please try again."
     },
     "status": {
         "pending": "Pending",
@@ -556,7 +570,8 @@
         "sitterRate": "Rate:",
         "sitterAvailability": "Availability:",
         "noUnassignedBookings": "No unassigned bookings",
-        "assignSitterToBooking": "Assign {{name}} to Booking"
+        "assignSitterToBooking": "Assign {{name}} to Booking",
+        "noAvailableSitters": "No available sitters"
     },
     "liveMonitor": {
         "noActiveSessions": "No active sessions",
@@ -672,7 +687,10 @@
         "noDocuments": "No documents uploaded",
         "female": "Female",
         "male": "Male",
-        "otherGender": "Other"
+        "otherGender": "Other",
+        "cardNumberPlaceholder": "**** **** **** ****",
+        "expiryPlaceholder": "MM/YY",
+        "cardHolderPlaceholder": "Card holder name"
     },
     "notifications": {
         "inbox": "Notification Inbox",
@@ -708,7 +726,14 @@
         "photoAdded": "Photo Added",
         "snackLogged": "Snack Logged",
         "sessionComplete": "Session Complete",
-        "uploadPhoto": "Upload activity photo"
+        "uploadPhoto": "Upload activity photo",
+        "activityRecorded": "Your activity update has been recorded.",
+        "photoUploaded": "Photo has been uploaded.",
+        "uploadFailed": "Upload Failed",
+        "uploadFailedDesc": "Could not upload photo.",
+        "snackRecorded": "Snack has been recorded.",
+        "sessionCompletedDesc": "The care session has been completed.",
+        "sessionCompleteFailed": "Could not complete session."
     },
     "landing": {
         "navFeatures": "Features",
@@ -815,7 +840,11 @@
         "loading": "Loading your reservation...",
         "nextStep": "Continue",
         "previousStep": "Back",
-        "languageLabel": "Language"
+        "languageLabel": "Language",
+        "cardNumberPlaceholder": "4242 4242 4242 4242",
+        "expiryPlaceholder": "MM/YY",
+        "cvvPlaceholder": "123",
+        "cardHolderPlaceholder": "JOHN DOE"
     },
     "ops": {
         "title": "Operations Console",
@@ -864,7 +893,22 @@
         "allHotels": "All Hotels",
         "allStatuses": "All Statuses",
         "filterByHotel": "Filter by hotel",
-        "filterByStatus": "Filter by status"
+        "filterByStatus": "Filter by status",
+        "hotel": "Hotel",
+        "bookings": "Bookings",
+        "commission": "Commission",
+        "netPayout": "Net Payout",
+        "tier": "Tier",
+        "id": "ID",
+        "severity": "Severity",
+        "category": "Category",
+        "summary": "Summary",
+        "sitter": "Sitter",
+        "status": "Status",
+        "revenue": "Revenue",
+        "net": "Net",
+        "total": "Total",
+        "unassigned": "Unassigned"
     },
     "info": {
         "about": {

@@ -136,6 +136,6 @@
 }
 
 .notification-inbox-item-actions button.delete:hover {
-    border-color: #ef4444;
-    color: #ef4444;
+    border-color: var(--error-500);
+    color: var(--error-500);
 }

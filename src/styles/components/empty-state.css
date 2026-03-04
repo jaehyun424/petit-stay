@@ -51,14 +51,14 @@
    Dark Mode
    ---------------------------------------- */
 [data-theme="dark"] .empty-state-icon {
-  background: #2A2A2A;
-  color: #808080;
+  background: var(--cream-200);
+  color: var(--text-tertiary);
 }
 
 [data-theme="dark"] .empty-state-title {
-  color: #E8E8E8;
+  color: var(--text-primary);
 }
 
 [data-theme="dark"] .empty-state-description {
-  color: #808080;
+  color: var(--text-tertiary);
 }

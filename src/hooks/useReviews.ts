@@ -112,10 +112,7 @@ export function useReviews(sitterId?: string) {
             return newReview.id;
         }
 
-        const id = await reviewService.createReview({
-            ...review,
-            createdAt: new Date(),
-        });
+        const id = await reviewService.createReview(review);
         return id;
     }, []);
 

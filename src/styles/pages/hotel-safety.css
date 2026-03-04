@@ -140,7 +140,7 @@
 }
 
 .incident-filter-tab-active .incident-filter-count {
-  background: rgba(79, 70, 187, 0.1);
+  background: rgba(197, 160, 89, 0.1);
   color: var(--primary-400);
 }
 
