@@ -353,3 +353,80 @@
 :root[data-theme="dark"] .ops-sitter-actions {
   border-top-color: var(--border-light, #333);
 }
+
+/* ============================================
+   Demand Heatmap
+   ============================================ */
+.ops-heatmap-wrapper {
+  overflow-x: auto;
+}
+
+.ops-heatmap {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  min-width: 500px;
+}
+
+.ops-heatmap-row {
+  display: flex;
+  gap: 2px;
+  align-items: center;
+}
+
+.ops-heatmap-day-label {
+  width: 36px;
+  font-size: 0.7rem;
+  font-weight: 600;
+  color: var(--text-secondary);
+  text-align: right;
+  padding-right: 4px;
+  flex-shrink: 0;
+}
+
+.ops-heatmap-hour-label {
+  flex: 1;
+  font-size: 0.65rem;
+  color: var(--text-tertiary);
+  text-align: center;
+}
+
+.ops-heatmap-cell {
+  flex: 1;
+  aspect-ratio: 1;
+  max-height: 32px;
+  border-radius: 3px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.65rem;
+  font-weight: 600;
+  color: var(--text-secondary);
+  cursor: default;
+  transition: transform 0.15s;
+}
+
+.ops-heatmap-cell:hover {
+  transform: scale(1.15);
+  z-index: 1;
+}
+
+.ops-heatmap-legend {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-2);
+  margin-top: var(--space-3);
+}
+
+.ops-heatmap-legend-label {
+  font-size: 0.7rem;
+  color: var(--text-tertiary);
+}
+
+.ops-heatmap-legend-bar {
+  width: 120px;
+  height: 8px;
+  border-radius: 4px;
+  background: linear-gradient(90deg, var(--glass-bg), rgba(99, 102, 241, 0.75));
+}
