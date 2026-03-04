@@ -57,7 +57,9 @@
     "thisWeek": "This Week",
     "thisMonth": "This Month",
     "signHere": "Sign Here",
-    "demoBanner": "Demo Mode — Data is simulated and will not persist"
+    "demoBanner": "Demo Mode — Data is simulated and will not persist",
+    "tierGold": "GOLD",
+    "tierSilver": "SILVER"
   },
   "validation": {
     "required": "Required",
@@ -406,7 +408,8 @@
     "hoursAgo": "{{count}} hours ago",
     "justNow": "just now",
     "minutesAgo": "{{count}}m ago",
-    "daysAgo": "{{count}}d ago"
+    "daysAgo": "{{count}}d ago",
+    "hoursAgoShort": "{{count}}h ago"
   },
   "errors": {
     "invalidCredentials": "Invalid email or password",

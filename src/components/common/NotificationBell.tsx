@@ -34,15 +34,15 @@ function getNotificationPath(type: string, role?: string): string | null {
     }
 }
 
-function timeAgo(date: Date): string {
+function timeAgo(date: Date, t: (key: string, opts?: Record<string, unknown>) => string): string {
     const seconds = Math.floor((Date.now() - date.getTime()) / 1000);
-    if (seconds < 60) return 'just now';
+    if (seconds < 60) return t('time.justNow');
     const minutes = Math.floor(seconds / 60);
-    if (minutes < 60) return `${minutes}m ago`;
+    if (minutes < 60) return t('time.minutesAgo', { count: minutes });
     const hours = Math.floor(minutes / 60);
-    if (hours < 24) return `${hours}h ago`;
+    if (hours < 24) return t('time.hoursAgoShort', { count: hours });
     const days = Math.floor(hours / 24);
-    return `${days}d ago`;
+    return t('time.daysAgo', { count: days });
 }
 
 export function NotificationBell() {
@@ -127,7 +127,7 @@ export function NotificationBell() {
                                         <span className="notification-item-title">{n.title}</span>
                                         <span className="notification-item-body">{n.body}</span>
                                         <span className="notification-item-time">
-                                            {timeAgo(n.createdAt instanceof Date ? n.createdAt : new Date(n.createdAt))}
+                                            {timeAgo(n.createdAt instanceof Date ? n.createdAt : new Date(n.createdAt), t)}
                                         </span>
                                     </div>
                                     {!n.read && <span className="notification-unread-dot" />}

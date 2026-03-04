@@ -57,7 +57,9 @@
     "thisWeek": "本周",
     "thisMonth": "本月",
     "signHere": "在此签名",
-    "demoBanner": "演示模式 — 数据为模拟数据，不会被保存"
+    "demoBanner": "演示模式 — 数据为模拟数据，不会被保存",
+    "tierGold": "GOLD",
+    "tierSilver": "SILVER"
   },
   "validation": {
     "required": "必填",
@@ -406,7 +408,8 @@
     "hoursAgo": "{{count}}小时前",
     "justNow": "刚刚",
     "minutesAgo": "{{count}}分钟前",
-    "daysAgo": "{{count}}天前"
+    "daysAgo": "{{count}}天前",
+    "hoursAgoShort": "{{count}}小时前"
   },
   "errors": {
     "invalidCredentials": "邮箱或密码不正确",

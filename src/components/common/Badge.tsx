@@ -88,12 +88,13 @@ export function StatusBadge({ status }: StatusBadgeProps) {
 // Tier Badge
 // ----------------------------------------
 export function TierBadge({ tier, showLabel = true }: TierBadgeProps) {
+    const { t } = useTranslation();
     const isGold = tier === 'gold';
 
     return (
         <span className={`badge-tier-${tier}`}>
             <Star size={14} strokeWidth={0} fill="currentColor" />
-            {showLabel && <span style={{ marginLeft: '4px' }}>{isGold ? 'GOLD' : 'SILVER'}</span>}
+            {showLabel && <span style={{ marginLeft: '4px' }}>{isGold ? t('common.tierGold') : t('common.tierSilver')}</span>}
         </span>
     );
 }

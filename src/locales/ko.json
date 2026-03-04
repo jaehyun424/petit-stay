@@ -57,7 +57,9 @@
     "thisWeek": "이번 주",
     "thisMonth": "이번 달",
     "signHere": "여기에 서명",
-    "demoBanner": "데모 모드 — 데이터는 시뮬레이션이며 저장되지 않습니다"
+    "demoBanner": "데모 모드 — 데이터는 시뮬레이션이며 저장되지 않습니다",
+    "tierGold": "GOLD",
+    "tierSilver": "SILVER"
   },
   "validation": {
     "required": "필수 항목",
@@ -406,7 +408,8 @@
     "hoursAgo": "{{count}}시간 전",
     "justNow": "방금",
     "minutesAgo": "{{count}}분 전",
-    "daysAgo": "{{count}}일 전"
+    "daysAgo": "{{count}}일 전",
+    "hoursAgoShort": "{{count}}시간 전"
   },
   "errors": {
     "invalidCredentials": "이메일 또는 비밀번호가 올바르지 않습니다",
