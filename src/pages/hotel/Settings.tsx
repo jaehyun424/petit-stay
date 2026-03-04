@@ -2,18 +2,27 @@
 // Petit Stay - Hotel Settings Page
 // ============================================
 
-import { useState, useEffect, useCallback } from 'react';
+import { useState, useEffect, useCallback, useRef } from 'react';
 import { useTranslation } from 'react-i18next';
-import { Moon, Sun } from 'lucide-react';
+import { Moon, Sun, Upload, Palette } from 'lucide-react';
 import { Card, CardHeader, CardTitle, CardBody } from '../../components/common/Card';
 import { Input, Select, Textarea } from '../../components/common/Input';
 import { Button } from '../../components/common/Button';
 import { Skeleton } from '../../components/common/Skeleton';
 import ErrorBanner from '../../components/common/ErrorBanner';
+import { BrandPreview } from '../../components/common/BrandPreview';
 import { useAuth } from '../../contexts/AuthContext';
 import { useHotel } from '../../hooks/useHotel';
 import { useToast } from '../../contexts/ToastContext';
 import { useTheme } from '../../contexts/ThemeContext';
+import { DEMO_MODE } from '../../hooks/useDemo';
+import {
+  DEFAULT_BRANDING,
+  APPROVED_FONTS,
+  uploadBrandLogo,
+  saveBranding,
+  type HotelBranding,
+} from '../../services/whiteLabel';
 import type { Currency, CancellationPolicy } from '../../types';
 import '../../styles/pages/hotel-settings.css';
 
@@ -56,6 +65,18 @@ export default function Settings() {
     const [notifyDailySummary, setNotifyDailySummary] = useState(false);
 
     // ----------------------------------------
+    // Branding state
+    // ----------------------------------------
+    const [brandPrimary, setBrandPrimary] = useState(DEFAULT_BRANDING.primaryColor);
+    const [brandSecondary, setBrandSecondary] = useState(DEFAULT_BRANDING.secondaryColor);
+    const [brandAccent, setBrandAccent] = useState(DEFAULT_BRANDING.accentColor);
+    const [brandFont, setBrandFont] = useState(DEFAULT_BRANDING.fontFamily);
+    const [brandTagline, setBrandTagline] = useState(DEFAULT_BRANDING.tagline);
+    const [brandLogoUrl, setBrandLogoUrl] = useState('');
+    const [isUploadingLogo, setIsUploadingLogo] = useState(false);
+    const logoInputRef = useRef<HTMLInputElement>(null);
+
+    // ----------------------------------------
     // Save state
     // ----------------------------------------
     const [isSaving, setIsSaving] = useState(false);
@@ -82,6 +103,13 @@ export default function Settings() {
             setCancellationPolicy(hotel.settings.cancellationPolicy);
             setCommission(hotel.commission);
             setCurrency(hotel.currency);
+            // Branding
+            setBrandPrimary(hotel.branding?.primaryColor || DEFAULT_BRANDING.primaryColor);
+            setBrandSecondary(hotel.branding?.secondaryColor || DEFAULT_BRANDING.secondaryColor);
+            setBrandAccent(hotel.branding?.accentColor || DEFAULT_BRANDING.accentColor);
+            setBrandFont(hotel.branding?.fontFamily || DEFAULT_BRANDING.fontFamily);
+            setBrandTagline(hotel.branding?.tagline || DEFAULT_BRANDING.tagline);
+            setBrandLogoUrl(hotel.branding?.logoUrl || '');
             setFormErrors({});
             setIsDirty(false);
         }
@@ -146,6 +174,31 @@ export default function Settings() {
     };
 
     // ----------------------------------------
+    // Logo upload handler
+    // ----------------------------------------
+    const handleLogoUpload = async (e: React.ChangeEvent<HTMLInputElement>) => {
+        const file = e.target.files?.[0];
+        if (!file || !user?.hotelId) return;
+
+        setIsUploadingLogo(true);
+        try {
+            if (DEMO_MODE) {
+                const url = URL.createObjectURL(file);
+                setBrandLogoUrl(url);
+                markDirty();
+            } else {
+                const url = await uploadBrandLogo(user.hotelId, file);
+                setBrandLogoUrl(url);
+                markDirty();
+            }
+            success(t('branding.logoUploaded'));
+        } catch {
+            toastError(t('branding.logoUploadFailed'));
+        }
+        setIsUploadingLogo(false);
+    };
+
+    // ----------------------------------------
     // Save handler
     // ----------------------------------------
     const handleSave = async () => {
@@ -168,6 +221,18 @@ export default function Settings() {
                     cancellationPolicy,
                 },
             });
+
+            // Save branding separately
+            if (user?.hotelId && !DEMO_MODE) {
+                await saveBranding(user.hotelId, {
+                    primaryColor: brandPrimary,
+                    secondaryColor: brandSecondary,
+                    accentColor: brandAccent,
+                    fontFamily: brandFont,
+                    tagline: brandTagline,
+                });
+            }
+
             success(t('settings.settingsSaved'), t('settings.settingsSavedDesc'));
         } catch {
             toastError(t('settings.saveFailed'), t('settings.saveFailedDesc'));
@@ -336,6 +401,118 @@ export default function Settings() {
                                     { value: 'JPY', label: t('settings.jpy') },
                                 ]}
                             />
+                        </div>
+                    </CardBody>
+                </Card>
+
+                {/* Branding */}
+                <Card>
+                    <CardHeader>
+                        <CardTitle subtitle={t('branding.subtitle', 'Customize your hotel branding')}><Palette size={20} strokeWidth={1.75} style={{ display: 'inline', marginRight: 8, verticalAlign: 'text-bottom' }} />{t('branding.title', 'Branding')}</CardTitle>
+                    </CardHeader>
+                    <CardBody>
+                        <div className="form-stack">
+                            {/* Logo Upload */}
+                            <div className="branding-logo-section">
+                                <label className="form-label">{t('branding.logo')}</label>
+                                <div className="branding-logo-row">
+                                    {brandLogoUrl ? (
+                                        <img src={brandLogoUrl} alt="Brand logo" className="branding-logo-preview" />
+                                    ) : (
+                                        <div className="branding-logo-placeholder">
+                                            <Upload size={20} />
+                                        </div>
+                                    )}
+                                    <input
+                                        ref={logoInputRef}
+                                        type="file"
+                                        accept="image/*"
+                                        onChange={handleLogoUpload}
+                                        style={{ display: 'none' }}
+                                    />
+                                    <Button
+                                        variant="secondary"
+                                        size="sm"
+                                        onClick={() => logoInputRef.current?.click()}
+                                        isLoading={isUploadingLogo}
+                                    >
+                                        {t('branding.uploadLogo')}
+                                    </Button>
+                                </div>
+                            </div>
+
+                            {/* Color Pickers */}
+                            <div className="branding-color-row">
+                                <div className="branding-color-field">
+                                    <label className="form-label">{t('branding.primaryColor')}</label>
+                                    <div className="color-picker-wrapper">
+                                        <input
+                                            type="color"
+                                            value={brandPrimary}
+                                            onChange={(e) => { setBrandPrimary(e.target.value); markDirty(); }}
+                                            className="color-picker-input"
+                                        />
+                                        <span className="color-picker-value">{brandPrimary}</span>
+                                    </div>
+                                </div>
+                                <div className="branding-color-field">
+                                    <label className="form-label">{t('branding.secondaryColor')}</label>
+                                    <div className="color-picker-wrapper">
+                                        <input
+                                            type="color"
+                                            value={brandSecondary}
+                                            onChange={(e) => { setBrandSecondary(e.target.value); markDirty(); }}
+                                            className="color-picker-input"
+                                        />
+                                        <span className="color-picker-value">{brandSecondary}</span>
+                                    </div>
+                                </div>
+                                <div className="branding-color-field">
+                                    <label className="form-label">{t('branding.accentColor')}</label>
+                                    <div className="color-picker-wrapper">
+                                        <input
+                                            type="color"
+                                            value={brandAccent}
+                                            onChange={(e) => { setBrandAccent(e.target.value); markDirty(); }}
+                                            className="color-picker-input"
+                                        />
+                                        <span className="color-picker-value">{brandAccent}</span>
+                                    </div>
+                                </div>
+                            </div>
+
+                            {/* Font Selector */}
+                            <Select
+                                label={t('branding.fontFamily')}
+                                value={brandFont}
+                                onChange={(e) => { setBrandFont(e.target.value); markDirty(); }}
+                                options={APPROVED_FONTS.map((f) => ({ value: f, label: f }))}
+                            />
+
+                            {/* Tagline */}
+                            <Input
+                                label={t('branding.tagline')}
+                                value={brandTagline}
+                                onChange={(e) => { setBrandTagline(e.target.value); markDirty(); }}
+                                placeholder={t('branding.taglinePlaceholder')}
+                            />
+
+                            {/* Live Preview */}
+                            <div className="branding-preview-section">
+                                <label className="form-label">{t('branding.livePreview')}</label>
+                                <BrandPreview
+                                    branding={{
+                                        primaryColor: brandPrimary,
+                                        secondaryColor: brandSecondary,
+                                        accentColor: brandAccent,
+                                        logo: '',
+                                        logoUrl: brandLogoUrl,
+                                        fontFamily: brandFont,
+                                        hotelName: name || DEFAULT_BRANDING.hotelName,
+                                        tagline: brandTagline,
+                                    }}
+                                />
+                            </div>
                         </div>
                     </CardBody>
                 </Card>
