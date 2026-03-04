@@ -2,7 +2,7 @@
 // Petit Stay - Spinner Component
 // ============================================
 
-
+import { useTranslation } from 'react-i18next';
 
 // ----------------------------------------
 // Types
@@ -16,6 +16,7 @@ interface SpinnerProps {
 // Component
 // ----------------------------------------
 export function Spinner({ size = 'md', className = '' }: SpinnerProps) {
+    const { t } = useTranslation();
     const sizeMap = {
         sm: 16,
         md: 24,
@@ -29,7 +30,7 @@ export function Spinner({ size = 'md', className = '' }: SpinnerProps) {
             className={`spinner ${className}`}
             style={{ width: pixelSize, height: pixelSize }}
             role="status"
-            aria-label="Loading"
+            aria-label={t('aria.loading')}
         />
     );
 }

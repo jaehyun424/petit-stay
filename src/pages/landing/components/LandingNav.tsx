@@ -46,7 +46,7 @@ export function LandingNav() {
         <button
           className="landing-nav-mobile-toggle"
           onClick={() => setMobileOpen(!mobileOpen)}
-          aria-label="Toggle menu"
+          aria-label={t('aria.toggleMenu')}
         >
           {mobileOpen ? <X size={24} /> : <Menu size={24} />}
         </button>

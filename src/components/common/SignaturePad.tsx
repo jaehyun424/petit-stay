@@ -1,5 +1,6 @@
 
 import React, { useRef, useEffect, useState, forwardRef, useImperativeHandle } from 'react';
+import { useTranslation } from 'react-i18next';
 
 interface SignaturePadProps {
     className?: string;
@@ -16,6 +17,7 @@ export const SignaturePad = forwardRef<SignaturePadRef, SignaturePadProps>(({
     className = '',
     onEnd
 }, ref) => {
+    const { t } = useTranslation();
     const canvasRef = useRef<HTMLCanvasElement>(null);
     const [isDrawing, setIsDrawing] = useState(false);
     const [hasSignature, setHasSignature] = useState(false);
@@ -109,7 +111,7 @@ export const SignaturePad = forwardRef<SignaturePadRef, SignaturePadProps>(({
                 onTouchEnd={stopDrawing}
             />
             <div className="signature-line" />
-            <div className="signature-label">Sign Here</div>
+            <div className="signature-label">{t('common.signHere')}</div>
             <style>{`
                 .signature-pad-wrapper {
                     position: relative;

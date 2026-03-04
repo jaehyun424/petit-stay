@@ -48,7 +48,15 @@
         "light": "Light",
         "dark": "Dark",
         "markAllRead": "Mark all read",
-        "noNotifications": "No notifications yet"
+        "noNotifications": "No notifications yet",
+        "selectDate": "Select date",
+        "startDate": "Start date",
+        "endDate": "End date",
+        "to": "to",
+        "today": "Today",
+        "thisWeek": "This Week",
+        "thisMonth": "This Month",
+        "signHere": "Sign Here"
     },
     "validation": {
         "required": "Required",
@@ -136,7 +144,9 @@
         "resetLinkSent": "Reset link sent",
         "resetLinkSentDesc": "A password reset link has been sent to your email.",
         "requestFailed": "Request Failed",
-        "footerText": "Petit Stay. Tokyo · Seoul · Singapore."
+        "footerText": "Petit Stay. Tokyo · Seoul · Singapore.",
+        "tagline": "Premium Hotel Childcare Infrastructure",
+        "copyright": "\u00a9 2025 Petit Stay. All rights reserved."
     },
     "nav": {
         "home": "Home",
@@ -392,7 +402,10 @@
         "thisMonth": "This Month",
         "minAgo": "{{count}} min ago",
         "hourAgo": "{{count}} hour ago",
-        "hoursAgo": "{{count}} hours ago"
+        "hoursAgo": "{{count}} hours ago",
+        "justNow": "just now",
+        "minutesAgo": "{{count}}m ago",
+        "daysAgo": "{{count}}d ago"
     },
     "errors": {
         "invalidCredentials": "Invalid email or password",
@@ -733,7 +746,21 @@
         "uploadFailedDesc": "Could not upload photo.",
         "snackRecorded": "Snack has been recorded.",
         "sessionCompletedDesc": "The care session has been completed.",
-        "sessionCompleteFailed": "Could not complete session."
+        "sessionCompleteFailed": "Could not complete session.",
+        "activityLogDescription": "Activity update logged by sitter",
+        "photoLogDescription": "Photo uploaded",
+        "snackLogDescription": "Snack served"
+    },
+    "payment": {
+        "card": "Card",
+        "default": "Default"
+    },
+    "activityFeed": {
+        "noUpdates": "No activity updates yet.",
+        "activityUpdate": "Activity Update"
+    },
+    "sitterProfile": {
+        "defaultLanguages": "English/Korean"
     },
     "landing": {
         "navFeatures": "Features",
@@ -1024,5 +1051,88 @@
             "section9Title": "9. Changes to Terms",
             "section9Content": "We may modify these terms at any time. Continued use of the platform after changes constitutes acceptance. Material changes will be communicated at least 30 days in advance."
         }
+    },
+    "aria": {
+        "toggleSidebar": "Toggle sidebar",
+        "toggleTheme": "Toggle theme",
+        "signOut": "Sign out",
+        "openMenu": "Open menu",
+        "switchLanguage": "Switch language",
+        "loading": "Loading",
+        "closeModal": "Close modal",
+        "pagination": "Pagination",
+        "previousPage": "Previous page",
+        "nextPage": "Next page",
+        "closeChat": "Close chat",
+        "timePeriod": "Time period",
+        "rating": "Rating",
+        "previous": "Previous",
+        "next": "Next",
+        "testimonialNumber": "Testimonial {{number}}",
+        "toggleMenu": "Toggle menu",
+        "bookingsList": "Bookings list",
+        "cameraFeed": "Camera feed for QR code scanning",
+        "messageSitter": "Message Sitter",
+        "sessionActive": "Session active, elapsed time: {{time}}",
+        "hidePassword": "Hide password",
+        "showPassword": "Show password"
+    },
+    "sitterProfile": {
+        "bankKb": "KB Kookmin Bank",
+        "bankShinhan": "Shinhan Bank",
+        "bankWoori": "Woori Bank",
+        "bankHana": "Hana Bank",
+        "bankNh": "NH NongHyup Bank",
+        "bankIbk": "IBK Industrial Bank",
+        "reviewsCount": "reviews",
+        "sessions": "Sessions",
+        "safeDays": "Safe Days",
+        "onTime": "On-Time",
+        "certifications": "Certifications",
+        "reviews": "Reviews",
+        "reviewCount": "{{count}} review",
+        "reviewCount_other": "{{count}} reviews",
+        "guestFallback": "Guest",
+        "languages": "Languages",
+        "displayNamePlaceholder": "Display Name",
+        "languagesPlaceholder": "English, Korean",
+        "accountHolderPlaceholder": "Account holder name"
+    },
+    "review": {
+        "leaveReview": "Leave a Review",
+        "rateExperience": "Rate your experience with {{sitterName}} on {{date}}",
+        "selectRating": "Select rating",
+        "experiencePlaceholder": "Share your experience (optional)",
+        "submitReview": "Submit Review",
+        "tagProfessional": "Professional",
+        "tagPunctual": "Punctual",
+        "tagCreative": "Creative",
+        "tagCommunicative": "Communicative",
+        "tagAttentive": "Attentive",
+        "tagFun": "Fun",
+        "tagSafe": "Safe",
+        "tagExperienced": "Experienced"
+    },
+    "chat": {
+        "userFallback": "User",
+        "chatTitle": "Chat",
+        "online": "Online",
+        "read": "Read",
+        "typingIndicator": "{{name}} is typing...",
+        "someone": "Someone",
+        "messagePlaceholder": "Type a message...",
+        "send": "Send"
+    },
+    "schedule": {
+        "mon": "Mon",
+        "tue": "Tue",
+        "wed": "Wed",
+        "thu": "Thu",
+        "fri": "Fri",
+        "sat": "Sat",
+        "sun": "Sun",
+        "day": "Day",
+        "start": "Start",
+        "end": "End"
     }
 }

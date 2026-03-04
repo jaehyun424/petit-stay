@@ -3,6 +3,7 @@
 // ============================================
 
 import { Outlet } from 'react-router-dom';
+import { useTranslation } from 'react-i18next';
 import { Sun, Moon } from 'lucide-react';
 import { useTheme } from '../../contexts/ThemeContext';
 import { IconButton } from '../common/Button';
@@ -11,6 +12,7 @@ import { BrandLogo } from '../common/BrandLogo';
 // Component
 export function AuthLayout() {
     const { isDark, toggleTheme } = useTheme();
+    const { t } = useTranslation();
 
     return (
         <div className="auth-layout">
@@ -19,7 +21,7 @@ export function AuthLayout() {
                 <IconButton
                     icon={isDark ? <Sun size={20} strokeWidth={1.75} /> : <Moon size={20} strokeWidth={1.75} />}
                     onClick={toggleTheme}
-                    aria-label="Toggle theme"
+                    aria-label={t('aria.toggleTheme')}
                 />
             </div>
 
@@ -32,7 +34,7 @@ export function AuthLayout() {
                     <h1 className="auth-logo-text">
                         Petit<span className="text-gold">Stay</span>
                     </h1>
-                    <p className="auth-logo-tagline">Premium Hotel Childcare Infrastructure</p>
+                    <p className="auth-logo-tagline">{t('auth.tagline')}</p>
                 </div>
 
                 <div className="auth-card">
@@ -40,7 +42,7 @@ export function AuthLayout() {
                 </div>
 
                 <footer className="auth-footer">
-                    <p>&copy; 2025 Petit Stay. All rights reserved.</p>
+                    <p>{t('auth.copyright')}</p>
                 </footer>
             </div>
         </div>

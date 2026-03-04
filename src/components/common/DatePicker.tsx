@@ -3,6 +3,7 @@
 // ============================================
 
 import { useRef } from 'react';
+import { useTranslation } from 'react-i18next';
 
 interface DatePickerProps {
     value: string;
@@ -22,10 +23,12 @@ export function DatePicker({
     min,
     max,
     error,
-    placeholder = 'Select date',
+    placeholder,
     className = '',
 }: DatePickerProps) {
+    const { t } = useTranslation();
     const inputRef = useRef<HTMLInputElement>(null);
+    const resolvedPlaceholder = placeholder ?? t('common.selectDate');
 
     const formatDisplayDate = (dateStr: string) => {
         if (!dateStr) return '';
@@ -50,7 +53,7 @@ export function DatePicker({
                     onChange={(e) => onChange(e.target.value)}
                     min={min}
                     max={max}
-                    placeholder={placeholder}
+                    placeholder={resolvedPlaceholder}
                 />
                 {value && (
                     <span className="date-picker-display">{formatDisplayDate(value)}</span>
@@ -78,6 +81,8 @@ export function DateRangePicker({
     label,
     className = '',
 }: DateRangePickerProps) {
+    const { t } = useTranslation();
+
     return (
         <div className={`date-range-picker ${className}`}>
             {label && <label className="input-label">{label}</label>}
@@ -86,14 +91,14 @@ export function DateRangePicker({
                     value={startDate}
                     onChange={onStartChange}
                     max={endDate || undefined}
-                    placeholder="Start date"
+                    placeholder={t('common.startDate')}
                 />
-                <span className="date-range-separator">to</span>
+                <span className="date-range-separator">{t('common.to')}</span>
                 <DatePicker
                     value={endDate}
                     onChange={onEndChange}
                     min={startDate || undefined}
-                    placeholder="End date"
+                    placeholder={t('common.endDate')}
                 />
             </div>
         </div>
@@ -110,15 +115,17 @@ interface PeriodSelectorProps {
 export function PeriodSelector({
     value,
     onChange,
-    options = [
-        { value: 'today', label: 'Today' },
-        { value: 'week', label: 'This Week' },
-        { value: 'month', label: 'This Month' },
-    ],
+    options,
 }: PeriodSelectorProps) {
+    const { t } = useTranslation();
+    const resolvedOptions = options ?? [
+        { value: 'today', label: t('common.today') },
+        { value: 'week', label: t('common.thisWeek') },
+        { value: 'month', label: t('common.thisMonth') },
+    ];
     return (
-        <div className="period-selector" role="group" aria-label="Time period">
-            {options.map((opt) => (
+        <div className="period-selector" role="group" aria-label={t('aria.timePeriod')}>
+            {resolvedOptions.map((opt) => (
                 <button
                     key={opt.value}
                     className={`period-btn ${value === opt.value ? 'period-active' : ''}`}

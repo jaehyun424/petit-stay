@@ -278,7 +278,7 @@ export default function ScanCheckIn() {
                                         className="scan-video"
                                         playsInline
                                         muted
-                                        aria-label="Camera feed for QR code scanning"
+                                        aria-label={t('aria.cameraFeed')}
                                     />
                                     <div className="scan-overlay">
                                         <div className="scan-corners" />
@@ -290,7 +290,7 @@ export default function ScanCheckIn() {
                                     onClick={() => { stopCamera(); setScanStatus('idle'); }}
                                     fullWidth
                                 >
-                                    Cancel
+                                    {t('common.cancel')}
                                 </Button>
                             </div>
                         )}

@@ -56,12 +56,12 @@ export default function LiveStatus() {
                                 <h3 className="sitter-profile-name">{sessionInfo.sitterName}</h3>
                                 <TierBadge tier="gold" />
                             </div>
-                            <p className="sitter-profile-details">{t('parent.certifiedSpecialist')} • English/Korean</p>
+                            <p className="sitter-profile-details">{t('parent.certifiedSpecialist')} • {t('sitterProfile.defaultLanguages')}</p>
                         </div>
                         <IconButton
                             variant="ghost"
                             size="md"
-                            aria-label="Message Sitter"
+                            aria-label={t('aria.messageSitter')}
                             icon={<MessageCircle size={20} strokeWidth={1.75} />}
                             onClick={() => setChatOpen(true)}
                         />

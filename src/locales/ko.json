@@ -48,7 +48,15 @@
         "light": "라이트",
         "dark": "다크",
         "markAllRead": "모두 읽음 처리",
-        "noNotifications": "알림이 없습니다"
+        "noNotifications": "알림이 없습니다",
+        "selectDate": "날짜 선택",
+        "startDate": "시작일",
+        "endDate": "종료일",
+        "to": "~",
+        "today": "오늘",
+        "thisWeek": "이번 주",
+        "thisMonth": "이번 달",
+        "signHere": "여기에 서명"
     },
     "validation": {
         "required": "필수 항목",
@@ -136,7 +144,9 @@
         "resetLinkSent": "재설정 링크 전송 완료",
         "resetLinkSentDesc": "비밀번호 재설정 링크가 이메일로 전송되었습니다.",
         "requestFailed": "요청 실패",
-        "footerText": "Petit Stay. 도쿄 · 서울 · 싱가포르."
+        "footerText": "Petit Stay. 도쿄 · 서울 · 싱가포르.",
+        "tagline": "프리미엄 호텔 아이돌봄 인프라",
+        "copyright": "\u00a9 2025 Petit Stay. All rights reserved."
     },
     "nav": {
         "home": "홈",
@@ -392,7 +402,10 @@
         "thisMonth": "이번 달",
         "minAgo": "{{count}}분 전",
         "hourAgo": "{{count}}시간 전",
-        "hoursAgo": "{{count}}시간 전"
+        "hoursAgo": "{{count}}시간 전",
+        "justNow": "방금",
+        "minutesAgo": "{{count}}분 전",
+        "daysAgo": "{{count}}일 전"
     },
     "errors": {
         "invalidCredentials": "이메일 또는 비밀번호가 올바르지 않습니다",
@@ -733,7 +746,21 @@
         "uploadFailedDesc": "사진을 업로드할 수 없습니다.",
         "snackRecorded": "간식이 기록되었습니다.",
         "sessionCompletedDesc": "돌봄 세션이 완료되었습니다.",
-        "sessionCompleteFailed": "세션을 완료할 수 없습니다."
+        "sessionCompleteFailed": "세션을 완료할 수 없습니다.",
+        "activityLogDescription": "시터가 활동 업데이트를 기록했습니다",
+        "photoLogDescription": "사진 업로드됨",
+        "snackLogDescription": "간식 제공됨"
+    },
+    "payment": {
+        "card": "카드",
+        "default": "기본"
+    },
+    "activityFeed": {
+        "noUpdates": "아직 활동 업데이트가 없습니다.",
+        "activityUpdate": "활동 업데이트"
+    },
+    "sitterProfile": {
+        "defaultLanguages": "영어/한국어"
     },
     "landing": {
         "navFeatures": "서비스",
@@ -1024,5 +1051,88 @@
             "section9Title": "9. 약관 변경",
             "section9Content": "본 약관은 언제든지 수정될 수 있습니다. 변경 후 플랫폼을 계속 사용하면 수락한 것으로 간주됩니다. 중요한 변경 사항은 최소 30일 전에 공지됩니다."
         }
+    },
+    "aria": {
+        "toggleSidebar": "사이드바 토글",
+        "toggleTheme": "테마 전환",
+        "signOut": "로그아웃",
+        "openMenu": "메뉴 열기",
+        "switchLanguage": "언어 변경",
+        "loading": "로딩 중",
+        "closeModal": "모달 닫기",
+        "pagination": "페이지네이션",
+        "previousPage": "이전 페이지",
+        "nextPage": "다음 페이지",
+        "closeChat": "채팅 닫기",
+        "timePeriod": "기간",
+        "rating": "평점",
+        "previous": "이전",
+        "next": "다음",
+        "testimonialNumber": "후기 {{number}}",
+        "toggleMenu": "메뉴 토글",
+        "bookingsList": "예약 목록",
+        "cameraFeed": "QR 코드 스캔을 위한 카메라 피드",
+        "messageSitter": "시터에게 메시지",
+        "sessionActive": "세션 진행 중, 경과 시간: {{time}}",
+        "hidePassword": "비밀번호 숨기기",
+        "showPassword": "비밀번호 표시"
+    },
+    "sitterProfile": {
+        "bankKb": "KB 국민은행",
+        "bankShinhan": "신한은행",
+        "bankWoori": "우리은행",
+        "bankHana": "하나은행",
+        "bankNh": "NH 농협은행",
+        "bankIbk": "IBK 기업은행",
+        "reviewsCount": "리뷰",
+        "sessions": "세션",
+        "safeDays": "안전 근무일",
+        "onTime": "정시율",
+        "certifications": "자격증",
+        "reviews": "리뷰",
+        "reviewCount": "{{count}}개 리뷰",
+        "reviewCount_other": "{{count}}개 리뷰",
+        "guestFallback": "게스트",
+        "languages": "언어",
+        "displayNamePlaceholder": "표시 이름",
+        "languagesPlaceholder": "영어, 한국어",
+        "accountHolderPlaceholder": "예금주 이름"
+    },
+    "review": {
+        "leaveReview": "리뷰 남기기",
+        "rateExperience": "{{date}}에 {{sitterName}}과의 경험을 평가해주세요",
+        "selectRating": "별점 선택",
+        "experiencePlaceholder": "경험을 공유해주세요 (선택사항)",
+        "submitReview": "리뷰 제출",
+        "tagProfessional": "전문적",
+        "tagPunctual": "시간 엄수",
+        "tagCreative": "창의적",
+        "tagCommunicative": "소통 능력",
+        "tagAttentive": "세심함",
+        "tagFun": "재미있는",
+        "tagSafe": "안전한",
+        "tagExperienced": "경험 풍부"
+    },
+    "chat": {
+        "userFallback": "사용자",
+        "chatTitle": "채팅",
+        "online": "온라인",
+        "read": "읽음",
+        "typingIndicator": "{{name}}님이 입력 중...",
+        "someone": "누군가",
+        "messagePlaceholder": "메시지를 입력하세요...",
+        "send": "전송"
+    },
+    "schedule": {
+        "mon": "월",
+        "tue": "화",
+        "wed": "수",
+        "thu": "목",
+        "fri": "금",
+        "sat": "토",
+        "sun": "일",
+        "day": "요일",
+        "start": "시작",
+        "end": "종료"
     }
 }

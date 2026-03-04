@@ -18,19 +18,22 @@ const BOOKING_TYPES = ['booking_created', 'booking_confirmed', 'booking_cancelle
 const SESSION_TYPES = ['care_started', 'care_completed', 'sitter_assigned'];
 const EMERGENCY_TYPES = ['emergency'];
 
-function timeAgo(date: Date): string {
-    const seconds = Math.floor((Date.now() - date.getTime()) / 1000);
-    if (seconds < 60) return 'just now';
-    const minutes = Math.floor(seconds / 60);
-    if (minutes < 60) return `${minutes}m ago`;
-    const hours = Math.floor(minutes / 60);
-    if (hours < 24) return `${hours}h ago`;
-    const days = Math.floor(hours / 24);
-    return `${days}d ago`;
-}
+// timeAgo is now defined inside the component to access t()
 
 export default function NotificationInbox() {
     const { t } = useTranslation();
+
+    const timeAgo = (date: Date): string => {
+        const seconds = Math.floor((Date.now() - date.getTime()) / 1000);
+        if (seconds < 60) return t('time.justNow');
+        const minutes = Math.floor(seconds / 60);
+        if (minutes < 60) return t('time.minutesAgo', { count: minutes });
+        const hours = Math.floor(minutes / 60);
+        if (hours < 24) return t('time.hoursAgo', { count: hours });
+        const days = Math.floor(hours / 24);
+        return t('time.daysAgo', { count: days });
+    };
+
     const { user } = useAuth();
     const { notifications, markAsRead, markAllAsRead, deleteNotification } = useNotifications(user?.id);
     const [filter, setFilter] = useState<FilterType>('all');

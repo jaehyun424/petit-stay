@@ -4,6 +4,7 @@
 // ============================================
 
 import { useState, useRef, useEffect, useCallback } from 'react';
+import { useTranslation } from 'react-i18next';
 import { CheckCheck } from 'lucide-react';
 import { useAuth } from '../../contexts/AuthContext';
 import { useMessaging } from '../../hooks/useMessaging';
@@ -19,8 +20,9 @@ interface ChatPanelProps {
 }
 
 export function ChatPanel({ isOpen, onClose, otherUserId, otherUserName, bookingId }: ChatPanelProps) {
+    const { t } = useTranslation();
     const { user } = useAuth();
-    const userName = user ? `${user.profile.firstName} ${user.profile.lastName}` : 'User';
+    const userName = user ? `${user.profile.firstName} ${user.profile.lastName}` : t('chat.userFallback');
     const { messages, sendMessage, openConversation, activeConversationId, typingUsers, setTyping: setTypingStatus, markAsRead } = useMessaging(user?.id);
     const [input, setInput] = useState('');
     const messagesEndRef = useRef<HTMLDivElement>(null);
@@ -41,7 +43,7 @@ export function ChatPanel({ isOpen, onClose, otherUserId, otherUserName, booking
             const names: Record<string, string> = {
                 [user.id]: userName,
             };
-            if (otherUserId) names[otherUserId] = otherUserName || 'User';
+            if (otherUserId) names[otherUserId] = otherUserName || t('chat.userFallback');
             openConversation(otherUserId, names, bookingId);
         }
     }, [isOpen, otherUserId, user?.id, userName, otherUserName, bookingId, openConversation]);
@@ -84,10 +86,10 @@ export function ChatPanel({ isOpen, onClose, otherUserId, otherUserName, booking
                 {/* Header */}
                 <div className="chat-header">
                     <div className="chat-header-info">
-                        <h3>{otherUserName || 'Chat'}</h3>
-                        <span className="chat-status">Online</span>
+                        <h3>{otherUserName || t('chat.chatTitle')}</h3>
+                        <span className="chat-status">{t('chat.online')}</span>
                     </div>
-                    <button className="chat-close" onClick={onClose} aria-label="Close chat">
+                    <button className="chat-close" onClick={onClose} aria-label={t('aria.closeChat')}>
                         &times;
                     </button>
                 </div>
@@ -106,7 +108,7 @@ export function ChatPanel({ isOpen, onClose, otherUserId, otherUserName, booking
                                 <p>{msg.text}</p>
                                 <span className="chat-time">{formatTime(msg.createdAt)}</span>
                                 {msg.senderId === user?.id && msg.readBy && msg.readBy.length > 0 && (
-                                    <span className="read-receipt" title="Read"><CheckCheck size={14} strokeWidth={2} /></span>
+                                    <span className="read-receipt" title={t('chat.read')}><CheckCheck size={14} strokeWidth={2} /></span>
                                 )}
                             </div>
                         </div>
@@ -116,7 +118,7 @@ export function ChatPanel({ isOpen, onClose, otherUserId, otherUserName, booking
                             <span className="typing-dots">
                                 <span></span><span></span><span></span>
                             </span>
-                            <span className="typing-text">{otherUserName || 'Someone'} is typing...</span>
+                            <span className="typing-text">{t('chat.typingIndicator', { name: otherUserName || t('chat.someone') })}</span>
                         </div>
                     )}
                     <div ref={messagesEndRef} />
@@ -130,10 +132,10 @@ export function ChatPanel({ isOpen, onClose, otherUserId, otherUserName, booking
                         onChange={(e) => setInput(e.target.value)}
                         onInput={handleTypingInput}
                         onKeyDown={handleKeyDown}
-                        placeholder="Type a message..."
+                        placeholder={t('chat.messagePlaceholder')}
                     />
                     <button className="chat-send-btn" onClick={handleSend} disabled={!input.trim()}>
-                        Send
+                        {t('chat.send')}
                     </button>
                 </div>
             </div>

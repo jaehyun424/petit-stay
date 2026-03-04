@@ -22,13 +22,13 @@ import { DEMO_SITTER_AVAILABILITY, DEMO_SITTER_DOCUMENTS } from '../../data/demo
 import type { WeeklyAvailability } from '../../types';
 import '../../styles/pages/sitter-profile.css';
 
-const BANK_OPTIONS = [
-    { value: 'kb', label: 'KB Kookmin Bank' },
-    { value: 'shinhan', label: 'Shinhan Bank' },
-    { value: 'woori', label: 'Woori Bank' },
-    { value: 'hana', label: 'Hana Bank' },
-    { value: 'nh', label: 'NH NongHyup Bank' },
-    { value: 'ibk', label: 'IBK Industrial Bank' },
+const getBankOptions = (t: (key: string) => string) => [
+    { value: 'kb', label: t('sitterProfile.bankKb') },
+    { value: 'shinhan', label: t('sitterProfile.bankShinhan') },
+    { value: 'woori', label: t('sitterProfile.bankWoori') },
+    { value: 'hana', label: t('sitterProfile.bankHana') },
+    { value: 'nh', label: t('sitterProfile.bankNh') },
+    { value: 'ibk', label: t('sitterProfile.bankIbk') },
 ];
 
 interface EditForm {
@@ -122,16 +122,16 @@ export default function Profile() {
                         <div className="profile-info">
                             <h2>{profile.name}</h2>
                             <TierBadge tier={profile.tier} />
-                            <div className="profile-rating"><Star size={14} strokeWidth={1.75} fill="currentColor" /> {profile.rating} ({profile.reviewCount} reviews)</div>
+                            <div className="profile-rating"><Star size={14} strokeWidth={1.75} fill="currentColor" /> {profile.rating} ({profile.reviewCount} {t('sitterProfile.reviewsCount')})</div>
                             <Button variant="ghost" size="sm" onClick={openEditModal}>
                                 {t('common.edit')} {t('sitter.profile.title', 'Profile')}
                             </Button>
                         </div>
                     </div>
                     <div className="profile-stats">
-                        <div className="pstat"><span className="pvalue">{profile.totalSessions}</span><span className="plabel">Sessions</span></div>
-                        <div className="pstat"><span className="pvalue">{profile.safetyDays}</span><span className="plabel">Safe Days</span></div>
-                        <div className="pstat"><span className="pvalue">{profile.onTimeRate}</span><span className="plabel">On-Time</span></div>
+                        <div className="pstat"><span className="pvalue">{profile.totalSessions}</span><span className="plabel">{t('sitterProfile.sessions')}</span></div>
+                        <div className="pstat"><span className="pvalue">{profile.safetyDays}</span><span className="plabel">{t('sitterProfile.safeDays')}</span></div>
+                        <div className="pstat"><span className="pvalue">{profile.onTimeRate}</span><span className="plabel">{t('sitterProfile.onTime')}</span></div>
                     </div>
                 </CardBody>
             </Card>
@@ -172,7 +172,7 @@ export default function Profile() {
             {/* Certifications */}
             <Card>
                 <CardBody>
-                    <h3 className="section-title">Certifications</h3>
+                    <h3 className="section-title">{t('sitterProfile.certifications')}</h3>
                     <div className="certs-list">
                         {profile.certifications.map((cert, i) => (
                             <Badge key={i} variant="success" icon={<Check size={12} strokeWidth={2.5} />}>{cert}</Badge>
@@ -184,14 +184,14 @@ export default function Profile() {
             {/* Reviews */}
             <Card>
                 <CardBody>
-                    <h3 className="section-title">Reviews</h3>
+                    <h3 className="section-title">{t('sitterProfile.reviews')}</h3>
                     {reviewsLoading ? (
                         <p className="text-sm text-charcoal-500">{t('profile.loadingReviews')}</p>
                     ) : reviews.length > 0 ? (
                         <>
                             <div className="reviews-summary">
                                 <StarRating rating={averageRating} />
-                                <span className="reviews-count">{reviews.length} review{reviews.length !== 1 ? 's' : ''}</span>
+                                <span className="reviews-count">{t('sitterProfile.reviewCount', { count: reviews.length })}</span>
                             </div>
                             <div className="reviews-list">
                                 {reviews.slice(0, 5).map((review) => (
@@ -205,7 +205,7 @@ export default function Profile() {
                                         {review.comment && (
                                             <p className="review-comment-text">{review.comment}</p>
                                         )}
-                                        <span className="review-author">{review.parentName || 'Guest'}</span>
+                                        <span className="review-author">{review.parentName || t('sitterProfile.guestFallback')}</span>
                                     </div>
                                 ))}
                             </div>
@@ -219,7 +219,7 @@ export default function Profile() {
             {/* Languages */}
             <Card>
                 <CardBody>
-                    <h3 className="section-title">Languages</h3>
+                    <h3 className="section-title">{t('sitterProfile.languages')}</h3>
                     <div className="lang-list">
                         {profile.languages.map((lang, i) => (
                             <span key={i}>{lang.flag} {lang.name} ({lang.level})</span>
@@ -268,7 +268,7 @@ export default function Profile() {
                         label={t('common.name')}
                         value={editForm.displayName}
                         onChange={(e) => setEditForm({ ...editForm, displayName: e.target.value })}
-                        placeholder="Display Name"
+                        placeholder={t('sitterProfile.displayNamePlaceholder')}
                     />
                     <Input
                         label={t('common.phone')}
@@ -281,7 +281,7 @@ export default function Profile() {
                         value={editForm.languages}
                         onChange={(e) => setEditForm({ ...editForm, languages: e.target.value })}
                         hint={t('sitter.profile.languagesHint', 'Comma-separated, e.g. English, Korean')}
-                        placeholder="English, Korean"
+                        placeholder={t('sitterProfile.languagesPlaceholder')}
                     />
                 </div>
             </Modal>
@@ -320,7 +320,7 @@ export default function Profile() {
                         label={t('profile.bankName')}
                         value={bankForm.bankName}
                         onChange={(e) => setBankForm({ ...bankForm, bankName: e.target.value })}
-                        options={BANK_OPTIONS}
+                        options={getBankOptions(t)}
                     />
                     <Input
                         label={t('profile.accountNumber')}
@@ -332,7 +332,7 @@ export default function Profile() {
                         label={t('profile.accountHolder')}
                         value={bankForm.accountHolder}
                         onChange={(e) => setBankForm({ ...bankForm, accountHolder: e.target.value })}
-                        placeholder="Account holder name"
+                        placeholder={t('sitterProfile.accountHolderPlaceholder')}
                     />
                 </div>
             </Modal>

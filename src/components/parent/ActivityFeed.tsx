@@ -1,4 +1,5 @@
 
+import { useTranslation } from 'react-i18next';
 import { Card, CardBody } from '../common/Card';
 
 export interface ActivityLog {
@@ -19,10 +20,12 @@ interface ActivityFeedProps {
 }
 
 export function ActivityFeed({ logs, className = '' }: ActivityFeedProps) {
+    const { t } = useTranslation();
+
     if (logs.length === 0) {
         return (
             <div className={`text-center py-8 text-charcoal-400 ${className}`}>
-                <p>No activity updates yet.</p>
+                <p>{t('activityFeed.noUpdates')}</p>
             </div>
         );
     }
@@ -50,7 +53,7 @@ export function ActivityFeed({ logs, className = '' }: ActivityFeedProps) {
                             <Card className="mb-4 overflow-hidden" padding="none">
                                 <img
                                     src={log.metadata.photoUrl}
-                                    alt="Activity Update"
+                                    alt={t('activityFeed.activityUpdate')}
                                     className="w-full h-48 object-cover"
                                 />
                                 <div className="p-3 bg-white">

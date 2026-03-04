@@ -34,7 +34,7 @@ export function TestimonialSection() {
       </ScrollReveal>
 
       <div className="testimonial-carousel">
-        <button className="testimonial-arrow" onClick={prev} aria-label="Previous">
+        <button className="testimonial-arrow" onClick={prev} aria-label={t('aria.previous')}>
           <ChevronLeft size={24} />
         </button>
 
@@ -64,7 +64,7 @@ export function TestimonialSection() {
           </AnimatePresence>
         </div>
 
-        <button className="testimonial-arrow" onClick={next} aria-label="Next">
+        <button className="testimonial-arrow" onClick={next} aria-label={t('aria.next')}>
           <ChevronRight size={24} />
         </button>
       </div>
@@ -76,7 +76,7 @@ export function TestimonialSection() {
             key={i}
             className={`testimonial-dot ${i === current ? 'testimonial-dot-active' : ''}`}
             onClick={() => setCurrent(i)}
-            aria-label={`Testimonial ${i + 1}`}
+            aria-label={t('aria.testimonialNumber', { number: i + 1 })}
           />
         ))}
       </div>

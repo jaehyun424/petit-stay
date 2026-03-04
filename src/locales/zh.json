@@ -48,7 +48,15 @@
         "light": "浅色",
         "dark": "深色",
         "markAllRead": "全部标为已读",
-        "noNotifications": "暂无通知"
+        "noNotifications": "暂无通知",
+        "selectDate": "选择日期",
+        "startDate": "开始日期",
+        "endDate": "结束日期",
+        "to": "至",
+        "today": "今天",
+        "thisWeek": "本周",
+        "thisMonth": "本月",
+        "signHere": "在此签名"
     },
     "validation": {
         "required": "必填",
@@ -136,7 +144,9 @@
         "resetLinkSent": "重置链接已发送",
         "resetLinkSentDesc": "密码重置链接已发送至您的邮箱。",
         "requestFailed": "请求失败",
-        "footerText": "Petit Stay. 东京 · 首尔 · 新加坡."
+        "footerText": "Petit Stay. 东京 · 首尔 · 新加坡.",
+        "tagline": "高端酒店儿童托管基础设施",
+        "copyright": "\u00a9 2025 Petit Stay. All rights reserved."
     },
     "nav": {
         "home": "首页",
@@ -392,7 +402,10 @@
         "thisMonth": "本月",
         "minAgo": "{{count}}分钟前",
         "hourAgo": "{{count}}小时前",
-        "hoursAgo": "{{count}}小时前"
+        "hoursAgo": "{{count}}小时前",
+        "justNow": "刚刚",
+        "minutesAgo": "{{count}}分钟前",
+        "daysAgo": "{{count}}天前"
     },
     "errors": {
         "invalidCredentials": "邮箱或密码不正确",
@@ -733,7 +746,21 @@
         "uploadFailedDesc": "无法上传照片。",
         "snackRecorded": "零食已记录。",
         "sessionCompletedDesc": "看护服务已完成。",
-        "sessionCompleteFailed": "无法完成服务。"
+        "sessionCompleteFailed": "无法完成服务。",
+        "activityLogDescription": "看护人记录了活动更新",
+        "photoLogDescription": "照片已上传",
+        "snackLogDescription": "已提供零食"
+    },
+    "payment": {
+        "card": "卡",
+        "default": "默认"
+    },
+    "activityFeed": {
+        "noUpdates": "暂无活动更新。",
+        "activityUpdate": "活动更新"
+    },
+    "sitterProfile": {
+        "defaultLanguages": "英语/韩语"
     },
     "landing": {
         "navFeatures": "特色",
@@ -1024,5 +1051,88 @@
             "section9Title": "9. 条款变更",
             "section9Content": "我们可随时修改本条款。变更后继续使用平台即视为接受。重大变更将至少提前30天通知。"
         }
+    },
+    "aria": {
+        "toggleSidebar": "切换侧边栏",
+        "toggleTheme": "切换主题",
+        "signOut": "退出登录",
+        "openMenu": "打开菜单",
+        "switchLanguage": "切换语言",
+        "loading": "加载中",
+        "closeModal": "关闭弹窗",
+        "pagination": "分页",
+        "previousPage": "上一页",
+        "nextPage": "下一页",
+        "closeChat": "关闭聊天",
+        "timePeriod": "时间段",
+        "rating": "评分",
+        "previous": "上一个",
+        "next": "下一个",
+        "testimonialNumber": "用户评价 {{number}}",
+        "toggleMenu": "切换菜单",
+        "bookingsList": "预约列表",
+        "cameraFeed": "QR码扫描摄像头",
+        "messageSitter": "给看护人发消息",
+        "sessionActive": "服务进行中，已用时间：{{time}}",
+        "hidePassword": "隐藏密码",
+        "showPassword": "显示密码"
+    },
+    "sitterProfile": {
+        "bankKb": "KB国民银行",
+        "bankShinhan": "新韩银行",
+        "bankWoori": "友利银行",
+        "bankHana": "韩亚银行",
+        "bankNh": "NH农协银行",
+        "bankIbk": "IBK企业银行",
+        "reviewsCount": "评价",
+        "sessions": "服务次数",
+        "safeDays": "安全天数",
+        "onTime": "准时率",
+        "certifications": "资质证书",
+        "reviews": "评价",
+        "reviewCount": "{{count}}条评价",
+        "reviewCount_other": "{{count}}条评价",
+        "guestFallback": "客人",
+        "languages": "语言",
+        "displayNamePlaceholder": "显示名称",
+        "languagesPlaceholder": "英语、中文",
+        "accountHolderPlaceholder": "账户持有人姓名"
+    },
+    "review": {
+        "leaveReview": "留下评价",
+        "rateExperience": "请评价{{date}}与{{sitterName}}的体验",
+        "selectRating": "选择评分",
+        "experiencePlaceholder": "分享您的体验（选填）",
+        "submitReview": "提交评价",
+        "tagProfessional": "专业",
+        "tagPunctual": "守时",
+        "tagCreative": "有创意",
+        "tagCommunicative": "善于沟通",
+        "tagAttentive": "细心",
+        "tagFun": "有趣",
+        "tagSafe": "安全",
+        "tagExperienced": "经验丰富"
+    },
+    "chat": {
+        "userFallback": "用户",
+        "chatTitle": "聊天",
+        "online": "在线",
+        "read": "已读",
+        "typingIndicator": "{{name}}正在输入...",
+        "someone": "某人",
+        "messagePlaceholder": "输入消息...",
+        "send": "发送"
+    },
+    "schedule": {
+        "mon": "周一",
+        "tue": "周二",
+        "wed": "周三",
+        "thu": "周四",
+        "fri": "周五",
+        "sat": "周六",
+        "sun": "周日",
+        "day": "日期",
+        "start": "开始",
+        "end": "结束"
     }
 }

@@ -2,6 +2,8 @@
 // Petit Stay - Pagination Component
 // ============================================
 
+import { useTranslation } from 'react-i18next';
+
 interface PaginationProps {
     currentPage: number;
     totalPages: number;
@@ -15,6 +17,8 @@ export function Pagination({
     onPageChange,
     className = '',
 }: PaginationProps) {
+    const { t } = useTranslation();
+
     if (totalPages <= 1) return null;
 
     const getVisiblePages = () => {
@@ -37,12 +41,12 @@ export function Pagination({
     };
 
     return (
-        <nav className={`pagination ${className}`} aria-label="Pagination">
+        <nav className={`pagination ${className}`} aria-label={t('aria.pagination')}>
             <button
                 className="pagination-btn"
                 onClick={() => onPageChange(currentPage - 1)}
                 disabled={currentPage === 1}
-                aria-label="Previous page"
+                aria-label={t('aria.previousPage')}
             >
                 ‹
             </button>
@@ -66,7 +70,7 @@ export function Pagination({
                 className="pagination-btn"
                 onClick={() => onPageChange(currentPage + 1)}
                 disabled={currentPage === totalPages}
-                aria-label="Next page"
+                aria-label={t('aria.nextPage')}
             >
                 ›
             </button>

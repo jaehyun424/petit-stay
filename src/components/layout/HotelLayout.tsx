@@ -69,7 +69,7 @@ export function HotelLayout() {
           <IconButton
             icon={<Menu size={20} strokeWidth={1.75} />}
             onClick={() => setSidebarCollapsed(!sidebarCollapsed)}
-            aria-label="Toggle sidebar"
+            aria-label={t('aria.toggleSidebar')}
             className="sidebar-toggle desktop-only"
           />
         </div>
@@ -97,13 +97,13 @@ export function HotelLayout() {
           <IconButton
             icon={isDark ? <Sun size={20} strokeWidth={1.75} /> : <Moon size={20} strokeWidth={1.75} />}
             onClick={toggleTheme}
-            aria-label="Toggle theme"
+            aria-label={t('aria.toggleTheme')}
           />
           <LanguageSwitcher />
           <IconButton
             icon={<LogOut size={20} strokeWidth={1.75} />}
             onClick={handleSignOut}
-            aria-label="Sign out"
+            aria-label={t('aria.signOut')}
           />
         </div>
       </aside>
@@ -115,7 +115,7 @@ export function HotelLayout() {
           <IconButton
             icon={<Menu size={20} strokeWidth={1.75} />}
             onClick={() => setMobileMenuOpen(true)}
-            aria-label="Open menu"
+            aria-label={t('aria.openMenu')}
             className="mobile-menu-btn"
           />
           <div className="header-spacer" />

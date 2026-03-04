@@ -3,6 +3,7 @@
 // ============================================
 
 import React, { useEffect, useCallback } from 'react';
+import { useTranslation } from 'react-i18next';
 import { X } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { IconButton } from './Button';
@@ -36,6 +37,8 @@ export function Modal({
     closeOnEscape = true,
     showCloseButton = true,
 }: ModalProps) {
+    const { t } = useTranslation();
+
     // Handle escape key
     const handleKeyDown = useCallback((e: KeyboardEvent) => {
         if (e.key === 'Escape' && closeOnEscape) {
@@ -87,7 +90,7 @@ export function Modal({
                                     <IconButton
                                         icon={<X size={20} strokeWidth={1.75} />}
                                         onClick={onClose}
-                                        aria-label="Close modal"
+                                        aria-label={t('aria.closeModal')}
                                         variant="ghost"
                                     />
                                 )}

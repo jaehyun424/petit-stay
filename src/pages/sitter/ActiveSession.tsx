@@ -39,7 +39,7 @@ export default function ActiveSession() {
                 await activityService.logActivity({
                     sessionId,
                     type: 'activity',
-                    description: 'Activity update logged by sitter',
+                    description: t('activeSession.activityLogDescription'),
                 });
             } catch (err) {
                 console.error('Failed to log activity:', err);
@@ -66,7 +66,7 @@ export default function ActiveSession() {
             await activityService.logActivity({
                 sessionId,
                 type: 'photo',
-                description: 'Photo uploaded',
+                description: t('activeSession.photoLogDescription'),
                 mediaUrl: photoUrl,
             });
             success(t('activeSession.photoAdded'), t('activeSession.photoUploaded'));
@@ -83,7 +83,7 @@ export default function ActiveSession() {
                 await activityService.logActivity({
                     sessionId,
                     type: 'meal',
-                    description: 'Snack served',
+                    description: t('activeSession.snackLogDescription'),
                 });
             } catch (err) {
                 console.error('Failed to log snack:', err);
@@ -116,7 +116,7 @@ export default function ActiveSession() {
     return (
         <div className="active-session animate-fade-in">
             {/* Status Banner */}
-            <div className="active-banner" role="status" aria-label={`Session active, elapsed time: ${sessionInfo.elapsedTime}`}>
+            <div className="active-banner" role="status" aria-label={t('aria.sessionActive', { time: sessionInfo.elapsedTime })}>
                 <div className="banner-left">
                     <span className="pulse-dot" aria-hidden="true" />
                     <span className="banner-text">{t('activeSession.title')}</span>

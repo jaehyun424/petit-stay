@@ -167,7 +167,7 @@ export default function Bookings() {
                 <CardBody>
                     {/* Desktop: semantic table */}
                     <div className="bookings-table-wrapper">
-                        <table className="bookings-table" aria-label="Bookings list">
+                        <table className="bookings-table" aria-label={t('aria.bookingsList')}>
                             <thead>
                                 <tr>
                                     <th>{t('hotel.bookingCode')}</th>

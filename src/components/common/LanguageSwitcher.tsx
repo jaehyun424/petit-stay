@@ -15,7 +15,7 @@ const LANGUAGES = [
 ];
 
 export function LanguageSwitcher() {
-    const { i18n } = useTranslation();
+    const { i18n, t } = useTranslation();
     const [isOpen, setIsOpen] = useState(false);
     const dropdownRef = useRef<HTMLDivElement>(null);
 
@@ -42,7 +42,7 @@ export function LanguageSwitcher() {
             <button
                 className="language-switcher"
                 onClick={() => setIsOpen(!isOpen)}
-                aria-label="Switch language"
+                aria-label={t('aria.switchLanguage')}
                 aria-expanded={isOpen}
             >
                 <span>{currentLang.flag}</span>

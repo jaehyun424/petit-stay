@@ -48,7 +48,15 @@
         "light": "ライト",
         "dark": "ダーク",
         "markAllRead": "すべて既読にする",
-        "noNotifications": "通知はありません"
+        "noNotifications": "通知はありません",
+        "selectDate": "日付を選択",
+        "startDate": "開始日",
+        "endDate": "終了日",
+        "to": "〜",
+        "today": "今日",
+        "thisWeek": "今週",
+        "thisMonth": "今月",
+        "signHere": "ここに署名"
     },
     "validation": {
         "required": "必須",
@@ -136,7 +144,9 @@
         "resetLinkSent": "リセットリンク送信完了",
         "resetLinkSentDesc": "パスワードリセットリンクがメールに送信されました。",
         "requestFailed": "リクエスト失敗",
-        "footerText": "Petit Stay. 東京 · ソウル · シンガポール."
+        "footerText": "Petit Stay. 東京 · ソウル · シンガポール.",
+        "tagline": "プレミアムホテル託児インフラ",
+        "copyright": "\u00a9 2025 Petit Stay. All rights reserved."
     },
     "nav": {
         "home": "ホーム",
@@ -392,7 +402,10 @@
         "thisMonth": "今月",
         "minAgo": "{{count}}分前",
         "hourAgo": "{{count}}時間前",
-        "hoursAgo": "{{count}}時間前"
+        "hoursAgo": "{{count}}時間前",
+        "justNow": "たった今",
+        "minutesAgo": "{{count}}分前",
+        "daysAgo": "{{count}}日前"
     },
     "errors": {
         "invalidCredentials": "メールアドレスまたはパスワードが正しくありません",
@@ -733,7 +746,21 @@
         "uploadFailedDesc": "写真をアップロードできませんでした。",
         "snackRecorded": "おやつが記録されました。",
         "sessionCompletedDesc": "ケアセッションが完了しました。",
-        "sessionCompleteFailed": "セッションを完了できませんでした。"
+        "sessionCompleteFailed": "セッションを完了できませんでした。",
+        "activityLogDescription": "シッターが活動更新を記録しました",
+        "photoLogDescription": "写真がアップロードされました",
+        "snackLogDescription": "おやつを提供しました"
+    },
+    "payment": {
+        "card": "カード",
+        "default": "デフォルト"
+    },
+    "activityFeed": {
+        "noUpdates": "まだ活動の更新はありません。",
+        "activityUpdate": "活動更新"
+    },
+    "sitterProfile": {
+        "defaultLanguages": "英語/韓国語"
     },
     "landing": {
         "navFeatures": "特徴",
@@ -1024,5 +1051,88 @@
             "section9Title": "9. 規約の変更",
             "section9Content": "本規約はいつでも変更される場合があります。変更後もプラットフォームを継続して使用した場合、承諾したものとみなされます。重要な変更は少なくとも30日前にお知らせします。"
         }
+    },
+    "aria": {
+        "toggleSidebar": "サイドバーの切り替え",
+        "toggleTheme": "テーマの切り替え",
+        "signOut": "ログアウト",
+        "openMenu": "メニューを開く",
+        "switchLanguage": "言語の切り替え",
+        "loading": "読み込み中",
+        "closeModal": "モーダルを閉じる",
+        "pagination": "ページネーション",
+        "previousPage": "前のページ",
+        "nextPage": "次のページ",
+        "closeChat": "チャットを閉じる",
+        "timePeriod": "期間",
+        "rating": "評価",
+        "previous": "前へ",
+        "next": "次へ",
+        "testimonialNumber": "お客様の声 {{number}}",
+        "toggleMenu": "メニューの切り替え",
+        "bookingsList": "予約一覧",
+        "cameraFeed": "QRコードスキャン用カメラ",
+        "messageSitter": "シッターにメッセージ",
+        "sessionActive": "セッション進行中、経過時間: {{time}}",
+        "hidePassword": "パスワードを隠す",
+        "showPassword": "パスワードを表示"
+    },
+    "sitterProfile": {
+        "bankKb": "KB国民銀行",
+        "bankShinhan": "新韓銀行",
+        "bankWoori": "ウリ銀行",
+        "bankHana": "ハナ銀行",
+        "bankNh": "NH農協銀行",
+        "bankIbk": "IBK企業銀行",
+        "reviewsCount": "レビュー",
+        "sessions": "セッション",
+        "safeDays": "安全日数",
+        "onTime": "定時率",
+        "certifications": "資格",
+        "reviews": "レビュー",
+        "reviewCount": "{{count}}件のレビュー",
+        "reviewCount_other": "{{count}}件のレビュー",
+        "guestFallback": "ゲスト",
+        "languages": "言語",
+        "displayNamePlaceholder": "表示名",
+        "languagesPlaceholder": "英語、日本語",
+        "accountHolderPlaceholder": "口座名義人"
+    },
+    "review": {
+        "leaveReview": "レビューを書く",
+        "rateExperience": "{{date}}の{{sitterName}}との体験を評価してください",
+        "selectRating": "評価を選択",
+        "experiencePlaceholder": "体験を共有してください（任意）",
+        "submitReview": "レビューを送信",
+        "tagProfessional": "プロフェッショナル",
+        "tagPunctual": "時間厳守",
+        "tagCreative": "創造的",
+        "tagCommunicative": "コミュニケーション力",
+        "tagAttentive": "きめ細やか",
+        "tagFun": "楽しい",
+        "tagSafe": "安全",
+        "tagExperienced": "経験豊富"
+    },
+    "chat": {
+        "userFallback": "ユーザー",
+        "chatTitle": "チャット",
+        "online": "オンライン",
+        "read": "既読",
+        "typingIndicator": "{{name}}が入力中...",
+        "someone": "誰か",
+        "messagePlaceholder": "メッセージを入力...",
+        "send": "送信"
+    },
+    "schedule": {
+        "mon": "月",
+        "tue": "火",
+        "wed": "水",
+        "thu": "木",
+        "fri": "金",
+        "sat": "土",
+        "sun": "日",
+        "day": "曜日",
+        "start": "開始",
+        "end": "終了"
     }
 }

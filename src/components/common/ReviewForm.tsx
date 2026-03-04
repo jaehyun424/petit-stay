@@ -3,6 +3,7 @@
 // ============================================
 
 import { useState } from 'react';
+import { useTranslation } from 'react-i18next';
 import { Star } from 'lucide-react';
 import { Button } from './Button';
 import { Modal } from './Modal';
@@ -15,17 +16,25 @@ interface ReviewFormProps {
     bookingInfo?: { sitterName: string; date: string };
 }
 
-const REVIEW_TAGS = [
+const REVIEW_TAG_KEYS = [
     'professional', 'punctual', 'creative', 'communicative',
     'attentive', 'fun', 'safe', 'experienced',
-];
+] as const;
+
+const getReviewTags = (t: (key: string) => string) =>
+    REVIEW_TAG_KEYS.map((key) => ({
+        key,
+        label: t(`review.tag${key.charAt(0).toUpperCase() + key.slice(1)}`),
+    }));
 
 export function ReviewForm({ isOpen, onClose, onSubmit, bookingInfo }: ReviewFormProps) {
+    const { t } = useTranslation();
     const [rating, setRating] = useState(0);
     const [hoverRating, setHoverRating] = useState(0);
     const [comment, setComment] = useState('');
     const [selectedTags, setSelectedTags] = useState<string[]>([]);
     const [isSubmitting, setIsSubmitting] = useState(false);
+    const reviewTags = getReviewTags(t);
 
     const handleSubmit = async () => {
         if (rating === 0) return;
@@ -48,16 +57,16 @@ export function ReviewForm({ isOpen, onClose, onSubmit, bookingInfo }: ReviewFor
     };
 
     return (
-        <Modal isOpen={isOpen} onClose={onClose} title="Leave a Review" size="md">
+        <Modal isOpen={isOpen} onClose={onClose} title={t('review.leaveReview')} size="md">
             <div className="review-form">
                 {bookingInfo && (
                     <p className="review-form-intro">
-                        Rate your experience with <strong>{bookingInfo.sitterName}</strong> on {bookingInfo.date}
+                        {t('review.rateExperience', { sitterName: bookingInfo.sitterName, date: bookingInfo.date })}
                     </p>
                 )}
 
                 {/* Star Rating */}
-                <div className="review-stars" role="group" aria-label="Rating">
+                <div className="review-stars" role="group" aria-label={t('aria.rating')}>
                     {[1, 2, 3, 4, 5].map((star) => (
                         <button
                             key={star}
@@ -75,19 +84,19 @@ export function ReviewForm({ isOpen, onClose, onSubmit, bookingInfo }: ReviewFor
                         </button>
                     ))}
                     <span className="review-stars-label">
-                        {rating > 0 ? `${rating}/5` : 'Select rating'}
+                        {rating > 0 ? `${rating}/5` : t('review.selectRating')}
                     </span>
                 </div>
 
                 {/* Tags */}
                 <div className="review-tags">
-                    {REVIEW_TAGS.map((tag) => (
+                    {reviewTags.map(({ key, label }) => (
                         <button
-                            key={tag}
-                            className={`review-tag ${selectedTags.includes(tag) ? 'review-tag-active' : ''}`}
-                            onClick={() => toggleTag(tag)}
+                            key={key}
+                            className={`review-tag ${selectedTags.includes(key) ? 'review-tag-active' : ''}`}
+                            onClick={() => toggleTag(key)}
                         >
-                            {tag}
+                            {label}
                         </button>
                     ))}
                 </div>
@@ -97,19 +106,19 @@ export function ReviewForm({ isOpen, onClose, onSubmit, bookingInfo }: ReviewFor
                     className="review-comment"
                     value={comment}
                     onChange={(e) => setComment(e.target.value)}
-                    placeholder="Share your experience (optional)"
+                    placeholder={t('review.experiencePlaceholder')}
                     rows={4}
                 />
 
                 <div className="review-form-actions">
-                    <Button variant="secondary" onClick={onClose}>Cancel</Button>
+                    <Button variant="secondary" onClick={onClose}>{t('common.cancel')}</Button>
                     <Button
                         variant="gold"
                         onClick={handleSubmit}
                         isLoading={isSubmitting}
                         disabled={rating === 0}
                     >
-                        Submit Review
+                        {t('review.submitReview')}
                     </Button>
                 </div>
             </div>

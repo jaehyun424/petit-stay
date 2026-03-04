@@ -8,14 +8,14 @@ import type { WeeklyAvailability, TimeSlot } from '../../types';
 import '../../styles/components/weekly-schedule.css';
 
 const DAYS = ['monday', 'tuesday', 'wednesday', 'thursday', 'friday', 'saturday', 'sunday'] as const;
-const DAY_LABELS: Record<string, string> = {
-    monday: 'Mon',
-    tuesday: 'Tue',
-    wednesday: 'Wed',
-    thursday: 'Thu',
-    friday: 'Fri',
-    saturday: 'Sat',
-    sunday: 'Sun',
+const DAY_LABEL_KEYS: Record<string, string> = {
+    monday: 'schedule.mon',
+    tuesday: 'schedule.tue',
+    wednesday: 'schedule.wed',
+    thursday: 'schedule.thu',
+    friday: 'schedule.fri',
+    saturday: 'schedule.sat',
+    sunday: 'schedule.sun',
 };
 
 interface WeeklyScheduleGridProps {
@@ -36,16 +36,16 @@ export function WeeklyScheduleGrid({ availability, onChange }: WeeklyScheduleGri
     return (
         <div>
             <div className="schedule-header">
-                <span>Day</span>
-                <span>Start</span>
-                <span>End</span>
+                <span>{t('schedule.day')}</span>
+                <span>{t('schedule.start')}</span>
+                <span>{t('schedule.end')}</span>
             </div>
             <div className="weekly-schedule-grid">
                 {DAYS.map((day) => {
                     const slot = availability[day]?.[0] || { start: '', end: '' };
                     return (
                         <React.Fragment key={day}>
-                            <span className="day-label">{DAY_LABELS[day]}</span>
+                            <span className="day-label">{t(DAY_LABEL_KEYS[day])}</span>
                             <input
                                 type="time"
                                 className="time-input"
