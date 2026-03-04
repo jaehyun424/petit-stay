@@ -47,3 +47,132 @@
   padding-top: var(--space-6);
   border-top: 1px solid var(--border-color);
 }
+
+/* ----------------------------------------
+   Branding Section
+   ---------------------------------------- */
+.branding-logo-section .form-label,
+.branding-color-field .form-label,
+.branding-preview-section .form-label {
+  display: block;
+  font-size: 0.85rem;
+  font-weight: 500;
+  color: var(--text-secondary);
+  margin-bottom: var(--space-2);
+}
+
+.branding-logo-row {
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+}
+
+.branding-logo-preview {
+  width: 56px;
+  height: 56px;
+  border-radius: var(--radius-md);
+  object-fit: cover;
+  border: 1px solid var(--border-color);
+}
+
+.branding-logo-placeholder {
+  width: 56px;
+  height: 56px;
+  border-radius: var(--radius-md);
+  border: 2px dashed var(--border-color);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--text-muted);
+}
+
+.branding-color-row {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: var(--space-3);
+}
+
+@media (max-width: 480px) {
+  .branding-color-row { grid-template-columns: 1fr; }
+}
+
+.color-picker-wrapper {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+  background: var(--glass-bg);
+  border-radius: var(--radius-md);
+  padding: var(--space-2);
+  border: 1px solid var(--border-color);
+}
+
+.color-picker-input {
+  width: 32px;
+  height: 32px;
+  border: none;
+  padding: 0;
+  cursor: pointer;
+  border-radius: var(--radius-sm);
+  background: transparent;
+}
+
+.color-picker-input::-webkit-color-swatch-wrapper { padding: 0; }
+.color-picker-input::-webkit-color-swatch { border: 1px solid rgba(0,0,0,0.1); border-radius: 4px; }
+
+.color-picker-value {
+  font-size: 0.75rem;
+  font-family: monospace;
+  color: var(--text-tertiary);
+}
+
+.branding-preview-section {
+  margin-top: var(--space-2);
+}
+
+.brand-preview {
+  max-width: 360px;
+}
+
+/* Hotel layout brand logo */
+.sidebar-brand-logo {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+}
+
+.sidebar-brand-img {
+  width: 28px;
+  height: 28px;
+  border-radius: var(--radius-sm);
+  object-fit: cover;
+}
+
+.sidebar-brand-name {
+  font-size: 0.875rem;
+  font-weight: 600;
+  color: var(--text-primary);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  max-width: 140px;
+}
+
+/* Guest page brand logo */
+.guest-brand-logo {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+}
+
+.guest-brand-img {
+  width: 32px;
+  height: 32px;
+  border-radius: var(--radius-sm);
+  object-fit: cover;
+}
+
+.guest-brand-name {
+  font-size: 1rem;
+  font-weight: 600;
+  color: var(--text-primary);
+}
