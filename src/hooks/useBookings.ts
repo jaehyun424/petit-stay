@@ -22,7 +22,7 @@ import {
 } from '../data/demo';
 import { bookingService, sitterService, hotelService } from '../services/firestore';
 import { getRecommendedSitters, type SitterMatch } from '../services/matchingEngine';
-import type { Booking, DashboardStats, Sitter, Hotel } from '../types';
+import type { Booking, DashboardStats, Sitter } from '../types';
 
 // LRU cache for sitter name lookups (capped at 100 entries)
 const CACHE_LIMIT = 100;
