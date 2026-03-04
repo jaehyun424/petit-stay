@@ -33,6 +33,14 @@ export default function CareersPage() {
         </div>
       </div>
 
+      <h2>{t('info.careers.benefitsTitle')}</h2>
+      <ul>
+        <li>{t('info.careers.benefit1')}</li>
+        <li>{t('info.careers.benefit2')}</li>
+        <li>{t('info.careers.benefit3')}</li>
+        <li>{t('info.careers.benefit4')}</li>
+      </ul>
+
       <h2>{t('info.careers.howToApply')}</h2>
       <p>
         <Trans i18nKey="info.careers.applyEmail" components={{ a: <a href="mailto:careers@petitstay.com" /> }} />
