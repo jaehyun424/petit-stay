@@ -105,6 +105,8 @@ export type SitterStatus = 'active' | 'inactive' | 'suspended';
 export type VerificationStatus = 'pending' | 'verified' | 'rejected';
 export type TrainingStatus = 'pending' | 'completed';
 export type CertificationType = 'childcare' | 'first_aid' | 'cpr' | 'hotel_manner';
+export type OnboardingStatus = 'applied' | 'documents_submitted' | 'training' | 'quiz_passed' | 'approved' | 'rejected';
+export type OnboardingStep = 'basicInfo' | 'documentUpload' | 'trainingVideo' | 'quiz' | 'pendingApproval';
 
 export interface Sitter {
   id: string;
@@ -119,8 +121,29 @@ export interface Sitter {
   stats: SitterStats;
   bankInfo: BankInfo;
   partnerHotels: string[];
+  onboarding?: SitterOnboarding;
   createdAt: Date;
   updatedAt: Date;
+}
+
+export interface SitterOnboarding {
+  status: OnboardingStatus;
+  currentStep: OnboardingStep;
+  documents: OnboardingDocument[];
+  trainingCompleted: boolean;
+  quizScore?: number;
+  quizPassedAt?: Date;
+  appliedAt: Date;
+  approvedAt?: Date;
+  rejectedAt?: Date;
+  rejectionReason?: string;
+}
+
+export interface OnboardingDocument {
+  type: 'id_card' | 'certificate' | 'background_check' | 'other';
+  name: string;
+  url: string;
+  uploadedAt: Date;
 }
 
 export interface SitterProfile {
