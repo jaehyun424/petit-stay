@@ -21,7 +21,6 @@ import {
   APPROVED_FONTS,
   uploadBrandLogo,
   saveBranding,
-  type HotelBranding,
 } from '../../services/whiteLabel';
 import type { Currency, CancellationPolicy } from '../../types';
 import '../../styles/pages/hotel-settings.css';
