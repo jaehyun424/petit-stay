@@ -11,6 +11,7 @@ import { Card, CardBody } from '../../components/common/Card';
 import { Button } from '../../components/common/Button';
 import { StatusBadge } from '../../components/common/Badge';
 import { EmptyState } from '../../components/common/EmptyState';
+import { AnimatedCounter } from '../../components/common/AnimatedCounter';
 import { Skeleton, CardSkeleton } from '../../components/common/Skeleton';
 import { useAuth } from '../../contexts/AuthContext';
 import { useParentBookings } from '../../hooks/useBookings';
@@ -34,6 +35,10 @@ export default function Home() {
     if (hour < 18) return t('parent.afternoon');
     return t('parent.evening');
   };
+
+  const avgRating = recentSessions.length > 0
+    ? (recentSessions.reduce((sum, s) => sum + s.rating, 0) / recentSessions.length)
+    : 0;
 
   if (isLoading) {
     return (
@@ -131,20 +136,36 @@ export default function Home() {
       {/* Dashboard Stats */}
       <div className="home-stats">
         <div className="stat-card">
-          <span className="stat-value">{recentSessions.length}</span>
-          <span className="stat-label">{t('parent.totalSessions', 'Sessions')}</span>
-        </div>
-        <div className="stat-card">
-          <span className="stat-value">
-            {recentSessions.length > 0
-              ? (recentSessions.reduce((sum, s) => sum + s.rating, 0) / recentSessions.length).toFixed(1)
-              : '—'}
+          {recentSessions.length > 0 ? (
+            <AnimatedCounter target={recentSessions.length} className="stat-value" />
+          ) : (
+            <span className="stat-value stat-value-empty">—</span>
+          )}
+          <span className="stat-label">
+            {recentSessions.length === 0
+              ? t('parent.noBookingsYet')
+              : t('parent.totalSessions')}
           </span>
-          <span className="stat-label">{t('parent.avgRating', 'Avg Rating')}</span>
         </div>
         <div className="stat-card">
-          <span className="stat-value">{upcomingBooking?.childrenIds?.length || 0}</span>
-          <span className="stat-label">{t('parent.children', 'Children')}</span>
+          {recentSessions.length > 0 ? (
+            <span className="stat-value">{avgRating.toFixed(1)}</span>
+          ) : (
+            <span className="stat-value stat-value-empty">—</span>
+          )}
+          <span className="stat-label">
+            {recentSessions.length === 0
+              ? t('parent.noRatingsYet')
+              : t('parent.avgRating')}
+          </span>
+        </div>
+        <div className="stat-card">
+          {(upcomingBooking?.childrenIds?.length || 0) > 0 ? (
+            <AnimatedCounter target={upcomingBooking?.childrenIds?.length || 0} className="stat-value" />
+          ) : (
+            <span className="stat-value stat-value-empty">—</span>
+          )}
+          <span className="stat-label">{t('parent.children')}</span>
         </div>
       </div>
 
@@ -192,11 +213,11 @@ export default function Home() {
           ) : (
             <EmptyState
               icon={<Calendar size={20} strokeWidth={1.75} />}
-              title={t('parent.noUpcomingBookings', 'No upcoming bookings')}
-              description={t('parent.noUpcomingBookingsDesc', 'Book a trusted sitter for your next hotel stay.')}
+              title={t('parent.noUpcomingBookings')}
+              description={t('parent.noUpcomingBookingsDesc')}
               action={
                 <Link to="/parent/book">
-                  <Button variant="gold">{t('parent.bookNow', 'Book Now')}</Button>
+                  <Button variant="gold">{t('parent.bookNow')}</Button>
                 </Link>
               }
             />
@@ -230,8 +251,8 @@ export default function Home() {
           ) : (
             <EmptyState
               icon={<ClipboardList size={20} strokeWidth={1.75} />}
-              title={t('parent.noRecentSessions', 'No recent sessions')}
-              description={t('parent.noRecentSessionsDesc', 'Your completed sessions will appear here.')}
+              title={t('parent.noRecentSessions')}
+              description={t('parent.noRecentSessionsDesc')}
             />
           )}
         </div>

@@ -238,6 +238,67 @@
   flex: 1;
 }
 
+/* PriceBreakdown */
+.price-breakdown {
+  margin-top: var(--space-4);
+  padding-top: var(--space-4);
+  border-top: 1px solid var(--cream-300);
+}
+
+.price-row {
+  display: flex;
+  justify-content: space-between;
+  padding: var(--space-2) 0;
+  font-size: var(--text-sm);
+  color: var(--charcoal-700);
+}
+
+.price-row-highlight {
+  color: var(--gold-600);
+  font-weight: 600;
+}
+
+.price-row-total {
+  margin-top: var(--space-4);
+  padding-top: var(--space-6);
+  border-top: 2px solid var(--charcoal-900);
+  font-family: var(--font-serif);
+  font-size: var(--text-xl);
+  font-weight: 600;
+  color: var(--charcoal-900);
+}
+
+.price-row-total span:last-child {
+  color: var(--gold-600);
+}
+
+/* Sticky price preview bar */
+.booking-price-sticky {
+  position: sticky;
+  bottom: 0;
+  background: var(--cream-100);
+  border-top: 1px solid var(--border-color);
+  padding: var(--space-3) var(--space-4);
+  font-family: var(--font-serif);
+  z-index: 10;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin: var(--space-4) calc(-1 * var(--space-4)) 0;
+}
+
+.booking-price-sticky span:first-child {
+  font-size: var(--text-sm);
+  color: var(--charcoal-500);
+  font-family: var(--font-sans);
+}
+
+.booking-price-sticky span:last-child {
+  font-size: var(--text-xl);
+  font-weight: 600;
+  color: var(--gold-600);
+}
+
 /* Dark mode */
 :root[data-theme="dark"] .step {
   background: var(--cream-50);
@@ -245,4 +306,8 @@
 
 :root[data-theme="dark"] .confirmation-summary {
   background: var(--cream-100);
+}
+
+:root[data-theme="dark"] .booking-price-sticky {
+  background: var(--cream-50);
 }

@@ -223,7 +223,9 @@
     "trustSessions": "10K+",
     "completedSessions": "Completed Sessions",
     "reviewSubmitted": "Review Submitted",
-    "thankYouFeedback": "Thank you for your feedback!"
+    "thankYouFeedback": "Thank you for your feedback!",
+    "noBookingsYet": "No bookings yet",
+    "noRatingsYet": "No ratings yet"
   },
   "booking": {
     "newBooking": "New Booking",
@@ -254,7 +256,10 @@
     "roomPlaceholder": "e.g., 2305",
     "baseRate": "Base rate",
     "additionalChild": "Additional child",
-    "nightSurcharge": "Night surcharge (after 22:00)"
+    "nightSurcharge": "Night surcharge (after 22:00)",
+    "baseRateDetail": "Base rate",
+    "additionalChildDetail": "Additional child surcharge",
+    "bookingFailed": "Failed to create booking. Please try again."
   },
   "sitter": {
     "todaySchedule": "Today's Schedule",

@@ -223,7 +223,9 @@
     "trustSessions": "10K+",
     "completedSessions": "已完成会话",
     "reviewSubmitted": "评价已提交",
-    "thankYouFeedback": "感谢您的反馈！"
+    "thankYouFeedback": "感谢您的反馈！",
+    "noBookingsYet": "暂无预约",
+    "noRatingsYet": "暂无评分"
   },
   "booking": {
     "newBooking": "新建预约",
@@ -254,7 +256,10 @@
     "roomPlaceholder": "例：2305",
     "baseRate": "基本费用",
     "additionalChild": "额外儿童",
-    "nightSurcharge": "夜间附加费（22:00后）"
+    "nightSurcharge": "夜间附加费（22:00后）",
+    "baseRateDetail": "基本费用",
+    "additionalChildDetail": "额外儿童附加费",
+    "bookingFailed": "预约创建失败，请重试。"
   },
   "sitter": {
     "todaySchedule": "今日日程",

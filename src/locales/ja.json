@@ -223,7 +223,9 @@
     "trustSessions": "10K+",
     "completedSessions": "完了セッション",
     "reviewSubmitted": "レビュー送信済み",
-    "thankYouFeedback": "フィードバックありがとうございます！"
+    "thankYouFeedback": "フィードバックありがとうございます！",
+    "noBookingsYet": "まだ予約がありません",
+    "noRatingsYet": "まだ評価がありません"
   },
   "booking": {
     "newBooking": "新規予約",
@@ -254,7 +256,10 @@
     "roomPlaceholder": "例：2305",
     "baseRate": "基本料金",
     "additionalChild": "追加のお子様",
-    "nightSurcharge": "夜間割増（22:00以降）"
+    "nightSurcharge": "夜間割増（22:00以降）",
+    "baseRateDetail": "基本料金",
+    "additionalChildDetail": "追加のお子様割増",
+    "bookingFailed": "予約の作成に失敗しました。もう一度お試しください。"
   },
   "sitter": {
     "todaySchedule": "本日のスケジュール",
