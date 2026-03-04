@@ -300,7 +300,14 @@
     "bankAccount": "口座情報",
     "documents": "書類",
     "nextSessionIn": "次のセッションまで",
-    "allergies": "アレルギー"
+    "allergies": "アレルギー",
+    "acceptAssignment": "承諾",
+    "declineAssignment": "辞退",
+    "assignmentAccepted": "配属承諾済み",
+    "assignmentAcceptedDesc": "このセッションを承諾しました。",
+    "assignmentDeclined": "配属辞退済み",
+    "assignmentDeclinedDesc": "予約は別のシッターに再配属されます。",
+    "assignmentFailed": "配属の更新に失敗しました。"
   },
   "hotel": {
     "hotelConsole": "ホテルコンソール",

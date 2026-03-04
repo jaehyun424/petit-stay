@@ -5,6 +5,7 @@
 import { useState, useEffect, useCallback } from 'react';
 import { DEMO_MODE } from './useDemo';
 import { messagingService, type Message, type Conversation } from '../services/messaging';
+import { fcmService } from '../services/fcm';
 
 // ----------------------------------------
 // Demo Messages
@@ -30,6 +31,14 @@ export function useMessaging(userId?: string, conversationId?: string) {
     }, []);
     const [activeConversationId, setActiveConversationId] = useState(conversationId);
     const [typingUsers] = useState<string[]>([]);
+
+    // Register FCM token for push notifications
+    useEffect(() => {
+        if (DEMO_MODE || !userId) return;
+        fcmService.registerToken(userId).catch((err) => {
+            console.warn('FCM token registration failed:', err);
+        });
+    }, [userId]);
 
     // Subscribe to conversations list
     useEffect(() => {

@@ -300,7 +300,14 @@
     "bankAccount": "계좌 정보",
     "documents": "서류",
     "nextSessionIn": "다음 세션까지",
-    "allergies": "알레르기"
+    "allergies": "알레르기",
+    "acceptAssignment": "수락",
+    "declineAssignment": "거절",
+    "assignmentAccepted": "배정 수락됨",
+    "assignmentAcceptedDesc": "이 세션을 수락했습니다.",
+    "assignmentDeclined": "배정 거절됨",
+    "assignmentDeclinedDesc": "예약이 다른 시터에게 재배정됩니다.",
+    "assignmentFailed": "배정 업데이트에 실패했습니다."
   },
   "hotel": {
     "hotelConsole": "호텔 콘솔",

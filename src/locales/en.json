@@ -300,7 +300,14 @@
     "bankAccount": "Bank Account",
     "documents": "Documents",
     "nextSessionIn": "Next session in",
-    "allergies": "Allergies"
+    "allergies": "Allergies",
+    "acceptAssignment": "Accept",
+    "declineAssignment": "Decline",
+    "assignmentAccepted": "Assignment Accepted",
+    "assignmentAcceptedDesc": "You have accepted this session.",
+    "assignmentDeclined": "Assignment Declined",
+    "assignmentDeclinedDesc": "The booking will be reassigned.",
+    "assignmentFailed": "Failed to update assignment."
   },
   "hotel": {
     "hotelConsole": "Hotel Console",

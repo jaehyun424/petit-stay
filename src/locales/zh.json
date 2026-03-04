@@ -300,7 +300,14 @@
     "bankAccount": "银行账户",
     "documents": "文件",
     "nextSessionIn": "下次会话还有",
-    "allergies": "过敏"
+    "allergies": "过敏",
+    "acceptAssignment": "接受",
+    "declineAssignment": "拒绝",
+    "assignmentAccepted": "已接受分配",
+    "assignmentAcceptedDesc": "您已接受此次服务。",
+    "assignmentDeclined": "已拒绝分配",
+    "assignmentDeclinedDesc": "预约将被重新分配给其他保姆。",
+    "assignmentFailed": "更新分配失败。"
   },
   "hotel": {
     "hotelConsole": "酒店控制台",
