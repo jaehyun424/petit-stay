@@ -10,8 +10,8 @@ import { initializeApp } from "firebase-admin/app";
 import { getFirestore, FieldValue, QueryDocumentSnapshot } from "firebase-admin/firestore";
 import * as crypto from "crypto";
 import Stripe from "stripe";
+
 import {
-  sendgridApiKey,
   twilioAccountSid,
   twilioAuthToken,
   twilioPhoneNumber,
@@ -20,6 +20,16 @@ import {
   sendPaymentLinkSMS as sendPaymentLinkSMSService,
 } from "./notifications";
 import { app as apiApp } from "./api";
+
+// HTML-escape helper to prevent injection in email templates
+function escapeHtml(str: string): string {
+  return str
+    .replace(/&/g, "&amp;")
+    .replace(/</g, "&lt;")
+    .replace(/>/g, "&gt;")
+    .replace(/"/g, "&quot;")
+    .replace(/'/g, "&#39;");
+}
 
 // Stripe secret key (stored in Firebase secrets)
 const stripeSecretKey = defineSecret("STRIPE_SECRET_KEY");
@@ -731,6 +741,11 @@ export const generateGuestToken = onCall(async (request) => {
     throw new HttpsError("invalid-argument", "bookingId and hotelId are required");
   }
 
+  if (typeof bookingId !== "string" || typeof hotelId !== "string" ||
+      bookingId.length > 128 || hotelId.length > 128) {
+    throw new HttpsError("invalid-argument", "Invalid bookingId or hotelId format");
+  }
+
   const token = crypto.randomBytes(32).toString("hex");
   const expiresAt = new Date();
   expiresAt.setDate(expiresAt.getDate() + 7); // 7-day expiry
@@ -763,6 +778,10 @@ export const validateGuestToken = onCall(async (request) => {
   const { token } = request.data;
   if (!token) {
     throw new HttpsError("invalid-argument", "token is required");
+  }
+
+  if (typeof token !== "string" || token.length > 256) {
+    throw new HttpsError("invalid-argument", "Invalid token format");
   }
 
   const tokensSnap = await db
@@ -1007,9 +1026,17 @@ export const createStripeCheckoutSession = onCall(
 // getPaymentStatus: Query payment status for a booking
 // ----------------------------------------
 export const getPaymentStatus = onCall(async (request) => {
+  if (!request.auth) {
+    throw new HttpsError("unauthenticated", "Must be authenticated");
+  }
+
   const { bookingId } = request.data;
   if (!bookingId) {
     throw new HttpsError("invalid-argument", "bookingId is required");
+  }
+
+  if (typeof bookingId !== "string" || bookingId.length > 128) {
+    throw new HttpsError("invalid-argument", "Invalid bookingId format");
   }
 
   const bookingSnap = await db.collection("bookings").doc(bookingId).get();
@@ -1163,6 +1190,20 @@ export const sendPaymentLinkSMS = onCall(
     const { phone, paymentUrl, locale } = request.data;
     if (!phone || !paymentUrl) {
       throw new HttpsError("invalid-argument", "phone and paymentUrl are required");
+    }
+
+    if (typeof phone !== "string" || typeof paymentUrl !== "string") {
+      throw new HttpsError("invalid-argument", "phone and paymentUrl must be strings");
+    }
+
+    // Validate phone format (E.164)
+    if (!/^\+[1-9]\d{1,14}$/.test(phone)) {
+      throw new HttpsError("invalid-argument", "Invalid phone number format (E.164 required)");
+    }
+
+    // Validate paymentUrl is a valid URL on our domain
+    if (paymentUrl.length > 2048 || !paymentUrl.startsWith("https://")) {
+      throw new HttpsError("invalid-argument", "Invalid payment URL");
     }
 
     const success = await sendPaymentLinkSMSService(phone, paymentUrl, locale || "en");
