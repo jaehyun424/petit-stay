@@ -50,17 +50,20 @@ export function useInfiniteBookings(hotelId?: string) {
                     return;
                 }
 
-                const constraints = [
-                    where('hotelId', '==', hotelId),
-                    orderBy('scheduledStart', 'desc'),
-                    limit(PAGE_SIZE),
-                ];
-
-                if (lastDocRef.current) {
-                    constraints.push(startAfter(lastDocRef.current));
-                }
-
-                const q = query(collection(db, 'bookings'), ...constraints);
+                const q = lastDocRef.current
+                    ? query(
+                        collection(db, 'bookings'),
+                        where('hotelId', '==', hotelId),
+                        orderBy('scheduledStart', 'desc'),
+                        startAfter(lastDocRef.current),
+                        limit(PAGE_SIZE),
+                    )
+                    : query(
+                        collection(db, 'bookings'),
+                        where('hotelId', '==', hotelId),
+                        orderBy('scheduledStart', 'desc'),
+                        limit(PAGE_SIZE),
+                    );
                 const snapshot = await getDocs(q);
 
                 if (snapshot.empty) {
