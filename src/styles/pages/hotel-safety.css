@@ -301,7 +301,104 @@
   }
 }
 
+/* Audit Log Timeline */
+.audit-header-controls {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+}
+
+.audit-timeline {
+  position: relative;
+  padding-left: var(--space-6);
+}
+
+.audit-timeline::before {
+  content: '';
+  position: absolute;
+  left: 7px;
+  top: 0;
+  bottom: 0;
+  width: 2px;
+  background: var(--cream-200);
+}
+
+.audit-timeline-item {
+  position: relative;
+  padding-bottom: var(--space-4);
+}
+
+.audit-timeline-item:last-child {
+  padding-bottom: 0;
+}
+
+.audit-timeline-dot {
+  position: absolute;
+  left: calc(-1 * var(--space-6) + 3px);
+  top: 4px;
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  background: var(--gold-600, #C5A059);
+  border: 2px solid var(--bg-card);
+  z-index: 1;
+}
+
+.audit-timeline-content {
+  padding: var(--space-3);
+  background: var(--glass-bg);
+  border-radius: var(--radius-lg);
+  border: 1px solid var(--cream-200);
+  transition: border-color 0.2s;
+}
+
+.audit-timeline-content:hover {
+  border-color: var(--cream-300);
+}
+
+.audit-timeline-header {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+  margin-bottom: var(--space-1);
+}
+
+.audit-booking-id {
+  font-size: var(--text-xs);
+  color: var(--text-tertiary);
+  font-family: var(--font-mono, monospace);
+}
+
+.audit-details {
+  font-size: var(--text-sm);
+  color: var(--text-secondary);
+  margin-bottom: var(--space-1);
+  line-height: 1.5;
+}
+
+.audit-meta {
+  display: flex;
+  justify-content: space-between;
+  font-size: var(--text-xs);
+  color: var(--text-tertiary);
+}
+
+@media (max-width: 600px) {
+  .audit-header-controls {
+    flex-direction: column;
+    align-items: stretch;
+  }
+}
+
 /* Dark mode */
 :root[data-theme="dark"] .incident-filter-tab:hover {
   background: rgba(255,255,255,0.05);
+}
+
+:root[data-theme="dark"] .audit-timeline::before {
+  background: var(--charcoal-600);
+}
+
+:root[data-theme="dark"] .audit-timeline-content {
+  border-color: var(--charcoal-600);
 }

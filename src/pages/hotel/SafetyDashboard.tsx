@@ -4,7 +4,7 @@
 
 import { useState, useMemo, useRef } from 'react';
 import { useTranslation } from 'react-i18next';
-import { Plus, ShieldCheck } from 'lucide-react';
+import { Plus, ShieldCheck, ClipboardList, Filter } from 'lucide-react';
 import { Card, CardHeader, CardTitle, CardBody } from '../../components/common/Card';
 import { Button } from '../../components/common/Button';
 import { AnimatedCounter } from '../../components/common/AnimatedCounter';
@@ -17,7 +17,9 @@ import { useAuth } from '../../contexts/AuthContext';
 import { useHotel } from '../../hooks/useHotel';
 import { useHotelIncidents } from '../../hooks/useIncidents';
 import { useHotelBookings } from '../../hooks/useBookings';
+import { useAllAuditLogs } from '../../hooks/useAuditLog';
 import { useToast } from '../../contexts/ToastContext';
+import type { AuditAction } from '../../services/auditLog';
 import '../../styles/pages/hotel-safety.css';
 
 // ----------------------------------------
@@ -69,6 +71,34 @@ function formatCategory(category: string): string {
         .join(' ');
 }
 
+function getAuditActionVariant(action: AuditAction): 'success' | 'primary' | 'warning' | 'error' | 'neutral' {
+    switch (action) {
+        case 'booking_created': return 'primary';
+        case 'sitter_assigned':
+        case 'sitter_confirmed': return 'success';
+        case 'payment_received': return 'success';
+        case 'payment_refunded': return 'warning';
+        case 'incident_reported': return 'error';
+        case 'insurance_claimed': return 'warning';
+        case 'insurance_activated': return 'success';
+        case 'booking_cancelled': return 'error';
+        case 'check_in_completed':
+        case 'check_out_completed': return 'success';
+        default: return 'neutral';
+    }
+}
+
+type AuditFilterType = 'all' | 'booking' | 'sitter' | 'payment' | 'incident' | 'insurance';
+
+const AUDIT_ACTION_GROUPS: Record<AuditFilterType, AuditAction[]> = {
+    all: [],
+    booking: ['booking_created', 'status_changed', 'booking_cancelled', 'booking_extended', 'guest_consent_given'],
+    sitter: ['sitter_assigned', 'sitter_confirmed', 'check_in_completed', 'check_out_completed'],
+    payment: ['payment_received', 'payment_refunded'],
+    incident: ['incident_reported'],
+    insurance: ['insurance_activated', 'insurance_claimed'],
+};
+
 // ----------------------------------------
 // Component
 // ----------------------------------------
@@ -79,6 +109,7 @@ export default function SafetyDashboard() {
     const { hotel, isLoading: hotelLoading } = useHotel(hotelId);
     const { incidents, isLoading: incidentsLoading, createIncident, updateIncidentStatus, error: incidentsError, retry: retryIncidents } = useHotelIncidents(hotelId);
     const { stats, isLoading: bookingsLoading } = useHotelBookings(hotelId);
+    const { entries: auditEntries, isLoading: auditLoading } = useAllAuditLogs();
     const toast = useToast();
 
     const SEVERITY_OPTIONS = [
@@ -119,10 +150,12 @@ export default function SafetyDashboard() {
 
     // Filter state
     const [activeFilter, setActiveFilter] = useState<FilterTab>('all');
+    const [auditFilter, setAuditFilter] = useState<AuditFilterType>('all');
+    const [auditBookingFilter, setAuditBookingFilter] = useState('');
 
     // Derived data
     const safetyDays = hotel?.stats?.safetyDays ?? 0;
-    const isLoading = hotelLoading || incidentsLoading || bookingsLoading;
+    const isLoading = hotelLoading || incidentsLoading || bookingsLoading || auditLoading;
 
     const filteredIncidents = useMemo(() => {
         if (activeFilter === 'all') return incidents;
@@ -136,6 +169,19 @@ export default function SafetyDashboard() {
     }, [incidents]);
 
     const complianceRate = monthlyIncidentCount === 0 ? 100 : Math.max(0, Math.round(100 - (monthlyIncidentCount * 2)));
+
+    const filteredAuditEntries = useMemo(() => {
+        let filtered = auditEntries;
+        if (auditFilter !== 'all') {
+            const actions = AUDIT_ACTION_GROUPS[auditFilter];
+            filtered = filtered.filter((e) => actions.includes(e.action));
+        }
+        if (auditBookingFilter.trim()) {
+            const q = auditBookingFilter.trim().toLowerCase();
+            filtered = filtered.filter((e) => e.bookingId.toLowerCase().includes(q));
+        }
+        return filtered;
+    }, [auditEntries, auditFilter, auditBookingFilter]);
 
     // Handlers
     const openModal = () => {
@@ -418,6 +464,78 @@ export default function SafetyDashboard() {
                                                 {t('safety.close')}
                                             </Button>
                                         )}
+                                    </div>
+                                </div>
+                            ))}
+                        </div>
+                    )}
+                </CardBody>
+            </Card>
+
+            {/* Audit Log Section */}
+            <Card>
+                <CardHeader
+                    action={
+                        <div className="audit-header-controls">
+                            <Input
+                                placeholder={t('audit.filterByBooking')}
+                                value={auditBookingFilter}
+                                onChange={(e) => setAuditBookingFilter(e.target.value)}
+                                style={{ width: '160px', margin: 0 }}
+                            />
+                        </div>
+                    }
+                >
+                    <CardTitle
+                        subtitle={t('audit.totalEntries', { count: filteredAuditEntries.length })}
+                    >
+                        <span style={{ display: 'inline-flex', alignItems: 'center', gap: 'var(--space-2)' }}>
+                            <ClipboardList size={18} />
+                            {t('audit.title')}
+                        </span>
+                    </CardTitle>
+                </CardHeader>
+                <CardBody>
+                    {/* Audit Filter Tabs */}
+                    <div className="incident-filter-tabs" role="tablist" aria-label="Audit action filter">
+                        {(['all', 'booking', 'sitter', 'payment', 'incident', 'insurance'] as AuditFilterType[]).map((key) => (
+                            <button
+                                key={key}
+                                role="tab"
+                                aria-selected={auditFilter === key}
+                                className={`incident-filter-tab ${auditFilter === key ? 'incident-filter-tab-active' : ''}`}
+                                onClick={() => setAuditFilter(key)}
+                            >
+                                <Filter size={12} />
+                                {t(`audit.filter_${key}`)}
+                            </button>
+                        ))}
+                    </div>
+
+                    {/* Audit Timeline */}
+                    {filteredAuditEntries.length === 0 ? (
+                        <div className="empty-incidents">
+                            <span className="empty-icon"><ClipboardList size={48} strokeWidth={1.5} /></span>
+                            <h4>{t('audit.noEntries')}</h4>
+                            <p>{t('audit.noEntriesDesc')}</p>
+                        </div>
+                    ) : (
+                        <div className="audit-timeline">
+                            {filteredAuditEntries.map((entry) => (
+                                <div key={entry.id} className="audit-timeline-item">
+                                    <div className="audit-timeline-dot" />
+                                    <div className="audit-timeline-content">
+                                        <div className="audit-timeline-header">
+                                            <Badge variant={getAuditActionVariant(entry.action)} size="sm">
+                                                {t(`audit.action_${entry.action}`)}
+                                            </Badge>
+                                            <span className="audit-booking-id">{entry.bookingId}</span>
+                                        </div>
+                                        <p className="audit-details">{entry.details}</p>
+                                        <div className="audit-meta">
+                                            <span>{entry.userName}</span>
+                                            <span>{entry.timestamp.toLocaleString()}</span>
+                                        </div>
                                     </div>
                                 </div>
                             ))}
