@@ -20,8 +20,9 @@ import {
     type DemoSitterSession,
     type DemoWeekDay,
 } from '../data/demo';
-import { bookingService, sitterService } from '../services/firestore';
-import type { DashboardStats } from '../types';
+import { bookingService, sitterService, hotelService } from '../services/firestore';
+import { getRecommendedSitters, type SitterMatch } from '../services/matchingEngine';
+import type { Booking, DashboardStats, Sitter, Hotel } from '../types';
 
 // LRU cache for sitter name lookups (capped at 100 entries)
 const CACHE_LIMIT = 100;
@@ -393,4 +394,62 @@ export function useSitterBookings(sitterId?: string) {
     }, []);
 
     return { todaySessions, weekSchedule, isLoading, createBooking, acceptAssignment, rejectAssignment, error, retry };
+}
+
+// ----------------------------------------
+// Recommended Sitters Hook (for Hotel Console)
+// ----------------------------------------
+export function useRecommendedSitters(booking: Booking | null, hotelId?: string) {
+    const [recommendations, setRecommendations] = useState<SitterMatch[]>([]);
+    const [isLoading, setIsLoading] = useState(false);
+    const [error, setError] = useState<string | null>(null);
+
+    const fetchRecommendations = useCallback(async () => {
+        if (DEMO_MODE) {
+            // Demo mode: return mock recommendations
+            setRecommendations([]);
+            return;
+        }
+
+        if (!booking || !hotelId) {
+            setRecommendations([]);
+            return;
+        }
+
+        setIsLoading(true);
+        setError(null);
+
+        try {
+            // Fetch sitters and hotel in parallel
+            const [sitters, hotel] = await Promise.all([
+                new Promise<Sitter[]>((resolve) => {
+                    const unsub = sitterService.subscribeToHotelSitters(hotelId, (s) => {
+                        unsub();
+                        resolve(s);
+                    });
+                }),
+                hotelService.getHotel(hotelId),
+            ]);
+
+            if (!hotel) {
+                setError('Hotel not found');
+                setRecommendations([]);
+                return;
+            }
+
+            const matches = getRecommendedSitters(booking, sitters, hotel);
+            setRecommendations(matches);
+        } catch (err) {
+            console.error('Failed to get recommended sitters:', err);
+            setError('Failed to load recommendations');
+        } finally {
+            setIsLoading(false);
+        }
+    }, [booking, hotelId]);
+
+    useEffect(() => {
+        fetchRecommendations();
+    }, [fetchRecommendations]);
+
+    return { recommendations, isLoading, error, refresh: fetchRecommendations };
 }
