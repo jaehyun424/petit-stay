@@ -21,7 +21,7 @@
 
 .welcome-section p {
   color: var(--charcoal-600);
-  font-size: 1.125rem;
+  font-size: var(--text-lg);
 }
 
 /* Quick Actions - Paper Buttons */
@@ -55,12 +55,12 @@
 }
 
 .quick-action-btn .icon {
-  font-size: 2rem;
+  font-size: var(--text-3xl);
   margin-bottom: 0.25rem;
 }
 
 .quick-action-btn span:last-child {
-  font-size: 0.875rem;
+  font-size: var(--text-sm);
   font-weight: 500;
   text-transform: none;
   letter-spacing: 0.02em;
@@ -97,7 +97,7 @@
 
 .upcoming-header h3 {
   font-family: var(--font-serif);
-  font-size: 1.25rem;
+  font-size: var(--text-xl);
   font-weight: 600;
   color: var(--charcoal-900);
   margin: 0;
@@ -114,12 +114,12 @@
   display: flex;
   align-items: center;
   gap: 0.75rem;
-  font-size: 0.95rem;
+  font-size: var(--text-base);
   color: var(--charcoal-700);
 }
 
 .detail-row span:first-child {
-  font-size: 1.1rem;
+  font-size: var(--text-lg);
   width: 24px;
   text-align: center;
 }
@@ -131,7 +131,7 @@
 /* Section Titles */
 .parent-home .section-title {
   font-family: var(--font-serif);
-  font-size: 1.5rem;
+  font-size: var(--text-2xl);
   font-weight: 400;
   color: var(--charcoal-900);
   margin-bottom: 1.5rem;
@@ -163,13 +163,13 @@
   display: block;
   font-weight: 600;
   color: var(--charcoal-900);
-  font-size: 1rem;
+  font-size: var(--text-base);
   margin-bottom: 0.25rem;
 }
 
 .session-hotel {
   display: block;
-  font-size: 0.875rem;
+  font-size: var(--text-sm);
   color: var(--charcoal-500);
 }
 
@@ -182,13 +182,13 @@
 }
 
 .session-meta span:first-child {
-  font-size: 0.875rem;
+  font-size: var(--text-sm);
   color: var(--charcoal-600);
   font-weight: 500;
 }
 
 .session-meta span:last-child {
-  font-size: 0.8rem;
+  font-size: var(--text-sm);
 }
 
 /* Dark mode overrides */
@@ -220,7 +220,7 @@
 
 .stat-value {
   font-family: var(--font-serif);
-  font-size: 1.75rem;
+  font-size: var(--text-2xl);
   font-weight: 600;
   color: var(--charcoal-900);
   line-height: 1;
@@ -228,7 +228,7 @@
 }
 
 .stat-label {
-  font-size: 0.75rem;
+  font-size: var(--text-xs);
   color: var(--charcoal-500);
   text-transform: none;
   letter-spacing: 0.05em;
@@ -260,14 +260,14 @@
 
 .trust-card-value {
   font-family: var(--font-serif);
-  font-size: 1.25rem;
+  font-size: var(--text-xl);
   font-weight: 600;
   color: var(--gold-500);
   line-height: 1;
 }
 
 .trust-card-label {
-  font-size: 0.75rem;
+  font-size: var(--text-xs);
   color: var(--charcoal-500);
   font-weight: 500;
 }

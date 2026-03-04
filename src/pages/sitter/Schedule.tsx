@@ -2,6 +2,8 @@
 
 import { useTranslation } from 'react-i18next';
 import { useNavigate } from 'react-router-dom';
+import { motion } from 'framer-motion';
+import { staggerContainer, staggerItem } from '../../utils/animations';
 import { Building2, Baby, Calendar } from 'lucide-react';
 import { Card, CardBody } from '../../components/common/Card';
 import { StatusBadge, TierBadge, SafetyBadge } from '../../components/common/Badge';
@@ -74,30 +76,32 @@ export default function Schedule() {
             {/* Today's Schedule */}
             <h2 className="section-title">{t('sitter.todaySchedule')}</h2>
             {todaySessions.length > 0 ? (
-                <div className="sessions-list">
+                <motion.div className="sessions-list" initial="hidden" animate="show" variants={staggerContainer}>
                     {todaySessions.map((session) => (
-                        <Card key={session.id}>
-                            <CardBody>
-                                <div className="session-header">
-                                    <span className="session-time">{session.time}</span>
-                                    <StatusBadge status={session.status} />
-                                </div>
-                                <div className="session-info">
-                                    <span><Building2 size={14} strokeWidth={1.75} /> {session.hotel} - {t('common.room')} {session.room}</span>
-                                    <span><Baby size={14} strokeWidth={1.75} /> {session.children.join(', ')}</span>
-                                </div>
-                                <div className="session-actions">
-                                    {session.status === 'confirmed' && (
-                                        <Button variant="gold" fullWidth onClick={() => { toast.success(t('sitter.startSession'), `Room ${session.room}`); navigate('/sitter/active'); }}>{t('sitter.startSession')}</Button>
-                                    )}
-                                    {session.status === 'pending' && (
-                                        <Button variant="secondary" fullWidth disabled>{t('status.pending')}</Button>
-                                    )}
-                                </div>
-                            </CardBody>
-                        </Card>
+                        <motion.div key={session.id} variants={staggerItem}>
+                            <Card>
+                                <CardBody>
+                                    <div className="session-header">
+                                        <span className="session-time">{session.time}</span>
+                                        <StatusBadge status={session.status} />
+                                    </div>
+                                    <div className="session-info">
+                                        <span><Building2 size={14} strokeWidth={1.75} /> {session.hotel} - {t('common.room')} {session.room}</span>
+                                        <span><Baby size={14} strokeWidth={1.75} /> {session.children.join(', ')}</span>
+                                    </div>
+                                    <div className="session-actions">
+                                        {session.status === 'confirmed' && (
+                                            <Button variant="gold" fullWidth onClick={() => { toast.success(t('sitter.startSession'), `Room ${session.room}`); navigate('/sitter/active'); }}>{t('sitter.startSession')}</Button>
+                                        )}
+                                        {session.status === 'pending' && (
+                                            <Button variant="secondary" fullWidth disabled>{t('status.pending')}</Button>
+                                        )}
+                                    </div>
+                                </CardBody>
+                            </Card>
+                        </motion.div>
                     ))}
-                </div>
+                </motion.div>
             ) : (
                 <EmptyState
                     icon={<Calendar size={20} strokeWidth={1.75} />}
@@ -108,14 +112,14 @@ export default function Schedule() {
 
             {/* Week View */}
             <h2 className="section-title">{t('sitter.thisWeek')}</h2>
-            <div className="week-grid" role="group" aria-label="Weekly schedule overview">
+            <motion.div className="week-grid" role="group" aria-label="Weekly schedule overview" initial="hidden" animate="show" variants={staggerContainer}>
                 {weekSchedule.map((day, i) => (
-                    <div key={i} className={`day-item ${day.sessions > 0 ? 'has-sessions' : ''}`} aria-label={`${day.date}: ${day.sessions > 0 ? day.sessions + ' sessions' : 'no sessions'}`}>
+                    <motion.div key={i} className={`day-item ${day.sessions > 0 ? 'has-sessions' : ''}`} aria-label={`${day.date}: ${day.sessions > 0 ? day.sessions + ' sessions' : 'no sessions'}`} variants={staggerItem}>
                         <span className="day-date">{day.date}</span>
                         <span className="day-count" aria-hidden="true">{day.sessions > 0 ? day.sessions : '-'}</span>
-                    </div>
+                    </motion.div>
                 ))}
-            </div>
+            </motion.div>
         </div>
     );
 }

@@ -48,15 +48,15 @@
 /* Section Titles */
 .section-title {
   font-family: var(--font-serif);
-  font-size: 1.5rem;
+  font-size: var(--text-2xl);
   color: var(--charcoal-900);
-  margin-bottom: 0.5rem;
+  margin-bottom: var(--space-2);
 }
 
 .section-subtitle {
   color: var(--charcoal-500);
-  margin-bottom: 2rem;
-  font-size: 0.95rem;
+  margin-bottom: var(--space-8);
+  font-size: var(--text-base);
 }
 
 /* Step Content Animation */
@@ -73,10 +73,10 @@
 .info-box {
   background: var(--cream-50);
   border: 1px solid var(--cream-200);
-  padding: 1rem;
+  padding: var(--space-4);
   border-radius: var(--radius-md);
   display: flex;
-  gap: 0.75rem;
+  gap: var(--space-3);
   align-items: flex-start;
   font-size: var(--text-sm);
   color: var(--charcoal-600);
@@ -93,10 +93,10 @@
 
 .checkbox-row {
   display: flex;
-  gap: 1rem;
+  gap: var(--space-4);
   align-items: flex-start;
   cursor: pointer;
-  padding: 1rem;
+  padding: var(--space-4);
   border: 1px solid var(--cream-200);
   border-radius: var(--radius-lg);
   transition: all 0.3s;
@@ -108,16 +108,16 @@
 }
 
 .checkbox-text {
-  font-size: 0.9rem;
+  font-size: var(--text-sm);
   line-height: 1.5;
   color: var(--charcoal-700);
 }
 
 .trust-checkin-page input[type="checkbox"] {
-  margin-top: 0.25rem;
+  margin-top: var(--space-1);
   accent-color: var(--gold-500);
-  width: 1.25rem;
-  height: 1.25rem;
+  width: var(--space-5);
+  height: var(--space-5);
 }
 
 /* Signature Section */
@@ -175,4 +175,33 @@
 :root[data-theme="dark"] .info-box {
   background: var(--cream-100);
   border-color: var(--cream-300);
+}
+
+/* Mobile breakpoint */
+@media (max-width: 480px) {
+  .trust-checkin-container {
+    padding: var(--space-6) var(--space-3);
+  }
+
+  .trust-checkin-title {
+    font-size: var(--text-2xl);
+  }
+
+  .section-title {
+    font-size: var(--text-xl);
+  }
+
+  .checkbox-row {
+    padding: var(--space-3);
+    gap: var(--space-3);
+  }
+
+  .info-box {
+    padding: var(--space-3);
+  }
+
+  .checkin-card-footer {
+    margin-top: var(--space-6);
+    padding-top: var(--space-4);
+  }
 }

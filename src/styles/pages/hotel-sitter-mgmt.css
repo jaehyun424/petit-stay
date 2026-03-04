@@ -167,3 +167,30 @@
   color: var(--text-tertiary);
   padding: var(--space-4);
 }
+
+/* Mobile breakpoint */
+@media (max-width: 480px) {
+  .sitters-grid {
+    grid-template-columns: 1fr;
+    gap: var(--space-4);
+  }
+
+  .modal-profile-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .sitter-management-page .sitter-name {
+    font-size: var(--text-base);
+  }
+
+  .sitter-actions {
+    flex-direction: column;
+    gap: var(--space-2);
+  }
+
+  .booking-option-row {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: var(--space-2);
+  }
+}

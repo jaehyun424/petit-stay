@@ -6,6 +6,7 @@ import React, { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import { motion } from 'framer-motion';
+import { staggerContainer, staggerItem } from '../../utils/animations';
 import { Calendar, Radio, CheckCircle, DollarSign, Plus, ArrowRight, Clock, DoorOpen, User } from 'lucide-react';
 import { Card, CardHeader, CardTitle, CardBody } from '../../components/common/Card';
 import { Button } from '../../components/common/Button';
@@ -171,8 +172,8 @@ export default function Dashboard() {
       <motion.div
         className="stats-grid"
         initial="hidden"
-        animate="visible"
-        variants={{ hidden: {}, visible: { transition: { staggerChildren: 0.1 } } }}
+        animate="show"
+        variants={staggerContainer}
       >
         {[
           { icon: <Calendar size={20} strokeWidth={2} />, label: t('hotel.totalBookings'), value: stats.todayBookings, subValue: `${stats.pendingBookings} ${t('status.pending').toLowerCase()}`, color: 'primary' as const, to: '/hotel/bookings' },
@@ -180,10 +181,7 @@ export default function Dashboard() {
           { icon: <CheckCircle size={20} strokeWidth={2} />, label: t('status.completed'), value: stats.completedToday, color: 'success' as const, to: '/hotel/reports' },
           { icon: <DollarSign size={20} strokeWidth={2} />, label: t('hotel.totalRevenue'), value: formatCurrency(stats.todayRevenue), color: 'gold' as const, to: '/hotel/reports' },
         ].map((stat, i) => (
-          <motion.div
-            key={i}
-            variants={{ hidden: { opacity: 0, y: 16 }, visible: { opacity: 1, y: 0, transition: { duration: 0.4 } } }}
-          >
+          <motion.div key={i} variants={staggerItem}>
             <StatCard {...stat} />
           </motion.div>
         ))}
@@ -203,7 +201,7 @@ export default function Dashboard() {
             </CardTitle>
           </CardHeader>
           <CardBody>
-            <div className="booking-list">
+            <motion.div className="booking-list" initial="hidden" animate="show" variants={staggerContainer}>
               {todayBookings.length === 0 ? (
                 <div className="empty-state">
                   <Calendar size={20} strokeWidth={2} />
@@ -214,7 +212,7 @@ export default function Dashboard() {
                 </div>
               ) : (
                 todayBookings.map((booking) => (
-                  <div key={booking.id} className="booking-item">
+                  <motion.div key={booking.id} className="booking-item" variants={staggerItem}>
                     <div className="booking-item-main">
                       <div className="booking-item-header">
                         <span className="booking-code">{booking.confirmationCode}</span>
@@ -248,10 +246,10 @@ export default function Dashboard() {
                         </Button>
                       )}
                     </div>
-                  </div>
+                  </motion.div>
                 ))
               )}
-            </div>
+            </motion.div>
           </CardBody>
         </Card>
 

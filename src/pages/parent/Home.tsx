@@ -4,6 +4,8 @@
 
 import { Link } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
+import { motion } from 'framer-motion';
+import { staggerContainer, staggerItem } from '../../utils/animations';
 import { Calendar, ClipboardList, Baby, Building2, Star, User, Shield, Award } from 'lucide-react';
 import { Card, CardBody } from '../../components/common/Card';
 import { Button } from '../../components/common/Button';
@@ -105,20 +107,26 @@ export default function Home() {
       </div>
 
       {/* Quick Actions */}
-      <div className="quick-actions animate-stagger" role="navigation" aria-label="Quick actions">
-        <Link to="/parent/book" className="quick-action-btn">
-          <span className="icon" aria-hidden="true"><Calendar size={20} strokeWidth={1.75} /></span>
-          <span>{t('parent.bookNow')}</span>
-        </Link>
-        <Link to="/parent/history" className="quick-action-btn">
-          <span className="icon" aria-hidden="true"><ClipboardList size={20} strokeWidth={1.75} /></span>
-          <span>{t('nav.history')}</span>
-        </Link>
-        <Link to="/parent/profile" className="quick-action-btn">
-          <span className="icon" aria-hidden="true"><Baby size={20} strokeWidth={1.75} /></span>
-          <span>{t('parent.children')}</span>
-        </Link>
-      </div>
+      <motion.div className="quick-actions" role="navigation" aria-label="Quick actions" initial="hidden" animate="show" variants={staggerContainer}>
+        <motion.div variants={staggerItem}>
+          <Link to="/parent/book" className="quick-action-btn">
+            <span className="icon" aria-hidden="true"><Calendar size={20} strokeWidth={1.75} /></span>
+            <span>{t('parent.bookNow')}</span>
+          </Link>
+        </motion.div>
+        <motion.div variants={staggerItem}>
+          <Link to="/parent/history" className="quick-action-btn">
+            <span className="icon" aria-hidden="true"><ClipboardList size={20} strokeWidth={1.75} /></span>
+            <span>{t('nav.history')}</span>
+          </Link>
+        </motion.div>
+        <motion.div variants={staggerItem}>
+          <Link to="/parent/profile" className="quick-action-btn">
+            <span className="icon" aria-hidden="true"><Baby size={20} strokeWidth={1.75} /></span>
+            <span>{t('parent.children')}</span>
+          </Link>
+        </motion.div>
+      </motion.div>
 
       {/* Dashboard Stats */}
       <div className="home-stats">
@@ -196,25 +204,29 @@ export default function Home() {
         </div>
 
         {/* Recent Sessions */}
-        <div className="section animate-stagger">
+        <div className="section">
           <h2 className="section-title">{t('parent.recentSessions')}</h2>
           {recentSessions.length > 0 ? (
-            recentSessions.map((session) => (
-              <Card key={session.id} className="session-card">
-                <CardBody>
-                  <div className="session-info">
-                    <div>
-                      <span className="session-date">{formatDate(session.date)}</span>
-                      <span className="session-hotel">{session.hotel}</span>
-                    </div>
-                    <div className="session-meta">
-                      <span>{session.durationHours}h</span>
-                      <span aria-label={`${session.rating} star rating`}>{Array.from({ length: session.rating }, (_, i) => <Star key={i} size={14} strokeWidth={1.75} fill="currentColor" />)}</span>
-                    </div>
-                  </div>
-                </CardBody>
-              </Card>
-            ))
+            <motion.div initial="hidden" animate="show" variants={staggerContainer}>
+              {recentSessions.map((session) => (
+                <motion.div key={session.id} variants={staggerItem}>
+                  <Card className="session-card">
+                    <CardBody>
+                      <div className="session-info">
+                        <div>
+                          <span className="session-date">{formatDate(session.date)}</span>
+                          <span className="session-hotel">{session.hotel}</span>
+                        </div>
+                        <div className="session-meta">
+                          <span>{session.durationHours}h</span>
+                          <span aria-label={`${session.rating} star rating`}>{Array.from({ length: session.rating }, (_, i) => <Star key={i} size={14} strokeWidth={1.75} fill="currentColor" />)}</span>
+                        </div>
+                      </div>
+                    </CardBody>
+                  </Card>
+                </motion.div>
+              ))}
+            </motion.div>
           ) : (
             <EmptyState
               icon={<ClipboardList size={20} strokeWidth={1.75} />}

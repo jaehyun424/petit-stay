@@ -3,6 +3,8 @@
 // ============================================
 
 import { useTranslation } from 'react-i18next';
+import { motion } from 'framer-motion';
+import { staggerContainer, staggerItem } from '../../utils/animations';
 import { Building2, Users, Calendar, DollarSign, Star, AlertTriangle, Wallet, Target } from 'lucide-react';
 import { Card, CardHeader, CardTitle, CardBody } from '../../components/common/Card';
 import { Badge } from '../../components/common/Badge';
@@ -48,17 +50,17 @@ export default function OpsDashboard() {
         </div>
       </div>
 
-      <div className="ops-stats-grid">
+      <motion.div className="ops-stats-grid" initial="hidden" animate="show" variants={staggerContainer}>
         {statCards.map((stat, i) => (
-          <div key={i} className={`ops-stat-card ops-stat-${stat.color}`}>
+          <motion.div key={i} className={`ops-stat-card ops-stat-${stat.color}`} variants={staggerItem}>
             <div className="ops-stat-icon">{stat.icon}</div>
             <div className="ops-stat-content">
               <div className="ops-stat-value">{stat.value}</div>
               <div className="ops-stat-label">{stat.label}</div>
             </div>
-          </div>
+          </motion.div>
         ))}
-      </div>
+      </motion.div>
 
       <div className="ops-grid-2">
         <Card>
