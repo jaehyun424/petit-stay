@@ -16,11 +16,13 @@ interface ConfirmationStepProps {
 export function ConfirmationStep({ reservation, onNext }: ConfirmationStepProps) {
   const { t } = useTranslation();
 
-  // Generate formatted confirmation code: PS-2026-MMDD-001
-  const now = new Date();
-  const mm = String(now.getMonth() + 1).padStart(2, '0');
-  const dd = String(now.getDate()).padStart(2, '0');
-  const displayCode = `PS-2026-${mm}${dd}-001`;
+  // Use actual confirmation code from reservation, fallback to generated code
+  const displayCode = reservation.confirmationCode || (() => {
+    const now = new Date();
+    const mm = String(now.getMonth() + 1).padStart(2, '0');
+    const dd = String(now.getDate()).padStart(2, '0');
+    return `PS-2026-${mm}${dd}-001`;
+  })();
 
   const summaryItems = [
     { icon: <Calendar size={18} />, label: t('guest.dateLabel'), value: reservation.date },

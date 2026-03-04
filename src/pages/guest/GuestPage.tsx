@@ -108,7 +108,7 @@ export default function GuestPage() {
               <ReservationInfo reservation={reservation} onNext={() => setCurrentStep(2)} />
             )}
             {currentStep === 2 && (
-              <ConsentForm onNext={() => setCurrentStep(3)} onBack={() => setCurrentStep(1)} />
+              <ConsentForm bookingId={reservation.id} onNext={() => setCurrentStep(3)} onBack={() => setCurrentStep(1)} />
             )}
             {currentStep === 3 && (
               <PaymentStep
@@ -124,7 +124,7 @@ export default function GuestPage() {
               />
             )}
             {currentStep === 5 && (
-              <FeedbackStep onSubmit={() => {}} />
+              <FeedbackStep bookingId={reservation.id} onSubmit={() => {}} />
             )}
           </motion.div>
         </AnimatePresence>

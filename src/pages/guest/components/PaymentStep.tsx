@@ -1,9 +1,12 @@
 import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { PriceBreakdown } from '../../../components/common/PriceBreakdown';
+import { DEMO_MODE } from '../../../hooks/useDemo';
+import { guestService } from '../../../services/firestore';
 
 interface PaymentStepProps {
   reservation: {
+    id: string;
     totalAmount: number;
     children: { name: string; age: number }[];
     time: string;
@@ -21,9 +24,22 @@ export function PaymentStep({ reservation, onNext, onBack }: PaymentStepProps) {
 
   const handleSubmit = async () => {
     setIsProcessing(true);
-    await new Promise((r) => setTimeout(r, 1500));
-    setIsProcessing(false);
-    onNext();
+    try {
+      if (DEMO_MODE) {
+        await new Promise((r) => setTimeout(r, 1500));
+      } else {
+        // Submit payment authorization to Firestore
+        await guestService.submitPayment(reservation.id, {
+          method: 'card',
+          transactionId: `txn_${Date.now()}`,
+        });
+      }
+      onNext();
+    } catch (err) {
+      console.error('Payment processing failed:', err);
+    } finally {
+      setIsProcessing(false);
+    }
   };
 
   // Build price breakdown items

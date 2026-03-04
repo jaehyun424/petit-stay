@@ -2,24 +2,38 @@ import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { motion } from 'framer-motion';
 import { CheckCircle } from 'lucide-react';
+import { DEMO_MODE } from '../../../hooks/useDemo';
+import { guestService } from '../../../services/firestore';
 
 interface FeedbackStepProps {
+  bookingId?: string;
   onSubmit: (rating: number, comment: string) => void;
 }
 
-export function FeedbackStep({ onSubmit }: FeedbackStepProps) {
+export function FeedbackStep({ bookingId, onSubmit }: FeedbackStepProps) {
   const { t } = useTranslation();
   const [rating, setRating] = useState(0);
   const [hoverRating, setHoverRating] = useState(0);
   const [comment, setComment] = useState('');
   const [submitted, setSubmitted] = useState(false);
   const [showToast, setShowToast] = useState(false);
+  const [isSubmitting, setIsSubmitting] = useState(false);
 
-  const handleSubmit = () => {
-    onSubmit(rating, comment);
-    setSubmitted(true);
-    setShowToast(true);
-    setTimeout(() => setShowToast(false), 3000);
+  const handleSubmit = async () => {
+    setIsSubmitting(true);
+    try {
+      if (!DEMO_MODE && bookingId) {
+        await guestService.submitFeedback(bookingId, rating, comment);
+      }
+      onSubmit(rating, comment);
+      setSubmitted(true);
+      setShowToast(true);
+      setTimeout(() => setShowToast(false), 3000);
+    } catch (err) {
+      console.error('Failed to submit feedback:', err);
+    } finally {
+      setIsSubmitting(false);
+    }
   };
 
   if (submitted) {
@@ -87,7 +101,7 @@ export function FeedbackStep({ onSubmit }: FeedbackStepProps) {
             onChange={(e) => setComment(e.target.value)}
           />
         </div>
-        <button className="guest-btn guest-btn-primary" onClick={handleSubmit} disabled={rating === 0}>
+        <button className="guest-btn guest-btn-primary" onClick={handleSubmit} disabled={rating === 0 || isSubmitting}>
           {t('guest.submitFeedback')}
         </button>
       </div>
