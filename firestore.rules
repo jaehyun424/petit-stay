@@ -239,6 +239,35 @@ service cloud.firestore {
     }
 
     // ========================================
+    // FCM Tokens Sub-collection (under users)
+    // ========================================
+    match /users/{userId}/fcmTokens/{tokenId} {
+      allow read, write: if isOwner(userId);
+      allow delete: if isOwner(userId) || isAdmin();
+    }
+
+    // ========================================
+    // API Keys Collection (admin only)
+    // ========================================
+    match /apiKeys/{keyId} {
+      allow read, write: if isAdmin();
+    }
+
+    // ========================================
+    // Webhook Events Collection (admin + hotel staff read)
+    // ========================================
+    match /webhookEvents/{eventId} {
+      allow read: if isSignedIn() && (
+        isHotelStaff(resource.data.hotelId) ||
+        isAdmin()
+      );
+      // Only Cloud Functions can create webhook events
+      allow create: if false;
+      allow update: if isAdmin();
+      allow delete: if isAdmin();
+    }
+
+    // ========================================
     // Settlements Collection
     // ========================================
     match /settlements/{settlementId} {
