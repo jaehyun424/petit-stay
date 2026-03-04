@@ -6,6 +6,27 @@
 import type { DashboardStats } from '../types';
 
 // ----------------------------------------
+// Date helpers for relative demo dates
+// ----------------------------------------
+function daysFromNow(days: number): string {
+    const d = new Date();
+    d.setDate(d.getDate() + days);
+    return d.toISOString().split('T')[0];
+}
+
+function formatDateLabel(days: number): string {
+    const d = new Date();
+    d.setDate(d.getDate() + days);
+    return d.toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' });
+}
+
+function formatShortDate(days: number): string {
+    const d = new Date();
+    d.setDate(d.getDate() + days);
+    return d.toLocaleDateString('en-US', { month: 'short', day: 'numeric' });
+}
+
+// ----------------------------------------
 // Hotel Dashboard Stats
 // ----------------------------------------
 export const DEMO_DASHBOARD_STATS: DashboardStats = {
@@ -36,51 +57,51 @@ export interface DemoBooking {
 export const DEMO_HOTEL_BOOKINGS: DemoBooking[] = [
     {
         id: '1',
-        confirmationCode: 'KCP-2025-0042',
-        date: '2025-01-15',
+        confirmationCode: 'KCP-2026-0042',
+        date: daysFromNow(0),
         time: '18:00 - 22:00',
         room: '2305',
         parent: { name: 'Sarah Johnson', phone: '+1 555-0123' },
         children: [{ name: 'Emma', age: 5, allergies: ['peanuts'] }],
         sitter: { name: 'Kim Minjung', tier: 'gold' },
         status: 'confirmed',
-        totalAmount: 280000,
+        totalAmount: 300000,
     },
     {
         id: '2',
-        confirmationCode: 'KCP-2025-0043',
-        date: '2025-01-15',
+        confirmationCode: 'KCP-2026-0043',
+        date: daysFromNow(0),
         time: '19:00 - 23:00',
         room: '1102',
         parent: { name: 'Tanaka Yuki', phone: '+81 90-1234-5678' },
         children: [{ name: 'Sota', age: 3 }, { name: 'Yui', age: 6 }],
         sitter: { name: 'Park Sooyeon', tier: 'gold' },
         status: 'in_progress',
-        totalAmount: 420000,
+        totalAmount: 450000,
     },
     {
         id: '3',
-        confirmationCode: 'KCP-2025-0044',
-        date: '2025-01-15',
+        confirmationCode: 'KCP-2026-0044',
+        date: daysFromNow(0),
         time: '20:00 - 24:00',
         room: '3501',
         parent: { name: 'Michael Chen', phone: '+86 138-0000-0000' },
         children: [{ name: 'Lucas', age: 4 }],
         sitter: null,
         status: 'pending',
-        totalAmount: 280000,
+        totalAmount: 300000,
     },
     {
         id: '4',
-        confirmationCode: 'KCP-2025-0045',
-        date: '2025-01-14',
+        confirmationCode: 'KCP-2026-0045',
+        date: daysFromNow(-1),
         time: '17:00 - 21:00',
         room: '2108',
         parent: { name: 'Emily Davis', phone: '+1 555-0456' },
         children: [{ name: 'Oliver', age: 7 }],
         sitter: { name: 'Lee Jihye', tier: 'silver' },
         status: 'completed',
-        totalAmount: 280000,
+        totalAmount: 240000,
     },
 ];
 
@@ -188,7 +209,7 @@ export const DEMO_SITTERS: DemoSitter[] = [
         languages: ['Korean', 'English', 'Japanese'],
         certifications: ['CPR', 'First Aid', 'Child Psychology'],
         availability: 'Available',
-        hourlyRate: 45000,
+        hourlyRate: 75000,
         safetyDays: 365,
     },
     {
@@ -200,7 +221,7 @@ export const DEMO_SITTERS: DemoSitter[] = [
         languages: ['Korean', 'English'],
         certifications: ['CPR', 'First Aid'],
         availability: 'In Session',
-        hourlyRate: 45000,
+        hourlyRate: 75000,
         safetyDays: 280,
     },
     {
@@ -212,7 +233,7 @@ export const DEMO_SITTERS: DemoSitter[] = [
         languages: ['Korean', 'Chinese'],
         certifications: ['CPR', 'First Aid'],
         availability: 'Available',
-        hourlyRate: 35000,
+        hourlyRate: 60000,
         safetyDays: 95,
     },
     {
@@ -224,7 +245,7 @@ export const DEMO_SITTERS: DemoSitter[] = [
         languages: ['Korean', 'English', 'Chinese'],
         certifications: ['CPR', 'First Aid', 'Child Development'],
         availability: 'In Session',
-        hourlyRate: 50000,
+        hourlyRate: 90000,
         safetyDays: 450,
     },
 ];
@@ -275,7 +296,7 @@ export interface DemoUpcomingBooking {
 
 export const DEMO_UPCOMING_BOOKING: DemoUpcomingBooking = {
     id: '1',
-    confirmationCode: 'KCP-2025-0042',
+    confirmationCode: 'KCP-2026-0042',
     dateKey: 'tonight',
     time: '18:00 - 22:00',
     hotel: 'Grand Hyatt Seoul',
@@ -301,9 +322,9 @@ export interface DemoHistoryItem {
 }
 
 export const DEMO_HISTORY: DemoHistoryItem[] = [
-    { id: '1', date: 'Jan 15, 2025', time: '18:00-22:00', hotel: 'Grand Hyatt Seoul', sitter: 'Kim Minjung', duration: '4h', amount: 280000, rating: 5, status: 'completed' },
-    { id: '2', date: 'Jan 10, 2025', time: '19:00-23:00', hotel: 'Grand Hyatt Seoul', sitter: 'Park Sooyeon', duration: '4h', amount: 280000, rating: 5, status: 'completed' },
-    { id: '3', date: 'Dec 28, 2024', time: '20:00-23:00', hotel: 'Park Hyatt Busan', sitter: 'Lee Jihye', duration: '3h', amount: 210000, rating: 4, status: 'completed' },
+    { id: '1', date: formatDateLabel(-1), time: '18:00-22:00', hotel: 'Grand Hyatt Seoul', sitter: 'Kim Minjung', duration: '4h', amount: 300000, rating: 5, status: 'completed' },
+    { id: '2', date: formatDateLabel(-6), time: '19:00-23:00', hotel: 'Grand Hyatt Seoul', sitter: 'Park Sooyeon', duration: '4h', amount: 300000, rating: 5, status: 'completed' },
+    { id: '3', date: formatDateLabel(-14), time: '20:00-23:00', hotel: 'Park Hyatt Busan', sitter: 'Lee Jihye', duration: '3h', amount: 180000, rating: 4, status: 'completed' },
 ];
 
 // ----------------------------------------
@@ -318,8 +339,8 @@ export interface DemoRecentSession {
 }
 
 export const DEMO_RECENT_SESSIONS: DemoRecentSession[] = [
-    { id: '1', date: new Date('2025-01-10'), hotel: 'Grand Hyatt Seoul', durationHours: 4, rating: 5 },
-    { id: '2', date: new Date('2024-12-28'), hotel: 'Park Hyatt Busan', durationHours: 3, rating: 5 },
+    { id: '1', date: new Date(Date.now() - 1000 * 60 * 60 * 24 * 6), hotel: 'Grand Hyatt Seoul', durationHours: 4, rating: 5 },
+    { id: '2', date: new Date(Date.now() - 1000 * 60 * 60 * 24 * 14), hotel: 'Park Hyatt Busan', durationHours: 3, rating: 5 },
 ];
 
 // ----------------------------------------
@@ -513,7 +534,7 @@ export interface DemoNotification {
 }
 
 export const DEMO_NOTIFICATIONS: DemoNotification[] = [
-    { id: '1', type: 'booking_confirmed', title: 'Booking Confirmed', body: 'Your booking KCP-2025-0042 has been confirmed.', read: false, createdAt: new Date(Date.now() - 1000 * 60 * 30) },
+    { id: '1', type: 'booking_confirmed', title: 'Booking Confirmed', body: 'Your booking KCP-2026-0042 has been confirmed.', read: false, createdAt: new Date(Date.now() - 1000 * 60 * 30) },
     { id: '2', type: 'sitter_assigned', title: 'Sitter Assigned', body: 'Kim Minjung has been assigned to your booking.', read: false, createdAt: new Date(Date.now() - 1000 * 60 * 60 * 2) },
     { id: '3', type: 'care_completed', title: 'Session Complete', body: 'The care session has been completed. Please leave a review.', read: true, createdAt: new Date(Date.now() - 1000 * 60 * 60 * 24) },
 ];
@@ -811,9 +832,9 @@ export interface DemoEarnings {
 }
 
 export const DEMO_EARNINGS: DemoEarnings = {
-    thisMonth: 2450000,
-    lastMonth: 2180000,
-    pending: 350000,
+    thisMonth: 2725000,
+    lastMonth: 2400000,
+    pending: 375000,
     totalSessions: 14,
 };
 
@@ -823,12 +844,12 @@ export interface DemoMonthlyChart {
 }
 
 export const DEMO_MONTHLY_CHART: DemoMonthlyChart[] = [
-    { month: 'Sep', amount: 1800000 },
     { month: 'Oct', amount: 2100000 },
     { month: 'Nov', amount: 1950000 },
-    { month: 'Dec', amount: 2400000 },
-    { month: 'Jan', amount: 2180000 },
-    { month: 'Feb', amount: 2450000 },
+    { month: 'Dec', amount: 2550000 },
+    { month: 'Jan', amount: 2400000 },
+    { month: 'Feb', amount: 2725000 },
+    { month: 'Mar', amount: 2725000 },
 ];
 
 export interface DemoRecentPayment {
@@ -841,11 +862,11 @@ export interface DemoRecentPayment {
 }
 
 export const DEMO_RECENT_PAYMENTS: DemoRecentPayment[] = [
-    { id: '1', date: 'Feb 10', hotel: 'Grand Hyatt Seoul', hours: 4, amount: 280000, status: 'paid' },
-    { id: '2', date: 'Feb 8', hotel: 'Grand Hyatt Seoul', hours: 3, amount: 210000, status: 'paid' },
-    { id: '3', date: 'Feb 5', hotel: 'Park Hyatt Busan', hours: 5, amount: 350000, status: 'paid' },
-    { id: '4', date: 'Feb 3', hotel: 'Grand Hyatt Seoul', hours: 4, amount: 280000, status: 'paid' },
-    { id: '5', date: 'Feb 1', hotel: 'Four Seasons Seoul', hours: 3, amount: 225000, status: 'pending' },
+    { id: '1', date: formatShortDate(-2), hotel: 'Grand Hyatt Seoul', hours: 4, amount: 300000, status: 'paid' },
+    { id: '2', date: formatShortDate(-4), hotel: 'Grand Hyatt Seoul', hours: 3, amount: 225000, status: 'paid' },
+    { id: '3', date: formatShortDate(-7), hotel: 'Park Hyatt Busan', hours: 5, amount: 375000, status: 'paid' },
+    { id: '4', date: formatShortDate(-9), hotel: 'Grand Hyatt Seoul', hours: 4, amount: 300000, status: 'paid' },
+    { id: '5', date: formatShortDate(-11), hotel: 'Four Seasons Seoul', hours: 3, amount: 225000, status: 'pending' },
 ];
 
 export interface DemoHotelBreakdown {
@@ -856,7 +877,7 @@ export interface DemoHotelBreakdown {
 }
 
 export const DEMO_HOTEL_BREAKDOWN: DemoHotelBreakdown[] = [
-    { hotel: 'Grand Hyatt Seoul', sessions: 9, amount: 1680000, percentage: 69 },
-    { hotel: 'Park Hyatt Busan', sessions: 3, amount: 525000, percentage: 21 },
-    { hotel: 'Four Seasons Seoul', sessions: 2, amount: 245000, percentage: 10 },
+    { hotel: 'Grand Hyatt Seoul', sessions: 9, amount: 1800000, percentage: 66 },
+    { hotel: 'Park Hyatt Busan', sessions: 3, amount: 600000, percentage: 22 },
+    { hotel: 'Four Seasons Seoul', sessions: 2, amount: 325000, percentage: 12 },
 ];
