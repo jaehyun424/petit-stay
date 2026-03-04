@@ -301,7 +301,11 @@ export function useSitterBookings(sitterId?: string) {
                     time: `${b.schedule.startTime} - ${b.schedule.endTime}`,
                     room: b.location.roomNumber || '',
                     hotel: b.hotelId,
-                    children: b.children.map((c) => `${c.firstName} (${c.age})`),
+                    children: b.children.map((c) => ({
+                        name: c.firstName,
+                        age: c.age,
+                        allergies: c.allergies || [],
+                    })),
                     status: b.status as 'confirmed' | 'pending' | 'in_progress',
                 })));
 

@@ -34,3 +34,6 @@ npm-debug.log*
 # Firebase
 .firebase/
 functions/lib/
+S*.md
+run_sessions.sh
+logs/

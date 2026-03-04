@@ -298,7 +298,9 @@
     "safeDays": "安全服务天数",
     "onTime": "准时率",
     "bankAccount": "银行账户",
-    "documents": "文件"
+    "documents": "文件",
+    "nextSessionIn": "下次会话还有",
+    "allergies": "过敏"
   },
   "hotel": {
     "hotelConsole": "酒店控制台",
@@ -776,7 +778,10 @@
     "sessionCompleteFailed": "无法完成服务。",
     "activityLogDescription": "看护人记录了活动更新",
     "photoLogDescription": "照片已上传",
-    "snackLogDescription": "已提供零食"
+    "snackLogDescription": "已提供零食",
+    "activityPlaceholder": "孩子在做什么？",
+    "snackPlaceholder": "提供了什么零食？",
+    "confirmCompleteDesc": "您确定要结束此会话吗？"
   },
   "payment": {
     "card": "卡",

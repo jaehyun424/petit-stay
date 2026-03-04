@@ -298,7 +298,9 @@
     "safeDays": "Safe Days",
     "onTime": "On-Time",
     "bankAccount": "Bank Account",
-    "documents": "Documents"
+    "documents": "Documents",
+    "nextSessionIn": "Next session in",
+    "allergies": "Allergies"
   },
   "hotel": {
     "hotelConsole": "Hotel Console",
@@ -776,7 +778,10 @@
     "sessionCompleteFailed": "Could not complete session.",
     "activityLogDescription": "Activity update logged by sitter",
     "photoLogDescription": "Photo uploaded",
-    "snackLogDescription": "Snack served"
+    "snackLogDescription": "Snack served",
+    "activityPlaceholder": "What is the child doing?",
+    "snackPlaceholder": "What snack was served?",
+    "confirmCompleteDesc": "Are you sure you want to end this session?"
   },
   "payment": {
     "card": "Card",

@@ -1,8 +1,6 @@
-// ============================================
-// Petit Stay - Sitter Earnings Page
-// ============================================
+// Sitter Earnings Page
 
-import { useState } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import { useTranslation } from 'react-i18next';
 import { motion } from 'framer-motion';
 import { staggerContainer, staggerItem } from '../../utils/animations';
@@ -21,17 +19,38 @@ import {
 } from '../../data/demo';
 import { formatCurrency } from '../../utils/format';
 
-// ----------------------------------------
-// Types
-// ----------------------------------------
 type PeriodFilter = 'this_month' | 'last_3_months' | 'all_time';
 
 const growthPercent = (current: number, previous: number) =>
     Math.round(((current - previous) / previous) * 100);
 
-// ----------------------------------------
-// Component
-// ----------------------------------------
+function AnimatedCounter({ value }: { value: number }) {
+    const [display, setDisplay] = useState(0);
+    const rafRef = useRef(0);
+
+    useEffect(() => {
+        const duration = 800;
+        const start = performance.now();
+        const from = 0;
+
+        const tick = (now: number) => {
+            const elapsed = now - start;
+            const progress = Math.min(elapsed / duration, 1);
+            // ease-out cubic
+            const eased = 1 - Math.pow(1 - progress, 3);
+            setDisplay(Math.round(from + (value - from) * eased));
+            if (progress < 1) {
+                rafRef.current = requestAnimationFrame(tick);
+            }
+        };
+
+        rafRef.current = requestAnimationFrame(tick);
+        return () => cancelAnimationFrame(rafRef.current);
+    }, [value]);
+
+    return <>{formatCurrency(display)}</>;
+}
+
 export default function Earnings() {
     const { t } = useTranslation();
     const { user } = useAuth();
@@ -39,11 +58,11 @@ export default function Earnings() {
     const { stats, isLoading } = useSitterStats(sitterId);
 
     const [period, setPeriod] = useState<PeriodFilter>('this_month');
+    const [hoveredBar, setHoveredBar] = useState<number | null>(null);
 
     const growth = growthPercent(DEMO_EARNINGS.thisMonth, DEMO_EARNINGS.lastMonth);
     const maxChartAmount = Math.max(...DEMO_MONTHLY_CHART.map((m) => m.amount));
 
-    // ---- Loading State ----
     if (isLoading) {
         return (
             <div className="earnings-page animate-fade-in">
@@ -61,7 +80,7 @@ export default function Earnings() {
 
     return (
         <div className="earnings-page animate-fade-in">
-            {/* ---- Header + Period Filter ---- */}
+            {/* Header + Period Filter */}
             <div className="earnings-header">
                 <h1 className="earnings-page-title">{t('earnings.title')}</h1>
                 <div className="period-filter" role="tablist" aria-label="Earnings period filter">
@@ -95,23 +114,25 @@ export default function Earnings() {
                 </div>
             </div>
 
-            {/* ---- Monthly Summary Card ---- */}
+            {/* Monthly Summary Card */}
             <Card className="earnings-summary" variant="gold">
                 <CardBody>
                     <h3 className="earnings-summary-label">{t('earnings.thisMonth')}</h3>
-                    <div className="earnings-amount">{formatCurrency(DEMO_EARNINGS.thisMonth)}</div>
+                    <div className="earnings-amount">
+                        <AnimatedCounter value={DEMO_EARNINGS.thisMonth} />
+                    </div>
                     <div className="earnings-meta">
                         <span className="earnings-sessions">
                             {stats?.totalSessions ?? DEMO_EARNINGS.totalSessions} {t('earnings.sessionsCompleted')}
                         </span>
                         <span className={`earnings-growth ${growth >= 0 ? 'positive' : 'negative'}`}>
-                            {growth >= 0 ? '+' : ''}{t('earnings.vsLastMonth', { percent: growth })}
+                            {growth >= 0 ? '▲' : '▼'} {t('earnings.vsLastMonth', { percent: Math.abs(growth) })}
                         </span>
                     </div>
                 </CardBody>
             </Card>
 
-            {/* ---- Stats Row ---- */}
+            {/* Stats Row */}
             <div className="stats-row">
                 <Card>
                     <CardBody>
@@ -127,7 +148,7 @@ export default function Earnings() {
                 </Card>
             </div>
 
-            {/* ---- Monthly Earnings Bar Chart ---- */}
+            {/* Monthly Earnings Bar Chart */}
             <Card className="chart-card">
                 <CardHeader>
                     <CardTitle>{t('earnings.monthlyEarnings')}</CardTitle>
@@ -137,13 +158,20 @@ export default function Earnings() {
                         {DEMO_MONTHLY_CHART.map((item, index) => {
                             const isCurrentMonth = index === DEMO_MONTHLY_CHART.length - 1;
                             const heightPercent = (item.amount / maxChartAmount) * 100;
+                            const isHovered = hoveredBar === index;
                             return (
-                                <div key={item.month} className="chart-bar-wrapper" aria-label={`${item.month}: ${formatCurrency(item.amount)}`}>
-                                    <span className="chart-amount" aria-hidden="true">
-                                        {formatCurrency(item.amount / 10000)}만
+                                <div
+                                    key={item.month}
+                                    className="chart-bar-wrapper"
+                                    aria-label={`${item.month}: ${formatCurrency(item.amount)}`}
+                                    onMouseEnter={() => setHoveredBar(index)}
+                                    onMouseLeave={() => setHoveredBar(null)}
+                                >
+                                    <span className={`chart-amount ${isHovered ? 'chart-amount-visible' : ''}`} aria-hidden="true">
+                                        {formatCurrency(item.amount)}
                                     </span>
                                     <div
-                                        className={`chart-bar ${isCurrentMonth ? 'chart-bar-current' : 'chart-bar-default'}`}
+                                        className={`chart-bar ${isCurrentMonth ? 'chart-bar-current' : 'chart-bar-default'} ${isHovered ? 'chart-bar-hovered' : ''}`}
                                         style={{ height: `${heightPercent}%` }}
                                         aria-hidden="true"
                                     />
@@ -157,7 +185,7 @@ export default function Earnings() {
                 </CardBody>
             </Card>
 
-            {/* ---- Hotel Breakdown ---- */}
+            {/* Hotel Breakdown */}
             <Card className="breakdown-card">
                 <CardHeader>
                     <CardTitle>{t('earnings.earningsByHotel')}</CardTitle>
@@ -186,7 +214,7 @@ export default function Earnings() {
                 </CardBody>
             </Card>
 
-            {/* ---- Recent Payments ---- */}
+            {/* Recent Payments */}
             <Card className="payments-card">
                 <CardHeader>
                     <CardTitle>{t('earnings.recentPayments')}</CardTitle>

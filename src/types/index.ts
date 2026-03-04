@@ -284,6 +284,7 @@ export interface BookingChild {
   childId: string;
   firstName: string;
   age: number;
+  allergies?: string[];
 }
 
 export interface BookingRequirements {

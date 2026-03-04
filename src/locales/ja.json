@@ -298,7 +298,9 @@
     "safeDays": "安全勤務日数",
     "onTime": "定時率",
     "bankAccount": "口座情報",
-    "documents": "書類"
+    "documents": "書類",
+    "nextSessionIn": "次のセッションまで",
+    "allergies": "アレルギー"
   },
   "hotel": {
     "hotelConsole": "ホテルコンソール",
@@ -776,7 +778,10 @@
     "sessionCompleteFailed": "セッションを完了できませんでした。",
     "activityLogDescription": "シッターが活動更新を記録しました",
     "photoLogDescription": "写真がアップロードされました",
-    "snackLogDescription": "おやつを提供しました"
+    "snackLogDescription": "おやつを提供しました",
+    "activityPlaceholder": "お子様は何をしていますか？",
+    "snackPlaceholder": "どのようなおやつを提供しましたか？",
+    "confirmCompleteDesc": "このセッションを終了してもよろしいですか？"
   },
   "payment": {
     "card": "カード",

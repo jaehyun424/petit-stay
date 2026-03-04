@@ -28,6 +28,25 @@
 
 .sitter-schedule .stat-item.gold { display: flex; align-items: center; }
 
+/* Countdown Banner */
+.countdown-banner {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+  padding: var(--space-3) var(--space-4);
+  background: var(--gold-100);
+  border: 1px solid var(--gold-300);
+  border-radius: var(--radius-lg);
+  font-size: var(--text-sm);
+  color: var(--gold-700);
+  margin-bottom: var(--space-4);
+}
+
+.countdown-banner strong {
+  color: var(--gold-text);
+  font-weight: var(--font-bold);
+}
+
 .sitter-schedule .section-title {
   font-size: var(--text-lg);
   font-weight: var(--font-semibold);
@@ -53,6 +72,16 @@
   margin-bottom: var(--space-4);
 }
 
+/* Allergy Info */
+.allergy-info {
+  display: flex;
+  align-items: center;
+  gap: var(--space-1);
+  color: var(--error-500);
+  font-weight: var(--font-medium);
+  font-size: var(--text-xs);
+}
+
 .no-sessions { text-align: center; color: var(--text-tertiary); }
 
 .week-grid {
@@ -62,19 +91,30 @@
 }
 
 .day-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--space-2);
   text-align: center;
   padding: var(--space-3);
   background: var(--glass-bg);
   border-radius: var(--radius-md);
   opacity: 0.5;
+  min-height: 56px;
 }
 
 .day-item.has-sessions { opacity: 1; }
 
 .day-date { display: block; font-size: var(--text-xs); color: var(--text-tertiary); }
-.day-count { display: block; font-size: var(--text-lg); font-weight: var(--font-bold); margin-top: var(--space-1); }
 
-.has-sessions .day-count { color: var(--primary-400); }
+/* Gold Dot */
+.gold-dot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: var(--gold-500);
+  flex-shrink: 0;
+}
 
 /* Desktop Layout */
 @media (min-width: 1024px) {

@@ -407,18 +407,24 @@ export const DEMO_LIVE_SESSION: DemoLiveSession = {
 // ----------------------------------------
 // Sitter Schedule (used by Sitter Schedule)
 // ----------------------------------------
+export interface DemoSitterChild {
+    name: string;
+    age: number;
+    allergies?: string[];
+}
+
 export interface DemoSitterSession {
     id: string;
     time: string;
     room: string;
     hotel: string;
-    children: string[];
+    children: DemoSitterChild[];
     status: 'confirmed' | 'pending' | 'in_progress';
 }
 
 export const DEMO_TODAY_SESSIONS: DemoSitterSession[] = [
-    { id: '1', time: '19:00 - 23:00', room: '1102', hotel: 'Grand Hyatt Seoul', children: ['Sota (3)', 'Yui (6)'], status: 'confirmed' },
-    { id: '2', time: '20:00 - 24:00', room: '3501', hotel: 'Grand Hyatt Seoul', children: ['Lucas (4)'], status: 'pending' },
+    { id: '1', time: '19:00 - 23:00', room: '1102', hotel: 'Grand Hyatt Seoul', children: [{ name: 'Sota', age: 3 }, { name: 'Yui', age: 6, allergies: ['dairy'] }], status: 'confirmed' },
+    { id: '2', time: '20:00 - 24:00', room: '3501', hotel: 'Grand Hyatt Seoul', children: [{ name: 'Lucas', age: 4, allergies: ['peanuts'] }], status: 'pending' },
 ];
 
 export interface DemoWeekDay {

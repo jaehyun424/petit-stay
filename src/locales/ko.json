@@ -298,7 +298,9 @@
     "safeDays": "안전 근무일",
     "onTime": "정시 출근율",
     "bankAccount": "계좌 정보",
-    "documents": "서류"
+    "documents": "서류",
+    "nextSessionIn": "다음 세션까지",
+    "allergies": "알레르기"
   },
   "hotel": {
     "hotelConsole": "호텔 콘솔",
@@ -776,7 +778,10 @@
     "sessionCompleteFailed": "세션을 완료할 수 없습니다.",
     "activityLogDescription": "시터가 활동 업데이트를 기록했습니다",
     "photoLogDescription": "사진 업로드됨",
-    "snackLogDescription": "간식 제공됨"
+    "snackLogDescription": "간식 제공됨",
+    "activityPlaceholder": "아이가 무엇을 하고 있나요?",
+    "snackPlaceholder": "어떤 간식을 제공했나요?",
+    "confirmCompleteDesc": "이 세션을 종료하시겠습니까?"
   },
   "payment": {
     "card": "카드",
