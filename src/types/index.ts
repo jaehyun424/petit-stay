@@ -638,6 +638,32 @@ export interface SitterPayout {
 }
 
 // ----------------------------------------
+// Insurance Types
+// ----------------------------------------
+export type InsuranceCoverageType = 'liability' | 'accident' | 'property' | 'comprehensive';
+export type InsuranceClaimStatus = 'pending' | 'active' | 'claimed' | 'expired';
+
+export interface InsurancePolicy {
+  id: string;
+  provider: string;
+  policyNumber: string;
+  coverageType: InsuranceCoverageType;
+  maxCoverage: number;
+  currency: Currency;
+  validFrom: Date;
+  validTo: Date;
+}
+
+export interface BookingInsurance {
+  bookingId: string;
+  policyId: string;
+  status: InsuranceClaimStatus;
+  claimAmount?: number;
+  claimDescription?: string;
+  claimedAt?: Date;
+}
+
+// ----------------------------------------
 // Utility Types
 // ----------------------------------------
 export type Language = 'en' | 'ko' | 'ja' | 'zh';

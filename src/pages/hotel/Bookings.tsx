@@ -2,7 +2,7 @@
 // Petit Stay - Hotel Bookings Page
 // ============================================
 
-import { useState } from 'react';
+import { useState, useMemo } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Calendar } from 'lucide-react';
 import { Card, CardBody } from '../../components/common/Card';
@@ -20,6 +20,9 @@ import { useHotelBookings } from '../../hooks/useBookings';
 import { useHotelSitters } from '../../hooks/useSitters';
 import { paymentService } from '../../services/payment';
 import { bookingService } from '../../services/firestore';
+import { calculatePrice } from '../../services/pricingEngine';
+import type { PricingInput } from '../../services/pricingEngine';
+import { PriceBreakdown } from '../../components/common/PriceBreakdown';
 import type { DemoBooking } from '../../data/demo';
 import { formatCurrency } from '../../utils/format';
 import '../../styles/pages/hotel-bookings.css';
@@ -90,8 +93,17 @@ export default function Bookings() {
                 // Real mode: create booking in Firestore, then generate payment link
                 const hotelId = user?.hotelId || '';
                 const duration = parseInt(newBookingForm.duration);
-                const baseRate = 75000; // ₩75,000/hr default
-                const total = baseRate * duration;
+                const computedPricing = pricePreview || calculatePrice({
+                    baseRate: 75000,
+                    hours: duration,
+                    startTime: newBookingForm.time,
+                    endTime: `${parseInt(newBookingForm.time) + duration}:00`,
+                    date: new Date(newBookingForm.date),
+                    childrenCount: parseInt(newBookingForm.childrenCount) || 1,
+                    sitterTier: 'any',
+                });
+                const baseRate = computedPricing.baseRate;
+                const total = computedPricing.total;
 
                 const bookingId = await bookingService.createBooking({
                     hotelId,
@@ -117,11 +129,11 @@ export default function Bookings() {
                     pricing: {
                         baseRate,
                         hours: duration,
-                        baseTotal: total,
-                        nightSurcharge: 0,
-                        holidaySurcharge: 0,
-                        goldSurcharge: 0,
-                        subtotal: total,
+                        baseTotal: baseRate * duration,
+                        nightSurcharge: computedPricing.nightSurcharge,
+                        holidaySurcharge: computedPricing.weekendSurcharge,
+                        goldSurcharge: computedPricing.goldSitterSurcharge,
+                        subtotal: computedPricing.subtotal,
                         commission: Math.round(total * 0.15),
                         total,
                     },
@@ -188,6 +200,36 @@ export default function Bookings() {
         toast.success(t('hotel.assign'), `${sitterName} → ${assignTarget?.confirmationCode}`);
         setAssignTarget(null);
     };
+
+    // Real-time price preview for new booking form
+    const pricePreview = useMemo(() => {
+        if (!newBookingForm.date || !newBookingForm.time || !newBookingForm.duration) return null;
+        const duration = parseInt(newBookingForm.duration);
+        const startHour = parseInt(newBookingForm.time);
+        const endTime = `${startHour + duration}:00`;
+        const input: PricingInput = {
+            baseRate: 75000,
+            hours: duration,
+            startTime: newBookingForm.time,
+            endTime,
+            date: new Date(newBookingForm.date),
+            childrenCount: parseInt(newBookingForm.childrenCount) || 1,
+            sitterTier: 'any',
+        };
+        return calculatePrice(input);
+    }, [newBookingForm.date, newBookingForm.time, newBookingForm.duration, newBookingForm.childrenCount]);
+
+    const previewPriceItems = useMemo(() => {
+        if (!pricePreview) return [];
+        return [
+            { labelKey: 'pricing.baseRate', amount: pricePreview.baseRate * pricePreview.hours },
+            ...(pricePreview.nightSurcharge > 0 ? [{ labelKey: 'pricing.nightSurcharge', amount: pricePreview.nightSurcharge }] : []),
+            ...(pricePreview.weekendSurcharge > 0 ? [{ labelKey: 'pricing.weekendSurcharge', amount: pricePreview.weekendSurcharge }] : []),
+            ...(pricePreview.urgentSurcharge > 0 ? [{ labelKey: 'pricing.urgentSurcharge', amount: pricePreview.urgentSurcharge }] : []),
+            ...(pricePreview.additionalChildrenSurcharge > 0 ? [{ labelKey: 'pricing.additionalChildren', amount: pricePreview.additionalChildrenSurcharge }] : []),
+            ...(pricePreview.goldSitterSurcharge > 0 ? [{ labelKey: 'pricing.goldSitter', amount: pricePreview.goldSitterSurcharge }] : []),
+        ];
+    }, [pricePreview]);
 
     const STATUS_OPTIONS = [
         { value: '', label: t('common.allStatuses') },
@@ -419,6 +461,12 @@ export default function Bookings() {
                     <Select label={t('booking.startTime')} value={newBookingForm.time} onChange={(e) => setNewBookingForm({ ...newBookingForm, time: e.target.value })} options={[{ value: '18:00', label: '18:00' }, { value: '19:00', label: '19:00' }, { value: '20:00', label: '20:00' }, { value: '21:00', label: '21:00' }]} />
                     <Select label={t('booking.duration')} value={newBookingForm.duration} onChange={(e) => setNewBookingForm({ ...newBookingForm, duration: e.target.value })} options={[{ value: '2', label: '2h' }, { value: '3', label: '3h' }, { value: '4', label: '4h' }, { value: '5', label: '5h' }]} />
                     <Select label={t('hotel.childrenInfo')} value={newBookingForm.childrenCount} onChange={(e) => setNewBookingForm({ ...newBookingForm, childrenCount: e.target.value })} options={[{ value: '1', label: '1' }, { value: '2', label: '2' }, { value: '3', label: '3' }]} />
+                    {pricePreview && (
+                        <div className="booking-price-preview">
+                            <h4>{t('pricing.breakdown')}</h4>
+                            <PriceBreakdown items={previewPriceItems} total={pricePreview.total} />
+                        </div>
+                    )}
                 </div>
             </Modal>
 
