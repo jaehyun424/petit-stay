@@ -148,13 +148,16 @@ export const bookingService = {
     },
 
     // Listen to booking changes (real-time)
-    subscribeToBooking(bookingId: string, callback: (booking: Booking | null) => void) {
+    subscribeToBooking(bookingId: string, callback: (booking: Booking | null) => void, onError?: (error: Error) => void) {
         return onSnapshot(doc(db, COLLECTIONS.bookings, bookingId), (doc) => {
             if (doc.exists()) {
                 callback({ id: doc.id, ...convertTimestamps(doc.data()) } as Booking);
             } else {
                 callback(null);
             }
+        }, (error) => {
+            console.error('Firestore subscription error (booking):', error);
+            onError?.(error);
         });
     },
 
@@ -262,7 +265,7 @@ export const bookingService = {
 
         return allBookings.filter((b) => {
             const code = (b.confirmationCode || '').toLowerCase();
-            const name = ((b as unknown as Record<string, unknown>).guestName as string || '').toLowerCase();
+            const name = (b.guestInfo?.name || '').toLowerCase();
             const room = (b.location?.roomNumber || '').toLowerCase();
             return code.includes(q) || name.includes(q) || room.includes(q);
         });
@@ -429,6 +432,7 @@ export const sitterService = {
             where('hotelId', '==', hotelId)
         );
         const snapshot = await getDocs(q);
+        // Cast: users collection docs have a superset of Sitter fields; safe structural overlap
         return snapshot.docs.map((doc) => ({
             id: doc.id,
             ...convertTimestamps(doc.data()),
@@ -442,6 +446,7 @@ export const sitterService = {
             // Fallback: try users collection
             const userSnap = await getDoc(doc(db, COLLECTIONS.users, sitterId));
             if (!userSnap.exists()) return null;
+            // Cast: users collection doc mapped to Sitter shape
             return { id: userSnap.id, ...convertTimestamps(userSnap.data()) } as unknown as Sitter;
         }
         return { id: docSnap.id, ...convertTimestamps(docSnap.data()) } as Sitter;
@@ -552,6 +557,7 @@ export const reviewService = {
             limit(50)
         );
         const snapshot = await getDocs(q);
+        // Cast: Firestore review docs include id + ReviewData fields
         return snapshot.docs.map((d) => ({
             id: d.id,
             ...convertTimestamps(d.data()),
