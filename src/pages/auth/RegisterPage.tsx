@@ -14,9 +14,9 @@ import { Input, Select } from '../../components/common/Input';
 import { BrandLogo } from '../../components/common/BrandLogo';
 import { LanguageSwitcher } from '../../components/common/LanguageSwitcher';
 import type { UserRole } from '../../types';
-import '../../styles/pages/register.css';
+import '../../styles/pages/login.css';
 
-const REGISTER_VIDEO = 'https://videos.pexels.com/video-files/3209211/3209211-uhd_2560_1440_25fps.mp4';
+const REGISTER_VIDEO = 'https://videos.pexels.com/video-files/5752729/5752729-uhd_2560_1440_30fps.mp4';
 const REGISTER_POSTER = 'https://images.pexels.com/photos/3209045/pexels-photo-3209045.jpeg?auto=compress&cs=tinysrgb&w=1920';
 
 const stagger = {
@@ -115,11 +115,11 @@ export default function RegisterPage() {
     };
 
     return (
-        <div className="register-container">
+        <div className="login-container login-page">
             {/* Video Visual Column (Left) */}
-            <div className="register-visual">
+            <div className="login-visual">
                 <video
-                    className="register-visual-video"
+                    className="login-visual-video"
                     autoPlay
                     muted
                     loop
@@ -153,7 +153,7 @@ export default function RegisterPage() {
             </div>
 
             {/* Form Column (Right) */}
-            <div className="register-form-container">
+            <div className="login-form-container">
                 <div className="login-header">
                     <Link to="/" className="brand-logo-link">
                         <BrandLogo size="sm" showName />

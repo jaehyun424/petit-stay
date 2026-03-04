@@ -152,6 +152,32 @@
   letter-spacing: 0.05em;
 }
 
+.visual-title {
+  font-family: var(--font-serif);
+  font-size: 3rem;
+  margin-bottom: 2rem;
+  line-height: 1.1;
+  color: white;
+  text-shadow: 0 4px 12px rgba(0,0,0,0.3);
+}
+
+.visual-list {
+  list-style: none;
+  padding: 0;
+}
+
+.visual-list li {
+  font-family: var(--font-action);
+  font-size: 1rem;
+  margin-bottom: 1rem;
+  letter-spacing: 0.05em;
+  color: var(--cream-200);
+}
+
+.visual-list li::before {
+  content: "• ";
+}
+
 .forgot-password-link {
   display: inline-block;
   font-size: 0.8125rem;
