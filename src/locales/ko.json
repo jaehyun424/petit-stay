@@ -1318,5 +1318,24 @@
     "matchingInProgress": "최적의 시터를 찾고 있습니다...",
     "scoreOutOf": "{{score}} / 100",
     "candidateCount": "{{count}}명의 후보자 평가 완료"
+  },
+  "pricing": {
+    "breakdown": "요금 상세",
+    "baseRate": "기본 요금",
+    "baseRateLine": "시간당 기본 요금",
+    "nightSurcharge": "야간 할증 (22:00–06:00)",
+    "nightSurchargeLine": "야간 시간 할증 (1.5배)",
+    "weekendSurcharge": "주말 할증",
+    "weekendSurchargeLine": "주말 할증 (1.3배)",
+    "urgentSurcharge": "긴급 예약 할증",
+    "urgentSurchargeLine": "긴급 예약 할증 (1.5배)",
+    "additionalChildren": "추가 아동",
+    "additionalChildrenLine": "추가 아동 (+30% 각)",
+    "goldSitter": "골드 전문가 프리미엄",
+    "goldSitterLine": "골드 등급 전문가 (1.4배)",
+    "subtotal": "소계",
+    "total": "합계",
+    "perHour": "시간당",
+    "estimatedTotal": "예상 합계"
   }
 }

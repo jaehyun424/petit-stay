@@ -1318,5 +1318,24 @@
     "matchingInProgress": "正在寻找最佳匹配...",
     "scoreOutOf": "{{score}} / 100",
     "candidateCount": "已评估 {{count}} 名候选人"
+  },
+  "pricing": {
+    "breakdown": "价格明细",
+    "baseRate": "基本费率",
+    "baseRateLine": "每小时基本费率",
+    "nightSurcharge": "夜间附加费 (22:00–06:00)",
+    "nightSurchargeLine": "夜间时段附加费 (1.5倍)",
+    "weekendSurcharge": "周末附加费",
+    "weekendSurchargeLine": "周末附加费 (1.3倍)",
+    "urgentSurcharge": "紧急预订附加费",
+    "urgentSurchargeLine": "紧急预订附加费 (1.5倍)",
+    "additionalChildren": "额外儿童",
+    "additionalChildrenLine": "额外儿童 (每位+30%)",
+    "goldSitter": "金牌专家附加费",
+    "goldSitterLine": "金牌专家 (1.4倍)",
+    "subtotal": "小计",
+    "total": "合计",
+    "perHour": "每小时",
+    "estimatedTotal": "预估合计"
   }
 }

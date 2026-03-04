@@ -1318,5 +1318,24 @@
     "matchingInProgress": "Finding the best match...",
     "scoreOutOf": "{{score}} / 100",
     "candidateCount": "{{count}} candidates evaluated"
+  },
+  "pricing": {
+    "breakdown": "Price Breakdown",
+    "baseRate": "Base Rate",
+    "baseRateLine": "Base hourly rate",
+    "nightSurcharge": "Night Surcharge (22:00–06:00)",
+    "nightSurchargeLine": "Night hours surcharge (1.5x)",
+    "weekendSurcharge": "Weekend Surcharge",
+    "weekendSurchargeLine": "Weekend surcharge (1.3x)",
+    "urgentSurcharge": "Urgent Booking Surcharge",
+    "urgentSurchargeLine": "Urgent booking surcharge (1.5x)",
+    "additionalChildren": "Additional Children",
+    "additionalChildrenLine": "Additional children (+30% each)",
+    "goldSitter": "Gold Specialist Premium",
+    "goldSitterLine": "Gold tier specialist (1.4x)",
+    "subtotal": "Subtotal",
+    "total": "Total",
+    "perHour": "per hour",
+    "estimatedTotal": "Estimated Total"
   }
 }

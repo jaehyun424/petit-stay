@@ -1318,5 +1318,24 @@
     "matchingInProgress": "最適なシッターを検索中...",
     "scoreOutOf": "{{score}} / 100",
     "candidateCount": "{{count}}名の候補者を評価済み"
+  },
+  "pricing": {
+    "breakdown": "料金内訳",
+    "baseRate": "基本料金",
+    "baseRateLine": "時間単位の基本料金",
+    "nightSurcharge": "夜間割増 (22:00–06:00)",
+    "nightSurchargeLine": "夜間時間帯割増 (1.5倍)",
+    "weekendSurcharge": "週末割増",
+    "weekendSurchargeLine": "週末割増 (1.3倍)",
+    "urgentSurcharge": "緊急予約割増",
+    "urgentSurchargeLine": "緊急予約割増 (1.5倍)",
+    "additionalChildren": "追加のお子様",
+    "additionalChildrenLine": "追加のお子様 (各+30%)",
+    "goldSitter": "ゴールドスペシャリスト",
+    "goldSitterLine": "ゴールドランクスペシャリスト (1.4倍)",
+    "subtotal": "小計",
+    "total": "合計",
+    "perHour": "時間あたり",
+    "estimatedTotal": "見積合計"
   }
 }
