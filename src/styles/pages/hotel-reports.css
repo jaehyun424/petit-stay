@@ -326,6 +326,11 @@
     }
 }
 
+/* Section gap */
+.rpt-section-gap {
+    margin-top: var(--space-6);
+}
+
 /* Bar Chart (legacy - kept for compatibility) */
 .rpt-bar-chart {
     display: flex;

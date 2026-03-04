@@ -364,6 +364,11 @@
   border-top-color: var(--border-light, #333);
 }
 
+/* Section gap (shared with hotel-reports) */
+.rpt-section-gap {
+  margin-top: var(--space-6);
+}
+
 /* ============================================
    Demand Heatmap
    ============================================ */

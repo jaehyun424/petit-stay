@@ -347,7 +347,7 @@ export default function Reports() {
                     <p className="page-subtitle">{t('reports.subtitle')}</p>
                 </div>
                 <div className="rpt-header-actions">
-                    <Button variant="outline" icon={<FileText size={20} strokeWidth={2} />} onClick={handlePdfExport} disabled={isGeneratingPdf}>
+                    <Button variant="secondary" icon={<FileText size={20} strokeWidth={2} />} onClick={handlePdfExport} disabled={isGeneratingPdf}>
                         {isGeneratingPdf ? t('reports.generating') : t('reports.downloadPdf')}
                     </Button>
                     <Button variant="gold" icon={<Download size={20} strokeWidth={2} />} onClick={handleExport}>
@@ -552,7 +552,8 @@ export default function Reports() {
             </div>
 
             {/* Sitter Performance Table */}
-            <Card className="animate-fade-in-up stagger-5" style={{ marginTop: 'var(--space-6)' }}>
+            <div className="rpt-section-gap">
+            <Card className="animate-fade-in-up stagger-5">
                 <CardHeader>
                     <CardTitle subtitle={`${sitters.length} ${t('reports.sitters')}`}>
                         {t('reports.sitterPerformance')}
@@ -603,6 +604,7 @@ export default function Reports() {
                     </div>
                 </CardBody>
             </Card>
+            </div>
         </div>
     );
 }

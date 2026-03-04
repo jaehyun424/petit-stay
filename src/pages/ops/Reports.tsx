@@ -266,7 +266,8 @@ export default function OpsReports() {
             </div>
 
             {/* Revenue Table */}
-            <Card style={{ marginTop: 'var(--space-6)' }}>
+            <div className="rpt-section-gap">
+            <Card>
                 <CardHeader>
                     <CardTitle>{t('ops.revenueBreakdown')}</CardTitle>
                 </CardHeader>
@@ -309,6 +310,7 @@ export default function OpsReports() {
                     </div>
                 </CardBody>
             </Card>
+            </div>
         </div>
     );
 }
