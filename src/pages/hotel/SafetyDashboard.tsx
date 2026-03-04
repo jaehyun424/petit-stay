@@ -7,6 +7,7 @@ import { useTranslation } from 'react-i18next';
 import { Plus, ShieldCheck } from 'lucide-react';
 import { Card, CardHeader, CardTitle, CardBody } from '../../components/common/Card';
 import { Button } from '../../components/common/Button';
+import { AnimatedCounter } from '../../components/common/AnimatedCounter';
 import { SafetyBadge, Badge } from '../../components/common/Badge';
 import { Modal } from '../../components/common/Modal';
 import { Select, Textarea, Input } from '../../components/common/Input';
@@ -43,10 +44,10 @@ function getRelativeTime(date: Date, t: (key: string, opts?: Record<string, unkn
 
 function getSeverityColor(severity: string): string {
     switch (severity) {
-        case 'low': return 'var(--success-500)';
-        case 'medium': return 'var(--warning-500)';
-        case 'high': return 'var(--error-500)';
-        case 'critical': return 'var(--error-600, #dc2626)';
+        case 'low': return '#4A6F58';
+        case 'medium': return '#C5A059';
+        case 'high': return '#BC8B4C';
+        case 'critical': return '#9E4747';
         default: return 'var(--text-tertiary)';
     }
 }
@@ -242,7 +243,9 @@ export default function SafetyDashboard() {
 
             {/* Main Safety Banner */}
             <div className="safety-main-banner">
-                <div className="safety-number" aria-live="polite">{safetyDays}</div>
+                <div className="safety-number" aria-live="polite">
+                    <AnimatedCounter target={safetyDays} duration={2} className="safety-number-counter" />
+                </div>
                 <div className="safety-text">
                     <h2>{t('safety.consecutiveDays')}</h2>
                     <p>
@@ -354,7 +357,7 @@ export default function SafetyDashboard() {
                     ) : (
                         <div className="incident-list">
                             {filteredIncidents.map((incident) => (
-                                <div key={incident.id} className="incident-row">
+                                <div key={incident.id} className="incident-row" style={{ borderLeft: `4px solid ${getSeverityColor(incident.severity)}` }}>
                                     <div className="incident-row-left">
                                         <span
                                             className="incident-severity-dot"

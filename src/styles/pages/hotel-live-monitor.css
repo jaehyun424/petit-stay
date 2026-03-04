@@ -8,8 +8,8 @@
   display: flex;
   justify-content: space-between;
   align-items: flex-end;
-  margin-bottom: 3.5rem;
-  padding-bottom: 2rem;
+  margin-bottom: var(--space-8);
+  padding-bottom: var(--space-6);
   border-bottom: 1px solid var(--cream-200);
 }
 
@@ -57,7 +57,7 @@
 .sessions-grid {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(400px, 1fr));
-  gap: 2rem;
+  gap: var(--space-4);
 }
 
 @media (max-width: 640px) {
@@ -214,6 +214,13 @@
   color: var(--charcoal-500);
   flex-shrink: 0;
   width: 50px;
+}
+
+.activity-icon {
+  display: flex;
+  align-items: center;
+  color: var(--charcoal-400);
+  flex-shrink: 0;
 }
 
 .activity-text {

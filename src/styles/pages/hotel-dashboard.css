@@ -8,10 +8,10 @@
   display: flex;
   justify-content: space-between;
   align-items: flex-end;
-  margin-bottom: 3.5rem;
+  margin-bottom: var(--space-8);
   flex-wrap: wrap;
-  gap: 1rem;
-  padding-bottom: 2rem;
+  gap: var(--space-4);
+  padding-bottom: var(--space-6);
   border-bottom: 1px solid var(--cream-200);
 }
 
@@ -64,8 +64,8 @@
 .stats-grid {
   display: grid;
   grid-template-columns: repeat(4, 1fr);
-  gap: 1.5rem;
-  margin-bottom: 3rem;
+  gap: var(--space-4);
+  margin-bottom: var(--space-8);
 }
 
 @media (max-width: 1024px) {
@@ -88,6 +88,7 @@
   border: 1px solid var(--cream-200);
   border-radius: var(--radius-xl);
   transition: all var(--duration-fast);
+  min-height: 140px;
 }
 
 .stat-card:hover {
@@ -148,7 +149,7 @@
 .dashboard-grid {
   display: grid;
   grid-template-columns: 1.5fr 1fr;
-  gap: 2rem;
+  gap: var(--space-4);
 }
 
 @media (max-width: 1024px) {

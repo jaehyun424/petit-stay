@@ -7,6 +7,7 @@ import { useTranslation } from 'react-i18next';
 import { Download, Calendar, DollarSign, Radio, CheckCircle, Star } from 'lucide-react';
 import { Card, CardHeader, CardTitle, CardBody } from '../../components/common/Card';
 import { Button } from '../../components/common/Button';
+import { AnimatedCounter } from '../../components/common/AnimatedCounter';
 import { TierBadge, SafetyBadge } from '../../components/common/Badge';
 import { Skeleton } from '../../components/common/Skeleton';
 import ErrorBanner from '../../components/common/ErrorBanner';
@@ -81,7 +82,9 @@ function StatCard({ icon, label, value, subValue, color }: StatCardProps) {
         <div className={`rpt-stat-card ${colorClasses[color]}`} role="group" aria-label={label}>
             <div className="rpt-stat-card-icon" aria-hidden="true">{icon}</div>
             <div className="rpt-stat-card-content">
-                <div className="rpt-stat-card-value">{value}</div>
+                <div className="rpt-stat-card-value">
+                    {typeof value === 'number' ? <AnimatedCounter target={value} duration={1.5} /> : value}
+                </div>
                 <div className="rpt-stat-card-label">{label}</div>
                 {subValue && <div className="rpt-stat-card-sub">{subValue}</div>}
             </div>
@@ -202,7 +205,8 @@ export default function Reports() {
         const url = URL.createObjectURL(blob);
         const link = document.createElement('a');
         link.href = url;
-        link.download = `petitstay-report-${period}.csv`;
+        const today = new Date().toISOString().split('T')[0];
+        link.download = `petit-stay-report-${today}.csv`;
         link.click();
         URL.revokeObjectURL(url);
 
@@ -339,7 +343,7 @@ export default function Reports() {
                             {chartData.map((d) => {
                                 const heightPct = maxRevenue > 0 ? (d.revenue / maxRevenue) * 100 : 0;
                                 return (
-                                    <div key={d.label} className="rpt-bar-col">
+                                    <div key={d.label} className="rpt-bar-col" title={`${d.label}: ${formatCurrency(d.revenue)} (${d.bookings} ${t('reports.bkgs')})`}>
                                         <div className="rpt-bar-value">{formatCompact(d.revenue)}</div>
                                         <div className="rpt-bar-track">
                                             <div

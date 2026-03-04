@@ -8,10 +8,10 @@
   display: flex;
   justify-content: space-between;
   align-items: flex-end;
-  margin-bottom: 3.5rem;
+  margin-bottom: var(--space-8);
   flex-wrap: wrap;
-  gap: 1rem;
-  padding-bottom: 2rem;
+  gap: var(--space-4);
+  padding-bottom: var(--space-6);
   border-bottom: 1px solid var(--cream-200);
 }
 
@@ -289,4 +289,31 @@
   text-align: center;
   color: var(--text-tertiary);
   padding: var(--space-4);
+}
+
+/* Guest Link Modal */
+.guest-link-desc {
+  font-size: 0.875rem;
+  color: var(--text-secondary);
+}
+
+.guest-link-box {
+  padding: 0.75rem;
+  background: var(--bg-secondary, #f5f0eb);
+  border-radius: var(--radius-md);
+  word-break: break-all;
+  font-size: 0.8125rem;
+  font-family: var(--font-mono, monospace);
+}
+
+/* Mobile card gap + touch target */
+@media (max-width: 1024px) {
+  .bookings-mobile {
+    gap: var(--space-4);
+  }
+
+  .booking-mobile-card {
+    min-height: 48px;
+    padding: var(--space-4);
+  }
 }

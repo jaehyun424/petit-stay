@@ -340,7 +340,10 @@
     "upcomingAndInProgress": "予定中および進行中の予約",
     "started": "開始済み",
     "energy": "エネルギー",
-    "guestNamePlaceholder": "例：田中太郎"
+    "guestNamePlaceholder": "例：田中太郎",
+    "noBookingsToday": "本日の予約はありません",
+    "noBookingsFound": "予約が見つかりません",
+    "noBookingsFoundDesc": "検索条件やフィルターを調整してみてください。"
   },
   "trustCheckin": {
     "trustProtocol": "トラストプロトコル チェックイン",
@@ -518,7 +521,8 @@
     "settingsSaved": "設定を保存しました",
     "settingsSavedDesc": "ホテル設定が正常に更新されました。",
     "saveFailed": "保存に失敗しました",
-    "saveFailedDesc": "設定を保存できませんでした。もう一度お試しください。"
+    "saveFailedDesc": "設定を保存できませんでした。もう一度お試しください。",
+    "cancellationPolicy": "キャンセルポリシー"
   },
   "earnings": {
     "title": "収入",
@@ -588,7 +592,9 @@
     "sitterAvailability": "対応可能：",
     "noUnassignedBookings": "未割り当ての予約はありません",
     "assignSitterToBooking": "{{name}}を予約に割り当て",
-    "noAvailableSitters": "対応可能なシッターがいません"
+    "noAvailableSitters": "対応可能なシッターがいません",
+    "noSitters": "登録されたシッターはいません",
+    "noSittersDesc": "最初のシッターを追加して始めましょう。"
   },
   "liveMonitor": {
     "noActiveSessions": "進行中のセッションなし",
@@ -960,7 +966,17 @@
     "unassigned": "未割り当て",
     "noIssues": "報告されたイシューなし",
     "noIssuesDesc": "現在、未解決のインシデントはありません。",
-    "issueResolved": "イシュー解決済み"
+    "issueResolved": "イシュー解決済み",
+    "hotelUpdated": "ホテル情報が更新されました",
+    "noHotels": "登録されたホテルはありません",
+    "noHotelsDesc": "ホテルがオンボーディングされると、ここに表示されます。",
+    "noSettlements": "精算記録はありません",
+    "noSettlementsDesc": "精算記録はここに表示されます。",
+    "confirmSettlementAction": "{{hotel}}に対してこの操作を実行してもよろしいですか？",
+    "noReservations": "予約が見つかりません",
+    "noReservationsDesc": "検索条件やフィルターを調整してみてください。",
+    "noSitters": "登録されたシッターはいません",
+    "noSittersDesc": "シッターがオンボーディングされると、ここに表示されます。"
   },
   "info": {
     "about": {

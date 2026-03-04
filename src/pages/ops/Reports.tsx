@@ -1,7 +1,8 @@
 import { useTranslation } from 'react-i18next';
-import { Download } from 'lucide-react';
+import { Download, BarChart3 } from 'lucide-react';
 import { Card, CardHeader, CardTitle, CardBody } from '../../components/common/Card';
 import { Button } from '../../components/common/Button';
+import { EmptyState } from '../../components/common/EmptyState';
 import { useOpsData } from '../../hooks/useOpsData';
 import { Skeleton } from '../../components/common/Skeleton';
 import { formatCurrency } from '../../utils/format';
@@ -42,8 +43,16 @@ export default function OpsReports() {
                   </tr>
                 </thead>
                 <tbody>
+                  {hotels.length === 0 && (
+                    <tr><td colSpan={4}>
+                      <EmptyState
+                        icon={<BarChart3 size={32} strokeWidth={1.5} />}
+                        title={t('ops.noData')}
+                      />
+                    </td></tr>
+                  )}
                   {hotels.map((hotel) => (
-                    <tr key={hotel.id}>
+                    <tr key={hotel.id} className="ops-table-row-hover">
                       <td>{hotel.name}</td>
                       <td>{formatCurrency(hotel.revenue)}</td>
                       <td>{formatCurrency(hotel.commission)}</td>
@@ -69,15 +78,15 @@ export default function OpsReports() {
           <CardBody>
             <div className="ops-sla-grid">
               <div className="ops-sla-item">
-                <div className="ops-sla-value">{stats.slaCompliance}%</div>
+                <div className="ops-sla-value" style={{ color: stats.slaCompliance >= 95 ? '#4A6F58' : stats.slaCompliance >= 80 ? '#C5A059' : '#9E4747' }}>{stats.slaCompliance}%</div>
                 <div className="ops-sla-label">{t('ops.slaCompliance')}</div>
               </div>
               <div className="ops-sla-item">
-                <div className="ops-sla-value">{stats.avgSatisfaction}</div>
+                <div className="ops-sla-value" style={{ color: stats.avgSatisfaction >= 4.5 ? '#4A6F58' : stats.avgSatisfaction >= 3.5 ? '#C5A059' : '#9E4747' }}>{stats.avgSatisfaction}</div>
                 <div className="ops-sla-label">{t('ops.avgSatisfaction')}</div>
               </div>
               <div className="ops-sla-item">
-                <div className="ops-sla-value">{stats.openIssues}</div>
+                <div className="ops-sla-value" style={{ color: stats.openIssues === 0 ? '#4A6F58' : stats.openIssues <= 3 ? '#C5A059' : '#9E4747' }}>{stats.openIssues}</div>
                 <div className="ops-sla-label">{t('ops.openIssues')}</div>
               </div>
               <div className="ops-sla-item">

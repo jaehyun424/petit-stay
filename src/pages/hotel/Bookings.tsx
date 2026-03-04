@@ -4,12 +4,14 @@
 
 import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
+import { Calendar } from 'lucide-react';
 import { Card, CardBody } from '../../components/common/Card';
 import { Button } from '../../components/common/Button';
 import { Input, Select } from '../../components/common/Input';
 import { Badge, StatusBadge, TierBadge } from '../../components/common/Badge';
 import { Avatar } from '../../components/common/Avatar';
 import { Modal } from '../../components/common/Modal';
+import { EmptyState } from '../../components/common/EmptyState';
 import { Pagination, usePagination } from '../../components/common/Pagination';
 import ErrorBanner from '../../components/common/ErrorBanner';
 import { useAuth } from '../../contexts/AuthContext';
@@ -223,6 +225,14 @@ export default function Bookings() {
                         </table>
                     </div>
 
+                    {paginatedBookings.length === 0 && (
+                        <EmptyState
+                            icon={<Calendar size={32} strokeWidth={1.5} />}
+                            title={t('hotel.noBookingsFound')}
+                            description={t('hotel.noBookingsFoundDesc')}
+                        />
+                    )}
+
                     {/* Mobile: card view */}
                     <div className="bookings-mobile">
                         {paginatedBookings.map((booking) => (
@@ -351,10 +361,10 @@ export default function Bookings() {
             >
                 {guestLink && (
                     <div className="modal-form-stack">
-                        <p style={{ fontSize: '0.875rem', color: 'var(--text-secondary)' }}>
+                        <p className="guest-link-desc">
                             {t('hotel.shareLinkDesc')}
                         </p>
-                        <div style={{ padding: '0.75rem', background: 'var(--bg-secondary, #f5f0eb)', borderRadius: '8px', wordBreak: 'break-all', fontSize: '0.8125rem', fontFamily: 'monospace' }}>
+                        <div className="guest-link-box">
                             {guestLink}
                         </div>
                         <Button variant="gold" onClick={handleCopyLink}>{t('hotel.copyLink')}</Button>

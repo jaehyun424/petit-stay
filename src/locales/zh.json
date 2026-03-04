@@ -340,7 +340,10 @@
     "upcomingAndInProgress": "即将到来和进行中的预约",
     "started": "已开始",
     "energy": "精力",
-    "guestNamePlaceholder": "例：张明"
+    "guestNamePlaceholder": "例：张明",
+    "noBookingsToday": "今日没有预订",
+    "noBookingsFound": "未找到预订",
+    "noBookingsFoundDesc": "请尝试调整搜索条件或筛选条件。"
   },
   "trustCheckin": {
     "trustProtocol": "信任协议签到",
@@ -518,7 +521,8 @@
     "settingsSaved": "设置已保存",
     "settingsSavedDesc": "酒店设置已成功更新。",
     "saveFailed": "保存失败",
-    "saveFailedDesc": "无法保存设置。请重试。"
+    "saveFailedDesc": "无法保存设置。请重试。",
+    "cancellationPolicy": "取消政策"
   },
   "earnings": {
     "title": "收入",
@@ -588,7 +592,9 @@
     "sitterAvailability": "可用：",
     "noUnassignedBookings": "没有未分配的预约",
     "assignSitterToBooking": "将{{name}}分配到预约",
-    "noAvailableSitters": "没有可用的看护人"
+    "noAvailableSitters": "没有可用的看护人",
+    "noSitters": "暂无注册保姆",
+    "noSittersDesc": "添加您的第一位保姆以开始使用。"
   },
   "liveMonitor": {
     "noActiveSessions": "没有进行中的服务",
@@ -960,7 +966,17 @@
     "unassigned": "未分配",
     "noIssues": "无报告的问题",
     "noIssuesDesc": "目前没有未解决的事件。",
-    "issueResolved": "问题已解决"
+    "issueResolved": "问题已解决",
+    "hotelUpdated": "酒店信息已更新",
+    "noHotels": "暂无注册酒店",
+    "noHotelsDesc": "酒店入驻后将显示在此处。",
+    "noSettlements": "暂无结算记录",
+    "noSettlementsDesc": "结算记录将显示在此处。",
+    "confirmSettlementAction": "您确定要对{{hotel}}执行此操作吗？",
+    "noReservations": "未找到预订",
+    "noReservationsDesc": "请尝试调整搜索条件或筛选条件。",
+    "noSitters": "暂无注册保姆",
+    "noSittersDesc": "保姆入驻后将显示在此处。"
   },
   "info": {
     "about": {

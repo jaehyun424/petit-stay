@@ -12,10 +12,10 @@ import { useToast } from '../../contexts/ToastContext';
 import { Skeleton } from '../../components/common/Skeleton';
 
 const severityBorderColor: Record<string, string> = {
-  critical: 'var(--error-600)',
-  high: 'var(--error-500)',
-  medium: 'var(--warning-500)',
-  low: 'var(--success-500)',
+  critical: '#9E4747',
+  high: '#BC8B4C',
+  medium: '#C5A059',
+  low: '#4A6F58',
 };
 
 export default function OpsIssues() {

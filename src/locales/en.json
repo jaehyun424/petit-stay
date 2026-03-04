@@ -340,7 +340,10 @@
     "upcomingAndInProgress": "Upcoming and in-progress bookings",
     "started": "Started",
     "energy": "energy",
-    "guestNamePlaceholder": "e.g. Sarah Johnson"
+    "guestNamePlaceholder": "e.g. Sarah Johnson",
+    "noBookingsToday": "No bookings today",
+    "noBookingsFound": "No bookings found",
+    "noBookingsFoundDesc": "Try adjusting your search or filter criteria."
   },
   "trustCheckin": {
     "trustProtocol": "Trust Protocol Check-In",
@@ -518,7 +521,8 @@
     "settingsSaved": "Settings Saved",
     "settingsSavedDesc": "Your hotel settings have been updated successfully.",
     "saveFailed": "Save Failed",
-    "saveFailedDesc": "Could not save settings. Please try again."
+    "saveFailedDesc": "Could not save settings. Please try again.",
+    "cancellationPolicy": "Cancellation Policy"
   },
   "earnings": {
     "title": "Earnings",
@@ -588,7 +592,9 @@
     "sitterAvailability": "Availability:",
     "noUnassignedBookings": "No unassigned bookings",
     "assignSitterToBooking": "Assign {{name}} to Booking",
-    "noAvailableSitters": "No available sitters"
+    "noAvailableSitters": "No available sitters",
+    "noSitters": "No sitters registered",
+    "noSittersDesc": "Add your first sitter to get started."
   },
   "liveMonitor": {
     "noActiveSessions": "No active sessions",
@@ -960,7 +966,17 @@
     "unassigned": "Unassigned",
     "noIssues": "No issues reported",
     "noIssuesDesc": "All clear — no open incidents at this time.",
-    "issueResolved": "Issue resolved"
+    "issueResolved": "Issue resolved",
+    "hotelUpdated": "Hotel updated",
+    "noHotels": "No hotels registered",
+    "noHotelsDesc": "Hotels will appear here once they are onboarded.",
+    "noSettlements": "No settlements",
+    "noSettlementsDesc": "Settlement records will appear here.",
+    "confirmSettlementAction": "Are you sure you want to proceed with this action for {{hotel}}?",
+    "noReservations": "No reservations found",
+    "noReservationsDesc": "Try adjusting your search or filter criteria.",
+    "noSitters": "No sitters registered",
+    "noSittersDesc": "Sitters will appear here once they are onboarded."
   },
   "info": {
     "about": {

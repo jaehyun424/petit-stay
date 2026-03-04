@@ -13,6 +13,8 @@ import { Button } from '../../components/common/Button';
 import { Badge, StatusBadge, TierBadge, SafetyBadge } from '../../components/common/Badge';
 import { Avatar } from '../../components/common/Avatar';
 import { Skeleton } from '../../components/common/Skeleton';
+import { EmptyState } from '../../components/common/EmptyState';
+import { AnimatedCounter } from '../../components/common/AnimatedCounter';
 import { Modal } from '../../components/common/Modal';
 import { Input, Select } from '../../components/common/Input';
 import { PeriodSelector } from '../../components/common/DatePicker';
@@ -59,7 +61,9 @@ function StatCard({ icon, label, value, subValue, color, to }: StatCardProps) {
     >
       <div className="stat-card-icon" aria-hidden="true">{icon}</div>
       <div className="stat-card-content">
-        <div className="stat-card-value">{value}</div>
+        <div className="stat-card-value">
+          {typeof value === 'number' ? <AnimatedCounter target={value} duration={1.5} /> : value}
+        </div>
         <div className="stat-card-label">{label}</div>
         {subValue && <div className="stat-card-sub">{subValue}</div>}
       </div>
@@ -196,13 +200,16 @@ export default function Dashboard() {
           <CardBody>
             <motion.div className="booking-list" initial="hidden" animate="show" variants={staggerContainer}>
               {todayBookings.length === 0 ? (
-                <div className="empty-state">
-                  <Calendar size={20} strokeWidth={2} />
-                  <p className="empty-state-text">{t('parent.noUpcomingBookings')}</p>
-                  <Button variant="gold" size="sm" onClick={() => setShowNewBooking(true)}>
-                    {t('hotel.newBooking')}
-                  </Button>
-                </div>
+                <EmptyState
+                  icon={<Calendar size={32} strokeWidth={1.5} />}
+                  title={t('hotel.noBookingsToday')}
+                  description={t('parent.noUpcomingBookings')}
+                  action={
+                    <Button variant="gold" size="sm" onClick={() => setShowNewBooking(true)}>
+                      {t('hotel.newBooking')}
+                    </Button>
+                  }
+                />
               ) : (
                 todayBookings.map((booking) => (
                   <motion.div key={booking.id} className="booking-item" variants={staggerItem}>
@@ -263,11 +270,11 @@ export default function Dashboard() {
           <CardBody>
             <div className="live-list">
               {activeSessions.length === 0 ? (
-                <div className="empty-state">
-                  <Radio size={20} strokeWidth={2} />
-                  <p className="empty-state-text">{t('liveMonitor.noActiveSessions')}</p>
-                  <p className="empty-state-sub">{t('liveMonitor.noActiveSessionsDesc')}</p>
-                </div>
+                <EmptyState
+                  icon={<Radio size={32} strokeWidth={1.5} />}
+                  title={t('liveMonitor.noActiveSessions')}
+                  description={t('liveMonitor.noActiveSessionsDesc')}
+                />
               ) : (
                 activeSessions.map((session) => (
                   <div key={session.id} className="live-item">

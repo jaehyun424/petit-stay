@@ -8,6 +8,8 @@ import { staggerContainer, staggerItem } from '../../utils/animations';
 import { Building2, Users, Calendar, DollarSign, Star, AlertTriangle, Wallet, Target } from 'lucide-react';
 import { Card, CardHeader, CardTitle, CardBody } from '../../components/common/Card';
 import { Badge } from '../../components/common/Badge';
+import { AnimatedCounter } from '../../components/common/AnimatedCounter';
+import { EmptyState } from '../../components/common/EmptyState';
 import { Skeleton } from '../../components/common/Skeleton';
 import { useOpsData } from '../../hooks/useOpsData';
 import { formatCurrency } from '../../utils/format';
@@ -53,7 +55,9 @@ export default function OpsDashboard() {
           <motion.div key={i} className={`ops-stat-card ops-stat-${stat.color}`} variants={staggerItem}>
             <div className="ops-stat-icon">{stat.icon}</div>
             <div className="ops-stat-content">
-              <div className="ops-stat-value">{stat.value}</div>
+              <div className="ops-stat-value">
+                {typeof stat.value === 'number' ? <AnimatedCounter target={stat.value} duration={1.5} /> : stat.value}
+              </div>
               <div className="ops-stat-label">{stat.label}</div>
             </div>
           </motion.div>
@@ -77,7 +81,7 @@ export default function OpsDashboard() {
                 </thead>
                 <tbody>
                   {hotels.map((hotel) => (
-                    <tr key={hotel.id}>
+                    <tr key={hotel.id} className="ops-table-row-hover">
                       <td><span className="ops-hotel-name">{hotel.name}</span></td>
                       <td>{hotel.bookingsThisMonth}</td>
                       <td>{formatCurrency(hotel.revenue)}</td>
@@ -95,11 +99,19 @@ export default function OpsDashboard() {
           </CardHeader>
           <CardBody>
             {incidents.length === 0 ? (
-              <p className="ops-empty">{t('ops.noData')}</p>
+              <EmptyState
+                icon={<AlertTriangle size={32} strokeWidth={1.5} />}
+                title={t('ops.noIssues')}
+                description={t('ops.noIssuesDesc')}
+              />
             ) : (
               <div className="ops-issue-list">
-                {incidents.map((incident) => (
-                  <div key={incident.id} className="ops-issue-item">
+                {incidents.map((incident) => {
+                  const severityColors: Record<string, string> = {
+                    critical: '#9E4747', high: '#BC8B4C', medium: '#C5A059', low: '#4A6F58',
+                  };
+                  return (
+                  <div key={incident.id} className="ops-issue-item" style={{ borderLeft: `3px solid ${severityColors[incident.severity] || 'var(--border-color)'}` }}>
                     <div className="ops-issue-header">
                       <Badge variant={incident.severity === 'high' || incident.severity === 'critical' ? 'error' : incident.severity === 'medium' ? 'warning' : 'neutral'} size="sm">
                         {incident.severity.toUpperCase()}
@@ -111,7 +123,8 @@ export default function OpsDashboard() {
                     <p className="ops-issue-summary">{incident.summary}</p>
                     <span className="ops-issue-meta">{incident.sitterName} &middot; {incident.childName}</span>
                   </div>
-                ))}
+                  );
+                })}
               </div>
             )}
           </CardBody>

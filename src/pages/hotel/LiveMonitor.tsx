@@ -5,7 +5,7 @@
 
 import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { Phone, AlertTriangle, Baby, Smile, Zap, Radio } from 'lucide-react';
+import { Phone, AlertTriangle, Baby, Smile, Zap, Radio, Utensils, Gamepad2, Moon, FileText } from 'lucide-react';
 import { Card, CardBody, CardHeader } from '../../components/common/Card';
 import { Avatar } from '../../components/common/Avatar';
 import { Badge, TierBadge } from '../../components/common/Badge';
@@ -21,6 +21,36 @@ import { useToast } from '../../contexts/ToastContext';
 import { useHotelSessions } from '../../hooks/useSessions';
 import type { DemoActiveSession } from '../../data/demo';
 import '../../styles/pages/hotel-live-monitor.css';
+
+function getMoodColor(mood: string): string {
+  switch (mood.toLowerCase()) {
+    case 'happy': case 'excited': return 'var(--success-500)';
+    case 'calm': case 'relaxed': return '#4A6F8F';
+    case 'tired': case 'sleepy': return 'var(--warning-500)';
+    case 'fussy': case 'crying': return 'var(--error-500)';
+    default: return 'var(--charcoal-600)';
+  }
+}
+
+function getEnergyColor(energy: string): string {
+  switch (energy.toLowerCase()) {
+    case 'high': return 'var(--success-500)';
+    case 'medium': return 'var(--warning-500)';
+    case 'low': return 'var(--error-500)';
+    default: return 'var(--charcoal-600)';
+  }
+}
+
+function getActivityIcon(activity: string) {
+  const lower = activity.toLowerCase();
+  if (lower.includes('meal') || lower.includes('eat') || lower.includes('snack') || lower.includes('feed'))
+    return <Utensils size={14} strokeWidth={1.75} />;
+  if (lower.includes('play') || lower.includes('game') || lower.includes('toy'))
+    return <Gamepad2 size={14} strokeWidth={1.75} />;
+  if (lower.includes('sleep') || lower.includes('nap') || lower.includes('rest'))
+    return <Moon size={14} strokeWidth={1.75} />;
+  return <FileText size={14} strokeWidth={1.75} />;
+}
 
 export default function LiveMonitor() {
   const { t } = useTranslation();
@@ -129,10 +159,10 @@ export default function LiveMonitor() {
 
               {/* Vitals */}
               <div className="vitals-row">
-                <span className="vital">
+                <span className="vital" style={{ color: getMoodColor(session.vitals.mood) }}>
                   <Smile size={16} strokeWidth={1.75} /> {session.vitals.mood}
                 </span>
-                <span className="vital">
+                <span className="vital" style={{ color: getEnergyColor(session.vitals.energy) }}>
                   <Zap size={16} strokeWidth={1.75} /> {session.vitals.energy} {t('hotel.energy')}
                 </span>
               </div>
@@ -143,6 +173,7 @@ export default function LiveMonitor() {
                 {session.activities.slice(0, 3).map((activity, i) => (
                   <div key={i} className="activity-item">
                     <span className="activity-time">{activity.time}</span>
+                    <span className="activity-icon" aria-hidden="true">{getActivityIcon(activity.activity)}</span>
                     <span className="activity-text">{activity.activity}</span>
                   </div>
                 ))}

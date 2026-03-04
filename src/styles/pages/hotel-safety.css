@@ -21,8 +21,12 @@
 .safety-number {
   font-size: 5rem;
   font-weight: var(--font-bold);
-  color: var(--success-500);
+  color: var(--gold-600, #C5A059);
   line-height: 1;
+}
+
+.safety-number-counter {
+  font-family: var(--font-serif);
 }
 
 .safety-text h2 {

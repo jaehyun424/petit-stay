@@ -59,6 +59,7 @@ export default function Settings() {
     // Save state
     // ----------------------------------------
     const [isSaving, setIsSaving] = useState(false);
+    const [isDirty, setIsDirty] = useState(false);
 
     // ----------------------------------------
     // Validation state
@@ -82,12 +83,18 @@ export default function Settings() {
             setCommission(hotel.commission);
             setCurrency(hotel.currency);
             setFormErrors({});
+            setIsDirty(false);
         }
     }, [hotel]);
 
     useEffect(() => {
         populateForm();
     }, [populateForm]);
+
+    // ----------------------------------------
+    // Mark form dirty on any change
+    // ----------------------------------------
+    const markDirty = () => { if (!isDirty) setIsDirty(true); };
 
     // ----------------------------------------
     // Clear a single field error
@@ -223,7 +230,7 @@ export default function Settings() {
                                 label={t('settings.hotelName')}
                                 value={name}
                                 error={formErrors.name}
-                                onChange={(e) => { setName(e.target.value); clearError('name'); }}
+                                onChange={(e) => { setName(e.target.value); clearError('name'); markDirty(); }}
                                 placeholder={t('settings.enterHotelName')}
                             />
                             <Input
@@ -231,20 +238,20 @@ export default function Settings() {
                                 type="email"
                                 value={email}
                                 error={formErrors.email}
-                                onChange={(e) => { setEmail(e.target.value); clearError('email'); }}
+                                onChange={(e) => { setEmail(e.target.value); clearError('email'); markDirty(); }}
                                 placeholder={t('settings.emailPlaceholder')}
                             />
                             <Input
                                 label={t('settings.contactPhone')}
                                 value={phone}
                                 error={formErrors.phone}
-                                onChange={(e) => { setPhone(e.target.value); clearError('phone'); }}
+                                onChange={(e) => { setPhone(e.target.value); clearError('phone'); markDirty(); }}
                                 placeholder={t('settings.phonePlaceholder')}
                             />
                             <Textarea
                                 label={t('settings.address')}
                                 value={address}
-                                onChange={(e) => setAddress(e.target.value)}
+                                onChange={(e) => { setAddress(e.target.value); markDirty(); }}
                                 placeholder={t('settings.enterAddress')}
                             />
                         </div>
@@ -262,7 +269,7 @@ export default function Settings() {
                                 <input
                                     type="checkbox"
                                     checked={autoAssign}
-                                    onChange={(e) => setAutoAssign(e.target.checked)}
+                                    onChange={(e) => { setAutoAssign(e.target.checked); markDirty(); }}
                                 />
                                 <span>{t('settings.autoAssign')}</span>
                             </label>
@@ -270,7 +277,7 @@ export default function Settings() {
                                 <input
                                     type="checkbox"
                                     checked={requireGoldForInfant}
-                                    onChange={(e) => setRequireGoldForInfant(e.target.checked)}
+                                    onChange={(e) => { setRequireGoldForInfant(e.target.checked); markDirty(); }}
                                 />
                                 <span>{t('settings.requireGoldTier')}</span>
                             </label>
@@ -279,7 +286,7 @@ export default function Settings() {
                                 type="number"
                                 value={minBookingHours}
                                 error={formErrors.minBookingHours}
-                                onChange={(e) => { setMinBookingHours(Number(e.target.value)); clearError('minBookingHours'); }}
+                                onChange={(e) => { setMinBookingHours(Number(e.target.value)); clearError('minBookingHours'); markDirty(); }}
                                 placeholder="2"
                             />
                             <Input
@@ -287,13 +294,13 @@ export default function Settings() {
                                 type="number"
                                 value={maxAdvanceBookingDays}
                                 error={formErrors.maxAdvanceBookingDays}
-                                onChange={(e) => { setMaxAdvanceBookingDays(Number(e.target.value)); clearError('maxAdvanceBookingDays'); }}
+                                onChange={(e) => { setMaxAdvanceBookingDays(Number(e.target.value)); clearError('maxAdvanceBookingDays'); markDirty(); }}
                                 placeholder="30"
                             />
                             <Select
-                                label="Cancellation Policy"
+                                label={t('settings.cancellationPolicy')}
                                 value={cancellationPolicy}
-                                onChange={(e) => setCancellationPolicy(e.target.value as CancellationPolicy)}
+                                onChange={(e) => { setCancellationPolicy(e.target.value as CancellationPolicy); markDirty(); }}
                                 options={[
                                     { value: 'flexible', label: t('settings.flexible') },
                                     { value: 'moderate', label: t('settings.moderate') },
@@ -316,13 +323,13 @@ export default function Settings() {
                                 type="number"
                                 value={commission}
                                 error={formErrors.commission}
-                                onChange={(e) => { setCommission(Number(e.target.value)); clearError('commission'); }}
+                                onChange={(e) => { setCommission(Number(e.target.value)); clearError('commission'); markDirty(); }}
                                 placeholder="15"
                             />
                             <Select
                                 label={t('settings.currency')}
                                 value={currency}
-                                onChange={(e) => setCurrency(e.target.value as Currency)}
+                                onChange={(e) => { setCurrency(e.target.value as Currency); markDirty(); }}
                                 options={[
                                     { value: 'KRW', label: t('settings.krw') },
                                     { value: 'USD', label: t('settings.usd') },
@@ -361,7 +368,7 @@ export default function Settings() {
                                 <input
                                     type="checkbox"
                                     checked={notifyNewBooking}
-                                    onChange={(e) => setNotifyNewBooking(e.target.checked)}
+                                    onChange={(e) => { setNotifyNewBooking(e.target.checked); markDirty(); }}
                                 />
                                 <span>{t('settings.newBookingNotif')}</span>
                             </label>
@@ -369,7 +376,7 @@ export default function Settings() {
                                 <input
                                     type="checkbox"
                                     checked={notifySessionAlerts}
-                                    onChange={(e) => setNotifySessionAlerts(e.target.checked)}
+                                    onChange={(e) => { setNotifySessionAlerts(e.target.checked); markDirty(); }}
                                 />
                                 <span>{t('settings.sessionAlerts')}</span>
                             </label>
@@ -377,7 +384,7 @@ export default function Settings() {
                                 <input
                                     type="checkbox"
                                     checked={notifyEmergency}
-                                    onChange={(e) => setNotifyEmergency(e.target.checked)}
+                                    onChange={(e) => { setNotifyEmergency(e.target.checked); markDirty(); }}
                                 />
                                 <span>{t('settings.emergencyAlerts')}</span>
                             </label>
@@ -385,7 +392,7 @@ export default function Settings() {
                                 <input
                                     type="checkbox"
                                     checked={notifyDailySummary}
-                                    onChange={(e) => setNotifyDailySummary(e.target.checked)}
+                                    onChange={(e) => { setNotifyDailySummary(e.target.checked); markDirty(); }}
                                 />
                                 <span>{t('settings.dailySummary')}</span>
                             </label>
@@ -396,7 +403,7 @@ export default function Settings() {
 
             <div className="settings-actions">
                 <Button variant="secondary" onClick={handleCancel}>{t('common.cancel')}</Button>
-                <Button variant="gold" onClick={handleSave} isLoading={isSaving}>
+                <Button variant="gold" onClick={handleSave} isLoading={isSaving} disabled={!isDirty}>
                     {t('settings.saveChanges')}
                 </Button>
             </div>

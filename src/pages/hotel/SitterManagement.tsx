@@ -3,15 +3,18 @@
 // ============================================
 
 
-import { useState } from 'react';
+import { useState, useMemo } from 'react';
 import { useTranslation } from 'react-i18next';
-import { Star, Check } from 'lucide-react';
+import { motion } from 'framer-motion';
+import { staggerContainer, staggerItem } from '../../utils/animations';
+import { Star, Check, Users } from 'lucide-react';
 import { Card, CardBody } from '../../components/common/Card';
 import { Avatar } from '../../components/common/Avatar';
 import { TierBadge, Badge, SafetyBadge } from '../../components/common/Badge';
 import { Button } from '../../components/common/Button';
 import { Modal } from '../../components/common/Modal';
 import { Input } from '../../components/common/Input';
+import { EmptyState } from '../../components/common/EmptyState';
 import ErrorBanner from '../../components/common/ErrorBanner';
 import { useAuth } from '../../contexts/AuthContext';
 import { useToast } from '../../contexts/ToastContext';
@@ -27,6 +30,12 @@ export default function SitterManagement() {
   const { sitters, error: sittersError, retry: retrySitters } = useHotelSitters(user?.hotelId);
   const { bookings } = useHotelBookings(user?.hotelId);
   const toast = useToast();
+
+  // Sort sitters: available > busy > offline
+  const sortedSitters = useMemo(() => {
+    const order: Record<string, number> = { 'Available': 0, 'Busy': 1, 'On Leave': 2, 'Offline': 3 };
+    return [...sitters].sort((a, b) => (order[a.availability] ?? 9) - (order[b.availability] ?? 9));
+  }, [sitters]);
 
   // Add New Sitter
   const [showAddSitter, setShowAddSitter] = useState(false);
@@ -61,9 +70,17 @@ export default function SitterManagement() {
 
       {sittersError && <ErrorBanner error={sittersError} onRetry={retrySitters} />}
 
-      <div className="sitters-grid">
-        {sitters.map((sitter) => (
-          <Card key={sitter.id} className="sitter-card" aria-label={`Sitter: ${sitter.name}`}>
+      {sortedSitters.length === 0 ? (
+        <EmptyState
+          icon={<Users size={32} strokeWidth={1.5} />}
+          title={t('sitterMgmt.noSitters')}
+          description={t('sitterMgmt.noSittersDesc')}
+        />
+      ) : (
+      <motion.div className="sitters-grid" initial="hidden" animate="show" variants={staggerContainer}>
+        {sortedSitters.map((sitter) => (
+          <motion.div key={sitter.id} variants={staggerItem}>
+          <Card className="sitter-card" aria-label={`Sitter: ${sitter.name}`}>
             <CardBody>
               <div className="sitter-header">
                 <Avatar name={sitter.name} size="xl" variant={sitter.tier === 'gold' ? 'gold' : 'default'} />
@@ -113,8 +130,10 @@ export default function SitterManagement() {
               </div>
             </CardBody>
           </Card>
+          </motion.div>
         ))}
-      </div>
+      </motion.div>
+      )}
 
       {/* Add New Sitter Modal */}
       <Modal

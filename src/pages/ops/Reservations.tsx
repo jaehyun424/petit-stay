@@ -1,9 +1,11 @@
 import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
+import { Calendar } from 'lucide-react';
 import { Card, CardBody } from '../../components/common/Card';
 import { Input, Select } from '../../components/common/Input';
 import { StatusBadge, TierBadge } from '../../components/common/Badge';
 import { Avatar } from '../../components/common/Avatar';
+import { EmptyState } from '../../components/common/EmptyState';
 import { useOpsData } from '../../hooks/useOpsData';
 import { Skeleton } from '../../components/common/Skeleton';
 import { formatCurrency } from '../../utils/format';
@@ -58,8 +60,17 @@ export default function OpsReservations() {
                 </tr>
               </thead>
               <tbody>
+                {filtered.length === 0 && (
+                  <tr><td colSpan={5}>
+                    <EmptyState
+                      icon={<Calendar size={32} strokeWidth={1.5} />}
+                      title={t('ops.noReservations')}
+                      description={t('ops.noReservationsDesc')}
+                    />
+                  </td></tr>
+                )}
                 {filtered.map((booking) => (
-                  <tr key={booking.id}>
+                  <tr key={booking.id} className="ops-table-row-hover">
                     <td>
                       <span className="booking-code">{booking.confirmationCode}</span>
                       <br /><span className="text-xs text-muted">{booking.date} {booking.time}</span>

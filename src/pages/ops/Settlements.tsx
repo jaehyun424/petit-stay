@@ -1,7 +1,11 @@
+import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
+import { Wallet } from 'lucide-react';
 import { Card, CardBody } from '../../components/common/Card';
 import { Badge } from '../../components/common/Badge';
 import { Button } from '../../components/common/Button';
+import { ConfirmDialog } from '../../components/common/ConfirmDialog';
+import { EmptyState } from '../../components/common/EmptyState';
 import { useSettlements } from '../../hooks/useSettlements';
 import { Skeleton } from '../../components/common/Skeleton';
 import { formatCurrency } from '../../utils/format';
@@ -9,14 +13,25 @@ import { formatCurrency } from '../../utils/format';
 export default function OpsSettlements() {
   const { t } = useTranslation();
   const { settlements, isLoading, approveSettlement, markAsPaid } = useSettlements();
+  const [confirmAction, setConfirmAction] = useState<{ type: 'approve' | 'pay'; id: string; name: string } | null>(null);
 
   const statusVariant = (status: string) => {
     switch (status) {
       case 'paid': return 'success' as const;
-      case 'approved': return 'primary' as const;
+      case 'approved': return 'gold' as const;
       case 'pending_approval': return 'warning' as const;
       default: return 'neutral' as const;
     }
+  };
+
+  const handleConfirm = () => {
+    if (!confirmAction) return;
+    if (confirmAction.type === 'approve') {
+      approveSettlement(confirmAction.id);
+    } else {
+      markAsPaid(confirmAction.id);
+    }
+    setConfirmAction(null);
   };
 
   if (isLoading) return <div className="animate-fade-in"><Skeleton height="400px" /></div>;
@@ -29,6 +44,13 @@ export default function OpsSettlements() {
 
       <Card>
         <CardBody>
+          {settlements.length === 0 ? (
+            <EmptyState
+              icon={<Wallet size={32} strokeWidth={1.5} />}
+              title={t('ops.noSettlements')}
+              description={t('ops.noSettlementsDesc')}
+            />
+          ) : (
           <div className="ops-table-wrapper">
             <table className="ops-table">
               <thead>
@@ -45,7 +67,7 @@ export default function OpsSettlements() {
               </thead>
               <tbody>
                 {settlements.map((s) => (
-                  <tr key={s.id}>
+                  <tr key={s.id} className="ops-table-row-hover">
                     <td><span className="ops-hotel-name">{s.hotelName}</span></td>
                     <td>{s.period}</td>
                     <td>{s.totalBookings}</td>
@@ -55,10 +77,10 @@ export default function OpsSettlements() {
                     <td><Badge variant={statusVariant(s.status)} size="sm">{s.status.replace('_', ' ')}</Badge></td>
                     <td>
                       {s.status === 'pending_approval' && (
-                        <Button variant="gold" size="sm" onClick={() => approveSettlement(s.id)}>{t('ops.approveSettlement')}</Button>
+                        <Button variant="gold" size="sm" onClick={() => setConfirmAction({ type: 'approve', id: s.id, name: s.hotelName })}>{t('ops.approveSettlement')}</Button>
                       )}
                       {s.status === 'approved' && (
-                        <Button variant="primary" size="sm" onClick={() => markAsPaid(s.id)}>{t('ops.markAsPaid')}</Button>
+                        <Button variant="primary" size="sm" onClick={() => setConfirmAction({ type: 'pay', id: s.id, name: s.hotelName })}>{t('ops.markAsPaid')}</Button>
                       )}
                     </td>
                   </tr>
@@ -66,8 +88,19 @@ export default function OpsSettlements() {
               </tbody>
             </table>
           </div>
+          )}
         </CardBody>
       </Card>
+
+      <ConfirmDialog
+        isOpen={!!confirmAction}
+        onClose={() => setConfirmAction(null)}
+        onConfirm={handleConfirm}
+        title={confirmAction?.type === 'approve' ? t('ops.approveSettlement') : t('ops.markAsPaid')}
+        message={t('ops.confirmSettlementAction', { hotel: confirmAction?.name || '' })}
+        confirmText={confirmAction?.type === 'approve' ? t('ops.approveSettlement') : t('ops.markAsPaid')}
+        variant={confirmAction?.type === 'approve' ? 'warning' : 'primary'}
+      />
     </div>
   );
 }
