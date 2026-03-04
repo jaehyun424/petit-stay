@@ -23,6 +23,7 @@ import { useHotelBookings } from '../../hooks/useBookings';
 import { useHotelSessions } from '../../hooks/useSessions';
 import { useHotelSitters } from '../../hooks/useSitters';
 import type { DemoBooking } from '../../data/demo';
+import { formatCurrency } from '../../utils/format';
 import '../../styles/pages/hotel-dashboard.css';
 
 // ----------------------------------------
@@ -112,14 +113,6 @@ export default function Dashboard() {
   const handleAssignSitter = (sitterName: string) => {
     toast.success(t('hotel.assign'), `${sitterName} → ${assignTarget?.confirmationCode}`);
     setAssignTarget(null);
-  };
-
-  const formatCurrency = (amount: number) => {
-    return new Intl.NumberFormat('ko-KR', {
-      style: 'currency',
-      currency: 'KRW',
-      maximumFractionDigits: 0,
-    }).format(amount);
   };
 
   if (isLoading) {

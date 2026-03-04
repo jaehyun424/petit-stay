@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
+import { formatCurrency } from '../../../utils/format';
 
 interface PaymentStepProps {
   totalAmount: number;
@@ -11,9 +12,6 @@ export function PaymentStep({ totalAmount, onNext, onBack }: PaymentStepProps) {
   const { t } = useTranslation();
   const [isProcessing, setIsProcessing] = useState(false);
   const [form, setForm] = useState({ cardNumber: '', expiry: '', cvv: '', holder: '' });
-
-  const formatCurrency = (amount: number) =>
-    new Intl.NumberFormat('ko-KR', { style: 'currency', currency: 'KRW', maximumFractionDigits: 0 }).format(amount);
 
   const isValid = form.cardNumber.length >= 16 && form.expiry.length >= 4 && form.cvv.length >= 3 && form.holder.length > 0;
 

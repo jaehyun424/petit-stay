@@ -390,7 +390,7 @@
 }
 
 .guest-star-active {
-  color: var(--gold-500, #c8a951);
+  color: var(--gold-text, #9E8047);
 }
 
 .guest-textarea {

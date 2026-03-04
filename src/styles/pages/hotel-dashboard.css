@@ -170,7 +170,7 @@
 }
 
 .card-link:hover {
-  color: var(--gold-500);
+  color: var(--gold-text);
   text-decoration: underline;
 }
 

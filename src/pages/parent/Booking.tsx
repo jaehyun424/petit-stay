@@ -14,6 +14,7 @@ import { useChildren } from '../../hooks/useChildren';
 import { useHotels } from '../../hooks/useHotel';
 import { DEMO_MODE } from '../../hooks/useDemo';
 import { bookingService } from '../../services/firestore';
+import { formatCurrency } from '../../utils/format';
 import '../../styles/pages/parent-booking.css';
 
 const TIME_SLOTS = [
@@ -325,26 +326,26 @@ export default function Booking() {
                             {/* Pricing Breakdown */}
                             <div className="pricing-breakdown">
                                 <div className="summary-row">
-                                    <span>{t('booking.baseRate')} ({new Intl.NumberFormat('ko-KR', { style: 'currency', currency: 'KRW', maximumFractionDigits: 0 }).format(calculatePricing().baseRate)} × {calculatePricing().hours}h)</span>
-                                    <span>{new Intl.NumberFormat('ko-KR', { style: 'currency', currency: 'KRW', maximumFractionDigits: 0 }).format(calculatePricing().baseTotal)}</span>
+                                    <span>{t('booking.baseRate')} ({formatCurrency(calculatePricing().baseRate)} × {calculatePricing().hours}h)</span>
+                                    <span>{formatCurrency(calculatePricing().baseTotal)}</span>
                                 </div>
                                 {calculatePricing().additionalChildCharge > 0 && (
                                     <div className="summary-row">
-                                        <span>{t('booking.additionalChild')} ({calculatePricing().childrenCount - 1} × {new Intl.NumberFormat('ko-KR', { style: 'currency', currency: 'KRW', maximumFractionDigits: 0 }).format(20000)}/h)</span>
-                                        <span>{new Intl.NumberFormat('ko-KR', { style: 'currency', currency: 'KRW', maximumFractionDigits: 0 }).format(calculatePricing().additionalChildCharge)}</span>
+                                        <span>{t('booking.additionalChild')} ({calculatePricing().childrenCount - 1} × {formatCurrency(20000)}/h)</span>
+                                        <span>{formatCurrency(calculatePricing().additionalChildCharge)}</span>
                                     </div>
                                 )}
                                 {calculatePricing().nightSurcharge > 0 && (
                                     <div className="summary-row">
                                         <span>{t('booking.nightSurcharge')}</span>
-                                        <span>{new Intl.NumberFormat('ko-KR', { style: 'currency', currency: 'KRW', maximumFractionDigits: 0 }).format(calculatePricing().nightSurcharge)}</span>
+                                        <span>{formatCurrency(calculatePricing().nightSurcharge)}</span>
                                     </div>
                                 )}
                             </div>
 
                             <div className="summary-row total">
                                 <span>{t('booking.totalCost')}</span>
-                                <span className="price">{new Intl.NumberFormat('ko-KR', { style: 'currency', currency: 'KRW', maximumFractionDigits: 0 }).format(calculatePrice())}</span>
+                                <span className="price">{formatCurrency(calculatePrice())}</span>
                             </div>
                         </div>
                         <p className="terms-note">

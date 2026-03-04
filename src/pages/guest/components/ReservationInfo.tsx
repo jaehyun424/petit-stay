@@ -1,5 +1,6 @@
 import { useTranslation } from 'react-i18next';
 import { TierBadge } from '../../../components/common/Badge';
+import { formatCurrency } from '../../../utils/format';
 
 interface ReservationInfoProps {
   reservation: {
@@ -18,9 +19,6 @@ interface ReservationInfoProps {
 
 export function ReservationInfo({ reservation, onNext }: ReservationInfoProps) {
   const { t } = useTranslation();
-
-  const formatCurrency = (amount: number) =>
-    new Intl.NumberFormat('ko-KR', { style: 'currency', currency: 'KRW', maximumFractionDigits: 0 }).format(amount);
 
   return (
     <div className="guest-card">

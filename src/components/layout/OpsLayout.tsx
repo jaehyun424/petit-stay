@@ -15,6 +15,7 @@ import { IconButton } from '../common/Button';
 import { Avatar } from '../common/Avatar';
 import { BrandLogo } from '../common/BrandLogo';
 import { LanguageSwitcher } from '../common/LanguageSwitcher';
+import { NotificationBell } from '../common/NotificationBell';
 import { PageTransition } from '../common/PageTransition';
 import { AnimatePresence } from 'framer-motion';
 import '../../styles/hotel-layout.css';
@@ -105,6 +106,7 @@ export function OpsLayout() {
             className="mobile-menu-btn"
           />
           <div className="header-spacer" />
+          <NotificationBell />
           <div className="header-user">
             <span className="header-user-name">{user?.profile.firstName} {user?.profile.lastName}</span>
             <Avatar name={`${user?.profile.firstName} ${user?.profile.lastName}`} size="sm" />

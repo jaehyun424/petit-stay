@@ -1,5 +1,6 @@
 import { useTranslation } from 'react-i18next';
 import { Link } from 'react-router-dom';
+import { BrandLogo } from '../../../components/common/BrandLogo';
 
 export function LandingFooter() {
   const { t } = useTranslation();
@@ -9,6 +10,7 @@ export function LandingFooter() {
       <div className="landing-footer-inner">
         <div className="landing-footer-brand">
           <span className="landing-footer-logo">
+            <BrandLogo size="sm" />
             Petit<span className="text-gold">Stay</span>
           </span>
           <p className="landing-footer-tagline">{t('landing.footerTagline')}</p>

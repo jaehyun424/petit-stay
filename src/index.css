@@ -32,6 +32,7 @@
   --gold-500: #C5A059;
   --gold-600: #9E8047;
   --gold-700: #766035;
+  --gold-text: #9E8047; /* WCAG AA compliant gold on white/cream */
 
   /* Semantic Colors */
   --primary-50: var(--charcoal-600);
@@ -376,7 +377,7 @@ p {
   display: inline-flex;
   align-items: center;
   gap: 2px;
-  color: var(--gold-500);
+  color: var(--gold-text);
   font-weight: 700;
   font-size: var(--text-sm);
 }
@@ -740,7 +741,7 @@ p {
 .tracking-widest { letter-spacing: 0.1em; }
 
 /* Colors */
-.text-gold { color: var(--gold-500); }
+.text-gold { color: var(--gold-text); }
 .text-charcoal-400 { color: var(--charcoal-400); }
 .text-charcoal-500 { color: var(--charcoal-500); }
 .text-charcoal-900 { color: var(--charcoal-900); }
@@ -781,6 +782,8 @@ p {
   --charcoal-500: #808080;
   --charcoal-400: #6A6A6A;
   --charcoal-300: #525252;
+
+  --gold-text: #C5A059; /* Original gold is AA-compliant on dark backgrounds */
 
   /* Luxury Neutrals - dark equivalents */
   --cream-50: #1A1A1A;
@@ -1250,7 +1253,7 @@ p {
 }
 
 .review-star:hover { transform: scale(1.15); }
-.review-star-active { color: var(--gold-500); }
+.review-star-active { color: var(--gold-text); }
 
 .review-tags {
   display: flex;
@@ -1294,7 +1297,7 @@ p {
 }
 
 .star-rating { display: inline-flex; align-items: center; }
-.star-filled { color: var(--gold-500); }
+.star-filled { color: var(--gold-text); }
 .star-empty { color: var(--cream-400); }
 .star-value { color: var(--text-secondary); font-weight: 500; }
 
@@ -1385,7 +1388,7 @@ p {
 .language-dropdown { position: absolute; top: calc(100% + 4px); right: 0; min-width: 140px; background: var(--bg-card); border: 1px solid var(--border-color); border-radius: var(--radius-md); box-shadow: var(--shadow-md); z-index: 100; overflow: hidden; animation: fadeInDown 0.15s ease-out; }
 .language-option { display: flex; align-items: center; gap: var(--space-2); width: 100%; padding: var(--space-2) var(--space-3); background: none; border: none; color: var(--text-primary); font-size: var(--text-sm); cursor: pointer; transition: background var(--transition-fast); text-align: left; }
 .language-option:hover { background: var(--glass-hover); }
-.language-option.active { color: var(--gold-500); font-weight: var(--font-medium); }
+.language-option.active { color: var(--gold-text); font-weight: var(--font-medium); }
 @keyframes fadeInDown { from { opacity: 0; transform: translateY(-4px); } to { opacity: 1; transform: translateY(0); } }
 
 /* AuthLayout */
@@ -1524,7 +1527,7 @@ p {
 }
 
 .bottom-nav-item-active {
-  color: var(--gold-500);
+  color: var(--gold-text);
   position: relative;
 }
 

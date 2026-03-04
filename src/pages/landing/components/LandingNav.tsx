@@ -4,6 +4,7 @@ import { useTranslation } from 'react-i18next';
 import { motion } from 'framer-motion';
 import { Menu, X } from 'lucide-react';
 import { LanguageSwitcher } from '../../../components/common/LanguageSwitcher';
+import { BrandLogo } from '../../../components/common/BrandLogo';
 
 export function LandingNav() {
   const { t } = useTranslation();
@@ -30,6 +31,7 @@ export function LandingNav() {
     >
       <div className="landing-nav-inner">
         <Link to="/" className="landing-nav-logo">
+          <BrandLogo size="sm" />
           Petit<span className="text-gold">Stay</span>
         </Link>
 

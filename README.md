@@ -1,34 +1,54 @@
-# 🍼 Petit Stay
+# Petit Stay
 
-> **Premium Hotel Childcare Platform**  
+> **Premium Hotel Childcare Platform**
 > 호텔 투숙객을 위한 프리미엄 아이돌봄 서비스 플랫폼
 
-![React](https://img.shields.io/badge/React-18.x-61dafb.svg)
-![TypeScript](https://img.shields.io/badge/TypeScript-5.x-3178c6.svg)
-![Vite](https://img.shields.io/badge/Vite-7.x-646cff.svg)
+![React](https://img.shields.io/badge/React-19.2-61dafb.svg)
+![TypeScript](https://img.shields.io/badge/TypeScript-5.9-3178c6.svg)
+![Vite](https://img.shields.io/badge/Vite-7-646cff.svg)
+![Firebase](https://img.shields.io/badge/Firebase-12.8-ffca28.svg)
 
 ---
 
-## ✨ Features
+## Features
 
-### 🏨 Hotel Console
-- Real-time booking dashboard with live monitoring
-- Sitter management with tier badges (Gold/Silver)
-- Safety record tracking (127+ incident-free days)
+### Hotel Console (`/hotel/*`)
+- Real-time booking dashboard with live session monitoring
+- Sitter management with tier badges (Gold/Silver) and safety records
+- QR check-in scanner with manual code fallback
+- Reports & analytics with CSV export
+- Safety dashboard with incident tracking (127+ incident-free days)
 
-### 👨‍👩‍👧 Parent App
-- Multi-step booking wizard
-- **Trust Protocol** - 4-step verification process
-- Live session status with activity timeline
+### Parent App (`/parent/*`)
+- Multi-step booking wizard with real-time pricing
+- **Trust Protocol** — 4-step verification (medical info, emergency contacts, safety consent, signature)
+- Live session status with activity timeline and chat
+- Booking history with review system
 
-### 👩‍🍼 Sitter App
-- Weekly schedule management
-- Active session care checklist
-- Earnings dashboard
+### Sitter App (`/sitter/*`)
+- Weekly schedule management with session overview
+- Active session care tools (activity log, photo upload, checklist)
+- Earnings dashboard with monthly charts and hotel breakdown
+
+### Ops Console (`/ops/*`)
+- Platform-wide statistics and hotel management
+- Reservation oversight and sitter management
+- Settlement processing (approve/pay)
+- Issue tracking with severity levels
+
+### Guest Page (`/guest/:id`)
+- Token-based access (no login required)
+- 4-step flow: reservation → consent → payment → confirmation
+- Multi-language support
+
+### Landing Page (`/`)
+- Video hero with parallax effect
+- Trust indicators, feature showcase, testimonials
+- Multi-language (EN/KO/JA/ZH)
 
 ---
 
-## 🚀 Quick Start
+## Quick Start
 
 ```bash
 npm install
@@ -41,22 +61,82 @@ Access at: **http://localhost:5173**
 
 | Role | Email | Password |
 |------|-------|----------|
-| 🏨 Hotel Staff | `hotel@demo.com` | demo1234 |
-| 👨‍👩‍👧 Parent | `parent@demo.com` | demo1234 |
-| 👩‍🍼 Sitter | `sitter@demo.com` | demo1234 |
+| Hotel Staff | `hotel@demo.com` | demo1234 |
+| Parent | `parent@demo.com` | demo1234 |
+| Sitter | `sitter@demo.com` | demo1234 |
+| Admin (Ops) | `admin@demo.com` | demo1234 |
+
+> Demo mode uses mock data — no Firebase backend required.
 
 ---
 
-## 🛠️ Tech Stack
+## Tech Stack
 
-- React 18 + TypeScript
-- React Router v6
-- Firebase (Firestore, Auth)
-- Vite
-- Custom CSS Design System
+| Category | Technology |
+|----------|-----------|
+| Framework | React 19.2 + TypeScript 5.9 |
+| Build | Vite 7 |
+| Routing | react-router-dom v7 |
+| Backend | Firebase 12.8 (Firestore, Auth, Storage, Hosting) |
+| i18n | react-i18next (EN, KO, JA, ZH) |
+| Animation | framer-motion 12 |
+| Icons | lucide-react 0.575 |
+| PDF | jsPDF |
+| QR | qrcode.react + jsQR |
+| Design | Custom CSS Design System ("Quiet Luxury" theme) |
 
 ---
 
-## 📄 License
+## Design System
 
-MIT License © 2025
+- **Theme**: Quiet Luxury — Deep Charcoal + Cream + Muted Gold
+- **Fonts**: Playfair Display (serif), Lato (sans), Montserrat (action)
+- **Colors**: `--charcoal-900 #1C1C1C`, `--cream-100 #F9F9F7`, `--gold-500 #C5A059`
+- **Dark mode**: Full support via `[data-theme="dark"]`
+- **Accessibility**: WCAG AA color contrast, focus-visible outlines, aria-labels
+
+---
+
+## Project Structure
+
+```
+src/
+├── components/
+│   ├── common/          # 27 shared components (Button, Card, Modal, Badge, etc.)
+│   ├── layout/          # HotelLayout, ParentLayout, SitterLayout, OpsLayout
+│   └── parent/          # ActivityFeed
+├── contexts/            # Auth, Theme, Toast
+├── data/                # Demo data (demo.ts)
+├── hooks/               # 15 dual-mode hooks (DEMO_MODE / Firestore)
+├── pages/
+│   ├── auth/            # Login, Register, ForgotPassword
+│   ├── hotel/           # Dashboard, Bookings, LiveMonitor, Reports, Safety, Settings, SitterMgmt, ScanCheckIn
+│   ├── parent/          # Home, Booking, TrustCheckIn, LiveStatus, History, Profile, QRDisplay
+│   ├── sitter/          # Schedule, ActiveSession, Earnings, Profile
+│   ├── ops/             # Dashboard, Reservations, SitterMgmt, HotelMgmt, Settlements, Issues, Reports
+│   ├── guest/           # GuestPage (4-step flow)
+│   ├── landing/         # LandingPage + components
+│   └── info/            # About, Careers, Press, Help, Privacy, Terms
+├── services/            # firebase.ts, firestore.ts (800+ lines), messaging.ts, storage.ts
+├── styles/              # Page and component CSS
+├── types/               # TypeScript interfaces (682 lines)
+├── utils/               # animations.ts, format.ts
+└── i18n/                # en.json, ko.json, ja.json, zh.json
+```
+
+---
+
+## Deployment
+
+```bash
+npm run build
+firebase deploy
+```
+
+Live at: **https://petit-stay.web.app**
+
+---
+
+## License
+
+MIT License © 2026

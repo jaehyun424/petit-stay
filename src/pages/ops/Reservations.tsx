@@ -6,6 +6,7 @@ import { StatusBadge, TierBadge } from '../../components/common/Badge';
 import { Avatar } from '../../components/common/Avatar';
 import { useOpsData } from '../../hooks/useOpsData';
 import { Skeleton } from '../../components/common/Skeleton';
+import { formatCurrency } from '../../utils/format';
 
 export default function OpsReservations() {
   const { t } = useTranslation();
@@ -18,9 +19,6 @@ export default function OpsReservations() {
     const matchesStatus = !statusFilter || b.status === statusFilter;
     return matchesSearch && matchesStatus;
   });
-
-  const formatCurrency = (amount: number) =>
-    new Intl.NumberFormat('ko-KR', { style: 'currency', currency: 'KRW', maximumFractionDigits: 0 }).format(amount);
 
   if (isLoading) return <div className="animate-fade-in"><Skeleton height="400px" /></div>;
 

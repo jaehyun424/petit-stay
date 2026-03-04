@@ -328,7 +328,7 @@ export function AuthProvider({ children }: AuthProviderProps) {
     const resetPassword = useCallback(async (email: string) => {
         if (DEMO_MODE) {
             await new Promise((r) => setTimeout(r, 500));
-            console.log('Demo mode: Password reset email would be sent to', email);
+            // Demo mode: no actual email sent
             return;
         }
         await sendPasswordResetEmail(auth, email);

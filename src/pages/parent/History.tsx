@@ -14,13 +14,13 @@ import { useAuth } from '../../contexts/AuthContext';
 import { useParentBookings } from '../../hooks/useBookings';
 import { useReviews } from '../../hooks/useReviews';
 import { useToast } from '../../contexts/ToastContext';
+import { formatCurrency } from '../../utils/format';
 import '../../styles/pages/parent-history.css';
 
 export default function History() {
     const { t } = useTranslation();
     const { user } = useAuth();
     const { history, isLoading } = useParentBookings(user?.id);
-    const formatCurrency = (amount: number) => new Intl.NumberFormat('ko-KR', { style: 'currency', currency: 'KRW', maximumFractionDigits: 0 }).format(amount);
     const [currentPage, setCurrentPage] = useState(1);
     const { totalPages, getPageItems } = usePagination(history, 10);
     const paginatedHistory = getPageItems(currentPage);

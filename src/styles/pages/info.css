@@ -146,7 +146,7 @@
   display: inline-block;
   width: 1.5rem;
   font-weight: 400;
-  color: var(--gold-500);
+  color: var(--gold-text);
 }
 
 .info-faq details[open] summary::before {

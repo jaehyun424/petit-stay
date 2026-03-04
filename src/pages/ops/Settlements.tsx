@@ -4,13 +4,11 @@ import { Badge } from '../../components/common/Badge';
 import { Button } from '../../components/common/Button';
 import { useSettlements } from '../../hooks/useSettlements';
 import { Skeleton } from '../../components/common/Skeleton';
+import { formatCurrency } from '../../utils/format';
 
 export default function OpsSettlements() {
   const { t } = useTranslation();
   const { settlements, isLoading, approveSettlement, markAsPaid } = useSettlements();
-
-  const formatCurrency = (amount: number) =>
-    new Intl.NumberFormat('ko-KR', { style: 'currency', currency: 'KRW', maximumFractionDigits: 0 }).format(amount);
 
   const statusVariant = (status: string) => {
     switch (status) {

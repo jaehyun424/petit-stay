@@ -18,6 +18,7 @@ import { useToast } from '../../contexts/ToastContext';
 import { useHotelSitters } from '../../hooks/useSitters';
 import { useHotelBookings } from '../../hooks/useBookings';
 import type { DemoSitter } from '../../data/demo';
+import { formatCurrency } from '../../utils/format';
 import '../../styles/pages/hotel-sitter-mgmt.css';
 
 export default function SitterManagement() {
@@ -48,14 +49,6 @@ export default function SitterManagement() {
     toast.success(t('sitterMgmt.sitterAssignedToast'), `${sitterName} → ${bookingCode}`);
     setAssignSitter(null);
   };
-  const formatCurrency = (amount: number) => {
-    return new Intl.NumberFormat('ko-KR', {
-      style: 'currency',
-      currency: 'KRW',
-      maximumFractionDigits: 0,
-    }).format(amount);
-  };
-
   return (
     <div className="sitter-management-page animate-fade-in">
       <div className="page-header">

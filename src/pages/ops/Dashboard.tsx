@@ -10,14 +10,12 @@ import { Card, CardHeader, CardTitle, CardBody } from '../../components/common/C
 import { Badge } from '../../components/common/Badge';
 import { Skeleton } from '../../components/common/Skeleton';
 import { useOpsData } from '../../hooks/useOpsData';
+import { formatCurrency } from '../../utils/format';
 import '../../styles/pages/ops-dashboard.css';
 
 export default function OpsDashboard() {
   const { t } = useTranslation();
   const { stats, hotels, incidents, isLoading } = useOpsData();
-
-  const formatCurrency = (amount: number) =>
-    new Intl.NumberFormat('ko-KR', { style: 'currency', currency: 'KRW', maximumFractionDigits: 0 }).format(amount);
 
   if (isLoading) {
     return (

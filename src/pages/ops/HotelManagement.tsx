@@ -4,13 +4,11 @@ import { Badge } from '../../components/common/Badge';
 import { Button } from '../../components/common/Button';
 import { useOpsData } from '../../hooks/useOpsData';
 import { Skeleton } from '../../components/common/Skeleton';
+import { formatCurrency } from '../../utils/format';
 
 export default function OpsHotelManagement() {
   const { t } = useTranslation();
   const { hotels, isLoading } = useOpsData();
-
-  const formatCurrency = (amount: number) =>
-    new Intl.NumberFormat('ko-KR', { style: 'currency', currency: 'KRW', maximumFractionDigits: 0 }).format(amount);
 
   if (isLoading) return <div className="animate-fade-in"><Skeleton height="400px" /></div>;
 

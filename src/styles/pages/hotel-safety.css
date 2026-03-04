@@ -69,7 +69,7 @@
 
 .safety-page .text-success { color: var(--success-500); }
 .safety-page .text-error { color: var(--error-500); }
-.safety-page .text-gold { color: var(--gold-500); }
+.safety-page .text-gold { color: var(--gold-text); }
 
 .protocol-list {
   display: flex;

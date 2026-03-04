@@ -88,7 +88,7 @@
 }
 
 .rpt-stat-card-primary .rpt-stat-card-icon { color: var(--primary-400); background: rgba(99, 102, 241, 0.1); }
-.rpt-stat-card-gold .rpt-stat-card-icon { color: var(--gold-500); background: rgba(245, 158, 11, 0.1); }
+.rpt-stat-card-gold .rpt-stat-card-icon { color: var(--gold-text); background: rgba(245, 158, 11, 0.1); }
 .rpt-stat-card-success .rpt-stat-card-icon { color: var(--success-500); background: rgba(16, 185, 129, 0.1); }
 .rpt-stat-card-warning .rpt-stat-card-icon { color: var(--warning-500); background: rgba(249, 115, 22, 0.1); }
 
@@ -277,7 +277,7 @@
 }
 
 .rpt-rating-star {
-    color: var(--gold-500);
+    color: var(--gold-text);
     font-size: var(--text-base);
 }
 

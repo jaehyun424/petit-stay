@@ -17,6 +17,7 @@ import { useToast } from '../../contexts/ToastContext';
 import { useHotelBookings } from '../../hooks/useBookings';
 import { useHotelSitters } from '../../hooks/useSitters';
 import type { DemoBooking } from '../../data/demo';
+import { formatCurrency } from '../../utils/format';
 import '../../styles/pages/hotel-bookings.css';
 
 // Icons
@@ -120,14 +121,6 @@ export default function Bookings() {
 
     const { totalPages, getPageItems } = usePagination(filteredBookings, 10);
     const paginatedBookings = getPageItems(currentPage);
-
-    const formatCurrency = (amount: number) => {
-        return new Intl.NumberFormat('ko-KR', {
-            style: 'currency',
-            currency: 'KRW',
-            maximumFractionDigits: 0,
-        }).format(amount);
-    };
 
     return (
         <div className="bookings-page animate-fade-in">

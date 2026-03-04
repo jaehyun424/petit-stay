@@ -262,7 +262,7 @@
   font-family: var(--font-serif);
   font-size: var(--text-xl);
   font-weight: 600;
-  color: var(--gold-500);
+  color: var(--gold-text);
   line-height: 1;
 }
 

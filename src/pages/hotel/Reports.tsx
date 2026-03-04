@@ -15,6 +15,7 @@ import { useHotelBookings } from '../../hooks/useBookings';
 import { useHotelSessions } from '../../hooks/useSessions';
 import { useHotelSitters } from '../../hooks/useSitters';
 import { useToast } from '../../contexts/ToastContext';
+import { formatCurrency } from '../../utils/format';
 import '../../styles/pages/hotel-reports.css';
 
 // ----------------------------------------
@@ -167,10 +168,6 @@ export default function Reports() {
         const total = sitters.reduce((sum, s) => sum + s.rating, 0);
         return (total / sitters.length).toFixed(2);
     }, [sitters]);
-
-    // Format helpers
-    const formatCurrency = (amount: number) =>
-        new Intl.NumberFormat('ko-KR', { style: 'currency', currency: 'KRW', maximumFractionDigits: 0 }).format(amount);
 
     const formatCompact = (amount: number) => {
         if (amount >= 1000000) {

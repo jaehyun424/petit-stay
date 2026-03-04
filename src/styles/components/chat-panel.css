@@ -226,7 +226,7 @@
 /* Read Receipts */
 .read-receipt {
     font-size: 0.65rem;
-    color: var(--gold-500);
+    color: var(--gold-text);
     display: block;
     text-align: right;
     margin-top: 0.125rem;

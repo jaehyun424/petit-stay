@@ -93,7 +93,7 @@
 .language-picker-label { flex: 1; }
 
 .language-picker-check {
-  color: var(--gold-500);
+  color: var(--gold-text);
   font-weight: var(--font-bold);
 }
 

@@ -17,17 +17,12 @@ import {
     DEMO_RECENT_PAYMENTS,
     DEMO_HOTEL_BREAKDOWN,
 } from '../../data/demo';
+import { formatCurrency } from '../../utils/format';
 
 // ----------------------------------------
 // Types
 // ----------------------------------------
 type PeriodFilter = 'this_month' | 'last_3_months' | 'all_time';
-
-// ----------------------------------------
-// Helpers
-// ----------------------------------------
-const formatCurrency = (amount: number) =>
-    new Intl.NumberFormat('ko-KR', { style: 'currency', currency: 'KRW', maximumFractionDigits: 0 }).format(amount);
 
 const growthPercent = (current: number, previous: number) =>
     Math.round(((current - previous) / previous) * 100);
