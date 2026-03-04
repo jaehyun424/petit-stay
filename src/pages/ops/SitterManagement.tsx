@@ -149,14 +149,14 @@ export default function OpsSitterManagement() {
 
       {/* Pending Onboarding Approvals */}
       {!pendingLoading && pending.length > 0 && (
-        <div style={{ marginBottom: 'var(--space-6)' }}>
-          <h2 style={{ fontSize: 'var(--text-lg)', fontFamily: 'var(--font-serif)', marginBottom: 'var(--space-3)', color: 'var(--text-primary)' }}>
+        <div className="ops-pending-section">
+          <h2 className="ops-pending-heading">
             {t('onboarding.pendingApprovals')} ({pending.length})
           </h2>
           <motion.div className="ops-card-grid" initial="hidden" animate="show" variants={staggerContainer}>
             {pending.map((ps) => (
               <motion.div key={ps.id} variants={staggerItem}>
-                <Card style={{ borderLeft: '3px solid var(--primary-400)' }}>
+                <Card className="ops-pending-sitter-card">
                   <CardBody>
                     <div className="ops-sitter-card">
                       <div className="ops-sitter-header">
@@ -179,7 +179,7 @@ export default function OpsSitterManagement() {
                           ))}
                         </div>
                       </div>
-                      <div className="ops-sitter-actions" style={{ gap: 'var(--space-2)' }}>
+                      <div className="ops-sitter-actions">
                         <Button
                           variant="primary"
                           size="sm"

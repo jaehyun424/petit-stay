@@ -236,12 +236,11 @@ function DocumentUploadStep({
 // Step 3: Training Video
 // ----------------------------------------
 function TrainingVideoStep({
-  trainingCompleted,
   onComplete,
   onBack,
   isSubmitting,
 }: {
-  trainingCompleted: boolean;
+  trainingCompleted?: boolean;
   onComplete: () => void;
   onBack: () => void;
   isSubmitting: boolean;
@@ -399,7 +398,6 @@ export default function SitterOnboarding() {
   const {
     currentStep,
     stepIndex,
-    totalSteps,
     documents,
     trainingCompleted,
     quizScore,

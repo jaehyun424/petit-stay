@@ -125,6 +125,16 @@
   gap: 1rem;
 }
 
+/* Pending Sitter Onboarding */
+.ops-pending-section { margin-bottom: var(--space-6); }
+.ops-pending-heading {
+  font-size: var(--text-lg);
+  font-family: var(--font-serif);
+  margin-bottom: var(--space-3);
+  color: var(--text-primary);
+}
+.ops-pending-sitter-card { border-left: 3px solid var(--primary-400); }
+
 /* Sitter Cards */
 .ops-sitter-card-wrapper {
   transition: all 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94);

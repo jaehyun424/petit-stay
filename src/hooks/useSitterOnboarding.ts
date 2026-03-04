@@ -5,7 +5,7 @@
 import { useState, useCallback } from 'react';
 import { DEMO_MODE } from './useDemo';
 import { ref, uploadBytes, getDownloadURL } from 'firebase/storage';
-import { doc, setDoc, updateDoc, serverTimestamp, collection } from 'firebase/firestore';
+import { doc, setDoc, updateDoc, serverTimestamp } from 'firebase/firestore';
 import { db, storage } from '../services/firebase';
 import type { OnboardingStatus, OnboardingStep, OnboardingDocument } from '../types';
 
