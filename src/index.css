@@ -585,7 +585,15 @@ p {
 .skeleton {
   background: var(--cream-300);
   animation: pulse 1.5s ease-in-out infinite;
+  border-radius: var(--radius-sm, 4px);
+  min-height: 1rem;
 }
+
+/* Explicit skeleton sizes to prevent CLS */
+.skeleton-text { height: 1rem; width: 60%; }
+.skeleton-title { height: 1.5rem; width: 40%; }
+.skeleton-avatar { width: 40px; height: 40px; border-radius: 50%; }
+.skeleton-card { height: 120px; width: 100%; }
 
 /* ----------------------------------------
    10. Animations
@@ -616,11 +624,13 @@ p {
 .animate-enter,
 .animate-fade-in {
   animation: fadeIn var(--duration-normal) var(--ease-out) forwards;
+  will-change: opacity, transform;
 }
 
 .animate-fade-in-up {
   animation: fadeInUp 0.5s var(--ease-out) forwards;
   opacity: 0;
+  will-change: opacity, transform;
 }
 
 .animate-ping {
@@ -639,6 +649,7 @@ p {
 
 .animate-slide-up {
     animation: slide-up 0.35s ease-out;
+    will-change: opacity, transform;
 }
 
 /* Stagger animation for list items */
@@ -650,6 +661,7 @@ p {
 .animate-stagger > * {
     opacity: 0;
     animation: slide-up 0.35s ease-out forwards;
+    will-change: opacity, transform;
 }
 
 /* Scale-in for buttons/badges on hover */

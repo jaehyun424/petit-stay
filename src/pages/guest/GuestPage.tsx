@@ -16,6 +16,7 @@ import { ConfirmationStep } from './components/ConfirmationStep';
 import { FeedbackStep } from './components/FeedbackStep';
 import { LanguageSwitcher } from '../../components/common/LanguageSwitcher';
 import { BrandLogo } from '../../components/common/BrandLogo';
+import { useWhiteLabel } from '../../hooks/useWhiteLabel';
 import '../../styles/pages/guest.css';
 
 const slideVariants = {
@@ -36,7 +37,9 @@ export default function GuestPage() {
     i18n.changeLanguage(langParam);
   }
 
+  const hotelId = searchParams.get('hotelId') || undefined;
   const { reservation, isLoading, isValid, isExpired, error } = useGuestToken(reservationId, token);
+  const { branding } = useWhiteLabel(hotelId);
   const [currentStep, setCurrentStep] = useState(1);
   const totalSteps = 5;
 
@@ -94,7 +97,14 @@ export default function GuestPage() {
     <div className="guest-page">
       <div className="guest-container">
         <div className="guest-header">
-          <BrandLogo size="sm" showName />
+          {branding.logoUrl ? (
+            <div className="guest-brand-logo">
+              <img src={branding.logoUrl} alt={branding.hotelName} className="guest-brand-img" />
+              <span className="guest-brand-name">{branding.hotelName}</span>
+            </div>
+          ) : (
+            <BrandLogo size="sm" showName />
+          )}
           <LanguageSwitcher />
         </div>
 
