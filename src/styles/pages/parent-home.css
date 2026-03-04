@@ -273,6 +273,27 @@
 }
 
 /* ============================================
+   Mobile Layout (<= 480px)
+   ============================================ */
+@media (max-width: 480px) {
+  .quick-actions {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .home-stats {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .trust-indicators {
+    grid-template-columns: 1fr;
+  }
+
+  .welcome-section h1 {
+    font-size: 2rem;
+  }
+}
+
+/* ============================================
    Desktop Layout (>= 1024px)
    ============================================ */
 @media (min-width: 1024px) {

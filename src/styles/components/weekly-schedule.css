@@ -67,3 +67,15 @@
     color: var(--text-muted);
     text-transform: none;
 }
+
+@media (max-width: 480px) {
+    .weekly-schedule-grid,
+    .schedule-header {
+        grid-template-columns: 60px repeat(2, 1fr);
+    }
+
+    .weekly-schedule-grid .time-input {
+        font-size: 0.8125rem;
+        padding: 0.25rem 0.375rem;
+    }
+}

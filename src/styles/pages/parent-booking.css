@@ -115,6 +115,12 @@
   gap: var(--space-6);
 }
 
+@media (max-width: 480px) {
+  .time-row {
+    grid-template-columns: 1fr;
+  }
+}
+
 /* Children Selection */
 .children-selection {
   display: flex;
