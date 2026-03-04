@@ -7,7 +7,7 @@ import { NavLink, Outlet, useNavigate, useLocation } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import {
   LayoutDashboard, Calendar, Users, Building2, Wallet, AlertTriangle,
-  BarChart3, Menu, Sun, Moon, LogOut,
+  BarChart3, Shield, Menu, Sun, Moon, LogOut,
 } from 'lucide-react';
 import { useAuth } from '../../contexts/AuthContext';
 import { useTheme } from '../../contexts/ThemeContext';
@@ -37,6 +37,7 @@ export function OpsLayout() {
     { to: '/ops/hotels', icon: <Building2 size={20} strokeWidth={1.75} />, labelKey: 'ops.hotelManagement' },
     { to: '/ops/settlements', icon: <Wallet size={20} strokeWidth={1.75} />, labelKey: 'ops.settlements' },
     { to: '/ops/issues', icon: <AlertTriangle size={20} strokeWidth={1.75} />, labelKey: 'ops.issues' },
+    { to: '/ops/insurance', icon: <Shield size={20} strokeWidth={1.75} />, labelKey: 'ops.insurance' },
     { to: '/ops/reports', icon: <BarChart3 size={20} strokeWidth={1.75} />, labelKey: 'ops.reports' },
   ];
 

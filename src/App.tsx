@@ -63,6 +63,7 @@ const OpsSitters = lazy(() => import('./pages/ops/SitterManagement'));
 const OpsHotels = lazy(() => import('./pages/ops/HotelManagement'));
 const OpsSettlements = lazy(() => import('./pages/ops/Settlements'));
 const OpsIssues = lazy(() => import('./pages/ops/Issues'));
+const OpsInsurance = lazy(() => import('./pages/ops/Insurance'));
 const OpsReports = lazy(() => import('./pages/ops/Reports'));
 
 // Common
@@ -215,6 +216,7 @@ function AppRoutes() {
           <Route path="hotels" element={<OpsHotels />} />
           <Route path="settlements" element={<OpsSettlements />} />
           <Route path="issues" element={<OpsIssues />} />
+          <Route path="insurance" element={<OpsInsurance />} />
           <Route path="reports" element={<OpsReports />} />
         </Route>
 
