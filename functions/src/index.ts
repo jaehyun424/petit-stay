@@ -52,6 +52,205 @@ async function getHotelStaffIds(hotelId: string): Promise<string[]> {
 }
 
 // ----------------------------------------
+// Matching Engine: Score calculation (server-side mirror)
+// ----------------------------------------
+function timeToMinutes(time: string): number {
+  const [hours, minutes] = time.split(":").map(Number);
+  return (hours || 0) * 60 + (minutes || 0);
+}
+
+interface SitterDoc {
+  id: string;
+  tier: string;
+  status: string;
+  profile: {
+    languages: string[];
+    experience: number;
+  };
+  certifications: { type: string }[];
+  availability: Record<string, { start: string; end: string }[]> & {
+    nightShift?: boolean;
+  };
+  stats: {
+    averageRating: number;
+    ratingCount: number;
+    totalSessions: number;
+    noShowCount: number;
+    safetyRecord: number;
+  };
+  partnerHotels: string[];
+}
+
+function scoreSitter(
+  sitter: SitterDoc,
+  booking: Record<string, unknown>,
+  hotelId: string
+): number {
+  const requirements = booking.requirements as {
+    preferredLanguages?: string[];
+    sitterTier?: string;
+  } | undefined;
+  const schedule = booking.schedule as {
+    date?: { toDate?: () => Date } | string;
+    startTime?: string;
+    endTime?: string;
+  } | undefined;
+
+  // Language (30%)
+  const sitterLangs = (sitter.profile?.languages || []).map((l: string) => l.toLowerCase());
+  const prefLangs = (requirements?.preferredLanguages || []).map((l: string) => l.toLowerCase());
+  let langScore = 100;
+  if (prefLangs.length > 0 && sitterLangs.length > 0) {
+    const matchCount = prefLangs.filter((l: string) => sitterLangs.includes(l)).length;
+    langScore = Math.round((matchCount / prefLangs.length) * 100);
+  } else if (prefLangs.length > 0) {
+    langScore = 0;
+  }
+
+  // Availability (25%)
+  let availScore = 0;
+  if (schedule?.date && schedule.startTime && schedule.endTime) {
+    const dateVal = typeof schedule.date === "object" && schedule.date.toDate
+      ? schedule.date.toDate()
+      : new Date(schedule.date as string);
+    const dayMap = ["sunday", "monday", "tuesday", "wednesday", "thursday", "friday", "saturday"];
+    const dayKey = dayMap[dateVal.getDay()];
+    const daySlots = sitter.availability?.[dayKey];
+    if (Array.isArray(daySlots) && daySlots.length > 0) {
+      const bStart = timeToMinutes(schedule.startTime);
+      const bEnd = timeToMinutes(schedule.endTime);
+      for (const slot of daySlots) {
+        const sStart = timeToMinutes(slot.start);
+        const sEnd = timeToMinutes(slot.end);
+        if (sStart <= bStart && sEnd >= bEnd) {
+          availScore = 100;
+          break;
+        }
+      }
+    }
+  }
+
+  // Experience (20%)
+  const years = sitter.profile?.experience || 0;
+  const certCount = sitter.certifications?.length || 0;
+  let expScore = Math.min(years / 10, 1) * 50 + Math.min(certCount / 4, 1) * 30;
+  if (requirements?.sitterTier === "gold" && sitter.tier === "gold") expScore += 20;
+  else if (requirements?.sitterTier === "any") expScore += sitter.tier === "gold" ? 20 : 10;
+  expScore = Math.min(expScore, 100);
+
+  // Rating (15%)
+  const avg = sitter.stats?.averageRating || 0;
+  const count = sitter.stats?.ratingCount || 0;
+  const sessions = sitter.stats?.totalSessions || 0;
+  const ratingBase = (avg / 5) * 80;
+  const volumeBonus = Math.min(sessions / 50, 1) * 15;
+  const confidence = count < 3 ? 0.7 : 1;
+  const noShowPen = sitter.stats?.noShowCount ? Math.max(0, 1 - sitter.stats.noShowCount * 0.1) : 1;
+  const ratingScore = Math.min((ratingBase + volumeBonus) * confidence * noShowPen, 100);
+
+  // Distance (10%)
+  const distScore = sitter.partnerHotels?.includes(hotelId) ? 100 : 30;
+
+  return Math.round(
+    langScore * 0.30 +
+    availScore * 0.25 +
+    expScore * 0.20 +
+    ratingScore * 0.15 +
+    distScore * 0.10
+  );
+}
+
+// ----------------------------------------
+// autoMatchSitter: Auto-assign best sitter on booking creation
+// Triggered by Firestore onCreate on bookings collection
+// ----------------------------------------
+export const autoMatchSitter = onDocumentCreated(
+  "bookings/{bookingId}",
+  async (event) => {
+    const snapshot = event.data;
+    if (!snapshot) return;
+
+    const booking = snapshot.data();
+    const hotelId = booking.hotelId;
+    if (!hotelId) return;
+
+    // Check if hotel has autoAssign enabled
+    const hotelDoc = await db.collection("hotels").doc(hotelId).get();
+    if (!hotelDoc.exists) return;
+    const hotel = hotelDoc.data();
+    if (!hotel?.settings?.autoAssign) return;
+
+    // Only auto-match for bookings in pending/pending_assignment status
+    if (booking.status !== "pending" && booking.status !== "pending_assignment") return;
+
+    // Fetch active sitters for this hotel
+    const sittersSnap = await db
+      .collection("sitters")
+      .where("partnerHotels", "array-contains", hotelId)
+      .where("status", "==", "active")
+      .get();
+
+    if (sittersSnap.empty) {
+      console.log(`autoMatchSitter: No active sitters for hotel ${hotelId}`);
+      return;
+    }
+
+    // Filter by tier if required
+    const requiredTier = booking.requirements?.sitterTier;
+    let sitters = sittersSnap.docs.map((doc: QueryDocumentSnapshot) => ({
+      id: doc.id,
+      ...doc.data(),
+    })) as SitterDoc[];
+
+    if (requiredTier === "gold") {
+      sitters = sitters.filter((s) => s.tier === "gold");
+    }
+
+    if (sitters.length === 0) {
+      console.log(`autoMatchSitter: No eligible sitters for booking ${event.params.bookingId}`);
+      return;
+    }
+
+    // Score and sort
+    const scored = sitters
+      .map((s) => ({ sitter: s, score: scoreSitter(s, booking, hotelId) }))
+      .sort((a, b) => b.score - a.score);
+
+    const bestMatch = scored[0];
+
+    // Assign the top sitter
+    const bookingRef = db.collection("bookings").doc(event.params.bookingId);
+    await bookingRef.update({
+      sitterId: bestMatch.sitter.id,
+      status: "sitter_assigned",
+      "matchResult": {
+        sitterId: bestMatch.sitter.id,
+        score: bestMatch.score,
+        matchedAt: FieldValue.serverTimestamp(),
+        topCandidates: scored.slice(0, 3).map((s) => ({
+          sitterId: s.sitter.id,
+          score: s.score,
+        })),
+      },
+      updatedAt: FieldValue.serverTimestamp(),
+    });
+
+    // Notify the assigned sitter
+    await createNotification(
+      bestMatch.sitter.id,
+      "sitter_assigned",
+      "New Assignment",
+      `You've been assigned to a new booking. Match score: ${bestMatch.score}/100.`,
+      { bookingId: event.params.bookingId, hotelId, matchScore: bestMatch.score }
+    );
+
+    console.log(
+      `autoMatchSitter: Assigned sitter ${bestMatch.sitter.id} (score: ${bestMatch.score}) to booking ${event.params.bookingId}`
+    );
+  }
+);
+
+// ----------------------------------------
 // onBookingCreated: Notify hotel staff when a new booking is created
 // ----------------------------------------
 export const onBookingCreated = onDocumentCreated(
