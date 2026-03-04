@@ -1,8 +1,10 @@
-import { useState } from 'react';
+import { useState, useMemo } from 'react';
 import { useTranslation } from 'react-i18next';
 import { PriceBreakdown } from '../../../components/common/PriceBreakdown';
 import { DEMO_MODE } from '../../../hooks/useDemo';
 import { guestService } from '../../../services/firestore';
+import { calculatePrice } from '../../../services/pricingEngine';
+import type { PricingInput } from '../../../services/pricingEngine';
 
 interface PaymentStepProps {
   reservation: {
@@ -10,6 +12,10 @@ interface PaymentStepProps {
     totalAmount: number;
     children: { name: string; age: number }[];
     time: string;
+    date?: string;
+    endTime?: string;
+    sitterTier?: 'gold' | 'silver' | 'any';
+    isUrgent?: boolean;
   };
   onNext: () => void;
   onBack: () => void;
@@ -21,6 +27,27 @@ export function PaymentStep({ reservation, onNext, onBack }: PaymentStepProps) {
   const [form, setForm] = useState({ cardNumber: '', expiry: '', cvv: '', holder: '' });
 
   const isValid = form.cardNumber.length >= 16 && form.expiry.length >= 4 && form.cvv.length >= 3 && form.holder.length > 0;
+
+  // Calculate dynamic pricing breakdown
+  const pricing = useMemo(() => {
+    const startHour = reservation.time || '18:00';
+    const duration = reservation.endTime
+      ? Math.max(1, parseInt(reservation.endTime) - parseInt(startHour))
+      : Math.max(1, reservation.children.length >= 2 ? 2 : 1);
+    const endHour = reservation.endTime || `${parseInt(startHour) + duration}:00`;
+
+    const input: PricingInput = {
+      baseRate: 60000,
+      hours: duration,
+      startTime: startHour,
+      endTime: endHour,
+      date: reservation.date ? new Date(reservation.date) : new Date(),
+      childrenCount: reservation.children.length,
+      sitterTier: reservation.sitterTier || 'any',
+      isUrgent: reservation.isUrgent ?? false,
+    };
+    return calculatePrice(input);
+  }, [reservation]);
 
   const handleSubmit = async () => {
     setIsProcessing(true);
@@ -42,25 +69,24 @@ export function PaymentStep({ reservation, onNext, onBack }: PaymentStepProps) {
     }
   };
 
-  // Build price breakdown items
-  const baseRate = 60000;
-  const hours = Math.max(1, reservation.children.length >= 2 ? 2 : 1);
-  const childSurcharge = reservation.children.length > 1 ? 15000 : 0;
-  const subtotal = baseRate * hours + childSurcharge;
-  const tax = Math.round(subtotal * 0.1);
-  const total = reservation.totalAmount;
-
+  // Build price breakdown items from pricing engine
   const priceItems = [
-    { labelKey: 'guest.priceBase', amount: baseRate * hours },
-    ...(childSurcharge > 0 ? [{ labelKey: 'guest.priceChildSurcharge', amount: childSurcharge }] : []),
-    { labelKey: 'guest.priceTax', amount: tax },
+    { labelKey: 'pricing.baseRate', amount: pricing.baseRate * pricing.hours },
+    ...(pricing.nightSurcharge > 0 ? [{ labelKey: 'pricing.nightSurcharge', amount: pricing.nightSurcharge }] : []),
+    ...(pricing.weekendSurcharge > 0 ? [{ labelKey: 'pricing.weekendSurcharge', amount: pricing.weekendSurcharge }] : []),
+    ...(pricing.urgentSurcharge > 0 ? [{ labelKey: 'pricing.urgentSurcharge', amount: pricing.urgentSurcharge }] : []),
+    ...(pricing.additionalChildrenSurcharge > 0 ? [{ labelKey: 'pricing.additionalChildren', amount: pricing.additionalChildrenSurcharge }] : []),
+    ...(pricing.goldSitterSurcharge > 0 ? [{ labelKey: 'pricing.goldSitter', amount: pricing.goldSitterSurcharge }] : []),
   ];
+
+  const total = pricing.total || reservation.totalAmount;
 
   return (
     <div className="guest-card">
       <h2 className="guest-card-title">{t('guest.paymentTitle')}</h2>
 
       <div className="guest-price-section">
+        <h3 className="guest-price-heading">{t('pricing.breakdown')}</h3>
         <PriceBreakdown items={priceItems} total={total} />
       </div>
 
