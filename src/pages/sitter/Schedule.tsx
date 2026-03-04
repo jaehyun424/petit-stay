@@ -5,7 +5,7 @@ import { useTranslation } from 'react-i18next';
 import { useNavigate } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import { staggerContainer, staggerItem } from '../../utils/animations';
-import { Building2, Baby, Calendar, Clock, AlertCircle } from 'lucide-react';
+import { Building2, Baby, Calendar, Clock, AlertCircle, Check, X } from 'lucide-react';
 import { Card, CardBody } from '../../components/common/Card';
 import { StatusBadge, TierBadge, SafetyBadge } from '../../components/common/Badge';
 import { Button } from '../../components/common/Button';
@@ -64,9 +64,27 @@ export default function Schedule() {
     const { user } = useAuth();
     const toast = useToast();
     const sitterId = user?.sitterInfo?.sitterId || user?.id;
-    const { todaySessions, weekSchedule, isLoading } = useSitterBookings(sitterId);
+    const { todaySessions, weekSchedule, isLoading, acceptAssignment, rejectAssignment } = useSitterBookings(sitterId);
     const { stats, isLoading: isStatsLoading } = useSitterStats(sitterId);
     const countdown = useCountdown(todaySessions);
+
+    const handleAccept = async (bookingId: string) => {
+        try {
+            await acceptAssignment(bookingId);
+            toast.success(t('sitter.assignmentAccepted', 'Assignment Accepted'), t('sitter.assignmentAcceptedDesc', 'You have accepted this session.'));
+        } catch {
+            toast.error(t('common.error'), t('sitter.assignmentFailed', 'Failed to update assignment.'));
+        }
+    };
+
+    const handleReject = async (bookingId: string) => {
+        try {
+            await rejectAssignment(bookingId);
+            toast.success(t('sitter.assignmentDeclined', 'Assignment Declined'), t('sitter.assignmentDeclinedDesc', 'The booking will be reassigned.'));
+        } catch {
+            toast.error(t('common.error'), t('sitter.assignmentFailed', 'Failed to update assignment.'));
+        }
+    };
 
     if (isLoading || isStatsLoading) {
         return (
@@ -152,6 +170,12 @@ export default function Schedule() {
                                     <div className="session-actions">
                                         {session.status === 'confirmed' && (
                                             <Button variant="gold" fullWidth onClick={() => { toast.success(t('sitter.startSession'), `Room ${session.room}`); navigate('/sitter/active'); }}>{t('sitter.startSession')}</Button>
+                                        )}
+                                        {session.status === 'sitter_assigned' && (
+                                            <div className="assignment-actions">
+                                                <Button variant="primary" onClick={() => handleAccept(session.id)}><Check size={16} strokeWidth={1.75} /> {t('sitter.acceptAssignment', 'Accept')}</Button>
+                                                <Button variant="danger" onClick={() => handleReject(session.id)}><X size={16} strokeWidth={1.75} /> {t('sitter.declineAssignment', 'Decline')}</Button>
+                                            </div>
                                         )}
                                         {session.status === 'pending' && (
                                             <Button variant="secondary" fullWidth disabled>{t('status.pending')}</Button>

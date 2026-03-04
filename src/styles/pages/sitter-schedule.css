@@ -82,6 +82,20 @@
   font-size: var(--text-xs);
 }
 
+/* Assignment Accept/Reject Actions */
+.assignment-actions {
+  display: flex;
+  gap: var(--space-2);
+}
+
+.assignment-actions .btn {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-1);
+}
+
 .no-sessions { text-align: center; color: var(--text-tertiary); }
 
 .week-grid {

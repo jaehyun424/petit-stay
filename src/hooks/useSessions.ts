@@ -285,57 +285,60 @@ export function useActiveSession(userId?: string) {
             return;
         }
 
-        let cancelled = false;
         setIsLoading(true);
-
-        async function load() {
+        let unsubscribe: (() => void) | undefined;
+        // First, find the active session, then subscribe to it for real-time updates
+        async function init() {
             try {
                 const session = await sessionService.getActiveSession(userId!);
-                if (cancelled || !session) {
+                if (!session) {
                     setIsLoading(false);
                     return;
                 }
 
                 setSessionId(session.id);
 
-                const startedAt = session.actualTimes?.startedAt;
-                if (startedAt) {
-                    const start = startedAt instanceof Date ? startedAt : new Date(startedAt as unknown as string);
-                    startTimeRef.current = start;
-                }
+                // Subscribe for real-time timeline updates
+                unsubscribe = sessionService.subscribeToSession(session.id, (liveSession) => {
+                    if (!liveSession) return;
 
-                setSessionInfo({
-                    room: '',
-                    children: '',
-                    parent: session.parentId,
-                    endTime: '',
-                    elapsedTime: startTimeRef.current ? formatElapsed(startTimeRef.current) : '',
+                    const startedAt = liveSession.actualTimes?.startedAt;
+                    if (startedAt) {
+                        const start = startedAt instanceof Date ? startedAt : new Date(startedAt as unknown as string);
+                        startTimeRef.current = start;
+                    }
+
+                    setSessionInfo({
+                        room: '',
+                        children: '',
+                        parent: liveSession.parentId,
+                        endTime: '',
+                        elapsedTime: startTimeRef.current ? formatElapsed(startTimeRef.current) : '',
+                    });
+
+                    const cl = liveSession.checklist;
+                    setChecklist([
+                        { id: '1', label: 'Pre-session: Wash hands', completed: true },
+                        { id: '2', label: 'Verify child identity with photo', completed: cl.childInfo.allergiesConfirmed },
+                        { id: '3', label: 'Review allergies & medical info', completed: cl.childInfo.allergiesConfirmed },
+                        { id: '4', label: 'Check emergency contact info', completed: cl.roomSafety.emergencyExitKnown },
+                        { id: '5', label: 'First activity started', completed: liveSession.timeline.length > 0 },
+                        { id: '6', label: 'Snack served (if applicable)', completed: false },
+                        { id: '7', label: 'Document any incidents', completed: false },
+                    ]);
+
+                    setError(null);
+                    setIsLoading(false);
                 });
-
-                const cl = session.checklist;
-                setChecklist([
-                    { id: '1', label: 'Pre-session: Wash hands', completed: true },
-                    { id: '2', label: 'Verify child identity with photo', completed: cl.childInfo.allergiesConfirmed },
-                    { id: '3', label: 'Review allergies & medical info', completed: cl.childInfo.allergiesConfirmed },
-                    { id: '4', label: 'Check emergency contact info', completed: cl.roomSafety.emergencyExitKnown },
-                    { id: '5', label: 'First activity started', completed: session.timeline.length > 0 },
-                    { id: '6', label: 'Snack served (if applicable)', completed: false },
-                    { id: '7', label: 'Document any incidents', completed: false },
-                ]);
-
-                setError(null);
-                setIsLoading(false);
             } catch (err) {
                 console.error('Failed to load active session:', err);
-                if (!cancelled) {
-                    setError('Failed to load session');
-                    setIsLoading(false);
-                }
+                setError('Failed to load session');
+                setIsLoading(false);
             }
         }
 
-        load();
-        return () => { cancelled = true; };
+        init();
+        return () => unsubscribe?.();
     }, [userId, retryCount]);
 
     // Live elapsed time counter — updates every second

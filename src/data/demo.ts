@@ -472,7 +472,7 @@ export interface DemoSitterSession {
     room: string;
     hotel: string;
     children: DemoSitterChild[];
-    status: 'confirmed' | 'pending' | 'in_progress';
+    status: 'confirmed' | 'pending' | 'in_progress' | 'sitter_assigned';
 }
 
 export const DEMO_TODAY_SESSIONS: DemoSitterSession[] = [
