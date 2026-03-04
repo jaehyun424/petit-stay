@@ -54,8 +54,8 @@ export function OpsLayout() {
       <aside className={`sidebar ${sidebarCollapsed ? 'sidebar-collapsed' : ''} ${mobileMenuOpen ? 'sidebar-mobile-open' : ''}`}>
         <div className="sidebar-header">
           <div className="sidebar-logo">
-            <BrandLogo size="sm" />
-            {!sidebarCollapsed && <span className="sidebar-logo-text">Petit<span className="text-gold">Stay</span> <span className="ops-badge">OPS</span></span>}
+            <BrandLogo size="sm" showName={!sidebarCollapsed} />
+            {!sidebarCollapsed && <span className="ops-badge">OPS</span>}
           </div>
           <IconButton
             icon={<Menu size={20} strokeWidth={1.75} />}

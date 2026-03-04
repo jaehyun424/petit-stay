@@ -742,6 +742,30 @@ p {
 
 /* Colors */
 .text-gold { color: var(--gold-text); }
+
+/* Brand Logo + Name */
+.brand-logo-wrap {
+  display: inline-flex;
+  align-items: center;
+  flex-shrink: 0;
+}
+.brand-logo-with-name {
+  gap: var(--space-2);
+}
+.brand-logo-name {
+  font-family: var(--font-serif);
+  font-weight: 600;
+  font-size: 1.25rem;
+  color: var(--charcoal-900);
+  letter-spacing: -0.02em;
+  white-space: nowrap;
+}
+:root[data-theme="dark"] .brand-logo-name {
+  color: var(--text-primary);
+}
+.brand-logo-name-gold {
+  color: var(--gold-text);
+}
 .text-charcoal-400 { color: var(--charcoal-400); }
 .text-charcoal-500 { color: var(--charcoal-500); }
 .text-charcoal-900 { color: var(--charcoal-900); }

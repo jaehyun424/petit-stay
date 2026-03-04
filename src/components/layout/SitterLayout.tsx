@@ -59,8 +59,7 @@ export function SitterLayout() {
             <aside className={`sitter-sidebar sidebar ${sidebarCollapsed ? 'sidebar-collapsed' : ''} ${mobileMenuOpen ? 'sidebar-mobile-open' : ''}`}>
                 <div className="sidebar-header">
                     <div className="sidebar-logo">
-                        <BrandLogo size="sm" />
-                        {!sidebarCollapsed && <span className="sidebar-logo-text">Petit<span className="text-gold">Stay</span></span>}
+                        <BrandLogo size="sm" showName={!sidebarCollapsed} />
                     </div>
                     <IconButton
                         icon={<Menu size={20} strokeWidth={1.75} />}
@@ -112,8 +111,7 @@ export function SitterLayout() {
                             onClick={() => setMobileMenuOpen(true)}
                             aria-label={t('aria.openMenu')}
                         />
-                        <BrandLogo size="sm" />
-                        <span className="sitter-header-brand">Petit<span className="text-gold">Stay</span></span>
+                        <BrandLogo size="sm" showName />
                     </div>
                     <div className="sitter-header-right">
                         <TierBadge tier="gold" showLabel={false} />

@@ -44,15 +44,21 @@
 }
 
 .landing-nav-logo {
-  font-family: var(--font-serif);
-  font-size: 1.5rem;
-  font-weight: 700;
-  color: white;
+  display: inline-flex;
+  align-items: center;
   text-decoration: none;
-  transition: color 0.3s;
+  transition: opacity 0.3s;
 }
 
-.landing-nav-scrolled .landing-nav-logo {
+.landing-nav-logo:hover {
+  opacity: 0.8;
+}
+
+.landing-nav-logo .brand-logo-name {
+  color: white;
+}
+
+.landing-nav-scrolled .landing-nav-logo .brand-logo-name {
   color: var(--text-primary);
 }
 
@@ -715,9 +721,11 @@
 }
 
 .landing-footer-logo {
-  font-family: var(--font-serif);
-  font-size: 1.5rem;
-  font-weight: 700;
+  display: inline-flex;
+  align-items: center;
+}
+
+.landing-footer-logo .brand-logo-name {
   color: white;
 }
 

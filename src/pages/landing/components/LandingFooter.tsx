@@ -10,8 +10,7 @@ export function LandingFooter() {
       <div className="landing-footer-inner">
         <div className="landing-footer-brand">
           <span className="landing-footer-logo">
-            <BrandLogo size="sm" />
-            Petit<span className="text-gold">Stay</span>
+            <BrandLogo size="sm" showName />
           </span>
           <p className="landing-footer-tagline">{t('landing.footerTagline')}</p>
         </div>

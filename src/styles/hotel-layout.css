@@ -88,6 +88,14 @@
   letter-spacing: -0.02em;
 }
 
+/* BrandLogo showName inside sidebar — override for dark sidebar context */
+.sidebar-logo .brand-logo-name {
+  color: var(--gold-300);
+}
+.sidebar-logo .brand-logo-name-gold {
+  color: var(--gold-400);
+}
+
 .sidebar-toggle {
   color: var(--sidebar-text-muted);
 }

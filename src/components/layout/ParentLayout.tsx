@@ -58,8 +58,7 @@ export function ParentLayout() {
             <aside className={`parent-sidebar sidebar ${sidebarCollapsed ? 'sidebar-collapsed' : ''} ${mobileMenuOpen ? 'sidebar-mobile-open' : ''}`}>
                 <div className="sidebar-header">
                     <div className="sidebar-logo">
-                        <BrandLogo size="sm" />
-                        {!sidebarCollapsed && <span className="sidebar-logo-text">Petit<span className="text-gold">Stay</span></span>}
+                        <BrandLogo size="sm" showName={!sidebarCollapsed} />
                     </div>
                     <IconButton
                         icon={<Menu size={20} strokeWidth={1.75} />}
@@ -112,8 +111,7 @@ export function ParentLayout() {
                             aria-label={t('aria.openMenu')}
                             className="parent-mobile-menu-btn"
                         />
-                        <BrandLogo size="sm" />
-                        <span className="parent-header-brand">Petit<span className="text-gold">Stay</span></span>
+                        <BrandLogo size="sm" showName />
                     </div>
                     <div className="parent-header-right">
                         <NotificationBell />

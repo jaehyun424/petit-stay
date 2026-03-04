@@ -144,8 +144,7 @@ export default function LoginPage() {
       <div className="login-form-container">
         <div className="login-header">
           <Link to="/" className="brand-logo-link">
-            <BrandLogo size="sm" />
-            <span className="logo-text">Petit<span className="text-gold">Stay</span></span>
+            <BrandLogo size="sm" showName />
           </Link>
           <div className="login-header-right">
             <LanguageSwitcher />

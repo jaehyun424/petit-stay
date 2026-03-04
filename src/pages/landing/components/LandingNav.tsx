@@ -31,8 +31,7 @@ export function LandingNav() {
     >
       <div className="landing-nav-inner">
         <Link to="/" className="landing-nav-logo">
-          <BrandLogo size="sm" />
-          Petit<span className="text-gold">Stay</span>
+          <BrandLogo size="sm" showName />
         </Link>
 
         {/* Desktop links */}

@@ -97,12 +97,7 @@
 .brand-logo-link {
   display: inline-flex;
   align-items: center;
-  gap: 0.5rem;
   text-decoration: none;
-  font-family: var(--font-serif);
-  font-size: 1.5rem;
-  font-weight: 700;
-  color: var(--charcoal-900);
   transition: opacity 0.2s;
 }
 
