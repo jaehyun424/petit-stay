@@ -1531,5 +1531,17 @@
     "previewActive": "Active",
     "previewRating": "Rating",
     "previewNewBooking": "New Booking"
+  },
+  "pwa": {
+    "installTitle": "Install Petit Stay",
+    "installDesc": "Add to home screen for the best experience",
+    "install": "Install",
+    "pullToRefresh": "Pull to refresh",
+    "releaseToRefresh": "Release to refresh",
+    "refreshing": "Refreshing...",
+    "offline": "You are offline",
+    "offlineDesc": "Some features may be limited while offline",
+    "updateAvailable": "Update available",
+    "updateNow": "Update now"
   }
 }

@@ -1531,5 +1531,17 @@
     "previewActive": "アクティブ",
     "previewRating": "評価",
     "previewNewBooking": "新規予約"
+  },
+  "pwa": {
+    "installTitle": "Petit Stayをインストール",
+    "installDesc": "ホーム画面に追加して最高の体験を",
+    "install": "インストール",
+    "pullToRefresh": "引っ張って更新",
+    "releaseToRefresh": "離して更新",
+    "refreshing": "更新中...",
+    "offline": "オフラインです",
+    "offlineDesc": "オフラインでは一部の機能が制限される場合があります",
+    "updateAvailable": "アップデートあり",
+    "updateNow": "今すぐ更新"
   }
 }
