@@ -11,6 +11,7 @@ import {
 } from 'lucide-react';
 import { useAuth } from '../../contexts/AuthContext';
 import { useTheme } from '../../contexts/ThemeContext';
+import { useWhiteLabel } from '../../hooks/useWhiteLabel';
 import { IconButton } from '../common/Button';
 import { Avatar } from '../common/Avatar';
 import { BrandLogo } from '../common/BrandLogo';
@@ -31,6 +32,7 @@ export function HotelLayout() {
   const location = useLocation();
   const [sidebarCollapsed, setSidebarCollapsed] = useState(false);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+  const { branding } = useWhiteLabel(user?.hotelId);
 
   const navItems = [
     { to: '/hotel', icon: <LayoutDashboard size={20} strokeWidth={1.75} />, labelKey: 'nav.dashboard', end: true },
@@ -63,7 +65,14 @@ export function HotelLayout() {
         {/* Logo */}
         <div className="sidebar-header">
           <div className="sidebar-logo">
-            <BrandLogo size="sm" showName={!sidebarCollapsed} />
+            {branding.logoUrl ? (
+              <div className="sidebar-brand-logo">
+                <img src={branding.logoUrl} alt={branding.hotelName} className="sidebar-brand-img" />
+                {!sidebarCollapsed && <span className="sidebar-brand-name">{branding.hotelName}</span>}
+              </div>
+            ) : (
+              <BrandLogo size="sm" showName={!sidebarCollapsed} />
+            )}
           </div>
           <IconButton
             icon={<Menu size={20} strokeWidth={1.75} />}
