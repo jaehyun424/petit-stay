@@ -360,7 +360,7 @@ export function bookingConfirmation(booking: BookingData, locale: Language = 'en
 // ----------------------------------------
 // Template: Sitter Assigned
 // ----------------------------------------
-export function sitterAssigned(booking: BookingData, sitter: SitterData, locale: Language = 'en'): EmailTemplate {
+export function sitterAssigned(_booking: BookingData, sitter: SitterData, locale: Language = 'en'): EmailTemplate {
   const t = i18n[locale].sitterAssigned;
   const tierDisplay = sitter.tier ? sitter.tier.charAt(0).toUpperCase() + sitter.tier.slice(1) : '—';
   const langsDisplay = sitter.languages?.join(', ') || '—';
