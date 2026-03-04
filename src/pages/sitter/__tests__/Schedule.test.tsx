@@ -64,8 +64,8 @@ describe('Sitter Schedule', () => {
 
     it('renders today session list', () => {
         render(<Schedule />);
-        expect(screen.getByText('Grand Hyatt Seoul')).toBeTruthy();
-        expect(screen.getByText('Park Hyatt Busan')).toBeTruthy();
+        expect(screen.getByText(/Grand Hyatt Seoul/)).toBeTruthy();
+        expect(screen.getByText(/Park Hyatt Busan/)).toBeTruthy();
     });
 
     it('renders session times', () => {
@@ -93,12 +93,15 @@ describe('Sitter Schedule', () => {
 
     it('renders pending button for pending sessions', () => {
         render(<Schedule />);
-        expect(screen.getByText('status.pending')).toBeTruthy();
+        const allPending = screen.getAllByText('status.pending');
+        const pendingBtn = allPending.find((el) => el.closest('button'));
+        expect(pendingBtn).toBeTruthy();
     });
 
     it('pending session button is disabled', () => {
         render(<Schedule />);
-        const pendingBtn = screen.getByText('status.pending').closest('button');
+        const allPending = screen.getAllByText('status.pending');
+        const pendingBtn = allPending.find((el) => el.closest('button'))?.closest('button');
         expect(pendingBtn).toBeDisabled();
     });
 
