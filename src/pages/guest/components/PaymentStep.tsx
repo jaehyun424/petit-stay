@@ -1,14 +1,18 @@
 import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { formatCurrency } from '../../../utils/format';
+import { PriceBreakdown } from '../../../components/common/PriceBreakdown';
 
 interface PaymentStepProps {
-  totalAmount: number;
+  reservation: {
+    totalAmount: number;
+    children: { name: string; age: number }[];
+    time: string;
+  };
   onNext: () => void;
   onBack: () => void;
 }
 
-export function PaymentStep({ totalAmount, onNext, onBack }: PaymentStepProps) {
+export function PaymentStep({ reservation, onNext, onBack }: PaymentStepProps) {
   const { t } = useTranslation();
   const [isProcessing, setIsProcessing] = useState(false);
   const [form, setForm] = useState({ cardNumber: '', expiry: '', cvv: '', holder: '' });
@@ -22,9 +26,28 @@ export function PaymentStep({ totalAmount, onNext, onBack }: PaymentStepProps) {
     onNext();
   };
 
+  // Build price breakdown items
+  const baseRate = 60000;
+  const hours = Math.max(1, reservation.children.length >= 2 ? 2 : 1);
+  const childSurcharge = reservation.children.length > 1 ? 15000 : 0;
+  const subtotal = baseRate * hours + childSurcharge;
+  const tax = Math.round(subtotal * 0.1);
+  const total = reservation.totalAmount;
+
+  const priceItems = [
+    { labelKey: 'guest.priceBase', amount: baseRate * hours },
+    ...(childSurcharge > 0 ? [{ labelKey: 'guest.priceChildSurcharge', amount: childSurcharge }] : []),
+    { labelKey: 'guest.priceTax', amount: tax },
+  ];
+
   return (
     <div className="guest-card">
       <h2 className="guest-card-title">{t('guest.paymentTitle')}</h2>
+
+      <div className="guest-price-section">
+        <PriceBreakdown items={priceItems} total={total} />
+      </div>
+
       <div className="guest-form-stack">
         <div className="guest-form-field">
           <label>{t('guest.cardNumber')}</label>
@@ -72,10 +95,7 @@ export function PaymentStep({ totalAmount, onNext, onBack }: PaymentStepProps) {
           />
         </div>
       </div>
-      <div className="guest-payment-total">
-        <span>{t('guest.totalAmount')}</span>
-        <span className="guest-payment-amount">{formatCurrency(totalAmount)}</span>
-      </div>
+
       <div className="guest-btn-row">
         <button className="guest-btn guest-btn-secondary" onClick={onBack} disabled={isProcessing}>{t('guest.previousStep')}</button>
         <button className="guest-btn guest-btn-primary" onClick={handleSubmit} disabled={!isValid || isProcessing}>

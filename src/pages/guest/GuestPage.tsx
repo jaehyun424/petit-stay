@@ -6,12 +6,14 @@ import { useState } from 'react';
 import { useParams, useSearchParams } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import { motion, AnimatePresence } from 'framer-motion';
+import { AlertCircle } from 'lucide-react';
 import { useGuestToken } from '../../hooks/useGuestToken';
 import { StepIndicator } from './components/StepIndicator';
 import { ReservationInfo } from './components/ReservationInfo';
 import { ConsentForm } from './components/ConsentForm';
 import { PaymentStep } from './components/PaymentStep';
 import { ConfirmationStep } from './components/ConfirmationStep';
+import { FeedbackStep } from './components/FeedbackStep';
 import { LanguageSwitcher } from '../../components/common/LanguageSwitcher';
 import { BrandLogo } from '../../components/common/BrandLogo';
 import '../../styles/pages/guest.css';
@@ -36,9 +38,9 @@ export default function GuestPage() {
 
   const { reservation, isLoading, isValid, isExpired, error } = useGuestToken(reservationId, token);
   const [currentStep, setCurrentStep] = useState(1);
-  // TODO: Enable feedback step when backend triggers post-service flow
+  const totalSteps = 5;
 
-  const stepLabels = [t('guest.step1'), t('guest.step2'), t('guest.step3'), t('guest.step4')];
+  const stepLabels = [t('guest.step1'), t('guest.step2'), t('guest.step3'), t('guest.step4'), t('guest.step5')];
 
   if (isLoading) {
     return (
@@ -60,7 +62,11 @@ export default function GuestPage() {
         <div className="guest-container">
           <div className="guest-error">
             <BrandLogo size="sm" showName />
-            <p>{t('guest.tokenExpired')}</p>
+            <div className="guest-error-icon">
+              <AlertCircle size={48} />
+            </div>
+            <h2 className="guest-error-title">{t('guest.tokenExpired')}</h2>
+            <p className="guest-error-desc">{t('guest.tokenExpiredDesc')}</p>
           </div>
         </div>
       </div>
@@ -73,7 +79,11 @@ export default function GuestPage() {
         <div className="guest-container">
           <div className="guest-error">
             <BrandLogo size="sm" showName />
-            <p>{t('guest.tokenInvalid')}</p>
+            <div className="guest-error-icon">
+              <AlertCircle size={48} />
+            </div>
+            <h2 className="guest-error-title">{t('guest.tokenInvalid')}</h2>
+            <p className="guest-error-desc">{t('guest.tokenInvalidDesc')}</p>
           </div>
         </div>
       </div>
@@ -90,7 +100,7 @@ export default function GuestPage() {
 
         <h1 className="guest-title">{t('guest.pageTitle')}</h1>
 
-        <StepIndicator currentStep={currentStep} totalSteps={4} labels={stepLabels} />
+        <StepIndicator currentStep={currentStep} totalSteps={totalSteps} labels={stepLabels} />
 
         <AnimatePresence mode="wait">
           <motion.div key={currentStep} variants={slideVariants} initial="enter" animate="center" exit="exit">
@@ -102,16 +112,19 @@ export default function GuestPage() {
             )}
             {currentStep === 3 && (
               <PaymentStep
-                totalAmount={reservation.totalAmount}
+                reservation={reservation}
                 onNext={() => setCurrentStep(4)}
                 onBack={() => setCurrentStep(2)}
               />
             )}
             {currentStep === 4 && (
               <ConfirmationStep
-                confirmationCode={reservation.confirmationCode}
-                sitterName={reservation.sitterName}
+                reservation={reservation}
+                onNext={() => setCurrentStep(5)}
               />
+            )}
+            {currentStep === 5 && (
+              <FeedbackStep onSubmit={() => {}} />
             )}
           </motion.div>
         </AnimatePresence>

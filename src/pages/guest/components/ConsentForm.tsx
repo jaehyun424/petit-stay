@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
+import { Check } from 'lucide-react';
 
 interface ConsentFormProps {
   onNext: () => void;
@@ -12,40 +13,33 @@ export function ConsentForm({ onNext, onBack }: ConsentFormProps) {
 
   const allConsented = consents.terms && consents.privacy && consents.liability;
 
+  const toggle = (key: keyof typeof consents) => {
+    setConsents((prev) => ({ ...prev, [key]: !prev[key] }));
+  };
+
+  const items: { key: keyof typeof consents; label: string }[] = [
+    { key: 'terms', label: t('guest.termsOfService') },
+    { key: 'privacy', label: t('guest.privacyPolicy') },
+    { key: 'liability', label: t('guest.liabilityWaiver') },
+  ];
+
   return (
     <div className="guest-card">
       <h2 className="guest-card-title">{t('guest.consentTitle')}</h2>
       <div className="guest-consent-list">
-        <label className="guest-consent-item">
-          <input
-            type="checkbox"
-            checked={consents.terms}
-            onChange={(e) => setConsents({ ...consents, terms: e.target.checked })}
-          />
-          <span>{t('guest.termsOfService')}</span>
-        </label>
-        <label className="guest-consent-item">
-          <input
-            type="checkbox"
-            checked={consents.privacy}
-            onChange={(e) => setConsents({ ...consents, privacy: e.target.checked })}
-          />
-          <span>{t('guest.privacyPolicy')}</span>
-        </label>
-        <label className="guest-consent-item">
-          <input
-            type="checkbox"
-            checked={consents.liability}
-            onChange={(e) => setConsents({ ...consents, liability: e.target.checked })}
-          />
-          <span>{t('guest.liabilityWaiver')}</span>
-        </label>
-      </div>
-      <div className="guest-consent-signature">
-        <label className="guest-info-label">{t('guest.signatureLabel')}</label>
-        <div className="guest-signature-pad">
-          <p className="guest-signature-placeholder">{t('guest.signaturePlaceholder')}</p>
-        </div>
+        {items.map(({ key, label }) => (
+          <button
+            key={key}
+            type="button"
+            className={`guest-consent-btn ${consents[key] ? 'guest-consent-btn-checked' : ''}`}
+            onClick={() => toggle(key)}
+          >
+            <div className={`guest-consent-check ${consents[key] ? 'guest-consent-check-on' : ''}`}>
+              {consents[key] && <Check size={14} strokeWidth={3} />}
+            </div>
+            <span>{label}</span>
+          </button>
+        ))}
       </div>
       <div className="guest-btn-row">
         <button className="guest-btn guest-btn-secondary" onClick={onBack}>{t('guest.previousStep')}</button>

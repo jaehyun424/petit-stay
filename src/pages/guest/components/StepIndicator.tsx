@@ -1,3 +1,5 @@
+import { Check } from 'lucide-react';
+
 interface StepIndicatorProps {
   currentStep: number;
   totalSteps: number;
@@ -12,18 +14,17 @@ export function StepIndicator({ currentStep, totalSteps, labels }: StepIndicator
         const isActive = step === currentStep;
         const isCompleted = step < currentStep;
         return (
-          <div key={step} className={`guest-step ${isActive ? 'guest-step-active' : ''} ${isCompleted ? 'guest-step-completed' : ''}`}>
-            <div className="guest-step-circle">
-              {isCompleted ? (
-                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3">
-                  <polyline points="20 6 9 17 4 12" />
-                </svg>
-              ) : (
-                step
-              )}
+          <div key={step} className="guest-step-wrapper">
+            {/* Connecting line before (except first step) */}
+            {step > 1 && (
+              <div className={`guest-step-connector ${step <= currentStep ? 'guest-step-connector-done' : ''}`} />
+            )}
+            <div className={`guest-step ${isActive ? 'guest-step-active' : ''} ${isCompleted ? 'guest-step-completed' : ''}`}>
+              <div className="guest-step-circle">
+                {isCompleted ? <Check size={16} strokeWidth={3} /> : step}
+              </div>
+              <span className="guest-step-label">{labels[i]}</span>
             </div>
-            <span className="guest-step-label">{labels[i]}</span>
-            {step < totalSteps && <div className={`guest-step-line ${isCompleted ? 'guest-step-line-completed' : ''}`} />}
           </div>
         );
       })}
