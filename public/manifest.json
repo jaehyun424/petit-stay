@@ -4,37 +4,91 @@
   "description": "Premium childcare management for luxury hotels. Real-time monitoring, booking, and sitter coordination.",
   "start_url": "/",
   "display": "standalone",
-  "theme_color": "#F4EBD9",
+  "theme_color": "#1C1C1C",
   "background_color": "#FBFBF9",
   "orientation": "portrait-primary",
   "scope": "/",
-  "categories": ["lifestyle", "business", "kids"],
+  "categories": ["business", "lifestyle"],
   "shortcuts": [
-    {
-      "name": "Book Now",
-      "short_name": "Book",
-      "url": "/parent/book",
-      "icons": [{ "src": "/icons/icon-192.svg", "sizes": "192x192" }]
-    },
     {
       "name": "Dashboard",
       "short_name": "Dashboard",
-      "url": "/hotel",
+      "url": "/hotel/dashboard",
+      "icons": [{ "src": "/icons/icon-192.svg", "sizes": "192x192" }]
+    },
+    {
+      "name": "Guest Check-in",
+      "short_name": "Guest",
+      "url": "/guest",
+      "icons": [{ "src": "/icons/icon-192.svg", "sizes": "192x192" }]
+    },
+    {
+      "name": "Sitter Portal",
+      "short_name": "Sitter",
+      "url": "/sitter",
       "icons": [{ "src": "/icons/icon-192.svg", "sizes": "192x192" }]
     }
   ],
   "icons": [
     {
+      "src": "/icons/icon-72.svg",
+      "sizes": "72x72",
+      "type": "image/svg+xml",
+      "purpose": "any"
+    },
+    {
+      "src": "/icons/icon-96.svg",
+      "sizes": "96x96",
+      "type": "image/svg+xml",
+      "purpose": "any"
+    },
+    {
+      "src": "/icons/icon-128.svg",
+      "sizes": "128x128",
+      "type": "image/svg+xml",
+      "purpose": "any"
+    },
+    {
+      "src": "/icons/icon-144.svg",
+      "sizes": "144x144",
+      "type": "image/svg+xml",
+      "purpose": "any"
+    },
+    {
+      "src": "/icons/icon-152.svg",
+      "sizes": "152x152",
+      "type": "image/svg+xml",
+      "purpose": "any"
+    },
+    {
       "src": "/icons/icon-192.svg",
       "sizes": "192x192",
       "type": "image/svg+xml",
-      "purpose": "any maskable"
+      "purpose": "any"
+    },
+    {
+      "src": "/icons/icon-384.svg",
+      "sizes": "384x384",
+      "type": "image/svg+xml",
+      "purpose": "any"
     },
     {
       "src": "/icons/icon-512.svg",
       "sizes": "512x512",
       "type": "image/svg+xml",
-      "purpose": "any maskable"
+      "purpose": "any"
+    },
+    {
+      "src": "/icons/icon-maskable-192.svg",
+      "sizes": "192x192",
+      "type": "image/svg+xml",
+      "purpose": "maskable"
+    },
+    {
+      "src": "/icons/icon-maskable-512.svg",
+      "sizes": "512x512",
+      "type": "image/svg+xml",
+      "purpose": "maskable"
     }
   ]
 }
