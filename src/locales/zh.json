@@ -1297,5 +1297,26 @@
     "specCtaTitle": "准备好加入我们了吗？",
     "specCtaSubtitle": "立即申请，开始您作为 Petit Stay 专家的职业生涯。",
     "specCtaBtn": "立即申请"
+  },
+  "matching": {
+    "recommendedSitters": "推荐保姆",
+    "matchScore": "匹配分数",
+    "topMatch": "最佳匹配",
+    "languageMatch": "语言匹配",
+    "availability": "可用时间",
+    "experience": "经验",
+    "ratingScore": "评分",
+    "distance": "距离",
+    "noRecommendations": "未找到推荐保姆",
+    "assignSitter": "分配保姆",
+    "autoMatched": "自动匹配",
+    "manualAssign": "手动分配",
+    "matchBreakdown": "匹配详情",
+    "viewCandidates": "查看候选人",
+    "bestMatch": "最佳候选",
+    "sitterAssigned": "保姆已分配",
+    "matchingInProgress": "正在寻找最佳匹配...",
+    "scoreOutOf": "{{score}} / 100",
+    "candidateCount": "已评估 {{count}} 名候选人"
   }
 }

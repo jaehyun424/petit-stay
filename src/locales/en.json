@@ -1297,5 +1297,26 @@
     "specCtaTitle": "Ready to join our network?",
     "specCtaSubtitle": "Apply today and start earning as a Petit Stay specialist.",
     "specCtaBtn": "Apply Now"
+  },
+  "matching": {
+    "recommendedSitters": "Recommended Sitters",
+    "matchScore": "Match Score",
+    "topMatch": "Top Match",
+    "languageMatch": "Language Match",
+    "availability": "Availability",
+    "experience": "Experience",
+    "ratingScore": "Rating",
+    "distance": "Distance",
+    "noRecommendations": "No recommended sitters found",
+    "assignSitter": "Assign Sitter",
+    "autoMatched": "Auto-matched",
+    "manualAssign": "Manual Assignment",
+    "matchBreakdown": "Match Breakdown",
+    "viewCandidates": "View Candidates",
+    "bestMatch": "Best Match",
+    "sitterAssigned": "Sitter has been assigned",
+    "matchingInProgress": "Finding the best match...",
+    "scoreOutOf": "{{score}} / 100",
+    "candidateCount": "{{count}} candidates evaluated"
   }
 }

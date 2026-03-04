@@ -1297,5 +1297,26 @@
     "specCtaTitle": "ネットワークに参加する準備はできましたか？",
     "specCtaSubtitle": "今すぐ応募して、Petit Stayスペシャリストとしての収入を始めましょう。",
     "specCtaBtn": "応募する"
+  },
+  "matching": {
+    "recommendedSitters": "おすすめシッター",
+    "matchScore": "マッチスコア",
+    "topMatch": "最適マッチ",
+    "languageMatch": "言語適合性",
+    "availability": "対応可能時間",
+    "experience": "経験",
+    "ratingScore": "評価",
+    "distance": "距離",
+    "noRecommendations": "おすすめのシッターが見つかりません",
+    "assignSitter": "シッターを割り当て",
+    "autoMatched": "自動マッチング",
+    "manualAssign": "手動割り当て",
+    "matchBreakdown": "マッチング詳細",
+    "viewCandidates": "候補者を見る",
+    "bestMatch": "最適候補",
+    "sitterAssigned": "シッターが割り当てられました",
+    "matchingInProgress": "最適なシッターを検索中...",
+    "scoreOutOf": "{{score}} / 100",
+    "candidateCount": "{{count}}名の候補者を評価済み"
   }
 }

@@ -1297,5 +1297,26 @@
     "specCtaTitle": "네트워크에 합류할 준비가 되셨나요?",
     "specCtaSubtitle": "오늘 지원하고 Petit Stay 전문가로서 수입을 시작하세요.",
     "specCtaBtn": "지원하기"
+  },
+  "matching": {
+    "recommendedSitters": "추천 시터",
+    "matchScore": "매칭 점수",
+    "topMatch": "최적 매칭",
+    "languageMatch": "언어 호환성",
+    "availability": "가용 시간",
+    "experience": "경력",
+    "ratingScore": "평점",
+    "distance": "거리",
+    "noRecommendations": "추천 시터를 찾을 수 없습니다",
+    "assignSitter": "시터 배정",
+    "autoMatched": "자동 매칭",
+    "manualAssign": "수동 배정",
+    "matchBreakdown": "매칭 상세",
+    "viewCandidates": "후보자 보기",
+    "bestMatch": "최적 후보",
+    "sitterAssigned": "시터가 배정되었습니다",
+    "matchingInProgress": "최적의 시터를 찾고 있습니다...",
+    "scoreOutOf": "{{score}} / 100",
+    "candidateCount": "{{count}}명의 후보자 평가 완료"
   }
 }
