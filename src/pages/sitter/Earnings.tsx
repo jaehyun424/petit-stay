@@ -4,6 +4,8 @@
 
 import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
+import { motion } from 'framer-motion';
+import { staggerContainer, staggerItem } from '../../utils/animations';
 import { useAuth } from '../../contexts/AuthContext';
 import { useSitterStats } from '../../hooks/useSitters';
 import { Card, CardHeader, CardTitle, CardBody } from '../../components/common/Card';
@@ -190,9 +192,9 @@ export default function Earnings() {
                     <CardTitle>{t('earnings.recentPayments')}</CardTitle>
                 </CardHeader>
                 <CardBody>
-                    <div className="payments-list animate-stagger">
+                    <motion.div className="payments-list" initial="hidden" animate="show" variants={staggerContainer}>
                         {DEMO_RECENT_PAYMENTS.map((payment) => (
-                            <div key={payment.id} className="payment-row">
+                            <motion.div key={payment.id} className="payment-row" variants={staggerItem}>
                                 <div className="payment-info">
                                     <span className="payment-date">{payment.date}</span>
                                     <span className="payment-hotel">{payment.hotel}</span>
@@ -207,9 +209,9 @@ export default function Earnings() {
                                         {payment.status === 'paid' ? t('earnings.paid') : t('earnings.pending')}
                                     </Badge>
                                 </div>
-                            </div>
+                            </motion.div>
                         ))}
-                    </div>
+                    </motion.div>
                 </CardBody>
             </Card>
         </div>

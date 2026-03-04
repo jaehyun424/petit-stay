@@ -2,6 +2,8 @@
 
 import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
+import { motion } from 'framer-motion';
+import { staggerContainer, staggerItem } from '../../utils/animations';
 import { Building2, User, Star, ClipboardList } from 'lucide-react';
 import { Card, CardBody } from '../../components/common/Card';
 import { Button } from '../../components/common/Button';
@@ -57,9 +59,10 @@ export default function History() {
             <p className="page-subtitle">{history.length} {t('sitter.completedSessions').toLowerCase()}</p>
 
             {history.length > 0 ? (
-                <div className="history-list">
+                <motion.div className="history-list" initial="hidden" animate="show" variants={staggerContainer}>
                     {paginatedHistory.map((item) => (
-                        <Card key={item.id} className="history-item">
+                        <motion.div key={item.id} variants={staggerItem}>
+                        <Card className="history-item">
                             <CardBody>
                                 <div className="history-header">
                                     <div>
@@ -93,13 +96,14 @@ export default function History() {
                                 </div>
                             </CardBody>
                         </Card>
+                        </motion.div>
                     ))}
                     <Pagination
                         currentPage={currentPage}
                         totalPages={totalPages}
                         onPageChange={setCurrentPage}
                     />
-                </div>
+                </motion.div>
             ) : (
                 <EmptyState
                     icon={<ClipboardList size={20} strokeWidth={1.75} />}
