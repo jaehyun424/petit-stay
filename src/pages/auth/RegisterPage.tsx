@@ -3,7 +3,7 @@
 // ============================================
 
 import React, { useState } from 'react';
-import { Link, useNavigate } from 'react-router-dom';
+import { Link, useNavigate, useSearchParams } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import { Eye, EyeOff } from 'lucide-react';
 import { motion } from 'framer-motion';
@@ -31,9 +31,15 @@ const fadeUp = {
 
 export default function RegisterPage() {
     const navigate = useNavigate();
+    const [searchParams] = useSearchParams();
     const { signUp } = useAuth();
     const { success, error } = useToast();
     const { t, i18n } = useTranslation();
+
+    // Support ?role=parent|sitter|hotel_staff URL param
+    const roleParam = searchParams.get('role');
+    const validRoles = ['parent', 'sitter', 'hotel_staff'];
+    const defaultRole = (roleParam && validRoles.includes(roleParam) ? roleParam : 'parent') as UserRole;
 
     const ROLE_OPTIONS = [
         { value: 'parent', label: t('auth.guestFamily') },
@@ -54,7 +60,7 @@ export default function RegisterPage() {
         confirmPassword: '',
         firstName: '',
         lastName: '',
-        role: 'parent' as UserRole,
+        role: defaultRole,
         language: i18n.language || 'en',
     });
     const [isLoading, setIsLoading] = useState(false);

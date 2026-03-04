@@ -115,7 +115,6 @@ export function ParentLayout() {
                     </div>
                     <div className="parent-header-right">
                         <NotificationBell />
-                        <LanguageSwitcher />
                         <IconButton
                             icon={isDark ? <Sun size={20} strokeWidth={1.75} /> : <Moon size={20} strokeWidth={1.75} />}
                             onClick={toggleTheme}
@@ -129,7 +128,6 @@ export function ParentLayout() {
                     <h2 className="desktop-page-title">{getPageTitle(location.pathname, t)}</h2>
                     <div className="header-spacer" />
                     <div className="header-user">
-                        <LanguageSwitcher />
                         <IconButton
                             icon={isDark ? <Sun size={20} strokeWidth={1.75} /> : <Moon size={20} strokeWidth={1.75} />}
                             onClick={toggleTheme}

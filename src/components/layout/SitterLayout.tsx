@@ -116,7 +116,6 @@ export function SitterLayout() {
                     <div className="sitter-header-right">
                         <TierBadge tier="gold" showLabel={false} />
                         <NotificationBell />
-                        <LanguageSwitcher />
                         <IconButton
                             icon={isDark ? <Sun size={20} strokeWidth={1.75} /> : <Moon size={20} strokeWidth={1.75} />}
                             onClick={toggleTheme}
@@ -130,7 +129,6 @@ export function SitterLayout() {
                     <h2 className="desktop-page-title">{getPageTitle(location.pathname, t)}</h2>
                     <div className="header-spacer" />
                     <div className="header-user">
-                        <LanguageSwitcher />
                         <IconButton
                             icon={isDark ? <Sun size={20} strokeWidth={1.75} /> : <Moon size={20} strokeWidth={1.75} />}
                             onClick={toggleTheme}
