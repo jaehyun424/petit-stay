@@ -13,12 +13,13 @@ describe('useHotelSitters', () => {
             expect(result.current.isLoading).toBe(false);
         });
 
-        expect(result.current.sitters.length).toBe(4);
+        expect(result.current.sitters.length).toBe(5);
         expect(result.current.sitters.map((s) => s.name)).toEqual([
             'Kim Minjung',
             'Park Sooyeon',
+            'Sato Haruka',
+            'Chen Wei',
             'Lee Jihye',
-            'Choi Yuna',
         ]);
     });
 
@@ -39,11 +40,11 @@ describe('useHotelSitters', () => {
         expect(sitter).toHaveProperty('certifications');
         expect(sitter).toHaveProperty('hourlyRate');
 
-        // Check tier distribution: 3 gold, 1 silver
+        // Check tier distribution: 3 gold, 2 silver
         const goldCount = result.current.sitters.filter((s) => s.tier === 'gold').length;
         const silverCount = result.current.sitters.filter((s) => s.tier === 'silver').length;
         expect(goldCount).toBe(3);
-        expect(silverCount).toBe(1);
+        expect(silverCount).toBe(2);
     });
 });
 
@@ -58,7 +59,7 @@ describe('useSitterStats', () => {
         });
 
         expect(result.current.stats.totalSessions).toBe(247);
-        expect(result.current.stats.avgRating).toBe(4.9);
+        expect(result.current.stats.avgRating).toBe(4.87);
         expect(result.current.stats.tier).toBe('gold');
         expect(result.current.stats.onTimeRate).toBe('98%');
         expect(result.current.stats.safetyDays).toBe(365);
@@ -77,7 +78,7 @@ describe('useSitterProfile', () => {
 
         expect(result.current.profile.name).toBe('Kim Minjung');
         expect(result.current.profile.tier).toBe('gold');
-        expect(result.current.profile.rating).toBe(4.9);
+        expect(result.current.profile.rating).toBe(4.95);
         expect(result.current.profile.totalSessions).toBe(247);
         expect(result.current.profile.certifications.length).toBeGreaterThan(0);
         expect(result.current.profile.languages.length).toBe(3);
