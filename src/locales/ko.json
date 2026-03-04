@@ -954,7 +954,10 @@
     "revenue": "매출",
     "net": "순액",
     "total": "합계",
-    "unassigned": "미배정"
+    "unassigned": "미배정",
+    "noIssues": "보고된 이슈 없음",
+    "noIssuesDesc": "현재 미해결 인시던트가 없습니다.",
+    "issueResolved": "이슈 해결됨"
   },
   "info": {
     "about": {

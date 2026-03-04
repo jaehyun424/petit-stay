@@ -5,6 +5,7 @@
 import { useState } from 'react';
 import { useParams, useSearchParams } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
+import { motion, AnimatePresence } from 'framer-motion';
 import { useGuestToken } from '../../hooks/useGuestToken';
 import { StepIndicator } from './components/StepIndicator';
 import { ReservationInfo } from './components/ReservationInfo';
@@ -12,7 +13,14 @@ import { ConsentForm } from './components/ConsentForm';
 import { PaymentStep } from './components/PaymentStep';
 import { ConfirmationStep } from './components/ConfirmationStep';
 import { LanguageSwitcher } from '../../components/common/LanguageSwitcher';
+import { BrandLogo } from '../../components/common/BrandLogo';
 import '../../styles/pages/guest.css';
+
+const slideVariants = {
+  enter: { opacity: 0, x: 30 },
+  center: { opacity: 1, x: 0, transition: { duration: 0.3, ease: [0.25, 0.46, 0.45, 0.94] as [number, number, number, number] } },
+  exit: { opacity: 0, x: -30, transition: { duration: 0.2 } },
+};
 
 export default function GuestPage() {
   const { reservationId } = useParams<{ reservationId: string }>();
@@ -37,7 +45,7 @@ export default function GuestPage() {
       <div className="guest-page">
         <div className="guest-container">
           <div className="guest-loading">
-            <div className="guest-brand">Petit<span className="text-gold">Stay</span></div>
+            <BrandLogo size="sm" showName />
             <div className="spinner" style={{ width: 32, height: 32 }} />
             <p>{t('guest.loading')}</p>
           </div>
@@ -51,7 +59,7 @@ export default function GuestPage() {
       <div className="guest-page">
         <div className="guest-container">
           <div className="guest-error">
-            <div className="guest-brand">Petit<span className="text-gold">Stay</span></div>
+            <BrandLogo size="sm" showName />
             <p>{t('guest.tokenExpired')}</p>
           </div>
         </div>
@@ -64,7 +72,7 @@ export default function GuestPage() {
       <div className="guest-page">
         <div className="guest-container">
           <div className="guest-error">
-            <div className="guest-brand">Petit<span className="text-gold">Stay</span></div>
+            <BrandLogo size="sm" showName />
             <p>{t('guest.tokenInvalid')}</p>
           </div>
         </div>
@@ -76,7 +84,7 @@ export default function GuestPage() {
     <div className="guest-page">
       <div className="guest-container">
         <div className="guest-header">
-          <div className="guest-brand">Petit<span className="text-gold">Stay</span></div>
+          <BrandLogo size="sm" showName />
           <LanguageSwitcher />
         </div>
 
@@ -84,25 +92,29 @@ export default function GuestPage() {
 
         <StepIndicator currentStep={currentStep} totalSteps={4} labels={stepLabels} />
 
-        {currentStep === 1 && (
-          <ReservationInfo reservation={reservation} onNext={() => setCurrentStep(2)} />
-        )}
-        {currentStep === 2 && (
-          <ConsentForm onNext={() => setCurrentStep(3)} onBack={() => setCurrentStep(1)} />
-        )}
-        {currentStep === 3 && (
-          <PaymentStep
-            totalAmount={reservation.totalAmount}
-            onNext={() => setCurrentStep(4)}
-            onBack={() => setCurrentStep(2)}
-          />
-        )}
-        {currentStep === 4 && (
-          <ConfirmationStep
-            confirmationCode={reservation.confirmationCode}
-            sitterName={reservation.sitterName}
-          />
-        )}
+        <AnimatePresence mode="wait">
+          <motion.div key={currentStep} variants={slideVariants} initial="enter" animate="center" exit="exit">
+            {currentStep === 1 && (
+              <ReservationInfo reservation={reservation} onNext={() => setCurrentStep(2)} />
+            )}
+            {currentStep === 2 && (
+              <ConsentForm onNext={() => setCurrentStep(3)} onBack={() => setCurrentStep(1)} />
+            )}
+            {currentStep === 3 && (
+              <PaymentStep
+                totalAmount={reservation.totalAmount}
+                onNext={() => setCurrentStep(4)}
+                onBack={() => setCurrentStep(2)}
+              />
+            )}
+            {currentStep === 4 && (
+              <ConfirmationStep
+                confirmationCode={reservation.confirmationCode}
+                sitterName={reservation.sitterName}
+              />
+            )}
+          </motion.div>
+        </AnimatePresence>
       </div>
     </div>
   );

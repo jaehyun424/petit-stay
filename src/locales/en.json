@@ -954,7 +954,10 @@
     "revenue": "Revenue",
     "net": "Net",
     "total": "Total",
-    "unassigned": "Unassigned"
+    "unassigned": "Unassigned",
+    "noIssues": "No issues reported",
+    "noIssuesDesc": "All clear — no open incidents at this time.",
+    "issueResolved": "Issue resolved"
   },
   "info": {
     "about": {

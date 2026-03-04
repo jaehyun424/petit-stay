@@ -90,6 +90,14 @@
   color: var(--text-primary, #1a1a1a);
 }
 
+.ops-table-row-hover {
+  transition: background 0.15s ease;
+}
+
+.ops-table-row-hover:hover {
+  background: var(--glass-hover, rgba(0, 0, 0, 0.02));
+}
+
 .ops-table-total td {
   border-top: 2px solid var(--border-light, #e0dbd5);
   font-weight: 600;

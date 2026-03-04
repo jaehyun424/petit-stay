@@ -954,7 +954,10 @@
     "revenue": "营收",
     "net": "净额",
     "total": "合计",
-    "unassigned": "未分配"
+    "unassigned": "未分配",
+    "noIssues": "无报告的问题",
+    "noIssuesDesc": "目前没有未解决的事件。",
+    "issueResolved": "问题已解决"
   },
   "info": {
     "about": {

@@ -954,7 +954,10 @@
     "revenue": "売上",
     "net": "純額",
     "total": "合計",
-    "unassigned": "未割り当て"
+    "unassigned": "未割り当て",
+    "noIssues": "報告されたイシューなし",
+    "noIssuesDesc": "現在、未解決のインシデントはありません。",
+    "issueResolved": "イシュー解決済み"
   },
   "info": {
     "about": {
