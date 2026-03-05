@@ -214,4 +214,10 @@
     max-width: 640px;
     margin: 0 auto;
   }
+
+  .sitter-layout .bottom-nav {
+    max-width: 640px;
+    left: 50%;
+    transform: translateX(-50%);
+  }
 }

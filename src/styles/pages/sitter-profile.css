@@ -210,7 +210,7 @@
     gap: var(--space-3);
     padding: var(--space-3);
     background: var(--bg-card);
-    border: 1px solid var(--cream-300);
+    border: 1px solid var(--border-color);
     border-radius: var(--radius-md);
 }
 
@@ -272,7 +272,7 @@
     gap: var(--space-3);
     margin-bottom: var(--space-4);
     padding-bottom: var(--space-3);
-    border-bottom: 1px solid var(--cream-300);
+    border-bottom: 1px solid var(--border-color);
 }
 
 .reviews-score-big {
@@ -302,7 +302,7 @@
 
 .review-item {
     padding-bottom: var(--space-3);
-    border-bottom: 1px solid var(--cream-200);
+    border-bottom: 1px solid var(--border-color);
 }
 
 .review-item:last-child {
