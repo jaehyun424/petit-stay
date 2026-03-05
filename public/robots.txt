@@ -1,0 +1,11 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://petit-stay.web.app/sitemap.xml
+
+# Disallow authenticated areas from crawling
+Disallow: /hotel/
+Disallow: /parent/
+Disallow: /sitter/
+Disallow: /ops/
+Disallow: /guest/
