@@ -27,12 +27,6 @@
   box-shadow: var(--shadow-md, 0 4px 16px rgba(0, 0, 0, 0.08));
 }
 
-.ops-stat-primary { border-left-color: var(--primary-500, #3b82f6); }
-.ops-stat-success { border-left-color: var(--success-500, #22c55e); }
-.ops-stat-warning { border-left-color: var(--warning-500, #f59e0b); }
-.ops-stat-gold { border-left-color: var(--gold-500, #c8a951); }
-.ops-stat-error { border-left-color: var(--error-500, #ef4444); }
-
 .ops-stat-icon {
   width: 40px;
   height: 40px;
@@ -250,12 +244,6 @@
 /* Page */
 .ops-page {
   padding: 0;
-}
-
-.ops-empty {
-  text-align: center;
-  padding: 2rem;
-  color: var(--text-secondary, #666);
 }
 
 /* Shared Page Layout (used across all ops pages) */

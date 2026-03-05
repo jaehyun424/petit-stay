@@ -203,19 +203,6 @@
 }
 
 /* Features list (legacy, kept for compatibility) */
-.solutions-features {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
-  gap: var(--space-4);
-}
-
-.solutions-feature-item {
-  display: flex;
-  align-items: flex-start;
-  gap: var(--space-3);
-  padding: var(--space-4);
-}
-
 .solutions-feature-item svg {
   flex-shrink: 0;
   color: var(--gold-500);
@@ -328,22 +315,6 @@
 }
 
 /* Scenarios (legacy, kept for compatibility) */
-.solutions-scenarios {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
-  gap: var(--space-6);
-}
-
-.solutions-scenario {
-  text-align: center;
-  padding: var(--space-6);
-}
-
-.solutions-scenario-icon {
-  font-size: 2rem;
-  margin-bottom: var(--space-3);
-}
-
 .solutions-scenario h3 {
   font-family: var(--font-serif);
   font-size: var(--text-base);

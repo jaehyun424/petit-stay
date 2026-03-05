@@ -21,21 +21,6 @@
   cursor: pointer;
 }
 
-.profile-upload-hint {
-  position: absolute;
-  bottom: -2px;
-  right: -2px;
-  width: 24px;
-  height: 24px;
-  border-radius: var(--radius-full);
-  background: var(--gold-500);
-  color: white;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  border: 2px solid var(--bg-card);
-}
-
 .profile-info h2 {
   font-family: var(--font-serif);
   font-size: var(--text-xl);
@@ -185,12 +170,6 @@
   padding: var(--space-4);
 }
 
-.profile-no-children {
-  color: var(--text-tertiary);
-  text-align: center;
-  padding: var(--space-4);
-}
-
 /* Profile form stack (child modal) */
 .profile-form-stack {
   display: flex;
@@ -259,10 +238,4 @@
     max-width: 640px;
   }
 
-  .profile-desktop-grid {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: var(--space-6);
-    align-items: start;
-  }
 }

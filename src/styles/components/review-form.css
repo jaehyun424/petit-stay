@@ -19,18 +19,6 @@
 }
 
 /* Star Rating sizes */
-.star-rating.star-rating-sm {
-  font-size: 0.875rem;
-}
-
-.star-rating.star-rating-md {
-  font-size: 1.125rem;
-}
-
-.star-rating.star-rating-lg {
-  font-size: 1.5rem;
-}
-
 .star-value {
   font-size: 0.875rem;
   margin-left: 0.25rem;

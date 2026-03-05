@@ -31,17 +31,6 @@
   gap: var(--space-2);
 }
 
-.parent-header-brand {
-  font-family: var(--font-serif);
-  font-size: 1.125rem;
-  font-weight: 700;
-  color: var(--charcoal-900);
-}
-
-:root[data-theme="dark"] .parent-header-brand {
-  color: var(--cream-100);
-}
-
 .parent-header-right {
   display: flex;
   align-items: center;

@@ -276,24 +276,6 @@
 }
 
 /* Completion confirmation */
-.checkin-complete {
-  text-align: center;
-  padding: var(--space-8) var(--space-4);
-}
-
-.checkin-complete-icon {
-  width: 64px;
-  height: 64px;
-  border-radius: var(--radius-full);
-  background: var(--success-bg);
-  color: var(--success-500);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  margin: 0 auto var(--space-4);
-  animation: scaleIn 0.4s ease;
-}
-
 @keyframes scaleIn {
   0% { transform: scale(0); opacity: 0; }
   60% { transform: scale(1.1); }

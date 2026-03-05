@@ -148,18 +148,6 @@
   transition: border-color var(--transition-fast), box-shadow var(--transition-fast);
 }
 
-.session-card--sitter_assigned {
-  border-left: 3px solid var(--gold-500);
-}
-
-.session-card--confirmed {
-  border-left: 3px solid var(--success-500);
-}
-
-.session-card--pending {
-  border-left: 3px solid var(--warning-500);
-}
-
 .sitter-schedule .session-header {
   display: flex;
   justify-content: space-between;
@@ -273,8 +261,6 @@
   gap: var(--space-2);
   font-weight: var(--font-semibold);
 }
-
-.no-sessions { text-align: center; color: var(--text-tertiary); }
 
 /* Week Grid */
 .week-grid {
