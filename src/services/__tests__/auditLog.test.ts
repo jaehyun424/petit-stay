@@ -203,7 +203,7 @@ describe('auditLogService', () => {
 
     it('subscribeToAuditLog invokes callback with entries on snapshot', () => {
       const callback = vi.fn();
-      mockOnSnapshot.mockImplementation((q, cb) => {
+      mockOnSnapshot.mockImplementation((_q, cb) => {
         cb({
           docs: [
             { id: 'rt-1', data: () => ({ action: 'booking_created', details: 'live', userId: 'u1', userName: 'Live', timestamp: { toDate: () => new Date() } }) },
