@@ -90,7 +90,7 @@ export const bookingService = {
         const q = query(
             collection(db, COLLECTIONS.bookings),
             where('hotelId', '==', hotelId),
-            orderBy('scheduledStart', 'desc'),
+            orderBy('schedule.date', 'desc'),
             limit(100)
         );
         const snapshot = await getDocs(q);
@@ -105,7 +105,7 @@ export const bookingService = {
         const q = query(
             collection(db, COLLECTIONS.bookings),
             where('parentId', '==', parentId),
-            orderBy('scheduledStart', 'desc')
+            orderBy('schedule.date', 'desc')
         );
         const snapshot = await getDocs(q);
         return snapshot.docs.map((doc) => ({
@@ -119,7 +119,7 @@ export const bookingService = {
         const q = query(
             collection(db, COLLECTIONS.bookings),
             where('sitterId', '==', sitterId),
-            orderBy('scheduledStart', 'desc')
+            orderBy('schedule.date', 'desc')
         );
         const snapshot = await getDocs(q);
         return snapshot.docs.map((doc) => ({

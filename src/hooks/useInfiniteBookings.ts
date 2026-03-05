@@ -54,14 +54,14 @@ export function useInfiniteBookings(hotelId?: string) {
                     ? query(
                         collection(db, 'bookings'),
                         where('hotelId', '==', hotelId),
-                        orderBy('scheduledStart', 'desc'),
+                        orderBy('schedule.date', 'desc'),
                         startAfter(lastDocRef.current),
                         limit(PAGE_SIZE),
                     )
                     : query(
                         collection(db, 'bookings'),
                         where('hotelId', '==', hotelId),
-                        orderBy('scheduledStart', 'desc'),
+                        orderBy('schedule.date', 'desc'),
                         limit(PAGE_SIZE),
                     );
                 const snapshot = await getDocs(q);

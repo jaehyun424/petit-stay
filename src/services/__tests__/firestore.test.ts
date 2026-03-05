@@ -115,7 +115,7 @@ describe('bookingService', () => {
 
       expect(mockCollection).toHaveBeenCalled();
       expect(mockWhere).toHaveBeenCalledWith('hotelId', '==', 'hotel-1');
-      expect(mockOrderBy).toHaveBeenCalledWith('scheduledStart', 'desc');
+      expect(mockOrderBy).toHaveBeenCalledWith('schedule.date', 'desc');
       expect(mockLimit).toHaveBeenCalledWith(100);
       expect(mockGetDocs).toHaveBeenCalled();
       expect(result).toHaveLength(2);
@@ -135,7 +135,7 @@ describe('bookingService', () => {
       const result = await bookingService.getParentBookings('parent-1');
 
       expect(mockWhere).toHaveBeenCalledWith('parentId', '==', 'parent-1');
-      expect(mockOrderBy).toHaveBeenCalledWith('scheduledStart', 'desc');
+      expect(mockOrderBy).toHaveBeenCalledWith('schedule.date', 'desc');
       expect(result).toHaveLength(2);
     });
   });
