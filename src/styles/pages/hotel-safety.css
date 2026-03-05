@@ -279,6 +279,11 @@
 }
 
 @media (max-width: 600px) {
+  .safety-stats-row,
+  .safety-grid {
+    grid-template-columns: 1fr;
+  }
+
   .incident-form-row {
     grid-template-columns: 1fr;
   }
