@@ -817,7 +817,9 @@
     "otherGender": "その他",
     "cardNumberPlaceholder": "**** **** **** ****",
     "expiryPlaceholder": "MM/YY",
-    "cardHolderPlaceholder": "カード名義人"
+    "cardHolderPlaceholder": "カード名義人",
+    "hotelPartnerName": "グランドハイアット - 2024",
+    "backgroundValidUntil": "2025年12月まで有効"
   },
   "notifications": {
     "inbox": "通知インボックス",

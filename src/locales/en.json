@@ -817,7 +817,9 @@
     "otherGender": "Other",
     "cardNumberPlaceholder": "**** **** **** ****",
     "expiryPlaceholder": "MM/YY",
-    "cardHolderPlaceholder": "Card holder name"
+    "cardHolderPlaceholder": "Card holder name",
+    "hotelPartnerName": "Grand Hyatt - 2024",
+    "backgroundValidUntil": "Valid until Dec 2025"
   },
   "notifications": {
     "inbox": "Notification Inbox",

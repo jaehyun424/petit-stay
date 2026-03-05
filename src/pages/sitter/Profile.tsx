@@ -181,7 +181,7 @@ export default function Profile() {
                             <span className="verify-icon" aria-hidden="true"><Building2 size={16} strokeWidth={1.75} /></span>
                             <div className="verify-text">
                                 <span className="verify-label">{t('profile.hotelPartnerVerified')}</span>
-                                <span className="verify-sub">Grand Hyatt - 2024</span>
+                                <span className="verify-sub">{t('profile.hotelPartnerName')}</span>
                             </div>
                             <span className="verify-check" aria-label="Verified"><Check size={16} strokeWidth={2.5} /></span>
                         </div>
@@ -197,7 +197,7 @@ export default function Profile() {
                             <span className="verify-icon" aria-hidden="true"><Scale size={16} strokeWidth={1.75} /></span>
                             <div className="verify-text">
                                 <span className="verify-label">{t('profile.backgroundClear')}</span>
-                                <span className="verify-sub">Valid until Dec 2025</span>
+                                <span className="verify-sub">{t('profile.backgroundValidUntil')}</span>
                             </div>
                             <span className="verify-check" aria-label="Verified"><Check size={16} strokeWidth={2.5} /></span>
                         </div>

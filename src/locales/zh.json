@@ -817,7 +817,9 @@
     "otherGender": "其他",
     "cardNumberPlaceholder": "**** **** **** ****",
     "expiryPlaceholder": "MM/YY",
-    "cardHolderPlaceholder": "持卡人姓名"
+    "cardHolderPlaceholder": "持卡人姓名",
+    "hotelPartnerName": "君悦酒店 - 2024",
+    "backgroundValidUntil": "有效期至2025年12月"
   },
   "notifications": {
     "inbox": "通知收件箱",
