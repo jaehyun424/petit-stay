@@ -1,6 +1,6 @@
 // Parent History Page
 
-import { useState } from 'react';
+import { useState, useMemo } from 'react';
 import { useTranslation } from 'react-i18next';
 import { motion } from 'framer-motion';
 import { staggerContainer, staggerItem } from '../../utils/animations';
@@ -32,7 +32,7 @@ export default function History() {
     const { history, isLoading } = useParentBookings(user?.id);
     const [currentPage, setCurrentPage] = useState(1);
     const [statusFilter, setStatusFilter] = useState<string>('all');
-    const filteredHistory = statusFilter === 'all' ? history : history.filter((item: { status: string }) => item.status === statusFilter);
+    const filteredHistory = useMemo(() => statusFilter === 'all' ? history : history.filter((item: { status: string }) => item.status === statusFilter), [history, statusFilter]);
     const { totalPages, getPageItems } = usePagination(filteredHistory, 10);
     const paginatedHistory = getPageItems(currentPage);
     const { submitReview } = useReviews();

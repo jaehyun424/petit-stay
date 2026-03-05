@@ -249,14 +249,14 @@ export default function Bookings() {
 
     const [currentPage, setCurrentPage] = useState(1);
 
-    const filteredBookings = bookings.filter((booking) => {
+    const filteredBookings = useMemo(() => bookings.filter((booking) => {
         const matchesSearch =
             booking.confirmationCode.toLowerCase().includes(searchTerm.toLowerCase()) ||
             booking.parent.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
             booking.room.includes(searchTerm);
         const matchesStatus = !statusFilter || booking.status === statusFilter;
         return matchesSearch && matchesStatus;
-    });
+    }), [bookings, searchTerm, statusFilter]);
 
     const { totalPages, getPageItems } = usePagination(filteredBookings, 10);
     const paginatedBookings = getPageItems(currentPage);

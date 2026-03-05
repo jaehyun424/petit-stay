@@ -2,7 +2,7 @@
 // Petit Stay - Notification Inbox Page
 // ============================================
 
-import { useState } from 'react';
+import { useState, useMemo } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Bell } from 'lucide-react';
 import { Card, CardBody } from '../../components/common/Card';
@@ -38,13 +38,13 @@ export default function NotificationInbox() {
     const { notifications, markAsRead, markAllAsRead, deleteNotification } = useNotifications(user?.id);
     const [filter, setFilter] = useState<FilterType>('all');
 
-    const filteredNotifications = notifications.filter((n) => {
+    const filteredNotifications = useMemo(() => notifications.filter((n) => {
         if (filter === 'all') return true;
         if (filter === 'bookings') return BOOKING_TYPES.includes(n.type);
         if (filter === 'sessions') return SESSION_TYPES.includes(n.type);
         if (filter === 'emergency') return EMERGENCY_TYPES.includes(n.type);
         return true;
-    });
+    }), [notifications, filter]);
 
     const filters: { key: FilterType; label: string }[] = [
         { key: 'all', label: t('notifications.filterAll') },

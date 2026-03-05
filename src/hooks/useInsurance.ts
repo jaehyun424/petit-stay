@@ -2,7 +2,7 @@
 // Petit Stay - Insurance Hook
 // ============================================
 
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useMemo } from 'react';
 import { DEMO_MODE } from './useDemo';
 import { insuranceService } from '../services/insurance';
 import type { InsurancePolicy, BookingInsurance } from '../types';
@@ -112,27 +112,24 @@ export function useInsurance() {
         };
     }, []);
 
-    // Derived stats
-    const activePolicies = policies.filter((p) => p.validTo >= now);
-    const expiredPolicies = policies.filter((p) => p.validTo < now);
-    const totalCoverage = activePolicies.reduce((sum, p) => sum + p.maxCoverage, 0);
-    const activeBookings = bookingInsurance.filter((b) => b.status === 'active').length;
-    const pendingClaims = bookingInsurance.filter((b) => b.status === 'pending').length;
-    const claimedCount = bookingInsurance.filter((b) => b.status === 'claimed').length;
-    const totalClaimAmount = bookingInsurance
-        .filter((b) => b.status === 'claimed' && b.claimAmount)
-        .reduce((sum, b) => sum + (b.claimAmount || 0), 0);
+    // Derived stats (memoized to avoid recomputation on unrelated re-renders)
+    const derivedStats = useMemo(() => {
+        const activePolicies = policies.filter((p) => p.validTo >= now);
+        const expiredPolicies = policies.filter((p) => p.validTo < now);
+        const totalCoverage = activePolicies.reduce((sum, p) => sum + p.maxCoverage, 0);
+        const activeBookings = bookingInsurance.filter((b) => b.status === 'active').length;
+        const pendingClaims = bookingInsurance.filter((b) => b.status === 'pending').length;
+        const claimedCount = bookingInsurance.filter((b) => b.status === 'claimed').length;
+        const totalClaimAmount = bookingInsurance
+            .filter((b) => b.status === 'claimed' && b.claimAmount)
+            .reduce((sum, b) => sum + (b.claimAmount || 0), 0);
+        return { activePolicies, expiredPolicies, totalCoverage, activeBookings, pendingClaims, claimedCount, totalClaimAmount };
+    }, [policies, bookingInsurance]);
 
     return {
         policies,
         bookingInsurance,
-        activePolicies,
-        expiredPolicies,
-        totalCoverage,
-        activeBookings,
-        pendingClaims,
-        claimedCount,
-        totalClaimAmount,
+        ...derivedStats,
         isLoading,
         error,
     };
