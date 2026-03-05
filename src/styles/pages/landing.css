@@ -339,6 +339,7 @@
 .hero-btn-primary {
   display: inline-flex;
   align-items: center;
+  justify-content: center;
   gap: 0.5rem;
   font-family: var(--font-action);
   font-size: 0.875rem;
@@ -346,6 +347,7 @@
   text-transform: uppercase;
   text-decoration: none;
   padding: 1rem 2.5rem;
+  min-width: 200px;
   border-radius: 100px;
   background: white;
   color: var(--charcoal-900);
@@ -364,12 +366,14 @@
 .hero-btn-secondary {
   display: inline-flex;
   align-items: center;
+  justify-content: center;
   gap: 0.5rem;
   font-family: var(--font-action);
   font-size: 0.875rem;
   letter-spacing: 0.04em;
   text-decoration: none;
-  padding: 0.875rem 2rem;
+  padding: 1rem 2.5rem;
+  min-width: 200px;
   border-radius: 100px;
   background: transparent;
   color: rgba(255, 255, 255, 0.85);
