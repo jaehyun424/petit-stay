@@ -2,6 +2,7 @@
 // Petit Stay - Spinner Component
 // ============================================
 
+import { memo } from 'react';
 import { useTranslation } from 'react-i18next';
 
 // ----------------------------------------
@@ -15,7 +16,7 @@ interface SpinnerProps {
 // ----------------------------------------
 // Component
 // ----------------------------------------
-export function Spinner({ size = 'md', className = '' }: SpinnerProps) {
+export const Spinner = memo(function Spinner({ size = 'md', className = '' }: SpinnerProps) {
     const { t } = useTranslation();
     const sizeMap = {
         sm: 16,
@@ -33,7 +34,7 @@ export function Spinner({ size = 'md', className = '' }: SpinnerProps) {
             aria-label={t('aria.loading')}
         />
     );
-}
+});
 
 // ----------------------------------------
 // Full Page Spinner

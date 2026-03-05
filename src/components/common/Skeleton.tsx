@@ -2,7 +2,7 @@
 // Petit Stay - Skeleton Loading Components
 // ============================================
 
-
+import { memo } from 'react';
 
 // ----------------------------------------
 // Types
@@ -27,7 +27,7 @@ interface SkeletonCircleProps {
 // ----------------------------------------
 // Skeleton
 // ----------------------------------------
-export function Skeleton({
+export const Skeleton = memo(function Skeleton({
     width = '100%',
     height = '1rem',
     borderRadius = 'var(--radius-md)',
@@ -40,7 +40,7 @@ export function Skeleton({
     };
 
     return <div className={`skeleton ${className}`} style={style} aria-hidden="true" />;
-}
+});
 
 // ----------------------------------------
 // Skeleton Text

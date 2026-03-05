@@ -3,6 +3,7 @@
 // Consistent sizing & styling for Lucide icons
 // ============================================
 
+import { memo } from 'react';
 import type { LucideIcon } from 'lucide-react';
 
 type IconSize = 'xs' | 'sm' | 'md' | 'lg' | 'xl';
@@ -22,7 +23,7 @@ const sizeMap: Record<IconSize, number> = {
   xl: 32,
 };
 
-export function Icon({ icon: LucideIcon, size = 'md', className = '', strokeWidth = 1.75 }: IconProps) {
+export const Icon = memo(function Icon({ icon: LucideIcon, size = 'md', className = '', strokeWidth = 1.75 }: IconProps) {
   const px = sizeMap[size];
   return (
     <LucideIcon
@@ -31,4 +32,4 @@ export function Icon({ icon: LucideIcon, size = 'md', className = '', strokeWidt
       className={className}
     />
   );
-}
+});

@@ -2,6 +2,7 @@
 // Petit Stay - Badge Component
 // ============================================
 
+import { memo } from 'react';
 import { Star, Shield } from 'lucide-react';
 import { useTranslation } from 'react-i18next';
 
@@ -31,7 +32,7 @@ interface TierBadgeProps {
 // ----------------------------------------
 // Badge Component
 // ----------------------------------------
-export function Badge({
+export const Badge = memo(function Badge({
     children,
     variant = 'neutral',
     size = 'md',
@@ -51,7 +52,7 @@ export function Badge({
             {children}
         </span>
     );
-}
+});
 
 // ----------------------------------------
 // Status Badge
@@ -72,7 +73,7 @@ const statusConfig: Record<StatusBadgeProps['status'], { variant: BadgeVariant; 
     issue_reported: { variant: 'error', labelKey: 'status.issueReported' },
 };
 
-export function StatusBadge({ status }: StatusBadgeProps) {
+export const StatusBadge = memo(function StatusBadge({ status }: StatusBadgeProps) {
     const { t } = useTranslation();
     const config = statusConfig[status];
 
@@ -82,12 +83,12 @@ export function StatusBadge({ status }: StatusBadgeProps) {
             {t(config.labelKey)}
         </Badge>
     );
-}
+});
 
 // ----------------------------------------
 // Tier Badge
 // ----------------------------------------
-export function TierBadge({ tier, showLabel = true }: TierBadgeProps) {
+export const TierBadge = memo(function TierBadge({ tier, showLabel = true }: TierBadgeProps) {
     const { t } = useTranslation();
     const isGold = tier === 'gold';
 
@@ -97,7 +98,7 @@ export function TierBadge({ tier, showLabel = true }: TierBadgeProps) {
             {showLabel && <span style={{ marginLeft: '4px' }}>{isGold ? t('common.tierGold') : t('common.tierSilver')}</span>}
         </span>
     );
-}
+});
 
 // ----------------------------------------
 // Safety Record Badge

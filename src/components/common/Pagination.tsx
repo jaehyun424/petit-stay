@@ -2,6 +2,7 @@
 // Petit Stay - Pagination Component
 // ============================================
 
+import { memo } from 'react';
 import { useTranslation } from 'react-i18next';
 
 interface PaginationProps {
@@ -11,7 +12,7 @@ interface PaginationProps {
     className?: string;
 }
 
-export function Pagination({
+export const Pagination = memo(function Pagination({
     currentPage,
     totalPages,
     onPageChange,
@@ -76,7 +77,7 @@ export function Pagination({
             </button>
         </nav>
     );
-}
+});
 
 export function usePagination<T>(items: T[], pageSize: number = 10) {
     const totalPages = Math.ceil(items.length / pageSize);

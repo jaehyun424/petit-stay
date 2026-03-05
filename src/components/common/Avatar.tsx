@@ -2,7 +2,7 @@
 // Petit Stay - Avatar Component
 // ============================================
 
-import React from 'react';
+import React, { memo } from 'react';
 
 // ----------------------------------------
 // Types
@@ -22,7 +22,7 @@ interface AvatarProps {
 // ----------------------------------------
 // Component
 // ----------------------------------------
-export function Avatar({
+export const Avatar = memo(function Avatar({
     src,
     alt,
     name,
@@ -62,7 +62,7 @@ export function Avatar({
             {initials}
         </div>
     );
-}
+});
 
 // ----------------------------------------
 // Avatar Group
