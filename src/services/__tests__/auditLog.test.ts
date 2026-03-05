@@ -147,4 +147,89 @@ describe('auditLogService', () => {
       expect(result).toBe(unsubscribe);
     });
   });
+
+  // ----------------------------------------
+  // Edge Case Tests
+  // ----------------------------------------
+  describe('edge cases', () => {
+    it('logAudit returns doc id for every valid action type', async () => {
+      mockAddDoc.mockResolvedValue({ id: 'doc-new' });
+
+      const actions: Array<'booking_created' | 'sitter_assigned' | 'status_changed' | 'payment_received' | 'incident_reported'> = [
+        'booking_created', 'sitter_assigned', 'status_changed', 'payment_received', 'incident_reported',
+      ];
+
+      for (const action of actions) {
+        const id = await auditLogService.logAudit('b1', action, `Action: ${action}`, 'u1', 'Admin');
+        expect(id).toBe('doc-new');
+      }
+      expect(mockAddDoc).toHaveBeenCalledTimes(actions.length);
+    });
+
+    it('logAudit passes serverTimestamp', async () => {
+      mockAddDoc.mockResolvedValue({ id: 'doc-ts' });
+
+      await auditLogService.logAudit('b1', 'booking_created', 'test', 'u1', 'Admin');
+
+      const callArgs = mockAddDoc.mock.calls[0][1];
+      expect(callArgs.timestamp).toEqual({ _type: 'serverTimestamp' });
+    });
+
+    it('getAuditLog preserves entry order from Firestore', async () => {
+      const mockDocs = [
+        { id: 'first', data: () => ({ action: 'booking_created', details: 'A', userId: 'u1', userName: 'A', timestamp: { toDate: () => new Date('2026-03-01T12:00:00Z') } }) },
+        { id: 'second', data: () => ({ action: 'sitter_assigned', details: 'B', userId: 'u2', userName: 'B', timestamp: { toDate: () => new Date('2026-03-01T11:00:00Z') } }) },
+        { id: 'third', data: () => ({ action: 'check_in_completed', details: 'C', userId: 'u3', userName: 'C', timestamp: { toDate: () => new Date('2026-03-01T10:00:00Z') } }) },
+      ];
+      mockGetDocs.mockResolvedValue({ docs: mockDocs });
+
+      const entries = await auditLogService.getAuditLog('b1');
+
+      // Order should match Firestore result (desc by timestamp via query)
+      expect(entries[0].id).toBe('first');
+      expect(entries[1].id).toBe('second');
+      expect(entries[2].id).toBe('third');
+    });
+
+    it('handles missing timestamp gracefully (falls back to new Date)', async () => {
+      const mockDocs = [
+        { id: 'no-ts', data: () => ({ action: 'booking_created', details: 'D', userId: 'u1', userName: 'X', timestamp: null }) },
+      ];
+      mockGetDocs.mockResolvedValue({ docs: mockDocs });
+
+      const entries = await auditLogService.getAuditLog('b1');
+      expect(entries[0].timestamp).toBeInstanceOf(Date);
+    });
+
+    it('subscribeToAuditLog invokes callback with entries on snapshot', () => {
+      const callback = vi.fn();
+      mockOnSnapshot.mockImplementation((q, cb) => {
+        cb({
+          docs: [
+            { id: 'rt-1', data: () => ({ action: 'booking_created', details: 'live', userId: 'u1', userName: 'Live', timestamp: { toDate: () => new Date() } }) },
+          ],
+        });
+        return vi.fn();
+      });
+
+      auditLogService.subscribeToAuditLog('b1', callback);
+
+      expect(callback).toHaveBeenCalledTimes(1);
+      expect(callback.mock.calls[0][0]).toHaveLength(1);
+      expect(callback.mock.calls[0][0][0].action).toBe('booking_created');
+    });
+
+    it('subscribeToAuditLog calls onError on failure', () => {
+      const callback = vi.fn();
+      const onError = vi.fn();
+      mockOnSnapshot.mockImplementation((_q, _cb, errCb) => {
+        errCb(new Error('Firestore permission denied'));
+        return vi.fn();
+      });
+
+      auditLogService.subscribeToAuditLog('b1', callback, onError);
+
+      expect(onError).toHaveBeenCalledWith(expect.any(Error));
+    });
+  });
 });

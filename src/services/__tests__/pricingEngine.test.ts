@@ -289,4 +289,115 @@ describe('pricingEngine', () => {
       expect(result.breakdown).toContain('pricing.goldSitterLine');
     });
   });
+
+  // ----------------------------------------
+  // Edge Case Tests
+  // ----------------------------------------
+  describe('edge cases', () => {
+    it('handles midnight-crossing booking (21:00 to 02:00)', () => {
+      const nightHours = getNightHours('21:00', '02:00');
+      // 22:00-02:00 = 4 night hours
+      expect(nightHours).toBe(4);
+    });
+
+    it('handles 0-hour booking (hours=0 means zero base total)', () => {
+      const result = calculatePrice({
+        baseRate: 60000,
+        hours: 0,
+        startTime: '10:00',
+        endTime: '14:00',
+        date: new Date('2026-03-04'),
+        childrenCount: 1,
+        sitterTier: 'silver',
+        isUrgent: false,
+      });
+
+      // baseTotal = 60000 * 0 = 0, so all surcharges based on baseTotal are 0
+      // but nightSurcharge is based on baseRate * nightHours
+      expect(result.weekendSurcharge).toBe(0);
+      expect(result.additionalChildrenSurcharge).toBe(0);
+    });
+
+    it('handles 5 children (4 additional children surcharge)', () => {
+      const surcharge = calculateAdditionalChildrenSurcharge(240000, 5);
+      // 4 additional children × 30% × 240000 = 288000
+      expect(surcharge).toBe(288000);
+    });
+
+    it('stacks all surcharges correctly', () => {
+      const result = calculatePrice({
+        baseRate: 60000,
+        hours: 4,
+        startTime: '22:00',
+        endTime: '02:00',
+        date: new Date('2026-03-07'), // Saturday
+        childrenCount: 3,
+        sitterTier: 'gold',
+        isUrgent: true,
+      });
+
+      const baseTotal = 60000 * 4;
+      expect(result.nightSurcharge).toBeGreaterThan(0);
+      expect(result.weekendSurcharge).toBeGreaterThan(0);
+      expect(result.urgentSurcharge).toBeGreaterThan(0);
+      expect(result.additionalChildrenSurcharge).toBeGreaterThan(0);
+      expect(result.goldSitterSurcharge).toBeGreaterThan(0);
+      expect(result.total).toBe(
+        baseTotal +
+        result.nightSurcharge +
+        result.weekendSurcharge +
+        result.urgentSurcharge +
+        result.additionalChildrenSurcharge +
+        result.goldSitterSurcharge
+      );
+    });
+
+    it('handles negative base rate gracefully', () => {
+      const result = calculatePrice({
+        baseRate: -1000,
+        hours: 2,
+        startTime: '10:00',
+        endTime: '12:00',
+        date: new Date('2026-03-04'),
+        childrenCount: 1,
+        sitterTier: 'silver',
+        isUrgent: false,
+      });
+
+      // Negative base produces negative total (no crash)
+      expect(result.total).toBe(-2000);
+    });
+
+    it('handles negative hours gracefully (no crash)', () => {
+      const result = calculatePrice({
+        baseRate: 60000,
+        hours: -1,
+        startTime: '10:00',
+        endTime: '12:00',
+        date: new Date('2026-03-04'),
+        childrenCount: 1,
+        sitterTier: 'silver',
+        isUrgent: false,
+      });
+
+      // baseTotal = 60000 * -1 = -60000, but night surcharge from time range may add
+      expect(typeof result.total).toBe('number');
+    });
+
+    it('returns zero night hours for fully daytime booking', () => {
+      const nightHours = getNightHours('08:00', '18:00');
+      expect(nightHours).toBe(0);
+    });
+
+    it('calculates full night booking correctly (22:00 to 06:00)', () => {
+      const nightHours = getNightHours('22:00', '06:00');
+      expect(nightHours).toBe(8);
+    });
+
+    it('isWeekend returns true for Saturday and Sunday', () => {
+      expect(isWeekend(new Date('2026-03-07'))).toBe(true); // Saturday
+      expect(isWeekend(new Date('2026-03-08'))).toBe(true); // Sunday
+      expect(isWeekend(new Date('2026-03-04'))).toBe(false); // Wednesday
+    });
+  });
 });

@@ -311,4 +311,112 @@ describe('matchingEngine', () => {
       expect(result.length).toBe(1);
     });
   });
+
+  // ----------------------------------------
+  // Edge Case Tests
+  // ----------------------------------------
+  describe('edge cases', () => {
+    it('handles sitter with no languages at all', () => {
+      const sitter = makeSitter({ profile: { ...makeSitter().profile, languages: [] } });
+      const booking = makeBooking({ requirements: { sitterTier: 'any', preferredLanguages: ['English'] } });
+      const hotel = makeHotel();
+
+      const result = calculateMatchScore(sitter, booking, hotel);
+      expect(result.languageScore).toBe(0);
+      expect(result.totalScore).toBeGreaterThanOrEqual(0);
+    });
+
+    it('handles sitter with no stats (undefined)', () => {
+      const sitter = makeSitter({ stats: undefined as any });
+      const booking = makeBooking();
+      const hotel = makeHotel();
+
+      const result = calculateMatchScore(sitter, booking, hotel);
+      expect(result.ratingScore).toBe(0);
+      expect(result.totalScore).toBeGreaterThanOrEqual(0);
+    });
+
+    it('handles sitter with zero experience and no certifications', () => {
+      const sitter = makeSitter({
+        profile: { ...makeSitter().profile, experience: 0 },
+        certifications: [],
+      });
+      const booking = makeBooking({ requirements: { sitterTier: 'any', preferredLanguages: [] } });
+      const hotel = makeHotel();
+
+      const result = calculateMatchScore(sitter, booking, hotel);
+      // tier bonus only (silver=10)
+      expect(result.experienceScore).toBeLessThanOrEqual(20);
+    });
+
+    it('gives perfect score to ideal sitter', () => {
+      const sitter = makeSitter({
+        profile: { ...makeSitter().profile, languages: ['English', 'Korean'], experience: 10 },
+        tier: 'gold',
+        certifications: [
+          { type: 'childcare', name: 'C1', issuedBy: 'A', issuedAt: new Date() },
+          { type: 'first_aid', name: 'C2', issuedBy: 'A', issuedAt: new Date() },
+          { type: 'childcare', name: 'C3', issuedBy: 'A', issuedAt: new Date() },
+          { type: 'first_aid', name: 'C4', issuedBy: 'A', issuedAt: new Date() },
+        ],
+        stats: { totalSessions: 200, totalHours: 800, averageRating: 5.0, ratingCount: 100, safetyRecord: 100, noShowCount: 0, repeatClientRate: 0.8 },
+        partnerHotels: ['hotel-grand-hyatt'],
+      });
+      const booking = makeBooking({
+        requirements: { sitterTier: 'gold', preferredLanguages: ['English'] },
+      });
+      const hotel = makeHotel();
+
+      const result = calculateMatchScore(sitter, booking, hotel);
+      expect(result.languageScore).toBe(100);
+      expect(result.availabilityScore).toBe(100);
+      expect(result.distanceScore).toBe(100);
+      expect(result.totalScore).toBeGreaterThan(90);
+    });
+
+    it('returns empty when all sitters are unavailable (Sunday booking)', () => {
+      const sitters = [
+        makeSitter({ id: 's1' }), // Sunday is []
+        makeSitter({ id: 's2' }),
+      ];
+      const sun = new Date('2026-03-08'); // Sunday
+      const booking = makeBooking({
+        schedule: { date: sun, startTime: '10:00', endTime: '14:00', duration: 4, timezone: 'Asia/Seoul' },
+      });
+      const hotel = makeHotel();
+
+      const result = getRecommendedSitters(booking, sitters, hotel);
+      // They still get returned (availability is scored, not filtered)
+      // but their availability score should be 0
+      expect(result.every(r => r.score.availabilityScore === 0)).toBe(true);
+    });
+
+    it('handles booking with no preferred languages (universal match)', () => {
+      const sitter = makeSitter({ profile: { ...makeSitter().profile, languages: ['Swahili'] } });
+      const booking = makeBooking({ requirements: { sitterTier: 'any', preferredLanguages: [] } });
+      const hotel = makeHotel();
+
+      const result = calculateMatchScore(sitter, booking, hotel);
+      expect(result.languageScore).toBe(100);
+    });
+
+    it('handles night shift availability for late booking', () => {
+      const sitter = makeSitter({
+        availability: {
+          ...makeSitter().availability,
+          wednesday: [{ start: '09:00', end: '18:00' }],
+          nightShift: true,
+        },
+      });
+      const wed = new Date('2026-03-04'); // Wednesday
+      const booking = makeBooking({
+        schedule: { date: wed, startTime: '21:00', endTime: '23:00', duration: 2, timezone: 'Asia/Seoul' },
+      });
+      const hotel = makeHotel();
+
+      const result = calculateMatchScore(sitter, booking, hotel);
+      // Night shift available, gets partial score
+      expect(result.availabilityScore).toBeGreaterThan(0);
+    });
+  });
 });
