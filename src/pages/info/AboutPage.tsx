@@ -1,5 +1,15 @@
 import { useTranslation } from 'react-i18next';
+import { motion } from 'framer-motion';
+import { Shield, Heart, Globe, Eye, Users } from 'lucide-react';
 import { InfoLayout } from './InfoLayout';
+
+const values = [
+  { icon: Shield, key: 'safety' },
+  { icon: Heart, key: 'trust' },
+  { icon: Globe, key: 'accessibility' },
+  { icon: Eye, key: 'transparency' },
+  { icon: Users, key: 'partnership' },
+] as const;
 
 export default function AboutPage() {
   const { t } = useTranslation();
@@ -9,6 +19,13 @@ export default function AboutPage() {
       <h2>{t('info.about.missionTitle')}</h2>
       <p>{t('info.about.missionDesc')}</p>
 
+      <h2>{t('info.about.visionTitle')}</h2>
+      <p>{t('info.about.visionDesc')}</p>
+
+      <h2>{t('info.about.storyTitle')}</h2>
+      <p>{t('info.about.storyDesc1')}</p>
+      <p>{t('info.about.storyDesc2')}</p>
+
       <h2>{t('info.about.howWeWorkTitle')}</h2>
       <p>{t('info.about.howWeWorkDesc')}</p>
       <ul>
@@ -17,6 +34,24 @@ export default function AboutPage() {
         <li>{t('info.about.bullet3')}</li>
         <li>{t('info.about.bullet4')}</li>
       </ul>
+
+      <h2>{t('info.about.valuesTitle')}</h2>
+      <div className="info-values-grid">
+        {values.map(({ icon: Icon, key }, i) => (
+          <motion.div
+            key={key}
+            className="info-value-card"
+            initial={{ opacity: 0, y: 16 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ delay: i * 0.08 }}
+          >
+            <Icon size={24} className="info-value-icon" />
+            <h3>{t(`info.about.value_${key}`)}</h3>
+            <p>{t(`info.about.value_${key}Desc`)}</p>
+          </motion.div>
+        ))}
+      </div>
 
       <h2>{t('info.about.whereTitle')}</h2>
       <p>{t('info.about.whereDesc')}</p>

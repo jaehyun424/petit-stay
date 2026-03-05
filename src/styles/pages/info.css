@@ -123,6 +123,96 @@
   margin-bottom: 0.75rem;
 }
 
+/* Values grid */
+.info-values-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 1.25rem;
+  margin: 1.5rem 0;
+}
+
+@media (min-width: 480px) {
+  .info-values-grid {
+    grid-template-columns: 1fr 1fr;
+  }
+}
+
+@media (min-width: 768px) {
+  .info-values-grid {
+    grid-template-columns: 1fr 1fr 1fr;
+  }
+}
+
+.info-value-card {
+  background: white;
+  border: 1px solid var(--cream-300);
+  border-radius: var(--radius-lg);
+  padding: 1.5rem;
+  text-align: center;
+}
+
+.info-value-icon {
+  color: var(--gold-600);
+  margin-bottom: 0.75rem;
+}
+
+.info-value-card h3 {
+  font-family: var(--font-serif);
+  font-size: var(--text-base);
+  color: var(--charcoal-900);
+  margin-bottom: 0.5rem;
+}
+
+.info-value-card p {
+  font-size: var(--text-xs);
+  margin-bottom: 0;
+}
+
+:root[data-theme="dark"] .info-value-card {
+  background: var(--charcoal-800);
+  border-color: var(--charcoal-700);
+}
+
+:root[data-theme="dark"] .info-value-card h3 {
+  color: var(--cream-100);
+}
+
+/* Process list */
+.info-process-list {
+  counter-reset: process-step;
+  list-style: none;
+  padding-left: 0;
+}
+
+.info-process-list li {
+  counter-increment: process-step;
+  padding-left: 2.5rem;
+  position: relative;
+  margin-bottom: 1rem;
+}
+
+.info-process-list li::before {
+  content: counter(process-step);
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 1.75rem;
+  height: 1.75rem;
+  background: var(--gold-100);
+  color: var(--gold-700);
+  font-weight: 700;
+  font-size: var(--text-sm);
+  border-radius: var(--radius-full);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+:root[data-theme="dark"] .info-process-list li::before {
+  background: var(--charcoal-700);
+  color: var(--gold-400);
+}
+
 /* FAQ accordion */
 .info-faq {
   margin: 1.5rem 0;
