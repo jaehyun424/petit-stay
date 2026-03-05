@@ -7,7 +7,7 @@ import { NavLink, Outlet, useNavigate, useLocation } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import {
   LayoutDashboard, Calendar, Users, Building2, Wallet, AlertTriangle,
-  BarChart3, Shield, Menu, Sun, Moon, LogOut,
+  BarChart3, Shield, Menu, Sun, Moon, LogOut, ChevronRight,
 } from 'lucide-react';
 import { useAuth } from '../../contexts/AuthContext';
 import { useTheme } from '../../contexts/ThemeContext';
@@ -40,6 +40,10 @@ export function OpsLayout() {
     { to: '/ops/insurance', icon: <Shield size={20} strokeWidth={1.75} />, labelKey: 'ops.insurance' },
     { to: '/ops/reports', icon: <BarChart3 size={20} strokeWidth={1.75} />, labelKey: 'ops.reports' },
   ];
+
+  const currentNav = navItems.find((item) =>
+    item.end ? location.pathname === item.to : location.pathname.startsWith(item.to)
+  ) || navItems[0];
 
   const handleSignOut = async () => {
     await signOut();
@@ -106,6 +110,11 @@ export function OpsLayout() {
             aria-label={t('aria.openMenu')}
             className="mobile-menu-btn"
           />
+          <nav className="ops-breadcrumb" aria-label="Breadcrumb">
+            <span className="ops-breadcrumb-root">{t('ops.title')}</span>
+            <ChevronRight size={14} strokeWidth={1.75} />
+            <span className="ops-breadcrumb-current">{t(currentNav.labelKey)}</span>
+          </nav>
           <div className="header-spacer" />
           <NotificationBell />
           <div className="header-user">
