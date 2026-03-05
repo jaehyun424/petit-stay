@@ -2,13 +2,15 @@
 // Petit Stay - Ops Dashboard
 // ============================================
 
+import { useMemo } from 'react';
 import { useTranslation } from 'react-i18next';
 import { motion } from 'framer-motion';
 import { staggerContainer, staggerItem } from '../../utils/animations';
-import { Building2, Users, Calendar, DollarSign, Star, AlertTriangle, Wallet, Target } from 'lucide-react';
+import { Building2, Users, Calendar, DollarSign, Star, AlertTriangle, Wallet, Target, Clock, Bell } from 'lucide-react';
 import { Card, CardHeader, CardTitle, CardBody } from '../../components/common/Card';
 import { Badge } from '../../components/common/Badge';
 import { AnimatedCounter } from '../../components/common/AnimatedCounter';
+import { Avatar } from '../../components/common/Avatar';
 import { EmptyState } from '../../components/common/EmptyState';
 import { Skeleton } from '../../components/common/Skeleton';
 import { useOpsData } from '../../hooks/useOpsData';
@@ -17,7 +19,20 @@ import '../../styles/pages/ops-dashboard.css';
 
 export default function OpsDashboard() {
   const { t } = useTranslation();
-  const { stats, hotels, incidents, isLoading } = useOpsData();
+  const { stats, hotels, incidents, sessions, sitters, isLoading } = useOpsData();
+
+  const urgentAlerts = useMemo(() =>
+    incidents.filter((inc) => (inc.severity === 'critical' || inc.severity === 'high') && inc.status !== 'resolved' && inc.status !== 'closed'),
+    [incidents]
+  );
+
+  const sitterAvailability = useMemo(() => {
+    const counts = { Available: 0, Busy: 0, 'On Leave': 0, Offline: 0 };
+    for (const s of sitters) {
+      if (s.availability in counts) counts[s.availability as keyof typeof counts]++;
+    }
+    return counts;
+  }, [sitters]);
 
   if (isLoading) {
     return (
@@ -41,6 +56,10 @@ export default function OpsDashboard() {
     { icon: <Target size={20} />, label: t('ops.slaCompliance'), value: `${stats.slaCompliance}%`, color: 'primary' },
   ];
 
+  const severityColors: Record<string, string> = {
+    critical: 'var(--error-500)', high: 'var(--warning-500)', medium: 'var(--gold-500)', low: 'var(--success-500)',
+  };
+
   return (
     <div className="ops-dashboard animate-fade-in">
       <div className="page-header">
@@ -50,6 +69,7 @@ export default function OpsDashboard() {
         </div>
       </div>
 
+      {/* Stats Grid */}
       <motion.div className="ops-stats-grid" initial="hidden" animate="show" variants={staggerContainer}>
         {statCards.map((stat, i) => (
           <motion.div key={i} className={`ops-stat-card ops-stat-${stat.color}`} variants={staggerItem}>
@@ -64,7 +84,31 @@ export default function OpsDashboard() {
         ))}
       </motion.div>
 
+      {/* Urgent Alerts */}
+      {urgentAlerts.length > 0 && (
+        <Card className="ops-urgent-card mb-6">
+          <CardHeader>
+            <CardTitle>
+              <Bell size={18} strokeWidth={2} style={{ marginRight: 8, verticalAlign: 'middle', color: 'var(--error-500)' }} />
+              {t('ops.urgentAlerts')} ({urgentAlerts.length})
+            </CardTitle>
+          </CardHeader>
+          <CardBody>
+            <div className="ops-alert-list">
+              {urgentAlerts.map((alert) => (
+                <div key={alert.id} className="ops-alert-item" style={{ borderLeft: `3px solid ${severityColors[alert.severity] || 'var(--border-color)'}` }}>
+                  <Badge variant="error" size="sm">{alert.severity.toUpperCase()}</Badge>
+                  <span className="ops-alert-text">{alert.summary}</span>
+                  <span className="ops-alert-meta">{alert.sitterName}</span>
+                </div>
+              ))}
+            </div>
+          </CardBody>
+        </Card>
+      )}
+
       <div className="ops-grid-2">
+        {/* Hotel Summary */}
         <Card>
           <CardHeader>
             <CardTitle>{t('ops.hotelManagement')}</CardTitle>
@@ -93,6 +137,7 @@ export default function OpsDashboard() {
           </CardBody>
         </Card>
 
+        {/* Issues Summary */}
         <Card>
           <CardHeader>
             <CardTitle>{t('ops.issues')}</CardTitle>
@@ -106,11 +151,7 @@ export default function OpsDashboard() {
               />
             ) : (
               <div className="ops-issue-list">
-                {incidents.map((incident) => {
-                  const severityColors: Record<string, string> = {
-                    critical: '#9E4747', high: '#BC8B4C', medium: '#C5A059', low: '#4A6F58',
-                  };
-                  return (
+                {incidents.map((incident) => (
                   <div key={incident.id} className="ops-issue-item" style={{ borderLeft: `3px solid ${severityColors[incident.severity] || 'var(--border-color)'}` }}>
                     <div className="ops-issue-header">
                       <Badge variant={incident.severity === 'high' || incident.severity === 'critical' ? 'error' : incident.severity === 'medium' ? 'warning' : 'neutral'} size="sm">
@@ -123,10 +164,72 @@ export default function OpsDashboard() {
                     <p className="ops-issue-summary">{incident.summary}</p>
                     <span className="ops-issue-meta">{incident.sitterName} &middot; {incident.childName}</span>
                   </div>
-                  );
-                })}
+                ))}
               </div>
             )}
+          </CardBody>
+        </Card>
+      </div>
+
+      {/* Today's Sessions + Sitter Availability */}
+      <div className="ops-grid-2">
+        <Card>
+          <CardHeader>
+            <CardTitle>
+              <Clock size={18} strokeWidth={2} style={{ marginRight: 8, verticalAlign: 'middle' }} />
+              {t('ops.todaySessions')}
+            </CardTitle>
+          </CardHeader>
+          <CardBody>
+            {sessions.length === 0 ? (
+              <EmptyState
+                icon={<Calendar size={32} strokeWidth={1.5} />}
+                title={t('ops.noActiveSessions')}
+                description={t('ops.noActiveSessionsDesc')}
+              />
+            ) : (
+              <div className="ops-session-list">
+                {sessions.map((session) => (
+                  <div key={session.id} className="ops-session-item">
+                    <Avatar name={session.sitter.name} size="sm" variant={session.sitter.tier === 'gold' ? 'gold' : 'default'} />
+                    <div className="ops-session-info">
+                      <span className="ops-session-sitter">{session.sitter.name}</span>
+                      <span className="ops-session-meta">{session.childrenText} &middot; {session.startTime}</span>
+                    </div>
+                    <Badge variant="success" size="sm">{session.status}</Badge>
+                  </div>
+                ))}
+              </div>
+            )}
+          </CardBody>
+        </Card>
+
+        <Card>
+          <CardHeader>
+            <CardTitle>
+              <Users size={18} strokeWidth={2} style={{ marginRight: 8, verticalAlign: 'middle' }} />
+              {t('ops.sitterAvailability')}
+            </CardTitle>
+          </CardHeader>
+          <CardBody>
+            <div className="ops-availability-grid">
+              <div className="ops-availability-item">
+                <div className="ops-availability-count ops-avail-available">{sitterAvailability.Available}</div>
+                <div className="ops-availability-label">{t('ops.available')}</div>
+              </div>
+              <div className="ops-availability-item">
+                <div className="ops-availability-count ops-avail-busy">{sitterAvailability.Busy}</div>
+                <div className="ops-availability-label">{t('ops.busy')}</div>
+              </div>
+              <div className="ops-availability-item">
+                <div className="ops-availability-count ops-avail-leave">{sitterAvailability['On Leave']}</div>
+                <div className="ops-availability-label">{t('ops.onLeave')}</div>
+              </div>
+              <div className="ops-availability-item">
+                <div className="ops-availability-count ops-avail-offline">{sitterAvailability.Offline}</div>
+                <div className="ops-availability-label">{t('ops.offline')}</div>
+              </div>
+            </div>
           </CardBody>
         </Card>
       </div>
