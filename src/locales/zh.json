@@ -947,6 +947,7 @@
     "cardHolder": "持卡人姓名",
     "totalAmount": "总金额",
     "processPayment": "处理支付",
+    "paymentError": "支付处理失败。请检查您的卡片信息并重试。",
     "confirmationTitle": "预约已确认！",
     "confirmationMessage": "您的保姆预约已确认。专家到达时会通知您。",
     "confirmationCode": "确认码",

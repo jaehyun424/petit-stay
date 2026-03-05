@@ -947,6 +947,7 @@
     "cardHolder": "Card Holder Name",
     "totalAmount": "Total Amount",
     "processPayment": "Process Payment",
+    "paymentError": "Payment processing failed. Please check your card details and try again.",
     "confirmationTitle": "Booking Confirmed!",
     "confirmationMessage": "Your babysitting reservation has been confirmed. You will receive a notification when your specialist arrives.",
     "confirmationCode": "Confirmation Code",

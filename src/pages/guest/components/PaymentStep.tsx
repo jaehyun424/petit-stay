@@ -24,6 +24,7 @@ interface PaymentStepProps {
 export function PaymentStep({ reservation, onNext, onBack }: PaymentStepProps) {
   const { t } = useTranslation();
   const [isProcessing, setIsProcessing] = useState(false);
+  const [paymentError, setPaymentError] = useState<string | null>(null);
   const [form, setForm] = useState({ cardNumber: '', expiry: '', cvv: '', holder: '' });
 
   const isValid = form.cardNumber.length >= 16 && form.expiry.length >= 4 && form.cvv.length >= 3 && form.holder.length > 0;
@@ -51,6 +52,7 @@ export function PaymentStep({ reservation, onNext, onBack }: PaymentStepProps) {
 
   const handleSubmit = async () => {
     setIsProcessing(true);
+    setPaymentError(null);
     try {
       if (DEMO_MODE) {
         await new Promise((r) => setTimeout(r, 1500));
@@ -64,6 +66,7 @@ export function PaymentStep({ reservation, onNext, onBack }: PaymentStepProps) {
       onNext();
     } catch (err) {
       console.error('Payment processing failed:', err);
+      setPaymentError(t('guest.paymentError'));
     } finally {
       setIsProcessing(false);
     }
@@ -137,6 +140,12 @@ export function PaymentStep({ reservation, onNext, onBack }: PaymentStepProps) {
           />
         </div>
       </div>
+
+      {paymentError && (
+        <div className="guest-error-banner" role="alert">
+          <p>{paymentError}</p>
+        </div>
+      )}
 
       <div className="guest-btn-row">
         <button className="guest-btn guest-btn-secondary" onClick={onBack} disabled={isProcessing}>{t('guest.previousStep')}</button>

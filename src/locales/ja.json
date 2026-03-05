@@ -947,6 +947,7 @@
     "cardHolder": "カード名義人",
     "totalAmount": "合計金額",
     "processPayment": "お支払い",
+    "paymentError": "お支払いの処理に失敗しました。カード情報をご確認の上、再度お試しください。",
     "confirmationTitle": "予約確定！",
     "confirmationMessage": "ベビーシッターの予約が確定しました。スペシャリストの到着時にお知らせします。",
     "confirmationCode": "確認コード",
