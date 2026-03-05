@@ -1,7 +1,7 @@
 // Parent Live Status Page - Quiet Luxury Redesign
 
 import { useState } from 'react';
-import { useParams, Link } from 'react-router-dom';
+import { useParams, useNavigate } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import { MessageCircle, Building2, DoorOpen, Clock, Star, Shield, Globe } from 'lucide-react';
 import { Card } from '../../components/common/Card';
@@ -20,6 +20,7 @@ import '../../styles/pages/parent-live-status.css';
 
 export default function LiveStatus() {
     const { id } = useParams();
+    const navigate = useNavigate();
     const { t } = useTranslation();
     useAuth();
     const { logs, sessionInfo, isLoading, error, retry } = useLiveStatus(id);
@@ -154,19 +155,16 @@ export default function LiveStatus() {
                     <Button variant="gold" fullWidth onClick={() => setChatOpen(true)}>
                         {t('parent.contactSitter')}
                     </Button>
-                    <a href="tel:119" className="emergency-call-link">
-                        <Button
-                            variant="danger"
-                            fullWidth
-                        >
-                            {t('parent.emergencyCall119')}
-                        </Button>
-                    </a>
-                    <Link to="/parent" className="return-home-link">
-                        <Button variant="secondary" fullWidth>
-                            {t('parent.returnHome')}
-                        </Button>
-                    </Link>
+                    <Button
+                        variant="danger"
+                        fullWidth
+                        onClick={() => window.location.href = 'tel:119'}
+                    >
+                        {t('parent.emergencyCall119')}
+                    </Button>
+                    <Button variant="secondary" fullWidth onClick={() => navigate('/parent')}>
+                        {t('parent.returnHome')}
+                    </Button>
                 </div>
 
                 {/* Chat Panel */}

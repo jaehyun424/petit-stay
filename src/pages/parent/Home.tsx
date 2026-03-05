@@ -2,7 +2,7 @@
 // Petit Stay - Parent Home Page
 // ============================================
 
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import { motion } from 'framer-motion';
 import { staggerContainer, staggerItem } from '../../utils/animations';
@@ -20,6 +20,7 @@ import '../../styles/pages/parent-home.css';
 
 
 export default function Home() {
+  const navigate = useNavigate();
   const { t, i18n } = useTranslation();
   const { user } = useAuth();
   const { upcomingBooking, recentSessions, isLoading } = useParentBookings(user?.id);
@@ -197,16 +198,12 @@ export default function Home() {
                   </div>
                 </div>
                 <div className="upcoming-actions">
-                  <Link to={`/parent/trust-checkin/${upcomingBooking.id}`}>
-                    <Button variant="gold" fullWidth>
-                      {t('parent.trustCheckIn')}
-                    </Button>
-                  </Link>
-                  <Link to={`/parent/qr/${upcomingBooking.id}`} style={{ marginTop: '0.5rem', display: 'block' }}>
-                    <Button variant="secondary" fullWidth>
-                      {t('parent.showQRCode')}
-                    </Button>
-                  </Link>
+                  <Button variant="gold" fullWidth onClick={() => navigate(`/parent/trust-checkin/${upcomingBooking.id}`)}>
+                    {t('parent.trustCheckIn')}
+                  </Button>
+                  <Button variant="secondary" fullWidth onClick={() => navigate(`/parent/qr/${upcomingBooking.id}`)} style={{ marginTop: '0.5rem' }}>
+                    {t('parent.showQRCode')}
+                  </Button>
                 </div>
               </CardBody>
             </Card>
@@ -216,9 +213,7 @@ export default function Home() {
               title={t('parent.noUpcomingBookings')}
               description={t('parent.noUpcomingBookingsDesc')}
               action={
-                <Link to="/parent/book">
-                  <Button variant="gold">{t('parent.bookNow')}</Button>
-                </Link>
+                <Button variant="gold" onClick={() => navigate('/parent/book')}>{t('parent.bookNow')}</Button>
               }
             />
           )}

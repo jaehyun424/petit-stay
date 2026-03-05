@@ -2,7 +2,7 @@
 // Petit Stay - 404 Not Found Page
 // ============================================
 
-import { Link, useNavigate } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import { motion } from 'framer-motion';
 import { MapPin, Home, ArrowLeft } from 'lucide-react';
@@ -39,9 +39,7 @@ export default function NotFound() {
                     <Button variant="secondary" icon={<ArrowLeft size={18} strokeWidth={2} />} onClick={() => navigate(-1)}>
                         {t('notFound.goBack', 'Go Back')}
                     </Button>
-                    <Link to="/">
-                        <Button variant="gold" icon={<Home size={18} strokeWidth={2} />}>{t('notFound.goHome')}</Button>
-                    </Link>
+                    <Button variant="gold" icon={<Home size={18} strokeWidth={2} />} onClick={() => navigate('/')}>{t('notFound.goHome')}</Button>
                 </div>
             </motion.div>
         </div>

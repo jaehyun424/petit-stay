@@ -1,4 +1,4 @@
-import { useParams, Link } from 'react-router-dom';
+import { useParams, useNavigate } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import { Copy, Smartphone } from 'lucide-react';
 import { BookingQR } from '../../components/common/BookingQR';
@@ -10,6 +10,7 @@ import { Skeleton } from '../../components/common/Skeleton';
 
 export default function QRDisplay() {
     const { bookingId } = useParams<{ bookingId: string }>();
+    const navigate = useNavigate();
     const { t } = useTranslation();
     const { user } = useAuth();
     const { upcomingBooking, isLoading } = useParentBookings(user?.id);
@@ -45,9 +46,7 @@ export default function QRDisplay() {
                     <span className="qr-empty-icon">📱</span>
                     <h2>{t('qr.noActiveBooking')}</h2>
                     <p>{t('qr.noBooking')}</p>
-                    <Link to="/parent">
-                        <Button variant="primary">{t('qr.goBack')}</Button>
-                    </Link>
+                    <Button variant="primary" onClick={() => navigate('/parent')}>{t('qr.goBack')}</Button>
                 </div>
             </div>
         );
@@ -104,11 +103,9 @@ export default function QRDisplay() {
                     </div>
                 </div>
 
-                <Link to="/parent" className="qr-back-link">
-                    <Button variant="secondary" fullWidth>
-                        {t('qr.goBack')}
-                    </Button>
-                </Link>
+                <Button variant="secondary" fullWidth onClick={() => navigate('/parent')}>
+                    {t('qr.goBack')}
+                </Button>
             </div>
         </div>
     );

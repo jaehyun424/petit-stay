@@ -3,7 +3,7 @@
 // ============================================
 
 import React, { useState } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import { Mail, ArrowRight, CheckCircle } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
@@ -33,6 +33,7 @@ const fadeUp = {
 type Step = 1 | 2 | 3;
 
 export default function ForgotPasswordPage() {
+  const navigate = useNavigate();
   const { success, error: showError } = useToast();
   const { t } = useTranslation();
 
@@ -179,11 +180,9 @@ export default function ForgotPasswordPage() {
                   <p className="text-sm text-charcoal-500 mb-8" style={{ lineHeight: 1.6 }}>
                     {t('auth.resetSuccessDesc')}
                   </p>
-                  <Link to="/login">
-                    <Button variant="primary" fullWidth>
+                  <Button variant="primary" fullWidth onClick={() => navigate('/login')}>
                       {t('auth.returnToLogin')}
-                    </Button>
-                  </Link>
+                  </Button>
                 </motion.div>
               ) : (
                 /* Step 1-2: Email form */
