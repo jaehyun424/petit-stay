@@ -33,11 +33,12 @@ export function LandingNav() {
 
   const scrollTo = (id: string) => {
     setMobileOpen(false);
+    setSolutionsOpen(false);
     if (location.pathname !== '/') {
       navigate('/');
       setTimeout(() => {
         document.getElementById(id)?.scrollIntoView({ behavior: 'smooth' });
-      }, 300);
+      }, 500);
     } else {
       document.getElementById(id)?.scrollIntoView({ behavior: 'smooth' });
     }
