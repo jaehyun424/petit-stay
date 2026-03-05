@@ -65,14 +65,35 @@ export default function Earnings() {
     const [showFilters, setShowFilters] = useState(false);
 
     const growth = growthPercent(DEMO_EARNINGS.thisMonth, DEMO_EARNINGS.lastMonth);
-    const maxChartAmount = Math.max(...DEMO_MONTHLY_CHART.map((m) => m.amount));
 
-    const filteredPayments = hotelFilter === 'all'
-        ? DEMO_RECENT_PAYMENTS
-        : DEMO_RECENT_PAYMENTS.filter((p) => p.hotel === hotelFilter);
+    const chartData = period === 'this_month'
+        ? DEMO_MONTHLY_CHART.slice(-1)
+        : period === 'last_3_months'
+            ? DEMO_MONTHLY_CHART.slice(-3)
+            : DEMO_MONTHLY_CHART;
+    const maxChartAmount = Math.max(...chartData.map((m) => m.amount));
+
+    const filteredPayments = (() => {
+        let payments = DEMO_RECENT_PAYMENTS;
+        if (hotelFilter !== 'all') {
+            payments = payments.filter((p) => p.hotel === hotelFilter);
+        }
+        if (period === 'this_month') {
+            payments = payments.slice(0, 2);
+        } else if (period === 'last_3_months') {
+            payments = payments.slice(0, 4);
+        }
+        return payments;
+    })();
 
     const paidCount = filteredPayments.filter((p) => p.status === 'paid').length;
     const pendingCount = filteredPayments.filter((p) => p.status === 'pending').length;
+
+    const summaryAmount = period === 'this_month'
+        ? DEMO_EARNINGS.thisMonth
+        : period === 'last_3_months'
+            ? DEMO_EARNINGS.thisMonth + DEMO_EARNINGS.lastMonth + 2100000
+            : chartData.reduce((sum, m) => sum + m.amount, 0);
 
     if (isLoading) {
         return (
@@ -169,7 +190,7 @@ export default function Earnings() {
                 <CardBody>
                     <h3 className="earnings-summary-label">{t('earnings.thisMonth')}</h3>
                     <div className="earnings-amount">
-                        <AnimatedCounter value={DEMO_EARNINGS.thisMonth} />
+                        <AnimatedCounter value={summaryAmount} />
                     </div>
                     <div className="earnings-meta">
                         <span className="earnings-sessions">
@@ -231,8 +252,8 @@ export default function Earnings() {
                 </CardHeader>
                 <CardBody>
                     <div className="chart-container" role="img" aria-label="Monthly earnings bar chart">
-                        {DEMO_MONTHLY_CHART.map((item, index) => {
-                            const isCurrentMonth = index === DEMO_MONTHLY_CHART.length - 1;
+                        {chartData.map((item, index) => {
+                            const isCurrentMonth = index === chartData.length - 1;
                             const heightPercent = (item.amount / maxChartAmount) * 100;
                             const isHovered = hoveredBar === index;
                             return (
