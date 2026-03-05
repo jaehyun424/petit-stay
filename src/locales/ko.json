@@ -1121,7 +1121,8 @@
     "reservationCount": "총 {{count}}건의 예약",
     "sitterCount": "등록된 시터 {{count}}명",
     "hotelCount": "제휴 호텔 {{count}}곳",
-    "allTiers": "전체 등급"
+    "allTiers": "전체 등급",
+    "settlementSummary": "정산 기록 {{count}}건"
   },
   "info": {
     "about": {

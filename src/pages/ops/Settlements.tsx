@@ -1,20 +1,42 @@
-import { useState } from 'react';
+import { useState, useMemo } from 'react';
 import { useTranslation } from 'react-i18next';
+import { motion } from 'framer-motion';
+import { staggerContainer, staggerItem } from '../../utils/animations';
 import { Wallet } from 'lucide-react';
 import { Card, CardBody } from '../../components/common/Card';
 import { Badge } from '../../components/common/Badge';
 import { Button } from '../../components/common/Button';
+import { Select } from '../../components/common/Input';
 import { ConfirmDialog } from '../../components/common/ConfirmDialog';
 import { EmptyState } from '../../components/common/EmptyState';
+import { AnimatedCounter } from '../../components/common/AnimatedCounter';
 import { useSettlements } from '../../hooks/useSettlements';
 import ErrorBanner from '../../components/common/ErrorBanner';
 import { Skeleton } from '../../components/common/Skeleton';
 import { formatCurrency } from '../../utils/format';
+import '../../styles/pages/ops-dashboard.css';
 
 export default function OpsSettlements() {
   const { t } = useTranslation();
   const { settlements, isLoading, approveSettlement, markAsPaid, error, retry } = useSettlements();
   const [confirmAction, setConfirmAction] = useState<{ type: 'approve' | 'pay'; id: string; name: string } | null>(null);
+  const [statusFilter, setStatusFilter] = useState('');
+  const [periodFilter, setPeriodFilter] = useState('');
+
+  const periods = useMemo(() => [...new Set(settlements.map((s) => s.period))], [settlements]);
+
+  const filtered = useMemo(() => settlements.filter((s) => {
+    const matchesStatus = !statusFilter || s.status === statusFilter;
+    const matchesPeriod = !periodFilter || s.period === periodFilter;
+    return matchesStatus && matchesPeriod;
+  }), [settlements, statusFilter, periodFilter]);
+
+  const totals = useMemo(() => {
+    const pending = filtered.filter((s) => s.status === 'pending_approval').reduce((sum, s) => sum + s.netPayout, 0);
+    const approved = filtered.filter((s) => s.status === 'approved').reduce((sum, s) => sum + s.netPayout, 0);
+    const paid = filtered.filter((s) => s.status === 'paid').reduce((sum, s) => sum + s.netPayout, 0);
+    return { pending, approved, paid, total: pending + approved + paid };
+  }, [filtered]);
 
   const statusVariant = (status: string) => {
     switch (status) {
@@ -35,18 +57,71 @@ export default function OpsSettlements() {
     setConfirmAction(null);
   };
 
-  if (isLoading) return <div className="animate-fade-in"><Skeleton height="400px" /></div>;
+  if (isLoading) {
+    return (
+      <div className="ops-page animate-fade-in">
+        <Skeleton width="240px" height="2rem" />
+        <div className="ops-summary-bar" style={{ marginTop: 'var(--space-6)' }}>
+          {[1, 2, 3, 4].map((i) => <Skeleton key={i} height="80px" />)}
+        </div>
+        <div style={{ marginTop: 'var(--space-4)' }}>
+          <Skeleton height="400px" />
+        </div>
+      </div>
+    );
+  }
 
   return (
     <div className="ops-page animate-fade-in">
       {error && <ErrorBanner error={error} onRetry={retry} />}
       <div className="page-header">
-        <h1 className="page-title">{t('ops.totalSettlements')}</h1>
+        <div>
+          <h1 className="page-title">{t('ops.totalSettlements')}</h1>
+          <p className="page-subtitle">{t('ops.settlementSummary', { count: filtered.length })}</p>
+        </div>
       </div>
+
+      {/* Summary Bar */}
+      <motion.div className="ops-summary-bar mb-6" initial="hidden" animate="show" variants={staggerContainer}>
+        <motion.div className="ops-summary-item" variants={staggerItem}>
+          <div className="ops-summary-value" style={{ color: 'var(--warning-500)' }}>{formatCurrency(totals.pending)}</div>
+          <div className="ops-summary-label">{t('ops.totalPending')}</div>
+        </motion.div>
+        <motion.div className="ops-summary-item" variants={staggerItem}>
+          <div className="ops-summary-value" style={{ color: 'var(--gold-600)' }}>{formatCurrency(totals.approved)}</div>
+          <div className="ops-summary-label">{t('ops.totalApproved')}</div>
+        </motion.div>
+        <motion.div className="ops-summary-item" variants={staggerItem}>
+          <div className="ops-summary-value" style={{ color: 'var(--success-500)' }}>{formatCurrency(totals.paid)}</div>
+          <div className="ops-summary-label">{t('ops.totalPaid')}</div>
+        </motion.div>
+        <motion.div className="ops-summary-item" variants={staggerItem}>
+          <div className="ops-summary-value">{formatCurrency(totals.total)}</div>
+          <div className="ops-summary-label">{t('ops.total')}</div>
+        </motion.div>
+      </motion.div>
+
+      {/* Filters */}
+      <Card className="mb-6">
+        <CardBody>
+          <div className="filters-row">
+            <Select value={periodFilter} onChange={(e) => setPeriodFilter(e.target.value)} options={[
+              { value: '', label: t('ops.allPeriods') },
+              ...periods.map((p) => ({ value: p, label: p })),
+            ]} />
+            <Select value={statusFilter} onChange={(e) => setStatusFilter(e.target.value)} options={[
+              { value: '', label: t('ops.allStatuses') },
+              { value: 'pending_approval', label: t('ops.totalPending') },
+              { value: 'approved', label: t('ops.totalApproved') },
+              { value: 'paid', label: t('ops.totalPaid') },
+            ]} />
+          </div>
+        </CardBody>
+      </Card>
 
       <Card>
         <CardBody>
-          {settlements.length === 0 ? (
+          {filtered.length === 0 ? (
             <EmptyState
               icon={<Wallet size={32} strokeWidth={1.5} />}
               title={t('ops.noSettlements')}
@@ -67,9 +142,9 @@ export default function OpsSettlements() {
                   <th></th>
                 </tr>
               </thead>
-              <tbody>
-                {settlements.map((s) => (
-                  <tr key={s.id} className="ops-table-row-hover">
+              <motion.tbody initial="hidden" animate="show" variants={staggerContainer}>
+                {filtered.map((s) => (
+                  <motion.tr key={s.id} variants={staggerItem} className="ops-table-row-hover">
                     <td><span className="ops-hotel-name">{s.hotelName}</span></td>
                     <td>{s.period}</td>
                     <td>{s.totalBookings}</td>
@@ -85,9 +160,9 @@ export default function OpsSettlements() {
                         <Button variant="primary" size="sm" onClick={() => setConfirmAction({ type: 'pay', id: s.id, name: s.hotelName })}>{t('ops.markAsPaid')}</Button>
                       )}
                     </td>
-                  </tr>
+                  </motion.tr>
                 ))}
-              </tbody>
+              </motion.tbody>
             </table>
           </div>
           )}

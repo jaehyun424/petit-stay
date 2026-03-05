@@ -1121,7 +1121,8 @@
     "reservationCount": "合計{{count}}件の予約",
     "sitterCount": "登録シッター{{count}}名",
     "hotelCount": "提携ホテル{{count}}件",
-    "allTiers": "全ティア"
+    "allTiers": "全ティア",
+    "settlementSummary": "精算記録{{count}}件"
   },
   "info": {
     "about": {

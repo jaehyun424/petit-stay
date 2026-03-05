@@ -1121,7 +1121,8 @@
     "reservationCount": "{{count}} reservations total",
     "sitterCount": "{{count}} sitters registered",
     "hotelCount": "{{count}} partner hotels",
-    "allTiers": "All Tiers"
+    "allTiers": "All Tiers",
+    "settlementSummary": "{{count}} settlement records"
   },
   "info": {
     "about": {
