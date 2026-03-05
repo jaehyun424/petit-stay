@@ -2,7 +2,7 @@ import { useState, useRef, useEffect } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import { motion, AnimatePresence } from 'framer-motion';
-import { Shield, Phone, PenTool, Check, Info } from 'lucide-react';
+import { Shield, Phone, PenTool, ClipboardCheck, Check, Info, AlertTriangle } from 'lucide-react';
 import { Card, CardBody } from '../../components/common/Card';
 import { Button } from '../../components/common/Button';
 import { Input } from '../../components/common/Input';
@@ -15,7 +15,7 @@ import { storageService } from '../../services/storage';
 import { bookingService, sessionService } from '../../services/firestore';
 import '../../styles/pages/parent-trust-checkin.css';
 
-const STEP_ICONS = [Shield, Phone, PenTool] as const;
+const STEP_ICONS = [Shield, Phone, ClipboardCheck, PenTool] as const;
 
 const easing: [number, number, number, number] = [0.25, 0.46, 0.45, 0.94];
 const slideVariants = {
@@ -46,19 +46,37 @@ export default function TrustCheckIn() {
 
     const [step, setStep] = useState(1);
     const [direction, setDirection] = useState(1);
+    const totalSteps = 4;
 
     // Focus the step heading when step changes
     useEffect(() => {
         stepHeadingRef.current?.focus();
     }, [step]);
+
     const userName = `${user?.profile?.firstName || ''} ${user?.profile?.lastName || ''}`.trim() || 'Parent';
     const userPhone = user?.profile?.phone || '';
+
     const [formData, setFormData] = useState({
-        allergies: 'None',
-        medications: 'None',
-        emergencyContact: userPhone,
+        // Step 1: Medical
+        allergies: '',
+        medications: '',
+        specialConditions: '',
+        // Step 2: Emergency contacts
         emergencyName: userName,
-        rulesAccepted: false,
+        emergencyPhone: userPhone,
+        emergencyRelation: 'parent',
+        secondaryName: '',
+        secondaryPhone: '',
+        secondaryRelation: '',
+        // Step 3: Safety consent checklist
+        roomWindowsSecured: false,
+        roomBalconyLocked: false,
+        roomHazardsRemoved: false,
+        roomEmergencyExitKnown: false,
+        consentFirstAid: false,
+        consentNoContagious: false,
+        consentEmergencyTransport: false,
+        // Step 4: Signature
     });
 
     const [isSubmitting, setIsSubmitting] = useState(false);
@@ -67,18 +85,26 @@ export default function TrustCheckIn() {
         t('trustCheckin.step1Label'),
         t('trustCheckin.step2Label'),
         t('trustCheckin.step3Label'),
+        t('trustCheckin.step4Label'),
     ];
 
     const validateStep = (): boolean => {
         if (step === 1) {
-            if (!formData.allergies.trim()) {
+            // Allergies can be empty (means none)
+            return true;
+        }
+        if (step === 2) {
+            if (!formData.emergencyName.trim() || !formData.emergencyPhone.trim()) {
                 error(t('trustCheckin.actionRequired'), t('trustCheckin.fillAllFields'));
                 return false;
             }
         }
-        if (step === 2) {
-            if (!formData.emergencyName.trim() || !formData.emergencyContact.trim()) {
-                error(t('trustCheckin.actionRequired'), t('trustCheckin.fillAllFields'));
+        if (step === 3) {
+            const allSafety = formData.roomWindowsSecured && formData.roomBalconyLocked &&
+                formData.roomHazardsRemoved && formData.roomEmergencyExitKnown;
+            const allConsent = formData.consentFirstAid && formData.consentNoContagious && formData.consentEmergencyTransport;
+            if (!allSafety || !allConsent) {
+                error(t('trustCheckin.actionRequired'), t('trustCheckin.acceptProtocols'));
                 return false;
             }
         }
@@ -87,17 +113,13 @@ export default function TrustCheckIn() {
 
     const handleNext = () => {
         if (!validateStep()) return;
-        if (step === 3 && !formData.rulesAccepted) {
-            error(t('trustCheckin.actionRequired'), t('trustCheckin.acceptProtocols'));
-            return;
-        }
         setDirection(1);
-        setStep((prev) => prev + 1);
+        setStep((prev) => Math.min(prev + 1, totalSteps));
     };
 
     const handleBack = () => {
         setDirection(-1);
-        setStep((prev) => prev - 1);
+        setStep((prev) => Math.max(prev - 1, 1));
     };
 
     const handleSubmit = async () => {
@@ -130,7 +152,7 @@ export default function TrustCheckIn() {
                                 parentVerified: true,
                                 roomSafetyChecked: true,
                                 childConditionNoted: true,
-                                emergencyConsentSigned: formData.rulesAccepted,
+                                emergencyConsentSigned: true,
                                 signatures: {
                                     parent: signatureUrl,
                                     sitter: '',
@@ -155,7 +177,12 @@ export default function TrustCheckIn() {
                             isPrivate: false,
                         }],
                         checklist: {
-                            roomSafety: { windowsSecured: false, balconyLocked: false, hazardsRemoved: false, emergencyExitKnown: false },
+                            roomSafety: {
+                                windowsSecured: formData.roomWindowsSecured,
+                                balconyLocked: formData.roomBalconyLocked,
+                                hazardsRemoved: formData.roomHazardsRemoved,
+                                emergencyExitKnown: formData.roomEmergencyExitKnown,
+                            },
                             childInfo: { allergiesConfirmed: true, medicationNoted: true, sleepScheduleNoted: false },
                             supplies: { diapersProvided: false, snacksProvided: false, toysAvailable: false, emergencyKitReady: false },
                         },
@@ -187,11 +214,21 @@ export default function TrustCheckIn() {
                     label={t('trustCheckin.allergiesLabel')}
                     value={formData.allergies}
                     onChange={(e) => setFormData({ ...formData, allergies: e.target.value })}
+                    placeholder={t('trustCheckin.allergiesPlaceholder')}
+                    hint={t('trustCheckin.allergiesHint')}
                 />
                 <Input
                     label={t('trustCheckin.currentMedications')}
                     value={formData.medications}
                     onChange={(e) => setFormData({ ...formData, medications: e.target.value })}
+                    placeholder={t('trustCheckin.medicationsPlaceholder')}
+                />
+                <Input
+                    label={t('trustCheckin.specialConditions')}
+                    value={formData.specialConditions}
+                    onChange={(e) => setFormData({ ...formData, specialConditions: e.target.value })}
+                    placeholder={t('trustCheckin.specialConditionsPlaceholder')}
+                    hint={t('trustCheckin.specialConditionsHint')}
                 />
             </div>
         </div>
@@ -203,6 +240,7 @@ export default function TrustCheckIn() {
             <p className="section-subtitle">{t('trustCheckin.whoToContactFirst')}</p>
 
             <div className="step-fields">
+                <h3 className="checkin-subheading">{t('trustCheckin.primaryContact')}</h3>
                 <Input
                     label={t('trustCheckin.emergencyContactName')}
                     value={formData.emergencyName}
@@ -210,9 +248,35 @@ export default function TrustCheckIn() {
                 />
                 <Input
                     label={t('trustCheckin.emergencyPhone')}
-                    value={formData.emergencyContact}
-                    onChange={(e) => setFormData({ ...formData, emergencyContact: e.target.value })}
+                    value={formData.emergencyPhone}
+                    onChange={(e) => setFormData({ ...formData, emergencyPhone: e.target.value })}
                 />
+                <Input
+                    label={t('trustCheckin.relationship')}
+                    value={formData.emergencyRelation}
+                    onChange={(e) => setFormData({ ...formData, emergencyRelation: e.target.value })}
+                    placeholder={t('trustCheckin.relationshipPlaceholder')}
+                />
+
+                <h3 className="checkin-subheading">{t('trustCheckin.secondaryContact')}</h3>
+                <Input
+                    label={t('trustCheckin.emergencyContactName')}
+                    value={formData.secondaryName}
+                    onChange={(e) => setFormData({ ...formData, secondaryName: e.target.value })}
+                    placeholder={t('trustCheckin.secondaryPlaceholder')}
+                />
+                <Input
+                    label={t('trustCheckin.emergencyPhone')}
+                    value={formData.secondaryPhone}
+                    onChange={(e) => setFormData({ ...formData, secondaryPhone: e.target.value })}
+                />
+                <Input
+                    label={t('trustCheckin.relationship')}
+                    value={formData.secondaryRelation}
+                    onChange={(e) => setFormData({ ...formData, secondaryRelation: e.target.value })}
+                    placeholder={t('trustCheckin.relationshipPlaceholder')}
+                />
+
                 <div className="info-box">
                     <span className="info-icon"><Info size={16} strokeWidth={1.75} /></span>
                     <p>{t('trustCheckin.emsInfo')}</p>
@@ -221,23 +285,75 @@ export default function TrustCheckIn() {
         </div>
     );
 
-    const renderStep3_Rules = () => (
-        <div className="step-content">
-            <h2 className="section-title" ref={stepHeadingRef} tabIndex={-1}>{t('trustCheckin.safetyProtocols')}</h2>
-            <p className="section-subtitle">{t('trustCheckin.agreedBoundaries')}</p>
+    const renderStep3_Safety = () => {
+        const safetyItems = [
+            { key: 'roomWindowsSecured' as const, label: t('trustCheckin.windowsSecured') },
+            { key: 'roomBalconyLocked' as const, label: t('trustCheckin.balconyLocked') },
+            { key: 'roomHazardsRemoved' as const, label: t('trustCheckin.hazardsRemoved') },
+            { key: 'roomEmergencyExitKnown' as const, label: t('trustCheckin.emergencyExitKnown') },
+        ];
 
-            <div className="rules-list">
-                <label className="checkbox-row">
-                    <input
-                        type="checkbox"
-                        checked={formData.rulesAccepted}
-                        onChange={(e) => setFormData({ ...formData, rulesAccepted: e.target.checked })}
-                    />
-                    <span className="checkbox-text">
-                        {t('trustCheckin.firstAidConsent')}
-                    </span>
-                </label>
+        const consentItems = [
+            { key: 'consentFirstAid' as const, label: t('trustCheckin.firstAidConsent') },
+            { key: 'consentNoContagious' as const, label: t('trustCheckin.noContagiousConsent') },
+            { key: 'consentEmergencyTransport' as const, label: t('trustCheckin.emergencyTransportConsent') },
+        ];
+
+        return (
+            <div className="step-content">
+                <h2 className="section-title" ref={stepHeadingRef} tabIndex={-1}>{t('trustCheckin.safetyProtocols')}</h2>
+                <p className="section-subtitle">{t('trustCheckin.agreedBoundaries')}</p>
+
+                <div className="checkin-section">
+                    <h3 className="checkin-subheading">
+                        <AlertTriangle size={14} strokeWidth={1.75} />
+                        {t('trustCheckin.roomSafetyChecklist')}
+                    </h3>
+                    <div className="rules-list">
+                        {safetyItems.map((item) => (
+                            <label key={item.key} className="checkbox-row">
+                                <input
+                                    type="checkbox"
+                                    checked={formData[item.key]}
+                                    onChange={(e) => setFormData({ ...formData, [item.key]: e.target.checked })}
+                                />
+                                <span className="checkbox-text">{item.label}</span>
+                            </label>
+                        ))}
+                    </div>
+                </div>
+
+                <div className="checkin-section">
+                    <h3 className="checkin-subheading">
+                        <Shield size={14} strokeWidth={1.75} />
+                        {t('trustCheckin.careConsent')}
+                    </h3>
+                    <div className="rules-list">
+                        {consentItems.map((item) => (
+                            <label key={item.key} className="checkbox-row">
+                                <input
+                                    type="checkbox"
+                                    checked={formData[item.key]}
+                                    onChange={(e) => setFormData({ ...formData, [item.key]: e.target.checked })}
+                                />
+                                <span className="checkbox-text">{item.label}</span>
+                            </label>
+                        ))}
+                    </div>
+                </div>
             </div>
+        );
+    };
+
+    const renderStep4_Signature = () => (
+        <div className="step-content">
+            <h2 className="section-title" ref={stepHeadingRef} tabIndex={-1}>{t('trustCheckin.signatureConfirmation')}</h2>
+            <p className="section-subtitle">{t('trustCheckin.signatureDesc')}</p>
+
+            <div className="signature-summary">
+                <p>{t('trustCheckin.signatureSummary')}</p>
+            </div>
+
             <div className="signature-section">
                 <label className="signature-label">{t('trustCheckin.parentSignature')}</label>
                 <SignaturePad ref={signatureRef} />
@@ -256,11 +372,11 @@ export default function TrustCheckIn() {
             <div className="trust-checkin-container">
                 <div className="trust-checkin-header">
                     <h1 className="trust-checkin-title">{t('trustCheckin.careHandover')}</h1>
-                    <div className="trust-checkin-progress-bar" role="progressbar" aria-valuenow={step} aria-valuemin={1} aria-valuemax={3}>
-                        <div className="trust-checkin-progress-fill" style={{ width: `${(step / 3) * 100}%` }} />
+                    <div className="trust-checkin-progress-bar" role="progressbar" aria-valuenow={step} aria-valuemin={1} aria-valuemax={totalSteps}>
+                        <div className="trust-checkin-progress-fill" style={{ width: `${(step / totalSteps) * 100}%` }} />
                     </div>
                     <div className="trust-checkin-steps">
-                        {[1, 2, 3].map(i => {
+                        {[1, 2, 3, 4].map(i => {
                             const Icon = STEP_ICONS[i - 1];
                             const completed = step > i;
                             const active = step === i;
@@ -317,7 +433,19 @@ export default function TrustCheckIn() {
                                     animate="center"
                                     exit="exit"
                                 >
-                                    {renderStep3_Rules()}
+                                    {renderStep3_Safety()}
+                                </motion.div>
+                            )}
+                            {step === 4 && (
+                                <motion.div
+                                    key="step4"
+                                    custom={direction}
+                                    variants={slideVariants}
+                                    initial="enter"
+                                    animate="center"
+                                    exit="exit"
+                                >
+                                    {renderStep4_Signature()}
                                 </motion.div>
                             )}
                         </AnimatePresence>
@@ -329,7 +457,7 @@ export default function TrustCheckIn() {
                                 <div /> /* Spacer */
                             )}
 
-                            {step < 3 ? (
+                            {step < totalSteps ? (
                                 <Button onClick={handleNext} variant="gold">
                                     {t('trustCheckin.nextStep')}
                                 </Button>

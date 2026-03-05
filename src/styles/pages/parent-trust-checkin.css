@@ -145,9 +145,40 @@
   flex-shrink: 0;
 }
 
+/* Checkin section grouping */
+.checkin-section {
+  margin-bottom: var(--space-6);
+}
+
+.checkin-subheading {
+  font-size: var(--text-sm);
+  font-weight: 600;
+  color: var(--charcoal-700);
+  margin-bottom: var(--space-3);
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+}
+
+/* Signature summary box */
+.signature-summary {
+  background: var(--cream-50);
+  border: 1px solid var(--cream-200);
+  border-radius: var(--radius-lg);
+  padding: var(--space-4) var(--space-5);
+  margin-bottom: var(--space-6);
+  font-size: var(--text-sm);
+  color: var(--charcoal-600);
+  line-height: 1.6;
+}
+.signature-summary p { margin: 0; }
+
 /* Rules / Checkbox */
 .rules-list {
   margin-bottom: var(--space-4);
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-3);
 }
 
 .checkbox-row {
