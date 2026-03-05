@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom';
 import { ArrowRight } from 'lucide-react';
 import { ScrollReveal } from './ScrollReveal';
 
-const CTA_IMAGE = 'https://images.unsplash.com/photo-1566073771259-6a8506099945?w=1920&q=80';
+const CTA_IMAGE = 'https://images.unsplash.com/photo-1602002418816-5c0aeef426aa?w=1920&q=80';
 
 export function CTASection() {
   const { t } = useTranslation();

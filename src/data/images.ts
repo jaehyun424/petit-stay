@@ -5,22 +5,22 @@
 
 export const IMAGES = {
   landing: {
-    hero: 'https://images.unsplash.com/photo-1606868306217-dbf5046868d2?w=1920&q=80',
+    hero: 'https://images.unsplash.com/photo-1602002418816-5c0aeef426aa?w=1920&q=80',
     feature: {
-      safety: 'https://images.unsplash.com/photo-1576091160550-2173dba999ef?w=800&q=80',
-      monitoring: 'https://images.unsplash.com/photo-1590650153855-d9e808231d41?w=800&q=80',
-      hotel: 'https://images.unsplash.com/photo-1551882547-ff40c63fe5fa?w=800&q=80',
-      nightCare: 'https://images.unsplash.com/photo-1590650046871-92c5da7d4e45?w=800&q=80',
+      safety: 'https://images.unsplash.com/photo-1587654780291-39c9404d7dd0?w=800&q=80',
+      monitoring: 'https://images.unsplash.com/photo-1503454537195-1dcabb73ffb9?w=800&q=80',
+      hotel: 'https://images.unsplash.com/photo-1566073771259-6a8506099945?w=800&q=80',
+      nightCare: 'https://images.unsplash.com/photo-1520250497591-112f2f40a3f4?w=800&q=80',
     },
   },
   solutions: {
-    families: 'https://images.unsplash.com/photo-1566073771259-6a8506099945?w=1200&q=80',
+    families: 'https://images.unsplash.com/photo-1476514525535-07fb3b4ae5f1?w=1200&q=80',
     hotels: 'https://images.unsplash.com/photo-1551882547-ff40c63fe5fa?w=1200&q=80',
-    specialists: 'https://images.unsplash.com/photo-1544126592-807ade215a0b?w=1200&q=80',
+    specialists: 'https://images.unsplash.com/photo-1544776193-352d25ca82cd?w=1200&q=80',
   },
   auth: {
-    background: 'https://images.unsplash.com/photo-1606868306217-dbf5046868d2?w=1920&q=80',
-    register: 'https://images.unsplash.com/photo-1566073771259-6a8506099945?w=1200&q=80',
+    background: 'https://images.unsplash.com/photo-1571896349842-33c89424de2d?w=1920&q=80',
+    register: 'https://images.unsplash.com/photo-1582719508461-905c673771fd?w=1200&q=80',
   },
   info: {
     about: 'https://images.unsplash.com/photo-1582719478250-c89cae4dc85b?w=1200&q=80',
@@ -28,7 +28,7 @@ export const IMAGES = {
     press: 'https://images.unsplash.com/photo-1504711434969-e33886168d6c?w=1200&q=80',
   },
   testimonials: {
-    background: 'https://images.unsplash.com/photo-1596394516093-501ba68a0ba6?w=1920&q=80',
+    background: 'https://images.unsplash.com/photo-1540541338287-41700207dee6?w=1920&q=80',
   },
 } as const;
 

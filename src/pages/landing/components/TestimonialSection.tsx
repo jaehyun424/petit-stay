@@ -10,7 +10,7 @@ const testimonials = [
   { nameKey: 'testimonial3Name', roleKey: 'testimonial3Role', quoteKey: 'testimonial3Quote', rating: 5, initials: 'LC' },
 ];
 
-const TESTIMONIAL_BG = 'https://images.unsplash.com/photo-1618773928121-c32242e63f39?w=1920&q=80';
+const TESTIMONIAL_BG = 'https://images.unsplash.com/photo-1540541338287-41700207dee6?w=1920&q=80';
 
 export function TestimonialSection() {
   const { t } = useTranslation();

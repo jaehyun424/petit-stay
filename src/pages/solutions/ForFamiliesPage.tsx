@@ -11,7 +11,7 @@ import { LandingFooter } from '../landing/components/LandingFooter';
 import { ScrollReveal } from '../landing/components/ScrollReveal';
 import '../../styles/pages/solutions.css';
 
-const HERO_IMG = 'https://images.unsplash.com/photo-1566073771259-6a8506099945?w=1200&q=80';
+const HERO_IMG = 'https://images.unsplash.com/photo-1476514525535-07fb3b4ae5f1?w=1200&q=80';
 
 const fadeUp = {
   hidden: { opacity: 0, y: 20 },

@@ -9,7 +9,7 @@ const stats = [
   { key: 'satisfaction', target: 100, suffix: '%' },
 ];
 
-const TRUST_BG = 'https://images.unsplash.com/photo-1566073771259-6a8506099945?w=1920&q=80';
+const TRUST_BG = 'https://images.unsplash.com/photo-1566073771259-6a8506099945?w=800&q=80';
 
 export function TrustBar() {
   const { t } = useTranslation();
