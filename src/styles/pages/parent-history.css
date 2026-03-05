@@ -50,7 +50,8 @@
   cursor: pointer;
   white-space: nowrap;
   transition: all 0.2s ease;
-  min-height: 36px;
+  min-height: 44px;
+  -webkit-tap-highlight-color: transparent;
 }
 
 .history-filter-btn:hover {

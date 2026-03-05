@@ -1219,11 +1219,13 @@
   background: none;
   border: none;
   cursor: pointer;
-  padding: 0.25rem 0;
+  padding: 0.5rem 0;
   margin-top: 0.25rem;
   font-size: 0.8125rem;
   color: var(--gold-600, #A38543);
   transition: color 0.2s;
+  min-height: 44px;
+  -webkit-tap-highlight-color: transparent;
 }
 .guest-consent-expand:hover {
   color: var(--gold-800, #7A6332);
