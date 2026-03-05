@@ -2,7 +2,8 @@
 import { useRef, useState, useEffect, useCallback } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
-import { ClipboardEdit, Camera, Apple, AlertTriangle, Shield } from 'lucide-react';
+import { motion } from 'framer-motion';
+import { ClipboardEdit, Camera, Apple, AlertTriangle, Shield, Clock, CheckCircle2 } from 'lucide-react';
 import { Card, CardBody } from '../../components/common/Card';
 import { Button } from '../../components/common/Button';
 import { Modal } from '../../components/common/Modal';
@@ -17,7 +18,7 @@ import { storageService } from '../../services/storage';
 import '../../styles/pages/sitter-active-session.css';
 
 function useElapsedTimer() {
-    const [elapsed, setElapsed] = useState('0h 0m');
+    const [elapsed, setElapsed] = useState({ h: 2, m: 15, display: '2h 15m' });
     const startRef = useRef(Date.now() - 2 * 60 * 60 * 1000 - 15 * 60 * 1000); // 2h 15m ago for demo
 
     useEffect(() => {
@@ -25,7 +26,7 @@ function useElapsedTimer() {
             const diff = Date.now() - startRef.current;
             const h = Math.floor(diff / (1000 * 60 * 60));
             const m = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
-            setElapsed(`${h}h ${m}m`);
+            setElapsed({ h, m, display: `${h}h ${m}m` });
         };
         update();
         const interval = setInterval(update, 60000);
@@ -34,6 +35,21 @@ function useElapsedTimer() {
 
     return elapsed;
 }
+
+interface TimelineEntry {
+    id: string;
+    time: string;
+    type: 'activity' | 'photo' | 'snack' | 'checklist';
+    description: string;
+}
+
+const DEMO_TIMELINE: TimelineEntry[] = [
+    { id: '1', time: '14:00', type: 'checklist', description: 'Session started, room safety check completed' },
+    { id: '2', time: '14:15', type: 'activity', description: 'Playing with building blocks' },
+    { id: '3', time: '14:45', type: 'snack', description: 'Apple slices and milk served' },
+    { id: '4', time: '15:30', type: 'photo', description: 'Photo of art activity uploaded' },
+    { id: '5', time: '16:00', type: 'activity', description: 'Reading storybooks together' },
+];
 
 export default function ActiveSession() {
     const { t } = useTranslation();
@@ -52,6 +68,7 @@ export default function ActiveSession() {
     const [showReportIssue, setShowReportIssue] = useState(false);
     const [issueForm, setIssueForm] = useState({ description: '', severity: 'low' });
     const [showCompleteConfirm, setShowCompleteConfirm] = useState(false);
+    const [timeline] = useState<TimelineEntry[]>(DEMO_TIMELINE);
 
     const completedCount = checklist.filter((item) => item.completed).length;
     const progressPercent = checklist.length > 0 ? (completedCount / checklist.length) * 100 : 0;
@@ -145,16 +162,29 @@ export default function ActiveSession() {
         }
     };
 
+    const getTimelineIcon = (type: TimelineEntry['type']) => {
+        switch (type) {
+            case 'activity': return <ClipboardEdit size={14} strokeWidth={1.75} />;
+            case 'photo': return <Camera size={14} strokeWidth={1.75} />;
+            case 'snack': return <Apple size={14} strokeWidth={1.75} />;
+            case 'checklist': return <CheckCircle2 size={14} strokeWidth={1.75} />;
+        }
+    };
+
     return (
         <div className="active-session animate-fade-in">
             {sessionError && <ErrorBanner error={sessionError} onRetry={retrySession} />}
-            {/* Status Banner */}
-            <div className="active-banner" role="status" aria-label={t('aria.sessionActive', { time: elapsed })}>
+
+            {/* Status Banner with Timer */}
+            <div className="active-banner" role="status" aria-label={t('aria.sessionActive', { time: elapsed.display })}>
                 <div className="banner-left">
                     <span className="pulse-dot" aria-hidden="true" />
                     <span className="banner-text">{t('activeSession.title')}</span>
                 </div>
-                <span className="banner-time" aria-live="polite">{elapsed}</span>
+                <div className="banner-timer">
+                    <Clock size={16} strokeWidth={1.75} />
+                    <span className="banner-time" aria-live="polite">{elapsed.display}</span>
+                </div>
             </div>
 
             {/* Session Info */}
@@ -203,17 +233,21 @@ export default function ActiveSession() {
             {/* Checklist with Progress Bar */}
             <Card>
                 <CardBody>
-                    <h3 className="section-title">{t('activeSession.careChecklist')}</h3>
+                    <div className="checklist-header">
+                        <h3 className="section-title">{t('activeSession.careChecklist')}</h3>
+                        <span className="checklist-progress-label">{completedCount}/{checklist.length}</span>
+                    </div>
                     <div className="checklist-progress-track">
-                        <div
+                        <motion.div
                             className="checklist-progress-fill"
-                            style={{ width: `${progressPercent}%` }}
+                            initial={{ width: 0 }}
+                            animate={{ width: `${progressPercent}%` }}
+                            transition={{ duration: 0.4, ease: 'easeOut' }}
                         />
                     </div>
-                    <span className="checklist-progress-label">{completedCount}/{checklist.length}</span>
                     <div className="checklist">
                         {checklist.map((item) => (
-                            <label key={item.id} className="check-item">
+                            <label key={item.id} className={`check-item ${item.completed ? 'check-item--done' : ''}`}>
                                 <input
                                     type="checkbox"
                                     checked={item.completed}
@@ -221,6 +255,29 @@ export default function ActiveSession() {
                                 />
                                 <span className={item.completed ? 'completed' : ''}>{item.label}</span>
                             </label>
+                        ))}
+                    </div>
+                </CardBody>
+            </Card>
+
+            {/* Activity Timeline */}
+            <Card>
+                <CardBody>
+                    <h3 className="section-title">{t('activeSession.activityTimeline', 'Activity Timeline')}</h3>
+                    <div className="timeline">
+                        {timeline.map((entry, i) => (
+                            <div key={entry.id} className={`timeline-item timeline-item--${entry.type}`}>
+                                <div className="timeline-line-container">
+                                    <div className="timeline-dot">
+                                        {getTimelineIcon(entry.type)}
+                                    </div>
+                                    {i < timeline.length - 1 && <div className="timeline-line" />}
+                                </div>
+                                <div className="timeline-content">
+                                    <span className="timeline-time">{entry.time}</span>
+                                    <span className="timeline-desc">{entry.description}</span>
+                                </div>
+                            </div>
                         ))}
                     </div>
                 </CardBody>
@@ -329,7 +386,7 @@ export default function ActiveSession() {
                     <div className="complete-summary-stats">
                         <div><span className="label">{t('activeSession.room')}</span><span className="value">{sessionInfo.room}</span></div>
                         <div><span className="label">{t('activeSession.children')}</span><span className="value">{sessionInfo.children}</span></div>
-                        <div><span className="label">{t('common.time')}</span><span className="value">{elapsed}</span></div>
+                        <div><span className="label">{t('common.time')}</span><span className="value">{elapsed.display}</span></div>
                         <div><span className="label">{t('activeSession.careChecklist')}</span><span className="value">{completedCount}/{checklist.length}</span></div>
                     </div>
                 </div>
