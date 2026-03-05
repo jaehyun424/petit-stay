@@ -21,6 +21,7 @@ interface ModalProps {
     closeOnOverlayClick?: boolean;
     closeOnEscape?: boolean;
     showCloseButton?: boolean;
+    className?: string;
 }
 
 // ----------------------------------------
@@ -36,6 +37,7 @@ export function Modal({
     closeOnOverlayClick = true,
     closeOnEscape = true,
     showCloseButton = true,
+    className = '',
 }: ModalProps) {
     const { t } = useTranslation();
 
@@ -74,7 +76,7 @@ export function Modal({
                         transition={{ duration: 0.2 }}
                     />
                     <motion.div
-                        className={`modal ${sizeClass}`}
+                        className={`modal ${sizeClass} ${className}`}
                         role="dialog"
                         aria-modal="true"
                         aria-labelledby={title ? 'modal-title' : undefined}
