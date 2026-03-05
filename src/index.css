@@ -1411,6 +1411,8 @@ p {
 .modal-full { max-width: calc(100% - 2rem); max-height: calc(100% - 2rem); width: 100%; height: 100%; }
 .modal-body { overflow-y: auto; max-height: calc(100vh - 12rem); overscroll-behavior: contain; }
 .modal-header + .modal-body { max-height: calc(100vh - 16rem); }
+.modal-form-stack { display: flex; flex-direction: column; gap: var(--space-4); }
+.modal-form-stack-sm { display: flex; flex-direction: column; gap: var(--space-3); }
 
 /* Mobile: modal bottom sheet for sm/md sizes */
 @media (max-width: 480px) {
