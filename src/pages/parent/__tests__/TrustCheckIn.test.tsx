@@ -21,7 +21,7 @@ vi.mock('../../../components/common/SignaturePad', () => ({
     SignaturePad: vi.fn(() => <div data-testid="signature-pad">Signature Pad Mock</div>),
 }));
 
-import { render, screen, fireEvent, waitFor } from '../../../test/utils';
+import { render, screen, fireEvent, waitFor, act } from '../../../test/utils';
 import TrustCheckIn from '../TrustCheckIn';
 
 describe('TrustCheckIn', () => {
@@ -33,7 +33,7 @@ describe('TrustCheckIn', () => {
     it('renders step indicators', () => {
         render(<TrustCheckIn />);
         const indicators = document.querySelectorAll('.step-indicator-icon');
-        expect(indicators.length).toBe(3);
+        expect(indicators.length).toBe(4);
     });
 
     it('renders first step - medical wellbeing heading', () => {
@@ -48,8 +48,7 @@ describe('TrustCheckIn', () => {
 
     it('renders allergies input on step 1', () => {
         render(<TrustCheckIn />);
-        const noneInputs = screen.getAllByDisplayValue('None');
-        expect(noneInputs.length).toBeGreaterThanOrEqual(1);
+        expect(screen.getByText('trustCheckin.allergiesLabel')).toBeTruthy();
     });
 
     it('renders next step button on step 1', () => {
@@ -71,8 +70,9 @@ describe('TrustCheckIn', () => {
         fireEvent.click(screen.getByText('trustCheckin.nextStep'));
 
         await waitFor(() => {
-            expect(screen.getByText('trustCheckin.emergencyContactName')).toBeTruthy();
-            expect(screen.getByText('trustCheckin.emergencyPhone')).toBeTruthy();
+            // Primary + secondary contacts share the same labels
+            expect(screen.getAllByText('trustCheckin.emergencyContactName').length).toBe(2);
+            expect(screen.getAllByText('trustCheckin.emergencyPhone').length).toBe(2);
         });
     });
 
@@ -100,7 +100,7 @@ describe('TrustCheckIn', () => {
         });
     });
 
-    it('advances to step 3 when next is clicked twice', async () => {
+    it('advances to step 3 and shows summary', async () => {
         render(<TrustCheckIn />);
         // Step 1 -> 2
         fireEvent.click(screen.getByText('trustCheckin.nextStep'));
@@ -108,17 +108,27 @@ describe('TrustCheckIn', () => {
             expect(screen.getByText('trustCheckin.emergencyProtocol')).toBeTruthy();
         });
 
-        // Step 2 -> 3
-        fireEvent.click(screen.getByText('trustCheckin.nextStep'));
+        // Step 2 -> 3 (wait for animation to settle)
+        await act(async () => {
+            fireEvent.click(screen.getByText('trustCheckin.nextStep'));
+        });
         await waitFor(() => {
             expect(screen.getByText('trustCheckin.safetyProtocols')).toBeTruthy();
-        });
+        }, { timeout: 3000 });
     });
 
-    it('shows confirm handover button on step 3', async () => {
+    it('shows confirm handover button on step 4', async () => {
         render(<TrustCheckIn />);
+        // Step 1 -> 2
         fireEvent.click(screen.getByText('trustCheckin.nextStep'));
         await waitFor(() => expect(screen.getByText('trustCheckin.emergencyProtocol')).toBeTruthy());
+        // Step 2 -> 3
+        fireEvent.click(screen.getByText('trustCheckin.nextStep'));
+        await waitFor(() => expect(screen.getByText('trustCheckin.safetyProtocols')).toBeTruthy());
+        // Check all required checkboxes on step 3
+        const checkboxes = screen.getAllByRole('checkbox');
+        checkboxes.forEach((cb) => fireEvent.click(cb));
+        // Step 3 -> 4
         fireEvent.click(screen.getByText('trustCheckin.nextStep'));
 
         await waitFor(() => {
@@ -137,10 +147,18 @@ describe('TrustCheckIn', () => {
         });
     });
 
-    it('shows signature pad on step 3', async () => {
+    it('shows signature pad on step 4', async () => {
         render(<TrustCheckIn />);
+        // Step 1 -> 2
         fireEvent.click(screen.getByText('trustCheckin.nextStep'));
         await waitFor(() => expect(screen.getByText('trustCheckin.emergencyProtocol')).toBeTruthy());
+        // Step 2 -> 3
+        fireEvent.click(screen.getByText('trustCheckin.nextStep'));
+        await waitFor(() => expect(screen.getByText('trustCheckin.safetyProtocols')).toBeTruthy());
+        // Check all required checkboxes on step 3
+        const checkboxes = screen.getAllByRole('checkbox');
+        checkboxes.forEach((cb) => fireEvent.click(cb));
+        // Step 3 -> 4
         fireEvent.click(screen.getByText('trustCheckin.nextStep'));
 
         await waitFor(() => {

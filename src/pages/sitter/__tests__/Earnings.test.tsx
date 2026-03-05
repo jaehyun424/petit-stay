@@ -45,20 +45,20 @@ describe('Sitter Earnings', () => {
 
     it('renders this month amount', () => {
         render(<Earnings />);
-        // AnimatedCounter renders formatted currency; value is 2,725,000
-        expect(screen.getByText(/2,725,000/)).toBeTruthy();
+        // AnimatedCounter renders formatted currency; value is 3,420,000
+        expect(screen.getAllByText(/3,420,000/).length).toBeGreaterThanOrEqual(1);
     });
 
     it('renders pending earnings stat', () => {
         render(<Earnings />);
         expect(screen.getAllByText('earnings.pending').length).toBeGreaterThanOrEqual(1);
-        expect(screen.getAllByText(/375,000/).length).toBeGreaterThanOrEqual(1);
+        expect(screen.getAllByText(/540,000/).length).toBeGreaterThanOrEqual(1);
     });
 
     it('renders last month earnings stat', () => {
         render(<Earnings />);
         expect(screen.getByText('earnings.lastMonth')).toBeTruthy();
-        expect(screen.getByText(/2,400,000/)).toBeTruthy();
+        expect(screen.getByText(/2,880,000/)).toBeTruthy();
     });
 
     it('renders sessions completed count', () => {
@@ -83,9 +83,9 @@ describe('Sitter Earnings', () => {
 
     it('renders chart month labels', () => {
         render(<Earnings />);
-        // Dynamic month labels based on current date
+        // Default period is 'this_month' which shows last 1 bar
         const chartBars = document.querySelectorAll('.chart-bar-wrapper');
-        expect(chartBars.length).toBe(6);
+        expect(chartBars.length).toBe(1);
     });
 
     it('renders earnings by hotel section', () => {
@@ -95,17 +95,16 @@ describe('Sitter Earnings', () => {
 
     it('renders hotel breakdown entries', () => {
         render(<Earnings />);
-        // Grand Hyatt appears in both breakdown and recent payments
-        expect(screen.getAllByText('Grand Hyatt Seoul').length).toBeGreaterThanOrEqual(1);
+        expect(screen.getAllByText('Four Seasons Seoul').length).toBeGreaterThanOrEqual(1);
         expect(screen.getAllByText('The Shilla Seoul').length).toBeGreaterThanOrEqual(1);
         expect(screen.getAllByText('Signiel Seoul').length).toBeGreaterThanOrEqual(1);
     });
 
     it('renders hotel breakdown percentages', () => {
         render(<Earnings />);
-        expect(screen.getAllByText('35%').length).toBeGreaterThanOrEqual(1);
-        expect(screen.getAllByText('25%').length).toBeGreaterThanOrEqual(1);
-        expect(screen.getAllByText('20%').length).toBeGreaterThanOrEqual(1);
+        expect(screen.getAllByText('32%').length).toBeGreaterThanOrEqual(1);
+        expect(screen.getAllByText('19%').length).toBeGreaterThanOrEqual(1);
+        expect(screen.getAllByText('15%').length).toBeGreaterThanOrEqual(1);
     });
 
     it('renders recent payments section', () => {
@@ -115,9 +114,9 @@ describe('Sitter Earnings', () => {
 
     it('renders payment history entries', () => {
         render(<Earnings />);
-        // Dynamic dates - check hotels instead
-        const hotelTexts = screen.getAllByText('Grand Hyatt Seoul');
-        // Grand Hyatt appears in both hotel breakdown and recent payments
+        // Default 'this_month' filter shows 2 payments: Four Seasons + The Shilla
+        // Four Seasons appears in both hotel breakdown and recent payments
+        const hotelTexts = screen.getAllByText('Four Seasons Seoul');
         expect(hotelTexts.length).toBeGreaterThanOrEqual(2);
     });
 

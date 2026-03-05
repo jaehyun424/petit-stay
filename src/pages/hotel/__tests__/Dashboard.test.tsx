@@ -123,10 +123,10 @@ describe('Hotel Dashboard', () => {
         expect(assignBtn).toBeEnabled();
     });
 
-    it('renders active sessions in live monitor preview', () => {
+    it('renders activity timeline in dashboard', () => {
         render(<Dashboard />);
-        expect(screen.getByText('Park Sooyeon')).toBeInTheDocument();
-        expect(screen.getByText('Playing with blocks')).toBeInTheDocument();
+        // Dashboard now shows activity timeline instead of direct session details
+        expect(screen.getByText('hotel.recentActivity')).toBeInTheDocument();
     });
 
     it('renders safety record banner', () => {

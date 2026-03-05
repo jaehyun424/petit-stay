@@ -58,13 +58,13 @@ describe('Sitter Schedule - Assignment Actions', () => {
         expect(screen.getByText('sitter.declineAssignment')).toBeTruthy();
     });
 
-    it('calls acceptAssignment when Accept button is clicked', async () => {
+    it('opens confirm modal when Accept button is clicked', async () => {
         render(<Schedule />);
         const acceptBtn = screen.getByText('sitter.acceptAssignment').closest('button');
         fireEvent.click(acceptBtn!);
 
-        // acceptAssignment is called with the booking ID
-        expect(mockAccept).toHaveBeenCalledWith('assign-1');
+        // Accept button opens a confirmation modal
+        expect(screen.getByText('sitter.confirmAcceptTitle')).toBeTruthy();
     });
 
     it('calls rejectAssignment when Decline button is clicked', async () => {
