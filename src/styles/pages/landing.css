@@ -1066,12 +1066,32 @@
 /* ----------------------------------------
    Mobile Landing Fixes
    ---------------------------------------- */
-@media (max-width: 767px) {
+@media (max-width: 768px) {
+  .hero-video-wrap .video-bg,
+  .hero-video,
+  .hero-bg-image,
+  .hero-section video,
+  .hero-section img {
+    object-position: center 15%;
+  }
+
+  .landing-nav-cta {
+    white-space: nowrap;
+    padding: 6px 14px;
+    font-size: 0.8125rem;
+    border-radius: 999px;
+    min-width: fit-content;
+  }
+
   .landing-nav-mobile button,
   .landing-nav-mobile a {
-    white-space: nowrap;
-    font-size: 1rem;
-    padding: 0.5rem 0;
+    color: #FBFBF9;
+    font-size: 1.125rem;
+    padding: 14px 20px;
+    border-bottom: 1px solid rgba(255,255,255,0.15);
+    display: block;
+    width: 100%;
+    text-align: left;
   }
 
   .testimonial-carousel {
