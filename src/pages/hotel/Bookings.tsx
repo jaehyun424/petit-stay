@@ -7,7 +7,7 @@ import { useTranslation } from 'react-i18next';
 import { Calendar } from 'lucide-react';
 import { Card, CardBody } from '../../components/common/Card';
 import { Button } from '../../components/common/Button';
-import { Input, Select } from '../../components/common/Input';
+import { Input, Select, Textarea } from '../../components/common/Input';
 import { Badge, StatusBadge, TierBadge } from '../../components/common/Badge';
 import { Avatar } from '../../components/common/Avatar';
 import { Modal } from '../../components/common/Modal';
@@ -56,7 +56,7 @@ export default function Bookings() {
 
     // New Booking modal
     const [showNewBooking, setShowNewBooking] = useState(false);
-    const [newBookingForm, setNewBookingForm] = useState({ guestName: '', room: '', date: '', time: '18:00', duration: '4', childrenCount: '1' });
+    const [newBookingForm, setNewBookingForm] = useState({ guestName: '', room: '', date: '', time: '18:00', duration: '4', childrenCount: '1', specialRequests: '', sitterPreference: 'any' as 'any' | 'gold' | 'silver' });
     const [formErrors, setFormErrors] = useState<Record<string, string>>({});
 
     const validateBookingForm = () => {
@@ -100,7 +100,7 @@ export default function Bookings() {
                     endTime: `${parseInt(newBookingForm.time) + duration}:00`,
                     date: new Date(newBookingForm.date),
                     childrenCount: parseInt(newBookingForm.childrenCount) || 1,
-                    sitterTier: 'any',
+                    sitterTier: newBookingForm.sitterPreference,
                 });
                 const baseRate = computedPricing.baseRate;
                 const total = computedPricing.total;
@@ -123,8 +123,9 @@ export default function Bookings() {
                     },
                     children: [],
                     requirements: {
-                        sitterTier: 'any',
+                        sitterTier: newBookingForm.sitterPreference,
                         preferredLanguages: ['en'],
+                        specialRequests: newBookingForm.specialRequests || undefined,
                     },
                     pricing: {
                         baseRate,
@@ -175,7 +176,7 @@ export default function Bookings() {
             }
 
             setShowNewBooking(false);
-            setNewBookingForm({ guestName: '', room: '', date: '', time: '18:00', duration: '4', childrenCount: '1' });
+            setNewBookingForm({ guestName: '', room: '', date: '', time: '18:00', duration: '4', childrenCount: '1', specialRequests: '', sitterPreference: 'any' });
             setFormErrors({});
         } catch (err: unknown) {
             const message = err instanceof Error ? err.message : t('common.error');
@@ -214,10 +215,10 @@ export default function Bookings() {
             endTime,
             date: new Date(newBookingForm.date),
             childrenCount: parseInt(newBookingForm.childrenCount) || 1,
-            sitterTier: 'any',
+            sitterTier: newBookingForm.sitterPreference,
         };
         return calculatePrice(input);
-    }, [newBookingForm.date, newBookingForm.time, newBookingForm.duration, newBookingForm.childrenCount]);
+    }, [newBookingForm.date, newBookingForm.time, newBookingForm.duration, newBookingForm.childrenCount, newBookingForm.sitterPreference]);
 
     const previewPriceItems = useMemo(() => {
         if (!pricePreview) return [];
@@ -487,6 +488,8 @@ export default function Bookings() {
                     <Select label={t('booking.startTime')} value={newBookingForm.time} onChange={(e) => setNewBookingForm({ ...newBookingForm, time: e.target.value })} options={[{ value: '18:00', label: '18:00' }, { value: '19:00', label: '19:00' }, { value: '20:00', label: '20:00' }, { value: '21:00', label: '21:00' }]} />
                     <Select label={t('booking.duration')} value={newBookingForm.duration} onChange={(e) => setNewBookingForm({ ...newBookingForm, duration: e.target.value })} options={[{ value: '2', label: '2h' }, { value: '3', label: '3h' }, { value: '4', label: '4h' }, { value: '5', label: '5h' }]} />
                     <Select label={t('hotel.childrenInfo')} value={newBookingForm.childrenCount} onChange={(e) => setNewBookingForm({ ...newBookingForm, childrenCount: e.target.value })} options={[{ value: '1', label: '1' }, { value: '2', label: '2' }, { value: '3', label: '3' }]} />
+                    <Select label={t('booking.sitterPreference', 'Sitter Preference')} value={newBookingForm.sitterPreference} onChange={(e) => setNewBookingForm({ ...newBookingForm, sitterPreference: e.target.value as 'any' | 'gold' | 'silver' })} options={[{ value: 'any', label: t('booking.anyTier', 'Any Tier') }, { value: 'gold', label: t('booking.goldTier', 'Gold Tier (Premium)') }, { value: 'silver', label: t('booking.silverTier', 'Silver Tier') }]} />
+                    <Textarea label={t('booking.specialRequests', 'Special Requests')} value={newBookingForm.specialRequests} onChange={(e) => setNewBookingForm({ ...newBookingForm, specialRequests: e.target.value })} placeholder={t('booking.specialRequestsPlaceholder', 'e.g. Allergies, bedtime routine, language preference...')} />
                     {pricePreview && (
                         <div className="booking-price-preview">
                             <h4>{t('pricing.breakdown')}</h4>
