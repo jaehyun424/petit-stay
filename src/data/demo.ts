@@ -373,11 +373,30 @@ export interface DemoHistoryItem {
 }
 
 export const DEMO_HISTORY: DemoHistoryItem[] = [
+    // Recent: yesterday — Gold sitter, late evening, full 4h
     { id: '1', date: formatDateLabel(-1), time: '18:00-22:00', hotel: 'Grand Hyatt Seoul', sitter: 'Kim Minjung', sitterAvatar: avatarUrl('Kim Minjung'), duration: '4h', amount: 360000, rating: 5, status: 'completed' },
+    // 4 days ago — The Shilla, different sitter, also rated 5
     { id: '2', date: formatDateLabel(-4), time: '19:00-23:00', hotel: 'The Shilla Seoul', sitter: 'Park Sooyeon', sitterAvatar: avatarUrl('Park Sooyeon'), duration: '4h', amount: 300000, rating: 5, status: 'completed' },
+    // 1 week ago — Unreviewed session, awaiting feedback
     { id: '3', date: formatDateLabel(-7), time: '17:00-21:00', hotel: 'Grand Hyatt Seoul', sitter: 'Sato Haruka', sitterAvatar: avatarUrl('Sato Haruka'), duration: '4h', amount: 360000, rating: 0, status: 'completed' },
-    { id: '4', date: formatDateLabel(-10), time: '20:00-23:00', hotel: 'Signiel Seoul', sitter: 'Chen Wei', sitterAvatar: avatarUrl('Chen Wei'), duration: '3h', amount: 180000, rating: 4, status: 'completed' },
+    // 10 days ago — Short 3h evening session at Signiel
+    { id: '4', date: formatDateLabel(-10), time: '20:00-23:00', hotel: 'Signiel Seoul', sitter: 'Chen Wei', sitterAvatar: avatarUrl('Chen Wei'), duration: '3h', amount: 270000, rating: 4, status: 'completed' },
+    // 2 weeks ago — Four Seasons, unreviewed
     { id: '5', date: formatDateLabel(-14), time: '18:00-22:00', hotel: 'Four Seasons Seoul', sitter: 'Lee Jihye', sitterAvatar: avatarUrl('Lee Jihye'), duration: '4h', amount: 240000, rating: 0, status: 'completed' },
+    // 3 weeks ago — Cancelled booking
+    { id: '6', date: formatDateLabel(-21), time: '19:00-22:00', hotel: 'Grand Hyatt Seoul', sitter: 'Kim Minjung', sitterAvatar: avatarUrl('Kim Minjung'), duration: '3h', amount: 270000, rating: 0, status: 'cancelled' },
+    // 1 month ago — Long 5h session, Gold sitter, high rating
+    { id: '7', date: formatDateLabel(-30), time: '17:00-22:00', hotel: 'Park Hyatt Busan', sitter: 'Tanaka Yuki', sitterAvatar: avatarUrl('Tanaka Yuki'), duration: '5h', amount: 450000, rating: 5, status: 'completed' },
+    // 5 weeks ago — 2h afternoon session
+    { id: '8', date: formatDateLabel(-35), time: '14:00-16:00', hotel: 'The Shilla Seoul', sitter: 'Park Sooyeon', sitterAvatar: avatarUrl('Park Sooyeon'), duration: '2h', amount: 120000, rating: 4, status: 'completed' },
+    // 6 weeks ago — 6h marathon session, two kids
+    { id: '9', date: formatDateLabel(-42), time: '16:00-22:00', hotel: 'Grand Hyatt Seoul', sitter: 'Kim Minjung', sitterAvatar: avatarUrl('Kim Minjung'), duration: '6h', amount: 540000, rating: 5, status: 'completed' },
+    // 2 months ago — First-ever booking
+    { id: '10', date: formatDateLabel(-60), time: '18:00-21:00', hotel: 'Signiel Seoul', sitter: 'Lee Jihye', sitterAvatar: avatarUrl('Lee Jihye'), duration: '3h', amount: 180000, rating: 5, status: 'completed' },
+    // Another cancelled
+    { id: '11', date: formatDateLabel(-50), time: '20:00-24:00', hotel: 'Four Seasons Seoul', sitter: 'Sato Haruka', sitterAvatar: avatarUrl('Sato Haruka'), duration: '4h', amount: 360000, rating: 0, status: 'cancelled' },
+    // 10 weeks ago — Standard 4h evening
+    { id: '12', date: formatDateLabel(-70), time: '19:00-23:00', hotel: 'The Shilla Seoul', sitter: 'Chen Wei', sitterAvatar: avatarUrl('Chen Wei'), duration: '4h', amount: 300000, rating: 3, status: 'completed' },
 ];
 
 // ----------------------------------------
