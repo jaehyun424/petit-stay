@@ -580,6 +580,19 @@
   }
 }
 
+/* Desktop: wider form layout */
+@media (min-width: 769px) {
+  .booking-form {
+    max-width: 800px;
+    margin: 0 auto;
+  }
+  .booking-form-row {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 16px;
+  }
+}
+
 /* Desktop: position price sticky within content area */
 @media (min-width: 1024px) {
   .booking-price-sticky {

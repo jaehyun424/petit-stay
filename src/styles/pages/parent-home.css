@@ -78,6 +78,13 @@
 }
 
 /* Upcoming Card - Gold Accent */
+.upcoming-card,
+.recent-sessions-card {
+  min-height: 200px;
+  border-radius: 12px;
+  padding: 20px;
+}
+
 .upcoming-card {
   margin-bottom: 1.5rem;
   border: 1.5px solid var(--gold-300) !important;
@@ -157,11 +164,17 @@
   letter-spacing: -0.03em;
 }
 
-/* Two-column grid gap */
+/* Two-column grid */
 .parent-home-grid {
-  display: flex;
-  flex-direction: column;
-  gap: 1.5rem;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 24px;
+}
+
+@media (max-width: 768px) {
+  .parent-home-grid {
+    grid-template-columns: 1fr;
+  }
 }
 
 /* Recent Sessions */
@@ -394,9 +407,7 @@
   }
 
   .parent-home-grid {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 1.5rem;
+    gap: 24px;
     align-items: start;
   }
 

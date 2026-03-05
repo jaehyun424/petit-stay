@@ -5,6 +5,19 @@
   padding: var(--space-6) var(--space-4);
 }
 
+.profile-section {
+  margin-bottom: 24px;
+}
+
+.profile-settings-item {
+  padding: 16px 0;
+  border-bottom: 1px solid var(--cream-200);
+}
+
+.profile-settings-item:last-child {
+  border-bottom: none;
+}
+
 .profile-card {
   margin-bottom: var(--space-4);
   border: 1px solid var(--cream-200) !important;
