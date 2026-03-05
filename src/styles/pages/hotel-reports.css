@@ -185,6 +185,11 @@
     background: color-mix(in srgb, var(--error-500) 10%, transparent);
 }
 
+/* Chart card - unified height for left/right charts */
+.reports-chart-card {
+    min-height: 350px;
+}
+
 /* Recharts container - unified height for all chart cards */
 .rpt-recharts-container {
     width: 100%;
