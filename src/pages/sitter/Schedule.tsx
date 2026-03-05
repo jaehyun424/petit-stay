@@ -5,7 +5,7 @@ import { useTranslation } from 'react-i18next';
 import { useNavigate } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import { staggerContainer, staggerItem } from '../../utils/animations';
-import { Building2, Baby, Calendar, Clock, AlertCircle, Check, X } from 'lucide-react';
+import { Building2, Baby, Calendar, Clock, AlertCircle, Check, X, DollarSign } from 'lucide-react';
 import { Card, CardBody } from '../../components/common/Card';
 import { StatusBadge, TierBadge, SafetyBadge } from '../../components/common/Badge';
 import { Button } from '../../components/common/Button';
@@ -154,19 +154,47 @@ export default function Schedule() {
                                         <span className="session-time">{session.time}</span>
                                         <StatusBadge status={session.status} />
                                     </div>
-                                    <div className="session-info">
-                                        <span><Building2 size={14} strokeWidth={1.75} /> {session.hotel} - {t('common.room')} {session.room}</span>
-                                        <span><Baby size={14} strokeWidth={1.75} /> {session.children.map((c) => typeof c === 'string' ? c : `${c.name} (${c.age})`).join(', ')}</span>
-                                        {session.children.some((c) => typeof c !== 'string' && c.allergies?.length) && (
-                                            <span className="allergy-info">
-                                                <AlertCircle size={14} strokeWidth={1.75} />
-                                                {t('sitter.allergies', 'Allergies')}: {session.children
-                                                    .filter((c) => typeof c !== 'string' && c.allergies?.length)
-                                                    .map((c) => typeof c !== 'string' ? `${c.name}: ${c.allergies!.join(', ')}` : '')
-                                                    .join(' | ')}
-                                            </span>
+                                    <div className="session-details-grid">
+                                        <div className="session-detail">
+                                            <Building2 size={14} strokeWidth={1.75} />
+                                            <div>
+                                                <span className="detail-label">{t('sitter.hotelRoom', 'Hotel / Room')}</span>
+                                                <span className="detail-value">{session.hotel} - {session.room}</span>
+                                            </div>
+                                        </div>
+                                        <div className="session-detail">
+                                            <Baby size={14} strokeWidth={1.75} />
+                                            <div>
+                                                <span className="detail-label">{t('sitter.childrenInfo', 'Children')}</span>
+                                                <span className="detail-value">{session.children.map((c) => typeof c === 'string' ? c : `${c.name} (${c.age})`).join(', ')}</span>
+                                            </div>
+                                        </div>
+                                        <div className="session-detail">
+                                            <Clock size={14} strokeWidth={1.75} />
+                                            <div>
+                                                <span className="detail-label">{t('common.time')}</span>
+                                                <span className="detail-value">{session.time}</span>
+                                            </div>
+                                        </div>
+                                        {session.amount && (
+                                            <div className="session-detail">
+                                                <DollarSign size={14} strokeWidth={1.75} />
+                                                <div>
+                                                    <span className="detail-label">{t('sitter.sessionAmount', 'Amount')}</span>
+                                                    <span className="detail-value detail-value-gold">{session.amount}</span>
+                                                </div>
+                                            </div>
                                         )}
                                     </div>
+                                    {session.children.some((c) => typeof c !== 'string' && c.allergies?.length) && (
+                                        <div className="allergy-info">
+                                            <AlertCircle size={14} strokeWidth={1.75} />
+                                            <span>{t('sitter.allergies', 'Allergies')}: {session.children
+                                                .filter((c) => typeof c !== 'string' && c.allergies?.length)
+                                                .map((c) => typeof c !== 'string' ? `${c.name}: ${c.allergies!.join(', ')}` : '')
+                                                .join(' | ')}</span>
+                                        </div>
+                                    )}
                                     <div className="session-actions">
                                         {session.status === 'confirmed' && (
                                             <Button variant="gold" fullWidth onClick={() => { toast.success(t('sitter.startSession'), `Room ${session.room}`); navigate('/sitter/active'); }}>{t('sitter.startSession')}</Button>
