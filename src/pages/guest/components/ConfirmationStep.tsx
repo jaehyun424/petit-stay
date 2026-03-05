@@ -1,6 +1,7 @@
 import { useTranslation } from 'react-i18next';
 import { motion } from 'framer-motion';
-import { CheckCircle, Calendar, Clock, Building, User } from 'lucide-react';
+import { CheckCircle, Calendar, Clock, Building, User, Phone } from 'lucide-react';
+import { TierBadge } from '../../../components/common/Badge';
 
 interface ConfirmationStepProps {
   reservation: {
@@ -8,7 +9,10 @@ interface ConfirmationStepProps {
     date: string;
     time: string;
     sitterName?: string;
+    sitterTier?: 'gold' | 'silver';
     confirmationCode: string;
+    roomNumber?: string;
+    children?: { name: string; age: number }[];
   };
   onNext: () => void;
 }
@@ -27,9 +31,24 @@ export function ConfirmationStep({ reservation, onNext }: ConfirmationStepProps)
   const summaryItems = [
     { icon: <Calendar size={18} />, label: t('guest.dateLabel'), value: reservation.date },
     { icon: <Clock size={18} />, label: t('guest.timeLabel'), value: reservation.time },
-    { icon: <Building size={18} />, label: t('guest.hotelLabel'), value: reservation.hotelName },
-    ...(reservation.sitterName ? [{ icon: <User size={18} />, label: t('guest.sitterLabel'), value: reservation.sitterName }] : []),
+    { icon: <Building size={18} />, label: t('guest.hotelLabel'), value: `${reservation.hotelName}${reservation.roomNumber ? ` · ${t('guest.roomLabel')} ${reservation.roomNumber}` : ''}` },
+    ...(reservation.sitterName ? [{
+      icon: <User size={18} />,
+      label: t('guest.sitterLabel'),
+      value: reservation.sitterName,
+    }] : []),
   ];
+
+  // Estimated check-in time (30 min before session start)
+  const startTime = reservation.time?.split(' - ')?.[0] || reservation.time;
+  const checkInTime = (() => {
+    if (!startTime) return '';
+    const [h, m] = startTime.split(':').map(Number);
+    const checkInMinutes = (h * 60 + (m || 0)) - 15;
+    const checkH = Math.floor(checkInMinutes / 60);
+    const checkM = checkInMinutes % 60;
+    return `${String(checkH).padStart(2, '0')}:${String(checkM).padStart(2, '0')}`;
+  })();
 
   return (
     <div className="guest-card guest-confirmation">
@@ -83,20 +102,43 @@ export function ConfirmationStep({ reservation, onNext }: ConfirmationStepProps)
           <div key={i} className="guest-confirmation-summary-row">
             <span className="guest-confirmation-summary-icon">{item.icon}</span>
             <span className="guest-info-label">{item.label}</span>
-            <span className="guest-info-value">{item.value}</span>
+            <span className="guest-info-value">
+              {item.value}
+              {item.label === t('guest.sitterLabel') && reservation.sitterTier && (
+                <TierBadge tier={reservation.sitterTier} />
+              )}
+            </span>
           </div>
         ))}
       </motion.div>
 
-      {/* Guide message */}
-      <motion.p
-        className="guest-confirmation-sitter"
+      {/* Sitter arrival & check-in time */}
+      <motion.div
+        className="guest-confirmation-checkin"
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
-        transition={{ delay: 0.9 }}
+        transition={{ delay: 0.85 }}
       >
-        {t('guest.sitterArrival')}
-      </motion.p>
+        <div className="guest-checkin-row">
+          <Clock size={16} />
+          <div>
+            <span className="guest-checkin-label">{t('guest.sitterCheckinTime')}</span>
+            <span className="guest-checkin-value">{checkInTime}</span>
+          </div>
+        </div>
+        <p className="guest-checkin-note">{t('guest.sitterArrival')}</p>
+      </motion.div>
+
+      {/* Emergency contact reminder */}
+      <motion.div
+        className="guest-confirmation-emergency"
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
+        transition={{ delay: 0.95 }}
+      >
+        <Phone size={14} />
+        <span>{t('guest.emergencyHotline')}</span>
+      </motion.div>
 
       <motion.button
         className="guest-btn guest-btn-primary"

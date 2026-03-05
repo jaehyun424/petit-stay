@@ -1084,7 +1084,18 @@
     "cardHolderPlaceholder": "JOHN DOE",
     "stepIndicatorLabel": "Booking progress",
     "stepLabel": "Step",
-    "completed": "Completed"
+    "completed": "Completed",
+    "consentSubtitle": "Please review and agree to the following before proceeding.",
+    "careConsentLabel": "I consent to the childcare service",
+    "careConsentDetail": "I authorize Petit Stay and the assigned specialist to provide childcare services for my child(ren) during the scheduled session. The specialist will follow hotel-approved activity guidelines, including play, snack time, and rest. I understand that the specialist is a vetted, certified professional and that the session will be conducted in accordance with Petit Stay's Trust Protocol.",
+    "privacyConsentLabel": "I consent to personal information collection",
+    "privacyConsentDetail": "I agree to the collection and processing of personal information including my name, contact details, child(ren)'s name, age, medical/allergy information, and emergency contact details. This data is processed in accordance with Korea's Personal Information Protection Act (PIPA) and is retained only for the duration necessary to provide the service. Data is stored securely and is not shared with third parties beyond what is necessary for service delivery.",
+    "emergencyConsentLabel": "I consent to emergency response procedures",
+    "emergencyConsentDetail": "In the event of a medical emergency, I authorize the specialist to: (1) administer basic first aid, (2) contact emergency services (119), (3) accompany my child to the nearest hospital if I cannot be reached within 5 minutes, and (4) share relevant medical information with emergency responders. I understand that Petit Stay carries comprehensive liability insurance covering up to KRW 100,000,000 per incident.",
+    "readMore": "Read details",
+    "readLess": "Hide details",
+    "sitterCheckinTime": "Specialist check-in time",
+    "emergencyHotline": "24/7 Emergency Hotline: 1588-0000"
   },
   "ops": {
     "title": "Operations Console",

@@ -1185,3 +1185,101 @@
 :root[data-theme="dark"] .guest-error p {
   color: var(--text-secondary, #b0b0b0);
 }
+
+/* ----------------------------------------
+   Consent Form - Expand/Detail
+   ---------------------------------------- */
+.guest-consent-item {
+  margin-bottom: 0.75rem;
+}
+
+.guest-consent-expand {
+  display: flex;
+  align-items: center;
+  gap: 0.25rem;
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 0.25rem 0;
+  margin-top: 0.25rem;
+  font-size: 0.75rem;
+  color: var(--gold-600, #A38543);
+  transition: color 0.2s;
+}
+.guest-consent-expand:hover {
+  color: var(--gold-800, #7A6332);
+}
+.guest-consent-expand-text {
+  text-decoration: underline;
+}
+
+.guest-consent-detail {
+  background: var(--cream-50, #FEFDF9);
+  border: 1px solid var(--cream-200, #E8E2D4);
+  border-radius: var(--radius-md, 8px);
+  padding: 0.75rem 1rem;
+  margin-top: 0.5rem;
+  font-size: 0.8125rem;
+  color: var(--charcoal-600, #555);
+  line-height: 1.65;
+}
+.guest-consent-detail p {
+  margin: 0;
+}
+
+/* Confirmation - Check-in time */
+.guest-confirmation-checkin {
+  background: var(--cream-50, #FEFDF9);
+  border: 1px solid var(--gold-200, #E8D5A0);
+  border-radius: var(--radius-lg, 12px);
+  padding: 1rem 1.25rem;
+  margin-bottom: 1rem;
+}
+.guest-checkin-row {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  color: var(--gold-600, #A38543);
+  margin-bottom: 0.5rem;
+}
+.guest-checkin-row div {
+  display: flex;
+  flex-direction: column;
+}
+.guest-checkin-label {
+  font-size: 0.75rem;
+  color: var(--charcoal-500, #777);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+.guest-checkin-value {
+  font-family: var(--font-serif, Georgia, serif);
+  font-size: 1.25rem;
+  font-weight: 600;
+  color: var(--charcoal-900, #1a1a1a);
+}
+.guest-checkin-note {
+  font-size: 0.8125rem;
+  color: var(--charcoal-500, #777);
+  margin: 0;
+  line-height: 1.5;
+}
+
+/* Confirmation - Emergency hotline */
+.guest-confirmation-emergency {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-size: 0.75rem;
+  color: var(--charcoal-500, #777);
+  padding: 0.5rem 0;
+  margin-bottom: 1rem;
+}
+
+/* Subtitle */
+.guest-subtitle {
+  text-align: center;
+  font-size: 0.875rem;
+  color: var(--charcoal-500, #777);
+  margin-bottom: 1.25rem;
+}

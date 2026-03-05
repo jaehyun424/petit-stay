@@ -1084,7 +1084,18 @@
     "cardHolderPlaceholder": "张三",
     "stepIndicatorLabel": "预订进度",
     "stepLabel": "步骤",
-    "completed": "已完成"
+    "completed": "已完成",
+    "consentSubtitle": "请在继续之前查阅并同意以下事项。",
+    "careConsentLabel": "我同意托儿服务",
+    "careConsentDetail": "我授权Petit Stay和指派的专家在预定服务期间为我的孩子提供托儿服务。专家将遵循酒店批准的活动指南，包括游戏、点心和休息。我了解专家是经过审查的认证专业人员，服务将按照Petit Stay的Trust Protocol进行。",
+    "privacyConsentLabel": "我同意个人信息收集",
+    "privacyConsentDetail": "我同意收集和处理包括姓名、联系方式、孩子姓名、年龄、健康/过敏信息和紧急联系人在内的个人信息。数据按照韩国个人信息保护法(PIPA)进行处理，仅在提供服务所需的期限内保留。数据安全存储，不会超出服务交付必要范围与第三方共享。",
+    "emergencyConsentLabel": "我同意紧急响应程序",
+    "emergencyConsentDetail": "在医疗紧急情况下，我授权专家：(1) 实施基本急救，(2) 联系紧急服务(119)，(3) 如5分钟内无法联系到我，陪同孩子前往最近的医院，(4) 向急救人员分享相关医疗信息。我了解Petit Stay投保了每次事故最高1亿韩元的综合责任保险。",
+    "readMore": "查看详情",
+    "readLess": "隐藏详情",
+    "sitterCheckinTime": "专家签到时间",
+    "emergencyHotline": "24小时紧急热线: 1588-0000"
   },
   "ops": {
     "title": "运营控制台",

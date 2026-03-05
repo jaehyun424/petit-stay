@@ -1084,7 +1084,18 @@
     "cardHolderPlaceholder": "홍길동",
     "stepIndicatorLabel": "예약 진행 상황",
     "stepLabel": "단계",
-    "completed": "완료"
+    "completed": "완료",
+    "consentSubtitle": "진행하기 전에 다음 사항을 검토하고 동의해 주세요.",
+    "careConsentLabel": "아이돌봄 서비스에 동의합니다",
+    "careConsentDetail": "저는 Petit Stay와 배정된 전문가가 예정된 세션 동안 아이에게 돌봄 서비스를 제공하는 것을 허가합니다. 전문가는 놀이, 간식 시간, 휴식을 포함한 호텔 승인 활동 가이드라인을 따릅니다. 전문가가 검증된 인증 전문가이며 세션이 Petit Stay의 Trust Protocol에 따라 진행됨을 이해합니다.",
+    "privacyConsentLabel": "개인정보 수집에 동의합니다",
+    "privacyConsentDetail": "이름, 연락처, 아이의 이름, 나이, 건강/알레르기 정보, 비상 연락처를 포함한 개인정보의 수집 및 처리에 동의합니다. 이 데이터는 대한민국 개인정보보호법(PIPA)에 따라 처리되며, 서비스 제공에 필요한 기간 동안만 보관됩니다. 데이터는 안전하게 저장되며 서비스 제공에 필요한 범위를 넘어 제3자와 공유되지 않습니다.",
+    "emergencyConsentLabel": "응급 대응 절차에 동의합니다",
+    "emergencyConsentDetail": "의료 응급 상황 시, 전문가가 다음을 수행하도록 허가합니다: (1) 기본 응급처치 실시, (2) 응급 서비스(119) 연락, (3) 5분 이내 연락이 되지 않을 경우 아이를 가장 가까운 병원으로 동행, (4) 응급 대응팀에 관련 의료 정보 공유. Petit Stay가 사건당 최대 1억원까지 보장하는 종합 배상보험에 가입되어 있음을 이해합니다.",
+    "readMore": "자세히 보기",
+    "readLess": "숨기기",
+    "sitterCheckinTime": "전문가 체크인 시간",
+    "emergencyHotline": "24시간 긴급 전화: 1588-0000"
   },
   "ops": {
     "title": "운영 콘솔",
