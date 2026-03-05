@@ -330,7 +330,14 @@
     "markedAvailable": "배정 가능 상태로 변경되었습니다",
     "toggleAvailability": "근무 가능 여부 전환",
     "calendarView": "캘린더",
-    "listView": "목록 보기"
+    "listView": "목록 보기",
+    "confirmAcceptTitle": "배정 확인",
+    "confirmAcceptDesc": "이 배정을 수락하시겠습니까?",
+    "hotelRoom": "호텔 / 객실",
+    "childrenInfo": "아이 정보",
+    "sessionAmount": "금액",
+    "noSessionsScheduled": "예정된 세션 없음",
+    "noSessionsScheduledDesc": "오늘 예정된 세션이 없습니다. 나중에 다시 확인해 주세요."
   },
   "hotel": {
     "hotelConsole": "호텔 콘솔",

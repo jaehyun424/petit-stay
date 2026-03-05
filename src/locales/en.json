@@ -330,7 +330,14 @@
     "markedAvailable": "You are now available for assignments",
     "toggleAvailability": "Toggle availability",
     "calendarView": "Calendar",
-    "listView": "List view"
+    "listView": "List view",
+    "confirmAcceptTitle": "Confirm Assignment",
+    "confirmAcceptDesc": "Are you sure you want to accept this assignment?",
+    "hotelRoom": "Hotel / Room",
+    "childrenInfo": "Children",
+    "sessionAmount": "Amount",
+    "noSessionsScheduled": "No sessions scheduled",
+    "noSessionsScheduledDesc": "You have no sessions scheduled for today. Check back later."
   },
   "hotel": {
     "hotelConsole": "Hotel Console",

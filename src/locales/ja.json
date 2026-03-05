@@ -330,7 +330,14 @@
     "markedAvailable": "配属可能に設定しました",
     "toggleAvailability": "空き状況の切り替え",
     "calendarView": "カレンダー",
-    "listView": "リスト表示"
+    "listView": "リスト表示",
+    "confirmAcceptTitle": "配属確認",
+    "confirmAcceptDesc": "この配属を受け入れますか？",
+    "hotelRoom": "ホテル / 部屋",
+    "childrenInfo": "お子様情報",
+    "sessionAmount": "金額",
+    "noSessionsScheduled": "予定されたセッションなし",
+    "noSessionsScheduledDesc": "本日のセッションはありません。後ほどご確認ください。"
   },
   "hotel": {
     "hotelConsole": "ホテルコンソール",

@@ -330,7 +330,14 @@
     "markedAvailable": "已标记为可用",
     "toggleAvailability": "切换可用状态",
     "calendarView": "日历",
-    "listView": "列表视图"
+    "listView": "列表视图",
+    "confirmAcceptTitle": "确认分配",
+    "confirmAcceptDesc": "您确定要接受此分配吗？",
+    "hotelRoom": "酒店 / 房间",
+    "childrenInfo": "儿童信息",
+    "sessionAmount": "金额",
+    "noSessionsScheduled": "暂无预定",
+    "noSessionsScheduledDesc": "今天没有预定的服务。请稍后再查看。"
   },
   "hotel": {
     "hotelConsole": "酒店控制台",

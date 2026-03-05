@@ -9,6 +9,7 @@ import { Building2, Baby, Calendar, Clock, AlertCircle, Check, X, DollarSign, Ca
 import { Card, CardBody } from '../../components/common/Card';
 import { StatusBadge, TierBadge, SafetyBadge } from '../../components/common/Badge';
 import { Button } from '../../components/common/Button';
+import { Modal } from '../../components/common/Modal';
 import { EmptyState } from '../../components/common/EmptyState';
 import { Skeleton, SkeletonText } from '../../components/common/Skeleton';
 import { useAuth } from '../../contexts/AuthContext';
@@ -84,6 +85,7 @@ export default function Schedule() {
     const [viewMode, setViewMode] = useState<ViewMode>('list');
     const [calendarDate, setCalendarDate] = useState(new Date());
     const [availabilityEnabled, setAvailabilityEnabled] = useState(true);
+    const [confirmAccept, setConfirmAccept] = useState<{ id: string; hotel: string; room: string; time: string } | null>(null);
 
     const calendarDays = getMonthDays(calendarDate.getFullYear(), calendarDate.getMonth());
     const today = new Date();
@@ -316,7 +318,7 @@ export default function Schedule() {
                                                     )}
                                                     {session.status === 'sitter_assigned' && (
                                                         <div className="assignment-actions">
-                                                            <Button variant="primary" onClick={() => handleAccept(session.id)}>
+                                                            <Button variant="primary" onClick={() => setConfirmAccept({ id: session.id, hotel: session.hotel, room: session.room, time: session.time })}>
                                                                 <Check size={16} strokeWidth={1.75} /> {t('sitter.acceptAssignment', 'Accept')}
                                                             </Button>
                                                             <Button variant="danger" onClick={() => handleReject(session.id)}>
@@ -408,6 +410,30 @@ export default function Schedule() {
                     </motion.div>
                 )}
             </AnimatePresence>
+
+            {/* Accept Confirmation Modal */}
+            <Modal
+                isOpen={!!confirmAccept}
+                onClose={() => setConfirmAccept(null)}
+                title={t('sitter.confirmAcceptTitle', 'Confirm Assignment')}
+                size="sm"
+                footer={
+                    <>
+                        <Button variant="secondary" onClick={() => setConfirmAccept(null)}>{t('common.cancel')}</Button>
+                        <Button variant="gold" onClick={() => { if (confirmAccept) { handleAccept(confirmAccept.id); setConfirmAccept(null); } }}>{t('sitter.acceptAssignment', 'Accept')}</Button>
+                    </>
+                }
+            >
+                {confirmAccept && (
+                    <div className="confirm-accept-details">
+                        <p>{t('sitter.confirmAcceptDesc', 'Are you sure you want to accept this assignment?')}</p>
+                        <div className="confirm-accept-info">
+                            <div><span className="detail-label">{t('sitter.hotelRoom', 'Hotel / Room')}</span><span className="detail-value">{confirmAccept.hotel} - {confirmAccept.room}</span></div>
+                            <div><span className="detail-label">{t('common.time')}</span><span className="detail-value">{confirmAccept.time}</span></div>
+                        </div>
+                    </div>
+                )}
+            </Modal>
         </div>
     );
 }

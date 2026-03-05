@@ -477,8 +477,9 @@ export interface DemoSitterSession {
 }
 
 export const DEMO_TODAY_SESSIONS: DemoSitterSession[] = [
-    { id: '1', time: '19:00 - 23:00', room: '1102', hotel: 'Grand Hyatt Seoul', children: [{ name: 'Yui', age: 4 }, { name: 'Haeun', age: 6, allergies: ['dairy'] }], status: 'confirmed' },
-    { id: '2', time: '20:00 - 24:00', room: '3501', hotel: 'Grand Hyatt Seoul', children: [{ name: 'Xiaoming', age: 3, allergies: ['peanuts'] }], status: 'pending' },
+    { id: '1', time: '19:00 - 23:00', room: '1102', hotel: 'Grand Hyatt Seoul', children: [{ name: 'Yui', age: 4 }, { name: 'Haeun', age: 6, allergies: ['dairy'] }], status: 'confirmed', amount: '\u20A975,000/hr' },
+    { id: '2', time: '20:00 - 24:00', room: '3501', hotel: 'The Shilla Seoul', children: [{ name: 'Xiaoming', age: 3, allergies: ['peanuts'] }], status: 'pending', amount: '\u20A960,000/hr' },
+    { id: '3', time: '21:00 - 01:00', room: '2205', hotel: 'Signiel Seoul', children: [{ name: 'Emma', age: 5 }], status: 'sitter_assigned', amount: '\u20A990,000/hr' },
 ];
 
 export interface DemoWeekDay {
