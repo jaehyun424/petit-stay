@@ -227,8 +227,8 @@ export default function OpsIssues() {
               </div>
             </div>
             <div>
-              <p style={{ fontSize: '0.8125rem', color: 'var(--text-secondary)', marginBottom: '0.5rem' }}>{t('ops.summary')}</p>
-              <p style={{ lineHeight: 1.6 }}>{selectedIncident.summary}</p>
+              <div style={{ fontSize: '0.8125rem', color: 'var(--text-secondary)', marginBottom: '0.5rem' }}>{t('ops.summary')}</div>
+              <div style={{ lineHeight: 1.6 }}>{selectedIncident.summary}</div>
             </div>
           </div>
         )}
