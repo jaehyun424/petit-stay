@@ -33,7 +33,7 @@ export default function OpsReservations() {
       const matchesStatus = !statusFilter || b.status === statusFilter;
       return matchesSearch && matchesStatus;
     });
-  }, [bookings, search, statusFilter, dateFilter]);
+  }, [bookings, search, statusFilter]);
 
   const totalPages = Math.max(1, Math.ceil(filtered.length / PAGE_SIZE));
   const paged = filtered.slice((page - 1) * PAGE_SIZE, page * PAGE_SIZE);
