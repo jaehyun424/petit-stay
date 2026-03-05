@@ -11,8 +11,8 @@
     display: flex;
     align-items: center;
     justify-content: center;
-    width: 36px;
-    height: 36px;
+    width: 44px;
+    height: 44px;
     border: none;
     border-radius: var(--radius-md);
     background: transparent;
@@ -28,8 +28,8 @@
 
 .notification-badge {
     position: absolute;
-    top: 2px;
-    right: 2px;
+    top: 4px;
+    right: 4px;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -159,7 +159,7 @@
 }
 
 .notification-item-time {
-    font-size: 10px;
+    font-size: 11px;
     color: var(--text-tertiary);
     margin-top: 2px;
 }
