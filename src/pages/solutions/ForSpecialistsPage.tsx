@@ -10,7 +10,7 @@ import { LandingFooter } from '../landing/components/LandingFooter';
 import { ScrollReveal } from '../landing/components/ScrollReveal';
 import '../../styles/pages/solutions.css';
 
-const HERO_IMG = 'https://images.pexels.com/photos/8363093/pexels-photo-8363093.jpeg?auto=compress&cs=tinysrgb&w=1920';
+const HERO_IMG = 'https://images.unsplash.com/photo-1544126592-807ade215a0b?w=1200&q=80';
 
 const fadeUp = {
   hidden: { opacity: 0, y: 20 },
@@ -52,10 +52,10 @@ export default function ForSpecialistsPage() {
             <h2>{t('solutions.specBenefitTitle')}</h2>
           </div>
         </ScrollReveal>
-        <div className="solutions-cards">
+        <div className="solutions-cards solutions-cards--4">
           {benefits.map((item, i) => (
             <ScrollReveal key={item.titleKey} delay={i * 0.1}>
-              <div className="solutions-card">
+              <div className="solutions-card solutions-card--uniform">
                 <div className="solutions-card-icon">{item.icon}</div>
                 <h3>{t(item.titleKey)}</h3>
                 <p>{t(item.descKey)}</p>
@@ -76,11 +76,11 @@ export default function ForSpecialistsPage() {
           </ScrollReveal>
           <div className="solutions-stats">
             <div>
-              <span className="solutions-stat-value">₩60,000+</span>
+              <span className="solutions-stat-value">&#8361;60,000+</span>
               <span className="solutions-stat-label">{t('solutions.specStat1')}</span>
             </div>
             <div>
-              <span className="solutions-stat-value">₩90,000</span>
+              <span className="solutions-stat-value">&#8361;90,000</span>
               <span className="solutions-stat-label">{t('solutions.specStat2')}</span>
             </div>
             <div>
@@ -99,10 +99,10 @@ export default function ForSpecialistsPage() {
             <p>{t('solutions.specReqSubtitle')}</p>
           </div>
         </ScrollReveal>
-        <div className="solutions-cards">
+        <div className="solutions-cards solutions-cards--3">
           {(['solutions.specReq1', 'solutions.specReq2', 'solutions.specReq3'] as const).map((key, i) => (
             <ScrollReveal key={key} delay={i * 0.1}>
-              <div className="solutions-card">
+              <div className="solutions-card solutions-card--uniform">
                 <h3>{t(`${key}Title`)}</h3>
                 <p>{t(`${key}Desc`)}</p>
               </div>
