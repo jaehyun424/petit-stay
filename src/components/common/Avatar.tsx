@@ -52,7 +52,7 @@ export const Avatar = memo(function Avatar({
     if (src) {
         return (
             <div className={classes}>
-                <img src={src} alt={alt || name || 'Avatar'} />
+                <img src={src} alt={alt || name || 'Avatar'} loading="lazy" />
             </div>
         );
     }

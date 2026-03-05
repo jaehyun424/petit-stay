@@ -107,7 +107,7 @@ export default function GuestPage() {
         <header className="guest-header">
           {branding.logoUrl ? (
             <div className="guest-brand-logo">
-              <img src={branding.logoUrl} alt={branding.hotelName} className="guest-brand-img" />
+              <img src={branding.logoUrl} alt={branding.hotelName} className="guest-brand-img" loading="lazy" />
               <span className="guest-brand-name">{branding.hotelName}</span>
             </div>
           ) : (

@@ -67,7 +67,7 @@ export function HotelLayout() {
           <div className="sidebar-logo">
             {branding.logoUrl ? (
               <div className="sidebar-brand-logo">
-                <img src={branding.logoUrl} alt={branding.hotelName} className="sidebar-brand-img" />
+                <img src={branding.logoUrl} alt={branding.hotelName} className="sidebar-brand-img" loading="lazy" />
                 {!sidebarCollapsed && <span className="sidebar-brand-name">{branding.hotelName}</span>}
               </div>
             ) : (

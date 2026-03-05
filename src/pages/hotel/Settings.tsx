@@ -418,7 +418,7 @@ export default function Settings() {
                                 <label className="form-label">{t('branding.logo')}</label>
                                 <div className="branding-logo-row">
                                     {brandLogoUrl ? (
-                                        <img src={brandLogoUrl} alt="Brand logo" className="branding-logo-preview" />
+                                        <img src={brandLogoUrl} alt="Brand logo" className="branding-logo-preview" loading="lazy" />
                                     ) : (
                                         <div className="branding-logo-placeholder">
                                             <Upload size={20} />
