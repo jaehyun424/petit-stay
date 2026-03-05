@@ -369,7 +369,19 @@
     "paymentStatus": "付款",
     "paid": "已付款",
     "paymentPending": "待付款",
-    "hotelVerified": "酒店认证"
+    "hotelVerified": "酒店认证",
+    "dashboard": {
+      "avgRevenue": "日均收入",
+      "sittersAvailable": "当前可用保姆",
+      "weeklyRevenue": "周收入",
+      "latestEvents": "最新事件和更新",
+      "actNewBooking": "新预约 KCP-2026-0046 已创建",
+      "actSessionStarted1": "会话开始 - 1102房 (朴秀妍)",
+      "actCheckinCompleted": "信任签到完成 - 2305房",
+      "actSessionStarted2": "会话开始 - 2305房 (金敏贞)",
+      "actSitterConfirmed": "佐藤遥明天已确认",
+      "actSessionCompleted": "会话完成 - 2108房 (李智慧)"
+    }
   },
   "trustCheckin": {
     "trustProtocol": "信任协议签到",

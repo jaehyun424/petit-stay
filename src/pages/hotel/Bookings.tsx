@@ -371,7 +371,7 @@ export default function Bookings() {
                                                     <div>
                                                         <span className="sitter-name">{booking.sitter.name}</span>
                                                         <TierBadge tier={booking.sitter.tier} />
-                                                        {booking.sitter.hotelVerified && <Badge variant="success" size="sm">Hotel Verified</Badge>}
+                                                        {booking.sitter.hotelVerified && <Badge variant="success" size="sm">{t('hotel.hotelVerified')}</Badge>}
                                                     </div>
                                                 </div>
                                             ) : (
@@ -544,7 +544,7 @@ export default function Bookings() {
                             </div>
                             <div style={{ display: 'flex', alignItems: 'center', gap: '4px' }}>
                                 <TierBadge tier={sitter.tier} />
-                                {sitter.hotelVerified && <Badge variant="success" size="sm">Hotel Verified</Badge>}
+                                {sitter.hotelVerified && <Badge variant="success" size="sm">{t('hotel.hotelVerified')}</Badge>}
                             </div>
                         </div>
                     ))}

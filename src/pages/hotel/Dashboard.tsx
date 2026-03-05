@@ -37,7 +37,7 @@ import '../../styles/pages/hotel-dashboard.css';
 function getWeekdayLabel(offset: number): string {
   const d = new Date();
   d.setDate(d.getDate() + offset);
-  return d.toLocaleDateString('en-US', { weekday: 'short' });
+  return d.toLocaleDateString(undefined, { weekday: 'short' });
 }
 
 const DEMO_WEEK_CHART = [
@@ -56,13 +56,13 @@ function timeAgo(minutes: number): string {
   return `${Math.floor(minutes / 60)}h ${minutes % 60}m ago`;
 }
 
-const DEMO_ACTIVITY_TIMELINE = [
-  { icon: 'booking', text: 'New booking KCP-2026-0046 created', time: timeAgo(12), color: 'var(--charcoal-900)' },
-  { icon: 'session', text: 'Session started - Room 1102 (Park Sooyeon)', time: timeAgo(45), color: 'var(--warning-500)' },
-  { icon: 'checkin', text: 'Trust check-in completed - Room 2305', time: timeAgo(68), color: 'var(--success-500)' },
-  { icon: 'session', text: 'Session started - Room 2305 (Kim Minjung)', time: timeAgo(90), color: 'var(--warning-500)' },
-  { icon: 'sitter', text: 'Sato Haruka confirmed for tomorrow', time: timeAgo(120), color: 'var(--gold-600)' },
-  { icon: 'completed', text: 'Session completed - Room 2108 (Lee Jihye)', time: timeAgo(180), color: 'var(--success-500)' },
+const DEMO_ACTIVITY_TIMELINE_KEYS = [
+  { icon: 'booking', textKey: 'hotel.dashboard.actNewBooking', time: timeAgo(12), color: 'var(--charcoal-900)' },
+  { icon: 'session', textKey: 'hotel.dashboard.actSessionStarted1', time: timeAgo(45), color: 'var(--warning-500)' },
+  { icon: 'checkin', textKey: 'hotel.dashboard.actCheckinCompleted', time: timeAgo(68), color: 'var(--success-500)' },
+  { icon: 'session', textKey: 'hotel.dashboard.actSessionStarted2', time: timeAgo(90), color: 'var(--warning-500)' },
+  { icon: 'sitter', textKey: 'hotel.dashboard.actSitterConfirmed', time: timeAgo(120), color: 'var(--gold-600)' },
+  { icon: 'completed', textKey: 'hotel.dashboard.actSessionCompleted', time: timeAgo(180), color: 'var(--success-500)' },
 ];
 
 function getActivityIcon(type: string) {
@@ -438,7 +438,7 @@ export default function Dashboard() {
                           <div className="sitter-info">
                             <span className="sitter-name">{booking.sitter.name}</span>
                             <TierBadge tier={booking.sitter.tier} />
-                            {booking.sitter.hotelVerified && <Badge variant="success" size="sm">Hotel Verified</Badge>}
+                            {booking.sitter.hotelVerified && <Badge variant="success" size="sm">{t('hotel.hotelVerified')}</Badge>}
                           </div>
                         </>
                       ) : (
@@ -461,7 +461,7 @@ export default function Dashboard() {
               {t('nav.liveMonitor')} <ArrowRight size={16} strokeWidth={2} />
             </Link>
           }>
-            <CardTitle subtitle={t('dashboard.recentEvents', 'Latest events and updates')}>
+            <CardTitle subtitle={t('hotel.dashboard.latestEvents')}>
               <span className="live-monitor-title-row">
                 {t('hotel.recentActivity')}
                 <span className="status-dot status-dot-success" aria-hidden="true" />
@@ -470,13 +470,13 @@ export default function Dashboard() {
           </CardHeader>
           <CardBody>
             <div className="activity-timeline-list">
-              {DEMO_ACTIVITY_TIMELINE.map((item, i) => (
+              {DEMO_ACTIVITY_TIMELINE_KEYS.map((item, i) => (
                 <div key={i} className="activity-timeline-item">
                   <span className="activity-timeline-icon" style={{ color: item.color }}>
                     {getActivityIcon(item.icon)}
                   </span>
                   <div className="activity-timeline-content">
-                    <span className="activity-timeline-text">{item.text}</span>
+                    <span className="activity-timeline-text">{t(item.textKey)}</span>
                     <span className="activity-timeline-time">{item.time}</span>
                   </div>
                 </div>
