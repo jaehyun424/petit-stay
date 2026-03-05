@@ -1,20 +1,20 @@
 // ============================================
 // Petit Stay - Language Switcher Component
-// Elegant popover with flag emojis + framer-motion
+// Minimal globe icon + language code dropdown
 // Portal-based to avoid overflow:hidden clipping
 // ============================================
 
 import { useState, useRef, useEffect, useCallback } from 'react';
 import { createPortal } from 'react-dom';
 import { useTranslation } from 'react-i18next';
-import { ChevronDown, Check } from 'lucide-react';
+import { Globe, Check } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
 
 const LANGUAGES = [
-    { code: 'en', label: 'English', flag: '\u{1F1FA}\u{1F1F8}' },
-    { code: 'ko', label: '\uD55C\uAD6D\uC5B4', flag: '\u{1F1F0}\u{1F1F7}' },
-    { code: 'ja', label: '\u65E5\u672C\u8A9E', flag: '\u{1F1EF}\u{1F1F5}' },
-    { code: 'zh', label: '\u4E2D\u6587', flag: '\u{1F1E8}\u{1F1F3}' },
+    { code: 'en', label: 'English' },
+    { code: 'ko', label: '\uD55C\uAD6D\uC5B4' },
+    { code: 'ja', label: '\u65E5\u672C\u8A9E' },
+    { code: 'zh', label: '\u4E2D\u6587' },
 ];
 
 export function LanguageSwitcher() {
@@ -33,7 +33,7 @@ export function LanguageSwitcher() {
     const getDropdownPosition = useCallback(() => {
         if (!buttonRef.current) return { top: 0, left: 0 };
         const rect = buttonRef.current.getBoundingClientRect();
-        const dropdownWidth = 180;
+        const dropdownWidth = 160;
         const wouldOverflowRight = rect.left + dropdownWidth > window.innerWidth;
         return {
             top: rect.bottom + 6,
@@ -76,17 +76,8 @@ export function LanguageSwitcher() {
                 aria-label={t('aria.switchLanguage')}
                 aria-expanded={isOpen}
             >
-                <span className="language-switcher-flag">{currentLang.flag}</span>
+                <Globe size={14} strokeWidth={1.75} />
                 <span className="language-switcher-code">{currentLang.code.toUpperCase()}</span>
-                <ChevronDown
-                    size={12}
-                    strokeWidth={1.75}
-                    className="language-switcher-chevron"
-                    style={{
-                        transform: isOpen ? 'rotate(180deg)' : 'rotate(0deg)',
-                        transition: 'transform 0.2s ease',
-                    }}
-                />
             </button>
 
             {createPortal(
@@ -115,7 +106,6 @@ export function LanguageSwitcher() {
                                     animate={{ opacity: 1, x: 0 }}
                                     transition={{ delay: index * 0.03, duration: 0.12 }}
                                 >
-                                    <span className="language-option-flag">{lang.flag}</span>
                                     <span className="language-option-label">{lang.label}</span>
                                     {lang.code === currentLang.code && (
                                         <Check size={14} strokeWidth={2} className="language-option-check" />
