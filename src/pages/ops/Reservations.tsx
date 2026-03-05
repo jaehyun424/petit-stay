@@ -2,7 +2,7 @@ import { useState, useMemo } from 'react';
 import { useTranslation } from 'react-i18next';
 import { motion } from 'framer-motion';
 import { staggerContainer, staggerItem } from '../../utils/animations';
-import { Calendar, CheckSquare, Search } from 'lucide-react';
+import { Calendar, CheckSquare } from 'lucide-react';
 import { Card, CardBody } from '../../components/common/Card';
 import { Input, Select } from '../../components/common/Input';
 import { StatusBadge, TierBadge } from '../../components/common/Badge';
@@ -23,7 +23,6 @@ export default function OpsReservations() {
   const [search, setSearch] = useState('');
   const [statusFilter, setStatusFilter] = useState('');
   const [hotelFilter, setHotelFilter] = useState('');
-  const [dateFilter, setDateFilter] = useState('');
   const [selectedIds, setSelectedIds] = useState<Set<string>>(new Set());
   const [page, setPage] = useState(1);
 
@@ -32,8 +31,7 @@ export default function OpsReservations() {
     return bookings.filter((b) => {
       const matchesSearch = !search || b.confirmationCode.toLowerCase().includes(search.toLowerCase()) || b.parent.name.toLowerCase().includes(search.toLowerCase());
       const matchesStatus = !statusFilter || b.status === statusFilter;
-      const matchesDate = !dateFilter || b.date === dateFilter;
-      return matchesSearch && matchesStatus && matchesDate;
+      return matchesSearch && matchesStatus;
     });
   }, [bookings, search, statusFilter, dateFilter]);
 

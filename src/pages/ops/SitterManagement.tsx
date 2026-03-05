@@ -3,7 +3,7 @@ import { useTranslation } from 'react-i18next';
 import { motion } from 'framer-motion';
 import { staggerContainer, staggerItem } from '../../utils/animations';
 import { Users, UserCheck, UserX, FileText, Award, Star, Calendar, Shield } from 'lucide-react';
-import { Card, CardHeader, CardTitle, CardBody } from '../../components/common/Card';
+import { Card, CardBody } from '../../components/common/Card';
 import { Badge, TierBadge } from '../../components/common/Badge';
 import { Avatar } from '../../components/common/Avatar';
 import { Button } from '../../components/common/Button';

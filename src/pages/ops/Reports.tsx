@@ -4,8 +4,6 @@
 
 import { useMemo } from 'react';
 import { useTranslation } from 'react-i18next';
-import { motion } from 'framer-motion';
-import { staggerContainer, staggerItem } from '../../utils/animations';
 import { Download, BarChart3, Users, Calendar } from 'lucide-react';
 import {
     BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip,

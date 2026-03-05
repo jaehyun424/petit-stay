@@ -9,7 +9,6 @@ import { Button } from '../../components/common/Button';
 import { Select } from '../../components/common/Input';
 import { ConfirmDialog } from '../../components/common/ConfirmDialog';
 import { EmptyState } from '../../components/common/EmptyState';
-import { AnimatedCounter } from '../../components/common/AnimatedCounter';
 import { useSettlements } from '../../hooks/useSettlements';
 import ErrorBanner from '../../components/common/ErrorBanner';
 import { Skeleton } from '../../components/common/Skeleton';
