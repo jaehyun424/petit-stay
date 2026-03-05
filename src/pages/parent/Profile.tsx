@@ -12,6 +12,7 @@ import { Input, Select } from '../../components/common/Input';
 import { PaymentMethodCardDisplay } from '../../components/common/PaymentMethodCard';
 import { useAuth } from '../../contexts/AuthContext';
 import { useChildren } from '../../hooks/useChildren';
+import ErrorBanner from '../../components/common/ErrorBanner';
 import { useToast } from '../../contexts/ToastContext';
 import { useTheme } from '../../contexts/ThemeContext';
 import { DEMO_PAYMENT_METHODS, type DemoPaymentMethod } from '../../data/demo';
@@ -50,7 +51,7 @@ export default function Profile() {
     const navigate = useNavigate();
     const { user, signOut } = useAuth();
     const { t, i18n } = useTranslation();
-    const { children, isLoading, addChild, updateChild, removeChild } = useChildren(user?.id);
+    const { children, isLoading, addChild, updateChild, removeChild, error: childrenError, retry: retryChildren } = useChildren(user?.id);
     const toast = useToast();
     const { toggleTheme, isDark } = useTheme();
 
@@ -226,6 +227,7 @@ export default function Profile() {
 
     return (
         <div className="profile-page animate-fade-in">
+            {childrenError && <ErrorBanner error={childrenError} onRetry={retryChildren} />}
             {/* User Info */}
             <Card className="profile-card">
                 <CardBody>

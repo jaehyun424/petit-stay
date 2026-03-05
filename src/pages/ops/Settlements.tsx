@@ -7,12 +7,13 @@ import { Button } from '../../components/common/Button';
 import { ConfirmDialog } from '../../components/common/ConfirmDialog';
 import { EmptyState } from '../../components/common/EmptyState';
 import { useSettlements } from '../../hooks/useSettlements';
+import ErrorBanner from '../../components/common/ErrorBanner';
 import { Skeleton } from '../../components/common/Skeleton';
 import { formatCurrency } from '../../utils/format';
 
 export default function OpsSettlements() {
   const { t } = useTranslation();
-  const { settlements, isLoading, approveSettlement, markAsPaid } = useSettlements();
+  const { settlements, isLoading, approveSettlement, markAsPaid, error, retry } = useSettlements();
   const [confirmAction, setConfirmAction] = useState<{ type: 'approve' | 'pay'; id: string; name: string } | null>(null);
 
   const statusVariant = (status: string) => {
@@ -38,6 +39,7 @@ export default function OpsSettlements() {
 
   return (
     <div className="ops-page animate-fade-in">
+      {error && <ErrorBanner error={error} onRetry={retry} />}
       <div className="page-header">
         <h1 className="page-title">{t('ops.totalSettlements')}</h1>
       </div>

@@ -10,6 +10,7 @@ import { Button } from '../../components/common/Button';
 import { EmptyState } from '../../components/common/EmptyState';
 import { useAuth } from '../../contexts/AuthContext';
 import { useNotifications } from '../../hooks/useNotifications';
+import ErrorBanner from '../../components/common/ErrorBanner';
 import '../../styles/pages/notification-inbox.css';
 
 type FilterType = 'all' | 'bookings' | 'sessions' | 'emergency';
@@ -35,7 +36,7 @@ export default function NotificationInbox() {
     };
 
     const { user } = useAuth();
-    const { notifications, markAsRead, markAllAsRead, deleteNotification } = useNotifications(user?.id);
+    const { notifications, markAsRead, markAllAsRead, deleteNotification, error, retry } = useNotifications(user?.id);
     const [filter, setFilter] = useState<FilterType>('all');
 
     const filteredNotifications = notifications.filter((n) => {
@@ -55,6 +56,7 @@ export default function NotificationInbox() {
 
     return (
         <div className="notification-inbox animate-fade-in">
+            {error && <ErrorBanner error={error} onRetry={retry} />}
             <div className="notification-inbox-header">
                 <h1 className="page-title">{t('notifications.inbox')}</h1>
                 <div className="notification-inbox-actions">

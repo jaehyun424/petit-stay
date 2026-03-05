@@ -14,13 +14,14 @@ import type { ActivityLog } from '../../components/parent/ActivityFeed';
 import { ChatPanel } from '../../components/common/ChatPanel';
 import { useAuth } from '../../contexts/AuthContext';
 import { useLiveStatus } from '../../hooks/useSessions';
+import ErrorBanner from '../../components/common/ErrorBanner';
 import '../../styles/pages/parent-live-status.css';
 
 export default function LiveStatus() {
     const { id } = useParams();
     const { t } = useTranslation();
     useAuth();
-    const { logs, sessionInfo, isLoading } = useLiveStatus(id);
+    const { logs, sessionInfo, isLoading, error, retry } = useLiveStatus(id);
     const [chatOpen, setChatOpen] = useState(false);
 
     if (!isLoading && !id && logs.length === 0) {
@@ -40,6 +41,7 @@ export default function LiveStatus() {
     return (
         <div className="live-status-page">
             <div className="live-status-container">
+                {error && <ErrorBanner error={error} onRetry={retry} />}
 
                 {/* Header */}
                 <div className="live-status-header">

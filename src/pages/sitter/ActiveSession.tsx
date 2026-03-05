@@ -10,6 +10,7 @@ import { Input, Select } from '../../components/common/Input';
 import { useToast } from '../../contexts/ToastContext';
 import { useAuth } from '../../contexts/AuthContext';
 import { useActiveSession } from '../../hooks/useSessions';
+import ErrorBanner from '../../components/common/ErrorBanner';
 import { DEMO_MODE } from '../../hooks/useDemo';
 import { activityService, sessionService, bookingService } from '../../services/firestore';
 import { storageService } from '../../services/storage';
@@ -39,7 +40,7 @@ export default function ActiveSession() {
     const { success, error } = useToast();
     const { user } = useAuth();
     const navigate = useNavigate();
-    const { sessionInfo, checklist, toggleChecklistItem, sessionId } = useActiveSession(user?.id);
+    const { sessionInfo, checklist, toggleChecklistItem, sessionId, error: sessionError, retry: retrySession } = useActiveSession(user?.id);
     const fileInputRef = useRef<HTMLInputElement>(null);
     const elapsed = useElapsedTimer();
 
@@ -146,6 +147,7 @@ export default function ActiveSession() {
 
     return (
         <div className="active-session animate-fade-in">
+            {sessionError && <ErrorBanner error={sessionError} onRetry={retrySession} />}
             {/* Status Banner */}
             <div className="active-banner" role="status" aria-label={t('aria.sessionActive', { time: elapsed })}>
                 <div className="banner-left">
