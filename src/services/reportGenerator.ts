@@ -119,6 +119,44 @@ function drawKpiCard(doc: jsPDF, x: number, y: number, width: number, label: str
     doc.text(label, x + width / 2, y + 18, { align: 'center' });
 }
 
+function drawRevenueChart(doc: jsPDF, x: number, y: number, width: number, height: number, data: RevenueDataPoint[]) {
+    if (data.length === 0) return y + height;
+
+    const maxRevenue = Math.max(...data.map(d => d.revenue));
+    const barWidth = Math.min(16, (width - (data.length - 1) * 4) / data.length);
+    const barGap = (width - barWidth * data.length) / (data.length + 1);
+
+    // Background
+    doc.setFillColor(252, 250, 245);
+    doc.roundedRect(x, y, width, height, 3, 3, 'F');
+
+    // Grid lines
+    doc.setDrawColor(230, 225, 218);
+    doc.setLineWidth(0.2);
+    for (let i = 0; i <= 4; i++) {
+        const lineY = y + 8 + (height - 24) * (1 - i / 4);
+        doc.line(x + 4, lineY, x + width - 4, lineY);
+    }
+
+    // Bars
+    data.forEach((d, i) => {
+        const barH = maxRevenue > 0 ? (d.revenue / maxRevenue) * (height - 28) : 0;
+        const barX = x + barGap + i * (barWidth + barGap);
+        const barY = y + 8 + (height - 24) - barH;
+
+        doc.setFillColor(...COLORS.primary);
+        doc.roundedRect(barX, barY, barWidth, barH, 1.5, 1.5, 'F');
+
+        // Label
+        doc.setFont('helvetica', 'normal');
+        doc.setFontSize(6);
+        doc.setTextColor(...COLORS.textSecondary);
+        doc.text(d.label, barX + barWidth / 2, y + height - 4, { align: 'center' });
+    });
+
+    return y + height + 6;
+}
+
 function drawFooter(doc: jsPDF, pageNum: number) {
     const pageHeight = doc.internal.pageSize.height;
     doc.setFont('helvetica', 'normal');
@@ -142,8 +180,20 @@ export function generateHotelMonthlyReport(data: HotelMonthlyReportData): Blob {
     // ---- Page 1: Header + KPIs + Revenue Table ----
     drawHeader(doc, data.hotelName, data.month);
 
-    // KPI Cards
+    // Executive Summary
     let y = 58;
+    y = drawSectionTitle(doc, 'Executive Summary', y);
+
+    doc.setFont('helvetica', 'normal');
+    doc.setFontSize(9);
+    doc.setTextColor(...COLORS.charcoal);
+    const avgPerBooking = data.totalBookings > 0 ? Math.round(data.totalRevenue / data.totalBookings) : 0;
+    const summaryText = `This report covers ${data.month} for ${data.hotelName}. During this period, ${data.totalBookings} childcare bookings were processed with a total revenue of ${formatCurrency(data.totalRevenue)} (avg. ${formatCurrency(avgPerBooking)}/booking). The completion rate stands at ${data.completionRate}%, with ${data.sitters.length} sitters on the roster. Service quality remains strong with a ${data.slaMetrics.fulfillmentRate}% fulfillment rate and ${data.slaMetrics.onTimeRate}% on-time delivery.`;
+    const lines = doc.splitTextToSize(summaryText, 170);
+    doc.text(lines, 20, y);
+    y += lines.length * 4.5 + 8;
+
+    // KPI Cards
     y = drawSectionTitle(doc, 'Key Performance Indicators', y);
 
     const cardWidth = 40;
@@ -156,6 +206,11 @@ export function generateHotelMonthlyReport(data: HotelMonthlyReportData): Blob {
     drawKpiCard(doc, startX + (cardWidth + gap) * 3, y, cardWidth, 'Avg / Booking', formatCurrency(data.totalBookings > 0 ? Math.round(data.totalRevenue / data.totalBookings) : 0));
 
     y += 34;
+
+    // Revenue Chart
+    y = drawSectionTitle(doc, 'Revenue Trend', y);
+    y = drawRevenueChart(doc, 20, y, 170, 50, data.revenueData);
+    y += 4;
 
     // Revenue Breakdown Table
     y = drawSectionTitle(doc, 'Revenue Breakdown', y);
@@ -293,6 +348,44 @@ export function generateHotelMonthlyReport(data: HotelMonthlyReportData): Blob {
         doc.setTextColor(...COLORS.textSecondary);
         doc.text('No sitter data available for this period.', 20, y + 8);
     }
+
+    // Safety & Compliance section
+    y = (doc as jsPDF & { lastAutoTable: { finalY: number } }).lastAutoTable?.finalY ?? y + 16;
+    y += 12;
+
+    y = drawSectionTitle(doc, 'Safety & Compliance', y);
+
+    const totalSafetyDays = data.sitters.length > 0
+        ? Math.round(data.sitters.reduce((sum, s) => sum + s.safetyDays, 0) / data.sitters.length)
+        : 0;
+    const goldCount = data.sitters.filter(s => s.tier.toLowerCase() === 'gold').length;
+
+    autoTable(doc, {
+        startY: y,
+        head: [['Metric', 'Value']],
+        body: [
+            ['Average Safety Days (incident-free)', `${totalSafetyDays} days`],
+            ['Gold Tier Sitters', `${goldCount} / ${data.sitters.length}`],
+            ['Fulfillment Rate', `${data.slaMetrics.fulfillmentRate}%`],
+            ['On-Time Rate', `${data.slaMetrics.onTimeRate}%`],
+            ['Cancellation Rate', `${data.slaMetrics.cancelRate}%`],
+        ],
+        theme: 'grid',
+        headStyles: {
+            fillColor: COLORS.success,
+            textColor: COLORS.white,
+            fontStyle: 'bold',
+            fontSize: 9,
+        },
+        bodyStyles: {
+            fontSize: 9,
+            textColor: COLORS.charcoal,
+        },
+        alternateRowStyles: {
+            fillColor: [252, 250, 245],
+        },
+        margin: { left: 20, right: 20 },
+    });
 
     drawFooter(doc, pageNum);
 
