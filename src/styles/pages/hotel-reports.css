@@ -140,7 +140,8 @@
 /* Revenue Chart Summary */
 .rpt-chart-summary {
     display: flex;
-    gap: var(--space-6);
+    flex-wrap: wrap;
+    gap: var(--space-4) var(--space-6);
     padding-bottom: var(--space-4);
     margin-bottom: var(--space-4);
     border-bottom: 1px solid var(--border-color);

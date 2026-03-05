@@ -419,6 +419,20 @@
   .dashboard-header-actions {
     width: 100%;
   }
+
+  .booking-item {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: var(--space-3);
+  }
+
+  .booking-item-sitter {
+    border-left: none;
+    padding-left: 0;
+    padding-top: var(--space-3);
+    border-top: 1px solid var(--cream-200);
+    width: 100%;
+  }
 }
 
 /* Clickable stat cards */

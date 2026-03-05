@@ -185,7 +185,8 @@
 /* Vitals */
 .vitals-row {
   display: flex;
-  gap: var(--space-6);
+  flex-wrap: wrap;
+  gap: var(--space-3) var(--space-6);
   margin-bottom: var(--space-4);
   padding: var(--space-3) var(--space-4);
   background: var(--cream-50);
