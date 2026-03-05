@@ -286,6 +286,7 @@
   width: 100%;
   height: 100%;
   object-fit: cover;
+  object-position: center 30%;
 }
 
 .hero-content {
@@ -1059,5 +1060,31 @@
 @media (min-width: 640px) {
   .landing-image-band {
     height: 420px;
+  }
+}
+
+/* ----------------------------------------
+   Mobile Landing Fixes
+   ---------------------------------------- */
+@media (max-width: 767px) {
+  .landing-nav-mobile button,
+  .landing-nav-mobile a {
+    white-space: nowrap;
+    font-size: 1rem;
+    padding: 0.5rem 0;
+  }
+
+  .testimonial-carousel {
+    overflow-x: auto;
+    display: flex;
+    gap: 16px;
+    scroll-snap-type: x mandatory;
+    -webkit-overflow-scrolling: touch;
+  }
+
+  .testimonial-content {
+    scroll-snap-align: center;
+    flex-shrink: 0;
+    min-width: 100%;
   }
 }
