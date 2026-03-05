@@ -461,7 +461,9 @@
     "unknownError": "An unknown error occurred",
     "required": "This field is required",
     "invalidEmail": "Invalid email format",
-    "passwordTooShort": "Password must be at least 6 characters"
+    "passwordTooShort": "Password must be at least 6 characters",
+    "tooManyRequests": "Too many attempts. Please try again later.",
+    "userDisabled": "This account has been disabled."
   },
   "safety": {
     "title": "Safety Record Dashboard",
@@ -1088,7 +1090,23 @@
       "whereTitle": "Where We Operate",
       "whereDesc": "Currently based in Seoul, with Tokyo expansion in preparation. We target five-star hotels in both cities, starting with premium properties in Gangnam, Jongno, and Yeouido.",
       "teamTitle": "Our Team",
-      "teamDesc": "Founded in 2025 by an entrepreneur with hands-on experience in franchise operations, hospitality management, and software development. With a background spanning restaurant business growth, Java/Spring Boot engineering, and frontend development (React, TypeScript, Firebase), the founder brings operational expertise and technical capability to solve real problems in the hospitality industry."
+      "teamDesc": "Founded in 2025 by an entrepreneur with hands-on experience in franchise operations, hospitality management, and software development. With a background spanning restaurant business growth, Java/Spring Boot engineering, and frontend development (React, TypeScript, Firebase), the founder brings operational expertise and technical capability to solve real problems in the hospitality industry.",
+      "visionTitle": "Our Vision",
+      "visionDesc": "To become the global standard for hotel childcare infrastructure, making premium in-room childcare as natural and expected as room service in every luxury hotel worldwide.",
+      "storyTitle": "Our Story",
+      "storyDesc1": "Petit Stay was founded in 2025 by an entrepreneur who saw a gap in the luxury hotel experience: families traveling with young children had no reliable, premium childcare option during their stay. Hotels wanted to help but lacked the infrastructure, insurance, and vetted specialist network to offer it safely.",
+      "storyDesc2": "With a background spanning franchise operations, hospitality management, and software development, the founder built Petit Stay to bridge this gap — combining hotel-grade service standards with modern technology to create a childcare platform that hotels trust and families love.",
+      "valuesTitle": "Our Values",
+      "value_safety": "Safety First",
+      "value_safetyDesc": "Every decision starts with child safety. From background checks to real-time monitoring, safety is non-negotiable.",
+      "value_trust": "Trust",
+      "value_trustDesc": "We build trust through transparency, verification, and consistent quality that families and hotels can rely on.",
+      "value_accessibility": "Accessibility",
+      "value_accessibilityDesc": "Multilingual support in 4 languages ensures every family feels welcome regardless of where they come from.",
+      "value_transparency": "Transparency",
+      "value_transparencyDesc": "Real-time activity logs, clear pricing, and open communication keep parents informed at every step.",
+      "value_partnership": "Partnership",
+      "value_partnershipDesc": "We grow together with our hotel partners, creating mutual value through premium guest experiences."
     },
     "careers": {
       "title": "Careers",
@@ -1114,7 +1132,27 @@
       "benefit3": "Annual learning budget (₩2,000,000) for conferences, courses, and certifications",
       "benefit4": "Health insurance and annual health check-up coverage",
       "howToApply": "How to Apply",
-      "applyEmail": "Send your resume and a brief note about why you are interested to <a>careers@petitstay.com</a>. We review every application and aim to respond within five business days."
+      "applyEmail": "Send your resume and a brief note about why you are interested to <a>careers@petitstay.com</a>. We review every application and aim to respond within five business days.",
+      "cultureTitle": "Our Culture",
+      "cultureDesc": "We are a small, focused team that values ownership, speed, and craftsmanship. We ship fast, iterate based on real hotel and family feedback, and hold ourselves to the highest standard in child safety and service quality.",
+      "lookingForTitle": "What We Look For",
+      "lookingFor1": "Passion for child safety and hospitality service excellence",
+      "lookingFor2": "Self-driven attitude with the ability to work autonomously in an early-stage startup",
+      "lookingFor3": "Strong communication skills in Korean and English (Japanese is a plus)",
+      "lookingFor4": "Experience or genuine interest in the hotel industry or childcare sector",
+      "processTitle": "Our Hiring Process",
+      "processStep1": "Application review — we read every application carefully within 5 business days",
+      "processStep2": "Initial video call with the founder (30 minutes)",
+      "processStep3": "Take-home task or pair working session relevant to the role",
+      "processStep4": "Final offer — we aim to complete the process within 2 weeks",
+      "job5Tag": "Marketing",
+      "job5Title": "Growth Marketing Manager",
+      "job5Desc": "Drive hotel partner acquisition and family user growth through digital marketing, content strategy, and partnership campaigns. Experience with B2B2C or hospitality marketing preferred.",
+      "job6Tag": "Operations",
+      "job6Title": "Specialist Quality Assurance Lead — Tokyo",
+      "job6Desc": "Establish and manage the quality assurance program for childcare specialists in the Tokyo market. Background in early childhood education or hospitality quality management required.",
+      "benefit5": "Complimentary Petit Stay service when traveling with family (up to 4 sessions/month)",
+      "benefit6": "Annual team retreat at a partner hotel in Seoul or Tokyo"
     },
     "press": {
       "title": "Press",
@@ -1129,7 +1167,13 @@
       "mediaKit": "Media Kit",
       "mediaKitDesc": "For logos, brand guidelines, and high-resolution images, please contact our communications team at <a>press@petitstay.com</a>.",
       "inquiries": "Press Inquiries",
-      "inquiriesDesc": "Journalists and media professionals can reach us at <a>press@petitstay.com</a>. We aim to respond to all inquiries within 24 hours."
+      "inquiriesDesc": "Journalists and media professionals can reach us at <a>press@petitstay.com</a>. We aim to respond to all inquiries within 24 hours.",
+      "news3Tag": "Partnership",
+      "news3Title": "Petit Stay Partners with Gangnam Premium Hotels for Family Services",
+      "news3Desc": "Three luxury hotels in Seoul Gangnam district integrate Petit Stay's childcare platform into their concierge services, offering guests on-demand vetted specialist matching. January 2026.",
+      "news4Tag": "Expansion",
+      "news4Title": "Petit Stay Announces Tokyo Market Entry for Q3 2026",
+      "news4Desc": "Following successful Seoul operations, Petit Stay begins onboarding hotel partners and childcare specialists in Tokyo, targeting premium hotels in Minato, Chiyoda, and Shibuya wards. December 2025."
     },
     "help": {
       "title": "Help Center",
@@ -1156,7 +1200,17 @@
       "q10": "Can I use Petit Stay at any hotel?",
       "a10": "Petit Stay is currently available at partner hotels in Seoul. We are preparing to expand to Tokyo. If your hotel is not yet in our network, you can suggest that your hotel contact us at partners@petitstay.com to join.",
       "contactTitle": "Contact Support",
-      "contactDesc": "Could not find what you were looking for? Reach out to our support team at <a>support@petitstay.com</a> or use the in-app chat feature. We are available 24/7 during active sessions."
+      "contactDesc": "Could not find what you were looking for? Reach out to our support team at <a>support@petitstay.com</a> or use the in-app chat feature. We are available 24/7 during active sessions.",
+      "q11": "Can I meet the specialist before the session?",
+      "a11": "Yes. When the specialist arrives at the hotel, they check in at the front desk via QR code. You can meet them at check-in and go over your child's routine, preferences, and any special instructions before the session begins.",
+      "q12": "What activities do specialists provide?",
+      "a12": "Activities are age-appropriate and include creative play, reading, arts and crafts, educational games, and gentle outdoor activities within the hotel premises. Specialists tailor activities based on the child's interests and parents' instructions.",
+      "q13": "Is there a minimum booking duration?",
+      "a13": "The minimum booking duration is 2 hours. Sessions can be extended in 1-hour increments, subject to specialist availability. Maximum single session duration is 8 hours.",
+      "q14": "Can I book for multiple children?",
+      "a14": "Yes. One specialist can care for up to 3 children from the same family. For larger groups, we assign additional specialists. Each child's age and care needs are considered during specialist matching.",
+      "q15": "How do I leave a review?",
+      "a15": "After each session, you'll receive a notification to rate and review your specialist. Your feedback helps maintain quality and assists other families in choosing specialists. Reviews are visible to the hotel and the specialist."
     },
     "privacy": {
       "title": "Privacy Policy",
@@ -1177,7 +1231,11 @@
       "section7Title": "7. Cookies and Tracking",
       "section7Content": "We use essential cookies to maintain sessions and preferences. Analytics cookies are used only with your explicit consent and can be disabled in your browser settings. We do not use third-party advertising trackers.",
       "section8Title": "8. Data Protection Officer",
-      "section8Content": "For privacy-related inquiries, data access requests, or complaints, contact our Data Protection Officer at privacy@petitstay.com or by mail at: Petit Stay Inc., Gangnam-gu, Seoul, Republic of Korea. If you are unsatisfied with our response, you may file a complaint with the Personal Information Protection Commission (PIPC) at www.pipc.go.kr."
+      "section8Content": "For privacy-related inquiries, data access requests, or complaints, contact our Data Protection Officer at privacy@petitstay.com or by mail at: Petit Stay Inc., Gangnam-gu, Seoul, Republic of Korea. If you are unsatisfied with our response, you may file a complaint with the Personal Information Protection Commission (PIPC) at www.pipc.go.kr.",
+      "section9Title": "9. International Data Transfers",
+      "section9Content": "Your data may be processed in countries where our cloud infrastructure (Google Cloud) operates. We ensure adequate safeguards through standard contractual clauses and compliance with PIPA cross-border transfer requirements. Data centers serving Korean users are located in the Asia-Pacific region.",
+      "section10Title": "10. Changes to This Policy",
+      "section10Content": "We may update this Privacy Policy periodically. Material changes will be notified via email or in-app notification at least 14 days before taking effect. Continued use of the platform after changes take effect constitutes acceptance of the updated policy."
     },
     "terms": {
       "title": "Terms of Service",
@@ -1200,7 +1258,13 @@
       "section8Title": "8. Governing Law and Dispute Resolution",
       "section8Content": "These terms are governed by the laws of the Republic of Korea. Any disputes arising from or in connection with these terms shall be submitted to the exclusive jurisdiction of the Seoul Central District Court. Before filing a lawsuit, both parties agree to attempt resolution through good-faith negotiation for at least 30 days.",
       "section9Title": "9. Changes to Terms",
-      "section9Content": "We may modify these terms at any time. Material changes will be communicated via email or in-app notification at least 30 days before they take effect. Continued use of the platform after changes take effect constitutes acceptance of the revised terms."
+      "section9Content": "We may modify these terms at any time. Material changes will be communicated via email or in-app notification at least 30 days before they take effect. Continued use of the platform after changes take effect constitutes acceptance of the revised terms.",
+      "section10Title": "10. Intellectual Property",
+      "section10Content": "All content, trademarks, and intellectual property on the Petit Stay platform are owned by Petit Stay Inc. or its licensors. Users may not copy, modify, or distribute any platform content without prior written consent. User-generated content (reviews, feedback) grants Petit Stay a non-exclusive license to use for service improvement and marketing purposes.",
+      "section11Title": "11. Termination",
+      "section11Content": "Either party may terminate the account at any time. Petit Stay may suspend or terminate accounts that violate these terms, provide false information, or engage in conduct harmful to children, specialists, or hotel partners. Upon termination, outstanding payments remain due and data retention follows our Privacy Policy.",
+      "section12Title": "12. Contact Information",
+      "section12Content": "For questions about these Terms, contact us at legal@petitstay.com or by mail: Petit Stay Inc., Gangnam-gu, Seoul, Republic of Korea. For service inquiries, contact support@petitstay.com. For partnership inquiries, contact partners@petitstay.com."
     }
   },
   "aria": {
@@ -1562,5 +1626,15 @@
     "offlineDesc": "Some features may be limited while offline",
     "updateAvailable": "Update available",
     "updateNow": "Update now"
+  },
+  "images": {
+    "alt": {
+      "landingHero": "Happy family in a luxury hotel lobby",
+      "featureSafety": "Child safety monitoring",
+      "solutionsFamilies": "Family enjoying a premium hotel room",
+      "solutionsHotels": "Luxury hotel exterior",
+      "solutionsSpecialists": "Professional childcare specialist with children",
+      "authBackground": "Warm family moment"
+    }
   }
 }
