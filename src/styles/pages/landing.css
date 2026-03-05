@@ -318,6 +318,8 @@
   margin-bottom: 1.5rem;
   letter-spacing: -0.02em;
   white-space: nowrap;
+  word-break: keep-all;
+  overflow-wrap: break-word;
 }
 
 @media (max-width: 768px) {
@@ -334,6 +336,8 @@
   max-width: 600px;
   margin-left: auto;
   margin-right: auto;
+  word-break: keep-all;
+  overflow-wrap: break-word;
 }
 
 .hero-actions {
@@ -474,6 +478,8 @@
   color: var(--text-primary);
   margin-bottom: 1rem;
   letter-spacing: -0.02em;
+  word-break: keep-all;
+  overflow-wrap: break-word;
 }
 
 .section-heading-light { color: white; }
@@ -484,6 +490,8 @@
   max-width: 600px;
   margin: 0 auto;
   line-height: 1.6;
+  word-break: keep-all;
+  overflow-wrap: break-word;
 }
 
 .feature-showcase-header {
@@ -833,6 +841,8 @@
   color: white;
   margin-bottom: 1.5rem;
   line-height: 1.15;
+  word-break: keep-all;
+  overflow-wrap: break-word;
 }
 
 .cta-subtitle {
@@ -840,6 +850,8 @@
   color: rgba(255, 255, 255, 0.7);
   margin-bottom: 2.5rem;
   line-height: 1.6;
+  word-break: keep-all;
+  overflow-wrap: break-word;
 }
 
 @media (min-width: 640px) {
