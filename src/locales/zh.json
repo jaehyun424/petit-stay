@@ -873,7 +873,21 @@
     "categorySnack": "零食",
     "categorySleep": "睡眠",
     "categoryDiaper": "换尿布",
-    "categoryOther": "其他"
+    "categoryOther": "其他",
+    "checklistWashHands": "服务前：洗手",
+    "checklistVerifyChild": "通过照片确认儿童身份",
+    "checklistReviewAllergies": "查看过敏和医疗信息",
+    "checklistEmergencyContact": "确认紧急联系方式",
+    "checklistRoomSafety": "房间安全检查（窗户、阳台、危险物品）",
+    "checklistFirstActivity": "第一个活动已开始",
+    "checklistSnackServed": "零食已提供（已确认过敏安全）",
+    "checklistPhotoUpdate": "已向家长发送照片更新",
+    "checklistDocumentIncidents": "记录事件",
+    "timelineSessionStarted": "服务开始，房间安全检查完成",
+    "timelineBuildingBlocks": "正在玩积木",
+    "timelineSnackServed": "提供了苹果片和牛奶",
+    "timelinePhotoUploaded": "已上传美术活动照片",
+    "timelineReadingBooks": "一起阅读故事书"
   },
   "payment": {
     "card": "卡",
@@ -904,7 +918,13 @@
     "accountHolderPlaceholder": "账户持有人姓名",
     "serviceRegions": "服务区域",
     "regionsUpdated": "服务区域已更新",
-    "selectRegions": "选择您可以工作的区域。"
+    "selectRegions": "选择您可以工作的区域。",
+    "editProfile": "编辑资料",
+    "regionGangnam": "江南区",
+    "regionJongno": "钟路区",
+    "regionYongsan": "龙山区",
+    "regionMapo": "麻浦区",
+    "regionSongpa": "松坡区"
   },
   "landing": {
     "navFeatures": "特色",

@@ -817,7 +817,9 @@
     "otherGender": "기타",
     "cardNumberPlaceholder": "**** **** **** ****",
     "expiryPlaceholder": "MM/YY",
-    "cardHolderPlaceholder": "카드 소유자 이름"
+    "cardHolderPlaceholder": "카드 소유자 이름",
+    "hotelPartnerName": "그랜드 하얏트 - 2024",
+    "backgroundValidUntil": "2025년 12월까지 유효"
   },
   "notifications": {
     "inbox": "알림 인박스",
