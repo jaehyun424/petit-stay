@@ -54,4 +54,19 @@
   .ops-mobile-only {
     display: flex;
   }
+  [class*="menu-btn"], [class*="hamburger"], .mobile-menu-toggle {
+    display: none !important;
+  }
+  .header-actions, [class*="header-right"], [class*="header-actions"] {
+    gap: 4px;
+  }
+  [class*="user-name"], [class*="userName"] {
+    display: none;
+  }
+}
+
+.ops-layout .header-actions, .ops-layout [class*="header-right"], .ops-layout [class*="header-actions"] {
+  display: flex;
+  align-items: center;
+  gap: 8px;
 }

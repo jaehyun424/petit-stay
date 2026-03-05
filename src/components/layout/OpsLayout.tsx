@@ -126,6 +126,11 @@ export function OpsLayout() {
             <NotificationBell />
             <span className="header-user-name">{user?.profile.firstName} {user?.profile.lastName}</span>
             <Avatar name={`${user?.profile.firstName} ${user?.profile.lastName}`} size="sm" />
+            <IconButton
+              icon={<LogOut size={18} strokeWidth={1.75} />}
+              onClick={handleSignOut}
+              aria-label={t('aria.signOut')}
+            />
           </div>
         </header>
 

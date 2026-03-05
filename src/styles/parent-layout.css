@@ -211,6 +211,25 @@
   }
 }
 
+/* Mobile: hide hamburger, header spacing */
+.parent-layout .header-actions, .parent-layout [class*="header-right"], .parent-layout [class*="header-actions"] {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+@media (max-width: 768px) {
+  .parent-layout [class*="menu-btn"], .parent-layout [class*="hamburger"], .parent-layout .mobile-menu-toggle {
+    display: none !important;
+  }
+  .parent-layout .header-actions, .parent-layout [class*="header-right"], .parent-layout [class*="header-actions"] {
+    gap: 4px;
+  }
+  .parent-layout [class*="user-name"], .parent-layout [class*="userName"] {
+    display: none;
+  }
+}
+
 /* Tablet: phone-frame layout removed */
 @media (min-width: 768px) and (max-width: 1023px) {
   .parent-layout {

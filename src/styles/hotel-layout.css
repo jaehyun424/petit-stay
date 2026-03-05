@@ -352,3 +352,22 @@
     font-size: var(--text-2xl);
   }
 }
+
+/* Mobile: hide hamburger, header spacing */
+.header-actions, [class*="header-right"], [class*="header-actions"] {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+@media (max-width: 768px) {
+  [class*="menu-btn"], [class*="hamburger"], .mobile-menu-toggle {
+    display: none !important;
+  }
+  .header-actions, [class*="header-right"], [class*="header-actions"] {
+    gap: 4px;
+  }
+  [class*="user-name"], [class*="userName"] {
+    display: none;
+  }
+}
