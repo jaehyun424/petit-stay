@@ -480,6 +480,12 @@
   }
 }
 
+.schedule-card,
+.schedule-item {
+  margin-bottom: 16px;
+  padding: 16px;
+}
+
 /* Desktop Layout */
 @media (min-width: 1024px) {
   .sitter-schedule {

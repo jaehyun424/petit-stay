@@ -356,6 +356,16 @@
   }
 }
 
+.session-info-card {
+  margin-bottom: 16px;
+  padding: 16px;
+}
+
+.checklist-item {
+  margin-bottom: 12px;
+  padding: 12px;
+}
+
 /* Desktop Layout */
 @media (min-width: 1024px) {
   .active-session {

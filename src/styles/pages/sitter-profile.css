@@ -342,6 +342,11 @@
   gap: var(--space-4);
 }
 
+.sitter-profile .profile-section {
+  margin-bottom: 24px;
+  padding: 16px;
+}
+
 /* Desktop Layout */
 @media (min-width: 1024px) {
   .sitter-profile {

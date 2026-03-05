@@ -197,6 +197,15 @@
   }
 }
 
+/* Mid-screen content constraint */
+@media (min-width: 769px) {
+  .sitter-content {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 24px 32px;
+  }
+}
+
 /* Tablet: centered frame */
 @media (min-width: 768px) and (max-width: 1023px) {
   .sitter-layout {

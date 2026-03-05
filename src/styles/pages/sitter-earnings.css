@@ -505,6 +505,22 @@
     }
 }
 
+.earnings-stats {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+  gap: var(--space-4);
+  margin-bottom: var(--space-6);
+}
+
+.earnings-list-item {
+  padding: var(--space-3) var(--space-4);
+  border-bottom: 1px solid var(--border-color);
+}
+
+.earnings-list-item:last-child {
+  border-bottom: none;
+}
+
 /* Desktop Layout */
 @media (min-width: 1024px) {
     .earnings-page {
