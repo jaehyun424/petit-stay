@@ -9,6 +9,7 @@
     display: flex;
     gap: var(--space-3);
     align-items: center;
+    flex-shrink: 0;
 }
 
 /* Period Tabs */
@@ -76,6 +77,8 @@
     border: 1px solid var(--cream-200);
     border-radius: var(--radius-xl);
     transition: all 0.3s;
+    min-height: 130px;
+    justify-content: center;
 }
 
 .rpt-stat-card:hover {
@@ -181,10 +184,11 @@
     background: color-mix(in srgb, var(--error-500) 10%, transparent);
 }
 
-/* Recharts container */
+/* Recharts container - unified height for all chart cards */
 .rpt-recharts-container {
     width: 100%;
     min-height: 260px;
+    max-height: 320px;
 }
 
 /* Custom Tooltip */
