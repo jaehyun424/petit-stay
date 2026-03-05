@@ -162,9 +162,9 @@ export default function LoginPage() {
             initial="hidden"
             animate="show"
           >
-            <motion.div className="text-center mb-8" variants={fadeUp}>
-              <h2 className="text-3xl font-serif mb-2">{t('auth.conciergeAccess')}</h2>
-              <p className="text-charcoal-500">{t('auth.pleaseAuthenticate')}</p>
+            <motion.div className="text-center mb-4" variants={fadeUp}>
+              <h2 className="text-2xl font-serif mb-1">{t('auth.conciergeAccess')}</h2>
+              <p className="text-charcoal-500 text-sm">{t('auth.pleaseAuthenticate')}</p>
             </motion.div>
 
             <form onSubmit={handleSubmit} className="flex flex-col gap-4">
@@ -224,9 +224,9 @@ export default function LoginPage() {
             </form>
 
             {/* Demo Accounts */}
-            <motion.div className="mt-8 border-t border-cream-300 pt-6" variants={fadeUp}>
-              <p className="text-xs text-charcoal-400 text-center uppercase tracking-widest mb-4">{t('auth.quickAccessSimulation')}</p>
-              <div className="grid grid-cols-4 gap-2">
+            <motion.div className="mt-4 border-t border-cream-300 pt-4" variants={fadeUp}>
+              <p className="text-xs text-charcoal-400 text-center uppercase tracking-widest mb-3">{t('auth.quickAccessSimulation')}</p>
+              <div className="demo-grid">
                 {DEMO_ACCOUNTS.map((account) => (
                   <button
                     key={account.email}
@@ -241,7 +241,7 @@ export default function LoginPage() {
               </div>
             </motion.div>
 
-            <motion.div className="mt-8 text-center" variants={fadeUp}>
+            <motion.div className="mt-4 text-center" variants={fadeUp}>
               <p className="text-sm text-charcoal-500">
                 {t('auth.notPartnerYet')} <Link to="/register" className="text-charcoal-900 border-b border-gold-500 pb-0.5 hover:text-gold-600">{t('auth.requestPartnership')}</Link>
               </p>
