@@ -1,5 +1,8 @@
 import { useTranslation, Trans } from 'react-i18next';
+import { motion } from 'framer-motion';
 import { InfoLayout } from './InfoLayout';
+
+const newsItems = [1, 2, 3, 4] as const;
 
 export default function PressPage() {
   const { t } = useTranslation();
@@ -8,16 +11,20 @@ export default function PressPage() {
     <InfoLayout title={t('info.press.title')} subtitle={t('info.press.subtitle')}>
       <h2>{t('info.press.recentNews')}</h2>
       <div className="info-card-grid">
-        <div className="info-card">
-          <span className="info-tag">{t('info.press.news1Tag')}</span>
-          <h3>{t('info.press.news1Title')}</h3>
-          <p>{t('info.press.news1Desc')}</p>
-        </div>
-        <div className="info-card">
-          <span className="info-tag">{t('info.press.news2Tag')}</span>
-          <h3>{t('info.press.news2Title')}</h3>
-          <p>{t('info.press.news2Desc')}</p>
-        </div>
+        {newsItems.map((i) => (
+          <motion.div
+            key={i}
+            className="info-card"
+            initial={{ opacity: 0, y: 12 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ delay: (i - 1) * 0.06 }}
+          >
+            <span className="info-tag">{t(`info.press.news${i}Tag`)}</span>
+            <h3>{t(`info.press.news${i}Title`)}</h3>
+            <p>{t(`info.press.news${i}Desc`)}</p>
+          </motion.div>
+        ))}
       </div>
 
       <h2>{t('info.press.mediaKit')}</h2>
