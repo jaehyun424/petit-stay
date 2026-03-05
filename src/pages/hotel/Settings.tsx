@@ -4,11 +4,12 @@
 
 import { useState, useEffect, useCallback, useRef } from 'react';
 import { useTranslation } from 'react-i18next';
-import { Moon, Sun, Upload, Palette } from 'lucide-react';
+import { Moon, Sun, Upload, Palette, Eye } from 'lucide-react';
 import { Card, CardHeader, CardTitle, CardBody } from '../../components/common/Card';
 import { Input, Select, Textarea } from '../../components/common/Input';
 import { Button } from '../../components/common/Button';
 import { Skeleton } from '../../components/common/Skeleton';
+import { Modal } from '../../components/common/Modal';
 import ErrorBanner from '../../components/common/ErrorBanner';
 import { BrandPreview } from '../../components/common/BrandPreview';
 import { useAuth } from '../../contexts/AuthContext';
@@ -74,6 +75,7 @@ export default function Settings() {
     const [brandLogoUrl, setBrandLogoUrl] = useState('');
     const [isUploadingLogo, setIsUploadingLogo] = useState(false);
     const logoInputRef = useRef<HTMLInputElement>(null);
+    const [showBrandPreview, setShowBrandPreview] = useState(false);
 
     // ----------------------------------------
     // Save state
@@ -498,7 +500,12 @@ export default function Settings() {
 
                             {/* Live Preview */}
                             <div className="branding-preview-section">
-                                <label className="form-label">{t('branding.livePreview')}</label>
+                                <div className="branding-preview-header">
+                                    <label className="form-label">{t('branding.livePreview')}</label>
+                                    <Button variant="ghost" size="sm" icon={<Eye size={16} strokeWidth={1.75} />} onClick={() => setShowBrandPreview(true)}>
+                                        {t('branding.fullPreview', 'Full Preview')}
+                                    </Button>
+                                </div>
                                 <BrandPreview
                                     branding={{
                                         primaryColor: brandPrimary,
@@ -583,6 +590,46 @@ export default function Settings() {
                     {t('settings.saveChanges')}
                 </Button>
             </div>
+
+            {/* Brand Preview Modal */}
+            <Modal
+                isOpen={showBrandPreview}
+                onClose={() => setShowBrandPreview(false)}
+                title={t('branding.previewTitle', 'Branding Preview')}
+                size="lg"
+            >
+                <div className="brand-preview-modal-content">
+                    <p className="brand-preview-modal-desc">
+                        {t('branding.previewDesc', 'This is how your branding will appear to guests and staff.')}
+                    </p>
+                    <BrandPreview
+                        branding={{
+                            primaryColor: brandPrimary,
+                            secondaryColor: brandSecondary,
+                            accentColor: brandAccent,
+                            logo: '',
+                            logoUrl: brandLogoUrl,
+                            fontFamily: brandFont,
+                            hotelName: name || DEFAULT_BRANDING.hotelName,
+                            tagline: brandTagline,
+                        }}
+                    />
+                    <div className="brand-preview-modal-colors">
+                        <div className="brand-preview-color-swatch">
+                            <span className="color-swatch" style={{ background: brandPrimary }} />
+                            <span className="color-swatch-label">{t('branding.primaryColor')}</span>
+                        </div>
+                        <div className="brand-preview-color-swatch">
+                            <span className="color-swatch" style={{ background: brandSecondary }} />
+                            <span className="color-swatch-label">{t('branding.secondaryColor')}</span>
+                        </div>
+                        <div className="brand-preview-color-swatch">
+                            <span className="color-swatch" style={{ background: brandAccent }} />
+                            <span className="color-swatch-label">{t('branding.accentColor')}</span>
+                        </div>
+                    </div>
+                </div>
+            </Modal>
         </div>
     );
 }
