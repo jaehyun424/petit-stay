@@ -473,6 +473,7 @@ export interface DemoSitterSession {
     hotel: string;
     children: DemoSitterChild[];
     status: 'confirmed' | 'pending' | 'in_progress' | 'sitter_assigned';
+    amount?: string;
 }
 
 export const DEMO_TODAY_SESSIONS: DemoSitterSession[] = [
