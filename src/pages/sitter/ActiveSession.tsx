@@ -2,7 +2,7 @@
 import { useRef, useState, useEffect, useCallback } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
-import { ClipboardEdit, Camera, Apple, AlertTriangle } from 'lucide-react';
+import { ClipboardEdit, Camera, Apple, AlertTriangle, Shield } from 'lucide-react';
 import { Card, CardBody } from '../../components/common/Card';
 import { Button } from '../../components/common/Button';
 import { Modal } from '../../components/common/Modal';
@@ -169,12 +169,27 @@ export default function ActiveSession() {
                 </CardBody>
             </Card>
 
+            {/* Emergency Report - prominent */}
+            <button className="emergency-report-btn" onClick={() => setShowReportIssue(true)}>
+                <Shield size={18} strokeWidth={2} />
+                <span>{t('activeSession.reportIssue')}</span>
+                <AlertTriangle size={14} strokeWidth={2} />
+            </button>
+
             {/* Quick Actions */}
             <div className="quick-actions-grid">
-                <Button variant="primary" onClick={() => setShowActivityModal(true)}><ClipboardEdit size={16} strokeWidth={1.75} /> {t('activeSession.logActivity')}</Button>
-                <Button variant="secondary" onClick={handleAddPhoto}><Camera size={16} strokeWidth={1.75} /> {t('activeSession.addPhoto')}</Button>
-                <Button variant="secondary" onClick={() => setShowSnackModal(true)}><Apple size={16} strokeWidth={1.75} /> {t('activeSession.logSnack')}</Button>
-                <Button variant="danger" onClick={() => setShowReportIssue(true)}><AlertTriangle size={16} strokeWidth={1.75} /> {t('activeSession.reportIssue')}</Button>
+                <button className="quick-action-card" onClick={() => setShowActivityModal(true)}>
+                    <span className="quick-action-icon"><ClipboardEdit size={20} strokeWidth={1.75} /></span>
+                    <span className="quick-action-label">{t('activeSession.logActivity')}</span>
+                </button>
+                <button className="quick-action-card" onClick={handleAddPhoto}>
+                    <span className="quick-action-icon"><Camera size={20} strokeWidth={1.75} /></span>
+                    <span className="quick-action-label">{t('activeSession.addPhoto')}</span>
+                </button>
+                <button className="quick-action-card" onClick={() => setShowSnackModal(true)}>
+                    <span className="quick-action-icon"><Apple size={20} strokeWidth={1.75} /></span>
+                    <span className="quick-action-label">{t('activeSession.logSnack')}</span>
+                </button>
                 <input
                     ref={fileInputRef}
                     type="file"
