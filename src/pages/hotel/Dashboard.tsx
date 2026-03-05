@@ -143,7 +143,7 @@ export default function Dashboard() {
   const { t } = useTranslation();
   const { user } = useAuth();
   const { bookings: todayBookings, stats, isLoading: bookingsLoading, error: bookingsError, retry: retryBookings, createBooking } = useHotelBookings(user?.hotelId);
-  const { sessions: activeSessions, isLoading: sessionsLoading, error: sessionsError, retry: retrySessions } = useHotelSessions(user?.hotelId);
+  const { isLoading: sessionsLoading, error: sessionsError, retry: retrySessions } = useHotelSessions(user?.hotelId);
   const { sitters } = useHotelSitters(user?.hotelId);
   const toast = useToast();
   const isLoading = bookingsLoading || sessionsLoading;

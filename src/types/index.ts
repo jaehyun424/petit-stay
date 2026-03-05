@@ -257,7 +257,7 @@ export interface EmergencyMedication {
 // ----------------------------------------
 export type BookingStatus = 'pending' | 'confirmed' | 'in_progress' | 'completed' | 'cancelled' | 'no_show' | 'pending_guest_consent' | 'pending_assignment' | 'sitter_assigned' | 'sitter_confirmed' | 'issue_reported';
 export type PaymentStatus = 'pending' | 'authorized' | 'captured' | 'refunded' | 'failed';
-export type PaymentMethodType = 'card' | 'hotel_billing';
+export type PaymentMethodType = 'card' | 'hotel_billing' | 'hotel_charge';
 
 export interface PaymentMethodCard {
   id: string;
@@ -271,7 +271,7 @@ export interface PaymentMethodCard {
 export type RefundStatus = 'full' | 'partial' | 'none';
 export type BookingSource = 'concierge' | 'parent_app' | 'website';
 export type LocationType = 'room' | 'kids_room';
-export type RequiredSitterTier = 'any' | 'gold';
+export type RequiredSitterTier = 'any' | 'gold' | 'silver';
 
 export interface Booking {
   id: string;

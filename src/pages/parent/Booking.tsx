@@ -52,7 +52,7 @@ export default function Booking() {
         notes: '',
         sitterPreference: 'any' as 'any' | 'gold' | 'silver',
         preferredLanguage: 'any' as string,
-        paymentMethod: 'card' as string,
+        paymentMethod: 'card' as 'card' | 'hotel_billing' | 'hotel_charge',
     });
     const [formErrors, setFormErrors] = useState<Record<string, string>>({});
 
@@ -539,10 +539,10 @@ export default function Booking() {
                                 <h2>{t('booking.payment')}</h2>
 
                                 <div className="payment-methods">
-                                    {[
-                                        { value: 'card', label: t('booking.creditCard'), icon: Shield },
-                                        { value: 'hotel_charge', label: t('booking.chargeToRoom'), icon: Shield },
-                                    ].map((method) => (
+                                    {([
+                                        { value: 'card' as const, label: t('booking.creditCard'), icon: Shield },
+                                        { value: 'hotel_charge' as const, label: t('booking.chargeToRoom'), icon: Shield },
+                                    ]).map((method) => (
                                         <button
                                             key={method.value}
                                             type="button"
