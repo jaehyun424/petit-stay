@@ -1,5 +1,8 @@
 /* Hotel Scan Check-In Page */
-.scan-page { max-width: 800px; margin: 0 auto; }
+.scan-page {
+  max-width: 680px;
+  margin: 0 auto;
+}
 
 .scan-content {
     display: flex;
@@ -28,11 +31,11 @@
     display: flex;
     align-items: center;
     justify-content: center;
-    width: 80px;
-    height: 80px;
+    width: 96px;
+    height: 96px;
     border-radius: 50%;
     background: rgba(197, 160, 89, 0.08);
-    color: var(--primary-400);
+    color: var(--gold-500);
 }
 
 .scan-icon.error {
@@ -92,10 +95,12 @@
     gap: var(--space-3);
     padding: var(--space-8);
     text-align: center;
+    background: linear-gradient(135deg, rgba(74, 111, 88, 0.05), rgba(74, 111, 88, 0.02));
+    border-radius: var(--radius-lg);
 }
 
 .scan-success-icon {
-    animation: scale-in 0.3s ease;
+    animation: scale-in 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
 }
 
 @keyframes scale-in {
@@ -146,6 +151,10 @@
 }
 
 @media (max-width: 480px) {
+    .scan-page {
+        padding: 0;
+    }
+
     .scan-data-grid {
         grid-template-columns: 1fr;
     }
@@ -154,8 +163,33 @@
         flex-direction: column;
     }
 
-    .scan-corners {
-        width: 160px;
-        height: 160px;
+    .scan-actions button {
+        width: 100%;
     }
+
+    .scan-corners {
+        width: 180px;
+        height: 180px;
+    }
+
+    .scan-video-wrapper {
+        aspect-ratio: 1;
+        border-radius: var(--radius-md);
+    }
+
+    .scan-idle {
+        padding: var(--space-6);
+    }
+
+    .scan-icon {
+        width: 80px;
+        height: 80px;
+    }
+}
+
+/* Manual entry form optimizations */
+.manual-entry {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-4);
 }
