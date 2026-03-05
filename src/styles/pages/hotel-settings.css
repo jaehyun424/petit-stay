@@ -24,6 +24,14 @@
   gap: var(--space-3);
 }
 
+/* Toggle option consistent padding */
+.toggle-option span {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+  font-size: var(--text-sm);
+}
+
 .toggle-option {
   display: flex;
   align-items: center;
@@ -44,8 +52,14 @@
   display: flex;
   justify-content: flex-end;
   gap: var(--space-3);
-  padding-top: var(--space-6);
+  padding: var(--space-4) var(--space-6);
   border-top: 1px solid var(--border-color);
+  background: var(--bg-card);
+  position: sticky;
+  bottom: 0;
+  z-index: 10;
+  border-radius: 0 0 var(--radius-xl) var(--radius-xl);
+  box-shadow: 0 -2px 8px rgba(0, 0, 0, 0.04);
 }
 
 /* ----------------------------------------
