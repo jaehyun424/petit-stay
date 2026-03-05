@@ -15,9 +15,8 @@ import { LanguageSwitcher } from '../../components/common/LanguageSwitcher';
 import { DEMO_MODE } from '../../hooks/useDemo';
 import { sendPasswordResetEmail } from 'firebase/auth';
 import { auth } from '../../services/firebase';
+import { IMAGES } from '../../data/images';
 import '../../styles/pages/login.css';
-
-const FORGOT_IMAGE = 'https://images.pexels.com/photos/1134176/pexels-photo-1134176.jpeg?auto=compress&cs=tinysrgb&w=1920';
 
 const pageTransition = {
   initial: { opacity: 0 },
@@ -102,7 +101,7 @@ export default function ForgotPasswordPage() {
         <div className="login-visual">
           <img
             className="login-visual-image"
-            src={FORGOT_IMAGE}
+            src={IMAGES.auth.background}
             alt=""
             loading="eager"
           />

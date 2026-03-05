@@ -13,9 +13,8 @@ import { Button } from '../../components/common/Button';
 import { Input } from '../../components/common/Input';
 import { BrandLogo } from '../../components/common/BrandLogo';
 import { LanguageSwitcher } from '../../components/common/LanguageSwitcher';
+import { IMAGES } from '../../data/images';
 import '../../styles/pages/login.css';
-
-const LOGIN_POSTER = 'https://images.pexels.com/photos/258154/pexels-photo-258154.jpeg?auto=compress&cs=tinysrgb&w=1920';
 
 // Demo accounts for testing
 const DEMO_ACCOUNTS = [
@@ -120,7 +119,7 @@ export default function LoginPage() {
         <div className="login-visual">
           <img
             className="login-visual-image"
-            src={LOGIN_POSTER}
+            src={IMAGES.auth.background}
             alt=""
             loading="eager"
           />

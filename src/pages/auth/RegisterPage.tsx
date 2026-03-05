@@ -14,9 +14,8 @@ import { Input, Select } from '../../components/common/Input';
 import { BrandLogo } from '../../components/common/BrandLogo';
 import { LanguageSwitcher } from '../../components/common/LanguageSwitcher';
 import type { UserRole } from '../../types';
+import { IMAGES } from '../../data/images';
 import '../../styles/pages/login.css';
-
-const REGISTER_IMAGE = 'https://images.unsplash.com/photo-1602002418082-a4443e081dd1?w=1920&q=80';
 
 const pageTransition = {
   initial: { opacity: 0 },
@@ -148,7 +147,7 @@ export default function RegisterPage() {
                 <div className="login-visual">
                     <img
                         className="login-visual-image"
-                        src={REGISTER_IMAGE}
+                        src={IMAGES.auth.background}
                         alt=""
                         loading="eager"
                     />
