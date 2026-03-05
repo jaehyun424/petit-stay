@@ -150,6 +150,7 @@ export function OpsLayout() {
           navItems[1],
           navItems[2],
           navItems[3],
+          navItems[4],
           navItems[5],
         ].map((item) => (
           <NavLink
