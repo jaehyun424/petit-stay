@@ -347,7 +347,7 @@ export const onBookingCreated = onDocumentCreated(
 
         const emailTemplate = {
           subject: subjectMap[locale] || subjectMap.en,
-          html: `<h2>${subjectMap[locale] || subjectMap.en}</h2><p>Code: ${bookingData.confirmationCode}</p><p>Hotel: ${bookingData.hotelName}</p><p>Date: ${bookingData.date} ${bookingData.startTime} — ${bookingData.endTime}</p>`,
+          html: `<h2>${escapeHtml(subjectMap[locale] || subjectMap.en)}</h2><p>Code: ${escapeHtml(bookingData.confirmationCode)}</p><p>Hotel: ${escapeHtml(bookingData.hotelName)}</p><p>Date: ${escapeHtml(bookingData.date)} ${escapeHtml(bookingData.startTime)} — ${escapeHtml(bookingData.endTime)}</p>`,
           text: `${subjectMap[locale] || subjectMap.en}\nCode: ${bookingData.confirmationCode}\nHotel: ${bookingData.hotelName}\nDate: ${bookingData.date} ${bookingData.startTime} — ${bookingData.endTime}`,
         };
 
@@ -417,7 +417,7 @@ export const onSessionCompleted = onDocumentUpdated(
           parentId,
           {
             subject: completedSubjectMap[locale] || completedSubjectMap.en,
-            html: `<h2>${completedSubjectMap[locale] || completedSubjectMap.en}</h2><p>Session ID: ${sessionId}</p>`,
+            html: `<h2>${escapeHtml(completedSubjectMap[locale] || completedSubjectMap.en)}</h2><p>Session ID: ${escapeHtml(sessionId)}</p>`,
             text: `${completedSubjectMap[locale] || completedSubjectMap.en}\nSession: ${sessionId}`,
           },
           completedSmsMap[locale] || completedSmsMap.en
@@ -434,7 +434,7 @@ export const onSessionCompleted = onDocumentUpdated(
           parentId,
           {
             subject: reviewSubjectMap[locale] || reviewSubjectMap.en,
-            html: `<h2>${reviewSubjectMap[locale] || reviewSubjectMap.en}</h2><p><a href="${reviewUrl}">${reviewCtaMap[locale] || reviewCtaMap.en}</a></p>`,
+            html: `<h2>${escapeHtml(reviewSubjectMap[locale] || reviewSubjectMap.en)}</h2><p><a href="${escapeHtml(reviewUrl)}">${escapeHtml(reviewCtaMap[locale] || reviewCtaMap.en)}</a></p>`,
             text: `${reviewSubjectMap[locale] || reviewSubjectMap.en}\n${reviewCtaMap[locale] || reviewCtaMap.en}: ${reviewUrl}`,
           },
           null
