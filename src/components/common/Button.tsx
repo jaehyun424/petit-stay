@@ -51,10 +51,14 @@ export function Button({
         <button
             className={classes}
             disabled={disabled || isLoading}
+            aria-busy={isLoading || undefined}
             {...props}
         >
             {isLoading ? (
-                <span className="spinner" style={{ width: 16, height: 16 }} />
+                <>
+                    <span className="spinner" style={{ width: 16, height: 16 }} />
+                    <span className="btn-loading-text">{children}</span>
+                </>
             ) : (
                 <>
                     {icon && iconPosition === 'left' && <span className="btn-icon-left">{icon}</span>}
