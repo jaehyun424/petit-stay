@@ -3,21 +3,11 @@ import { Link } from 'react-router-dom';
 import { ArrowRight } from 'lucide-react';
 import { ScrollReveal } from './ScrollReveal';
 
-const CTA_IMAGE = 'https://images.unsplash.com/photo-1602002418816-5c0aeef426aa?w=1920&q=80';
-
 export function CTASection() {
   const { t } = useTranslation();
 
   return (
-    <section className="cta-section section-fullscreen">
-      <img
-        className="cta-bg-image"
-        src={CTA_IMAGE}
-        alt="Premium hotel exterior"
-        loading="lazy"
-      />
-      <div className="video-overlay video-overlay-dark" />
-
+    <section className="cta-section section-fullscreen cta-section-gradient">
       <div className="cta-content">
         <ScrollReveal>
           <h2 className="cta-title">{t('landing.ctaTitle')}</h2>

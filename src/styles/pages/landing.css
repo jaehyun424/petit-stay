@@ -828,6 +828,10 @@
   justify-content: center;
 }
 
+.cta-section-gradient {
+  background: linear-gradient(135deg, #2C2C2C 0%, #1a1a2e 100%);
+}
+
 .cta-content {
   position: relative;
   z-index: 2;

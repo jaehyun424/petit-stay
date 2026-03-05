@@ -873,7 +873,21 @@
     "categorySnack": "간식",
     "categorySleep": "수면",
     "categoryDiaper": "기저귀 교체",
-    "categoryOther": "기타"
+    "categoryOther": "기타",
+    "checklistWashHands": "세션 전: 손 씻기",
+    "checklistVerifyChild": "사진으로 아이 신원 확인",
+    "checklistReviewAllergies": "알레르기 및 의료 정보 확인",
+    "checklistEmergencyContact": "비상 연락처 확인",
+    "checklistRoomSafety": "객실 안전 점검 (창문, 발코니, 위험요소)",
+    "checklistFirstActivity": "첫 활동 시작",
+    "checklistSnackServed": "간식 제공 (알레르기 안전 확인)",
+    "checklistPhotoUpdate": "보호자에게 사진 업데이트 전송",
+    "checklistDocumentIncidents": "사건 기록",
+    "timelineSessionStarted": "세션 시작, 객실 안전 점검 완료",
+    "timelineBuildingBlocks": "블록 놀이 중",
+    "timelineSnackServed": "사과 조각과 우유 제공",
+    "timelinePhotoUploaded": "미술 활동 사진 업로드",
+    "timelineReadingBooks": "함께 동화책 읽기"
   },
   "payment": {
     "card": "카드",
@@ -904,7 +918,13 @@
     "accountHolderPlaceholder": "예금주 이름",
     "serviceRegions": "서비스 지역",
     "regionsUpdated": "서비스 지역이 업데이트되었습니다",
-    "selectRegions": "근무 가능한 지역을 선택하세요."
+    "selectRegions": "근무 가능한 지역을 선택하세요.",
+    "editProfile": "프로필 수정",
+    "regionGangnam": "강남구",
+    "regionJongno": "종로구",
+    "regionYongsan": "용산구",
+    "regionMapo": "마포구",
+    "regionSongpa": "송파구"
   },
   "landing": {
     "navFeatures": "서비스",
@@ -950,7 +970,7 @@
     "testimonial3Name": "에밀리 첸",
     "testimonial3Role": "호텔 총지배인, 싱가포르",
     "testimonial3Quote": "쁘띠 스테이와 파트너십 이후, 가족 투숙객의 만족도가 40% 증가했습니다. 가장 많이 요청받는 서비스가 되었습니다.",
-    "ctaTitle": "프리미엄 호텔의 가족 고객 경험을 완성하는 돌봄 인프라",
+    "ctaTitle": "프리미엄 호텔의 가족 고객 경험을 혁신하는 아이돌봄 플랫폼",
     "ctaSubtitle": "세계 유수의 호텔과 수천 가족이 신뢰하는 쁘띠 스테이와 함께하세요.",
     "ctaPartnerBtn": "파트너 되기",
     "ctaFamilyBtn": "가족으로 가입",

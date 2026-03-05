@@ -873,7 +873,21 @@
     "categorySnack": "おやつ",
     "categorySleep": "睡眠",
     "categoryDiaper": "おむつ交換",
-    "categoryOther": "その他"
+    "categoryOther": "その他",
+    "checklistWashHands": "セッション前：手洗い",
+    "checklistVerifyChild": "写真でお子様の身元確認",
+    "checklistReviewAllergies": "アレルギー・医療情報の確認",
+    "checklistEmergencyContact": "緊急連絡先の確認",
+    "checklistRoomSafety": "客室安全点検（窓、バルコニー、危険物）",
+    "checklistFirstActivity": "最初のアクティビティ開始",
+    "checklistSnackServed": "おやつ提供（アレルギー安全確認済み）",
+    "checklistPhotoUpdate": "保護者に写真アップデート送信",
+    "checklistDocumentIncidents": "インシデントの記録",
+    "timelineSessionStarted": "セッション開始、客室安全点検完了",
+    "timelineBuildingBlocks": "ブロック遊び中",
+    "timelineSnackServed": "りんごスライスとミルク提供",
+    "timelinePhotoUploaded": "工作活動の写真アップロード",
+    "timelineReadingBooks": "一緒に絵本を読む"
   },
   "payment": {
     "card": "カード",
@@ -904,7 +918,13 @@
     "accountHolderPlaceholder": "口座名義人",
     "serviceRegions": "サービスエリア",
     "regionsUpdated": "サービスエリアが更新されました",
-    "selectRegions": "勤務可能なエリアを選択してください。"
+    "selectRegions": "勤務可能なエリアを選択してください。",
+    "editProfile": "プロフィール編集",
+    "regionGangnam": "江南区",
+    "regionJongno": "鍾路区",
+    "regionYongsan": "龍山区",
+    "regionMapo": "麻浦区",
+    "regionSongpa": "松坡区"
   },
   "landing": {
     "navFeatures": "特徴",
@@ -950,7 +970,7 @@
     "testimonial3Name": "エミリー・チェン",
     "testimonial3Role": "ホテルGM、シンガポール",
     "testimonial3Quote": "プチステイとの提携以来、ファミリー向けゲスト満足度が40%向上しました。最も要望の多いサービスになりました。",
-    "ctaTitle": "プレミアムホテルのファミリー体験を完成させる託児インフラ",
+    "ctaTitle": "プレミアムホテルのファミリー体験を革新する託児プラットフォーム",
     "ctaSubtitle": "世界有数のホテルと数千のご家族が信頼するプチステイにご参加ください。",
     "ctaPartnerBtn": "パートナーになる",
     "ctaFamilyBtn": "家族として参加",

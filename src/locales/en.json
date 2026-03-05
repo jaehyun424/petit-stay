@@ -873,7 +873,21 @@
     "categorySnack": "Snack",
     "categorySleep": "Sleep",
     "categoryDiaper": "Diaper Change",
-    "categoryOther": "Other"
+    "categoryOther": "Other",
+    "checklistWashHands": "Pre-session: Wash hands",
+    "checklistVerifyChild": "Verify child identity with photo",
+    "checklistReviewAllergies": "Review allergies & medical info",
+    "checklistEmergencyContact": "Check emergency contact info",
+    "checklistRoomSafety": "Room safety inspection (windows, balcony, hazards)",
+    "checklistFirstActivity": "First activity started",
+    "checklistSnackServed": "Snack served (allergy-safe confirmed)",
+    "checklistPhotoUpdate": "Photo update sent to parent",
+    "checklistDocumentIncidents": "Document any incidents",
+    "timelineSessionStarted": "Session started, room safety check completed",
+    "timelineBuildingBlocks": "Playing with building blocks",
+    "timelineSnackServed": "Apple slices and milk served",
+    "timelinePhotoUploaded": "Photo of art activity uploaded",
+    "timelineReadingBooks": "Reading storybooks together"
   },
   "payment": {
     "card": "Card",
@@ -904,7 +918,13 @@
     "accountHolderPlaceholder": "Account holder name",
     "serviceRegions": "Service Regions",
     "regionsUpdated": "Service regions updated",
-    "selectRegions": "Select the areas where you are available to work."
+    "selectRegions": "Select the areas where you are available to work.",
+    "editProfile": "Edit Profile",
+    "regionGangnam": "Gangnam",
+    "regionJongno": "Jongno",
+    "regionYongsan": "Yongsan",
+    "regionMapo": "Mapo",
+    "regionSongpa": "Songpa"
   },
   "landing": {
     "navFeatures": "Features",
@@ -950,7 +970,7 @@
     "testimonial3Name": "Emily Chen",
     "testimonial3Role": "Hotel GM, Singapore",
     "testimonial3Quote": "Since partnering with Petit Stay, our guest satisfaction scores for families have increased by 40%. It's become our most requested service.",
-    "ctaTitle": "The childcare infrastructure that completes your hotel's family experience",
+    "ctaTitle": "The childcare platform transforming your hotel's family experience",
     "ctaSubtitle": "Join the world's leading hotels and thousands of families who trust Petit Stay.",
     "ctaPartnerBtn": "Become a Partner",
     "ctaFamilyBtn": "Join as Family",
