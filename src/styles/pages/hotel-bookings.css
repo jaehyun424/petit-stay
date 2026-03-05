@@ -78,8 +78,9 @@
 }
 
 .bookings-table td {
-  padding: var(--space-4);
+  padding: var(--space-3) var(--space-4);
   vertical-align: middle;
+  line-height: 1.4;
 }
 
 .bookings-table td:last-child {
@@ -202,11 +203,11 @@
 .booking-detail {
   display: flex;
   flex-direction: column;
-  gap: 2rem;
+  gap: var(--space-4);
 }
 
 .detail-section {
-  padding-bottom: 1.5rem;
+  padding-bottom: var(--space-4);
   border-bottom: 1px solid var(--cream-200);
 }
 

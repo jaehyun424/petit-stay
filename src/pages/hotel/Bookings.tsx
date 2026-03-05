@@ -437,6 +437,32 @@ export default function Bookings() {
                             <p><strong>{t('common.date')}:</strong> {selectedBooking.date}</p>
                             <p><strong>{t('common.time')}:</strong> {selectedBooking.time}</p>
                         </div>
+                        <div className="detail-section">
+                            <h4>{t('hotel.status')}</h4>
+                            <StatusBadge status={selectedBooking.status} />
+                        </div>
+                        <div className="detail-section">
+                            <h4>{t('hotel.amount')}</h4>
+                            <p className="amount">{formatCurrency(selectedBooking.totalAmount)}</p>
+                        </div>
+                        <div className="detail-section">
+                            <h4>{t('hotel.paymentStatus', 'Payment')}</h4>
+                            <Badge variant={selectedBooking.status === 'completed' ? 'success' : 'warning'} size="sm">
+                                {selectedBooking.status === 'completed' ? t('hotel.paid', 'Paid') : t('hotel.paymentPending', 'Pending')}
+                            </Badge>
+                        </div>
+                        {selectedBooking.sitter && (
+                            <div className="detail-section">
+                                <h4>{t('auth.sitter')}</h4>
+                                <div className="sitter-cell">
+                                    <Avatar src={selectedBooking.sitter.avatar} name={selectedBooking.sitter.name} size="sm" variant={selectedBooking.sitter.tier === 'gold' ? 'gold' : 'default'} />
+                                    <div>
+                                        <span className="sitter-name">{selectedBooking.sitter.name}</span>
+                                        <TierBadge tier={selectedBooking.sitter.tier} />
+                                    </div>
+                                </div>
+                            </div>
+                        )}
                     </div>
                 )}
             </Modal>
