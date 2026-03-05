@@ -31,11 +31,18 @@ export default function SitterManagement() {
   const { bookings } = useHotelBookings(user?.hotelId);
   const toast = useToast();
 
-  // Sort sitters: available > busy > offline
+  // Filter state
+  const [tierFilter, setTierFilter] = useState<'all' | 'gold' | 'silver'>('all');
+
+  // Sort sitters: available > busy > offline, then filter by tier
   const sortedSitters = useMemo(() => {
     const order: Record<string, number> = { 'Available': 0, 'Busy': 1, 'On Leave': 2, 'Offline': 3 };
-    return [...sitters].sort((a, b) => (order[a.availability] ?? 9) - (order[b.availability] ?? 9));
-  }, [sitters]);
+    let filtered = [...sitters];
+    if (tierFilter !== 'all') {
+      filtered = filtered.filter((s) => s.tier === tierFilter);
+    }
+    return filtered.sort((a, b) => (order[a.availability] ?? 9) - (order[b.availability] ?? 9));
+  }, [sitters, tierFilter]);
 
   // Add New Sitter
   const [showAddSitter, setShowAddSitter] = useState(false);
@@ -69,6 +76,28 @@ export default function SitterManagement() {
       </div>
 
       {sittersError && <ErrorBanner error={sittersError} onRetry={retrySitters} />}
+
+      {/* Tier Filter */}
+      <div className="sitter-filter-tabs" role="tablist" aria-label={t('sitterMgmt.filterByTier', 'Filter by tier')}>
+        {([
+          { key: 'all' as const, label: t('common.all') },
+          { key: 'gold' as const, label: t('sitterMgmt.goldTier', 'Gold') },
+          { key: 'silver' as const, label: t('sitterMgmt.silverTier', 'Silver') },
+        ]).map((tab) => (
+          <button
+            key={tab.key}
+            role="tab"
+            aria-selected={tierFilter === tab.key}
+            className={`sitter-filter-tab ${tierFilter === tab.key ? 'sitter-filter-tab-active' : ''}`}
+            onClick={() => setTierFilter(tab.key)}
+          >
+            {tab.label}
+            <span className="sitter-filter-count">
+              {tab.key === 'all' ? sitters.length : sitters.filter((s) => s.tier === tab.key).length}
+            </span>
+          </button>
+        ))}
+      </div>
 
       {sortedSitters.length === 0 ? (
         <EmptyState
@@ -188,6 +217,10 @@ export default function SitterManagement() {
               </div>
             </div>
             <div><strong>{t('sitterMgmt.sitterAvailability')}</strong> <Badge variant={profileSitter.availability === 'Available' ? 'success' : 'warning'}>{profileSitter.availability}</Badge></div>
+            <div>
+              <strong>{t('sitterMgmt.availableHours', 'Available Hours')}:</strong>
+              <p className="sitter-available-hours">{t('sitterMgmt.weekdayHours', 'Weekdays 17:00 - 23:00, Weekends 10:00 - 23:00')}</p>
+            </div>
           </div>
         )}
       </Modal>

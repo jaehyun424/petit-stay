@@ -4,6 +4,69 @@
   margin: 0 auto;
 }
 
+/* Tier Filter Tabs */
+.sitter-filter-tabs {
+  display: flex;
+  gap: var(--space-2);
+  margin-bottom: var(--space-6);
+  padding: var(--space-1);
+  background: var(--glass-bg);
+  border-radius: var(--radius-lg);
+  width: fit-content;
+}
+
+.sitter-filter-tab {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+  padding: var(--space-2) var(--space-4);
+  border: none;
+  border-radius: var(--radius-md);
+  background: transparent;
+  color: var(--text-secondary);
+  font-size: var(--text-sm);
+  font-weight: var(--font-medium);
+  cursor: pointer;
+  transition: all 0.2s;
+  font-family: inherit;
+}
+
+.sitter-filter-tab:hover {
+  color: var(--text-primary);
+  background: rgba(0, 0, 0, 0.03);
+}
+
+.sitter-filter-tab-active {
+  background: var(--bg-card);
+  color: var(--gold-600);
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.08);
+}
+
+.sitter-filter-count {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 20px;
+  height: 20px;
+  padding: 0 6px;
+  border-radius: 10px;
+  background: var(--glass-bg);
+  font-size: var(--text-xs);
+  font-weight: var(--font-semibold);
+}
+
+.sitter-filter-tab-active .sitter-filter-count {
+  background: rgba(197, 160, 89, 0.1);
+  color: var(--gold-600);
+}
+
+/* Sitter Available Hours in profile modal */
+.sitter-available-hours {
+  font-size: var(--text-sm);
+  color: var(--text-secondary);
+  margin-top: var(--space-1);
+}
+
 .sitters-grid {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(340px, 1fr));
@@ -171,6 +234,15 @@
 
 /* Mobile breakpoint */
 @media (max-width: 480px) {
+  .sitter-filter-tabs {
+    width: 100%;
+  }
+
+  .sitter-filter-tab {
+    flex: 1;
+    justify-content: center;
+  }
+
   .sitters-grid {
     grid-template-columns: 1fr;
     gap: var(--space-4);
