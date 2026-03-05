@@ -256,6 +256,9 @@ export default function TrustCheckIn() {
             <div className="trust-checkin-container">
                 <div className="trust-checkin-header">
                     <h1 className="trust-checkin-title">{t('trustCheckin.careHandover')}</h1>
+                    <div className="trust-checkin-progress-bar" role="progressbar" aria-valuenow={step} aria-valuemin={1} aria-valuemax={3}>
+                        <div className="trust-checkin-progress-fill" style={{ width: `${(step / 3) * 100}%` }} />
+                    </div>
                     <div className="trust-checkin-steps">
                         {[1, 2, 3].map(i => {
                             const Icon = STEP_ICONS[i - 1];

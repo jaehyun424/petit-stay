@@ -7,27 +7,44 @@
 .trust-checkin-container {
   max-width: 28rem;
   margin: 0 auto;
-  padding: var(--space-8) var(--space-4);
+  padding: var(--space-6) var(--space-4);
 }
 
 /* Header */
 .trust-checkin-header {
   text-align: center;
-  margin-bottom: var(--space-8);
+  margin-bottom: var(--space-6);
 }
 
 .trust-checkin-title {
   font-family: var(--font-serif);
-  font-size: var(--text-3xl);
+  font-size: var(--text-2xl);
   color: var(--charcoal-900);
-  margin-bottom: var(--space-2);
+  margin-bottom: var(--space-4);
+}
+
+/* Progress Bar */
+.trust-checkin-progress-bar {
+  width: 100%;
+  height: 4px;
+  background: var(--cream-200);
+  border-radius: 2px;
+  overflow: hidden;
+  margin-bottom: var(--space-4);
+}
+
+.trust-checkin-progress-fill {
+  height: 100%;
+  background: linear-gradient(to right, var(--gold-400), var(--gold-600));
+  border-radius: 2px;
+  transition: width 0.4s ease;
 }
 
 /* Step Progress Indicators — Icon+Label */
 .trust-checkin-steps {
   display: flex;
   justify-content: center;
-  gap: var(--space-6);
+  gap: var(--space-4);
 }
 
 .step-indicator-icon {
@@ -39,13 +56,15 @@
 }
 
 .step-icon-circle {
-  width: 2.25rem;
-  height: 2.25rem;
+  width: 2.5rem;
+  height: 2.5rem;
   border-radius: var(--radius-full);
   display: flex;
   align-items: center;
   justify-content: center;
-  transition: all 0.3s ease;
+  transition: all 0.35s ease;
+  min-width: 2.5rem;
+  min-height: 2.5rem;
 }
 
 .step-icon-label {
@@ -162,7 +181,15 @@
 
 /* Signature Section */
 .signature-section {
-  margin-top: var(--space-8);
+  margin-top: var(--space-6);
+}
+
+.signature-section canvas {
+  min-height: 160px;
+  border: 1.5px solid var(--cream-300);
+  border-radius: var(--radius-lg);
+  background: white;
+  touch-action: none;
 }
 
 .signature-label {
@@ -217,23 +244,77 @@
   border-color: var(--cream-300);
 }
 
+/* Completion confirmation */
+.checkin-complete {
+  text-align: center;
+  padding: var(--space-8) var(--space-4);
+}
+
+.checkin-complete-icon {
+  width: 64px;
+  height: 64px;
+  border-radius: var(--radius-full);
+  background: var(--success-bg);
+  color: var(--success-500);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0 auto var(--space-4);
+  animation: scaleIn 0.4s ease;
+}
+
+@keyframes scaleIn {
+  0% { transform: scale(0); opacity: 0; }
+  60% { transform: scale(1.1); }
+  100% { transform: scale(1); opacity: 1; }
+}
+
+.checkin-complete h2 {
+  font-family: var(--font-serif);
+  font-size: var(--text-xl);
+  color: var(--charcoal-900);
+  margin-bottom: var(--space-2);
+}
+
+.checkin-complete p {
+  color: var(--charcoal-500);
+  font-size: var(--text-sm);
+  margin-bottom: var(--space-6);
+}
+
 /* Mobile breakpoint */
 @media (max-width: 480px) {
   .trust-checkin-container {
-    padding: var(--space-6) var(--space-3);
+    padding: var(--space-4) var(--space-3);
   }
 
   .trust-checkin-title {
-    font-size: var(--text-2xl);
+    font-size: var(--text-xl);
   }
 
-  .section-title {
-    font-size: var(--text-xl);
+  .trust-checkin-steps {
+    gap: var(--space-3);
+  }
+
+  .step-icon-circle {
+    width: 2rem;
+    height: 2rem;
+    min-width: 2rem;
+    min-height: 2rem;
+  }
+
+  .step-icon-label {
+    font-size: 0.625rem;
+  }
+
+  .trust-checkin-page .section-title {
+    font-size: var(--text-lg);
   }
 
   .checkbox-row {
     padding: var(--space-3);
     gap: var(--space-3);
+    min-height: 48px;
   }
 
   .info-box {
@@ -243,5 +324,9 @@
   .checkin-card-footer {
     margin-top: var(--space-6);
     padding-top: var(--space-4);
+  }
+
+  .checkin-card-footer .btn {
+    min-height: 48px;
   }
 }
