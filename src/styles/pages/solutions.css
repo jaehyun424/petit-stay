@@ -64,8 +64,10 @@
   font-size: var(--text-lg);
   color: rgba(255, 255, 255, 0.7);
   line-height: 1.6;
-  max-width: 560px;
+  max-width: 600px;
   margin: 0 auto;
+  word-break: keep-all;
+  overflow-wrap: break-word;
 }
 
 /* Section */
@@ -107,6 +109,8 @@
   max-width: 600px;
   margin: 0 auto;
   line-height: 1.6;
+  word-break: keep-all;
+  overflow-wrap: break-word;
 }
 
 /* Cards grid */
@@ -114,6 +118,11 @@
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
   gap: var(--space-6);
+}
+
+.solutions-cards > * {
+  display: flex;
+  flex-direction: column;
 }
 
 .solutions-cards--3 {
@@ -130,12 +139,15 @@
   border-radius: var(--radius-xl);
   padding: var(--space-6);
   transition: transform 0.3s ease, box-shadow 0.3s ease;
+  word-break: keep-all;
+  overflow-wrap: break-word;
 }
 
 .solutions-card--uniform {
   display: flex;
   flex-direction: column;
-  min-height: 200px;
+  min-height: 220px;
+  height: 100%;
 }
 
 .solutions-card--centered {
@@ -177,6 +189,8 @@
   font-size: var(--text-sm);
   color: var(--text-secondary);
   line-height: 1.6;
+  word-break: keep-all;
+  overflow-wrap: break-word;
 }
 
 /* Step number */
