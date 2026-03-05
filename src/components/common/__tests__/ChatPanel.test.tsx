@@ -63,7 +63,7 @@ describe('ChatPanel', () => {
         // Name appears in header h3 and as chat-sender span
         const elements = screen.getAllByText('Kim Minjung');
         expect(elements.length).toBeGreaterThanOrEqual(1);
-        expect(screen.getByText('Online')).toBeInTheDocument();
+        expect(screen.getByText('chat.online')).toBeInTheDocument();
     });
 
     it('displays messages', () => {
@@ -79,7 +79,7 @@ describe('ChatPanel', () => {
             <ChatPanel isOpen={true} onClose={vi.fn()} otherUserName="Kim Minjung" />
         );
         // Own message has readBy with entries, so should show checkmarks
-        const receipts = screen.getAllByTitle('Read');
+        const receipts = screen.getAllByTitle('chat.read');
         expect(receipts.length).toBeGreaterThan(0);
     });
 
@@ -87,7 +87,7 @@ describe('ChatPanel', () => {
         render(
             <ChatPanel isOpen={true} onClose={vi.fn()} otherUserName="Kim Minjung" />
         );
-        const input = screen.getByPlaceholderText('Type a message...');
+        const input = screen.getByPlaceholderText('chat.messagePlaceholder');
         fireEvent.change(input, { target: { value: 'Test message' } });
         fireEvent.keyDown(input, { key: 'Enter' });
         expect(mockSendMessage).toHaveBeenCalledWith('Test message', 'Sarah Johnson');
@@ -97,7 +97,7 @@ describe('ChatPanel', () => {
         render(
             <ChatPanel isOpen={true} onClose={vi.fn()} otherUserName="Kim Minjung" />
         );
-        const input = screen.getByPlaceholderText('Type a message...');
+        const input = screen.getByPlaceholderText('chat.messagePlaceholder');
         fireEvent.input(input);
         expect(mockSetTyping).toHaveBeenCalledWith(true);
     });
@@ -114,7 +114,7 @@ describe('ChatPanel', () => {
         render(
             <ChatPanel isOpen={true} onClose={onClose} otherUserName="Kim Minjung" />
         );
-        fireEvent.click(screen.getByLabelText('Close chat'));
+        fireEvent.click(screen.getByLabelText('aria.closeChat'));
         expect(onClose).toHaveBeenCalled();
     });
 });

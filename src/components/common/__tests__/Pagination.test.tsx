@@ -1,4 +1,4 @@
-import { render, screen, fireEvent } from '@testing-library/react';
+import { render, screen, fireEvent } from '../../../test/utils';
 import { Pagination, usePagination } from '../Pagination';
 import { renderHook } from '@testing-library/react';
 
@@ -34,7 +34,7 @@ describe('Pagination', () => {
             <Pagination currentPage={1} totalPages={5} onPageChange={() => {}} />
         );
 
-        const prevBtn = screen.getByLabelText('Previous page');
+        const prevBtn = screen.getByLabelText('aria.previousPage');
         expect(prevBtn).toBeDisabled();
     });
 
@@ -43,7 +43,7 @@ describe('Pagination', () => {
             <Pagination currentPage={5} totalPages={5} onPageChange={() => {}} />
         );
 
-        const nextBtn = screen.getByLabelText('Next page');
+        const nextBtn = screen.getByLabelText('aria.nextPage');
         expect(nextBtn).toBeDisabled();
     });
 

@@ -318,7 +318,7 @@ describe('sessionService', () => {
       const session = await sessionService.getActiveSession('b1');
 
       expect(mockWhere).toHaveBeenCalledWith('bookingId', '==', 'b1');
-      expect(mockWhere).toHaveBeenCalledWith('status', '==', 'in_progress');
+      expect(mockWhere).toHaveBeenCalledWith('status', 'in', ['active', 'checked_in', 'preparing']);
       expect(session).not.toBeNull();
       expect(session!.id).toBe('session-1');
     });

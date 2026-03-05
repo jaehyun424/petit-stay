@@ -64,17 +64,17 @@ describe('StatusBadge', () => {
 describe('TierBadge', () => {
     it('renders gold tier with label', () => {
         render(<TierBadge tier="gold" />);
-        expect(screen.getByText('GOLD')).toBeInTheDocument();
+        expect(screen.getByText('common.tierGold')).toBeInTheDocument();
     });
 
     it('renders silver tier with label', () => {
         render(<TierBadge tier="silver" />);
-        expect(screen.getByText('SILVER')).toBeInTheDocument();
+        expect(screen.getByText('common.tierSilver')).toBeInTheDocument();
     });
 
     it('hides label when showLabel is false', () => {
         render(<TierBadge tier="gold" showLabel={false} />);
-        expect(screen.queryByText('GOLD')).not.toBeInTheDocument();
+        expect(screen.queryByText('common.tierGold')).not.toBeInTheDocument();
     });
 });
 

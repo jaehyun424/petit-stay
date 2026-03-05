@@ -1,32 +1,36 @@
 // @ts-nocheck
-import { describe, it, expect, vi } from 'vitest';
+import { describe, it, expect, vi, beforeEach } from 'vitest';
+import { render, screen, fireEvent, waitFor } from '../../../test/utils';
+import NotificationInbox from '../NotificationInbox';
+
+// We need to re-mock useNotifications AFTER test/utils sets its mock
+// Use vi.mocked approach
+import * as useNotificationsModule from '../../../hooks/useNotifications';
 
 const mockMarkAsRead = vi.fn();
 const mockMarkAllAsRead = vi.fn();
 const mockDeleteNotification = vi.fn();
 
-vi.mock('../../../hooks/useNotifications', () => ({
-    useNotifications: () => ({
-        notifications: [
-            { id: 'n1', type: 'booking_confirmed', title: 'Booking Confirmed', body: 'Your booking KCP-001 has been confirmed', read: false, createdAt: new Date() },
-            { id: 'n2', type: 'care_started', title: 'Care Session Started', body: 'Kim Minjung has started the session', read: true, createdAt: new Date(Date.now() - 3600000) },
-            { id: 'n3', type: 'emergency', title: 'Emergency Alert', body: 'Emergency protocol activated in Room 2301', read: false, createdAt: new Date(Date.now() - 7200000) },
-            { id: 'n4', type: 'booking_cancelled', title: 'Booking Cancelled', body: 'Your booking KCP-002 has been cancelled', read: true, createdAt: new Date(Date.now() - 86400000) },
-        ],
-        unreadCount: 2,
-        markAsRead: mockMarkAsRead,
-        markAllAsRead: mockMarkAllAsRead,
-        deleteNotification: mockDeleteNotification,
-        isLoading: false,
-    }),
-}));
-
-import { render, screen, fireEvent, waitFor } from '../../../test/utils';
-import NotificationInbox from '../NotificationInbox';
+const mockNotifications = [
+    { id: 'n1', type: 'booking_confirmed', title: 'Booking Confirmed', body: 'Your booking KCP-001 has been confirmed', read: false, createdAt: new Date() },
+    { id: 'n2', type: 'care_started', title: 'Care Session Started', body: 'Kim Minjung has started the session', read: true, createdAt: new Date(Date.now() - 3600000) },
+    { id: 'n3', type: 'emergency', title: 'Emergency Alert', body: 'Emergency protocol activated in Room 2301', read: false, createdAt: new Date(Date.now() - 7200000) },
+    { id: 'n4', type: 'booking_cancelled', title: 'Booking Cancelled', body: 'Your booking KCP-002 has been cancelled', read: true, createdAt: new Date(Date.now() - 86400000) },
+];
 
 describe('NotificationInbox', () => {
     beforeEach(() => {
         vi.clearAllMocks();
+        vi.spyOn(useNotificationsModule, 'useNotifications').mockReturnValue({
+            notifications: mockNotifications,
+            unreadCount: 2,
+            markAsRead: mockMarkAsRead,
+            markAllAsRead: mockMarkAllAsRead,
+            deleteNotification: mockDeleteNotification,
+            isLoading: false,
+            error: null,
+            retry: vi.fn(),
+        } as any);
     });
 
     it('renders inbox title', () => {
@@ -64,10 +68,11 @@ describe('NotificationInbox', () => {
 
     it('renders time ago for notifications', () => {
         render(<NotificationInbox />);
-        expect(screen.getByText('just now')).toBeTruthy();
-        expect(screen.getByText('1h ago')).toBeTruthy();
-        expect(screen.getByText('2h ago')).toBeTruthy();
-        expect(screen.getByText('1d ago')).toBeTruthy();
+        // timeAgo uses t() which returns translation keys in test
+        expect(screen.getByText('time.justNow')).toBeTruthy();
+        expect(screen.getByText('time.hoursAgo(1)')).toBeTruthy();
+        expect(screen.getByText('time.hoursAgo(2)')).toBeTruthy();
+        expect(screen.getByText('time.daysAgo(1)')).toBeTruthy();
     });
 
     it('shows unread styling for unread notifications', () => {
@@ -171,31 +176,25 @@ describe('NotificationInbox', () => {
 
 describe('NotificationInbox - Empty state', () => {
     beforeEach(() => {
-        vi.doMock('../../../hooks/useNotifications', () => ({
-            useNotifications: () => ({
-                notifications: [],
-                unreadCount: 0,
-                markAsRead: vi.fn(),
-                markAllAsRead: vi.fn(),
-                deleteNotification: vi.fn(),
-                isLoading: false,
-            }),
-        }));
+        vi.spyOn(useNotificationsModule, 'useNotifications').mockReturnValue({
+            notifications: [],
+            unreadCount: 0,
+            markAsRead: vi.fn(),
+            markAllAsRead: vi.fn(),
+            deleteNotification: vi.fn(),
+            isLoading: false,
+            error: null,
+            retry: vi.fn(),
+        } as any);
     });
 
-    afterEach(() => {
-        vi.restoreAllMocks();
-    });
-
-    it('shows empty state when no notifications', async () => {
-        const { default: EmptyInbox } = await import('../NotificationInbox');
-        render(<EmptyInbox />);
+    it('shows empty state when no notifications', () => {
+        render(<NotificationInbox />);
         expect(screen.getByText('notifications.noNotifications')).toBeTruthy();
     });
 
-    it('shows empty state description', async () => {
-        const { default: EmptyInbox } = await import('../NotificationInbox');
-        render(<EmptyInbox />);
+    it('shows empty state description', () => {
+        render(<NotificationInbox />);
         expect(screen.getByText('notifications.noNotificationsDesc')).toBeTruthy();
     });
 });

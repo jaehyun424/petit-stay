@@ -76,30 +76,30 @@ describe('Sitter Profile', () => {
     it('renders profile rating and review count', () => {
         render(<Profile />);
         expect(screen.getByText(/4\.9/)).toBeTruthy();
-        expect(screen.getByText(/247 reviews/)).toBeTruthy();
+        expect(screen.getByText(/247 sitterProfile\.reviewsCount/)).toBeTruthy();
     });
 
     it('renders profile stats - total sessions', () => {
         render(<Profile />);
         expect(screen.getByText('247')).toBeTruthy();
-        expect(screen.getByText('Sessions')).toBeTruthy();
+        expect(screen.getByText('sitterProfile.sessions')).toBeTruthy();
     });
 
     it('renders profile stats - safety days', () => {
         render(<Profile />);
         expect(screen.getByText('365')).toBeTruthy();
-        expect(screen.getByText('Safe Days')).toBeTruthy();
+        expect(screen.getByText('sitterProfile.safeDays')).toBeTruthy();
     });
 
     it('renders profile stats - on-time rate', () => {
         render(<Profile />);
         expect(screen.getByText('98%')).toBeTruthy();
-        expect(screen.getByText('On-Time')).toBeTruthy();
+        expect(screen.getByText('sitterProfile.onTime')).toBeTruthy();
     });
 
     it('renders certifications section', () => {
         render(<Profile />);
-        expect(screen.getByText('Certifications')).toBeTruthy();
+        expect(screen.getByText('sitterProfile.certifications')).toBeTruthy();
     });
 
     it('renders all certifications', () => {
@@ -111,7 +111,7 @@ describe('Sitter Profile', () => {
 
     it('renders reviews section', () => {
         render(<Profile />);
-        expect(screen.getByText('Reviews')).toBeTruthy();
+        expect(screen.getByText('sitterProfile.reviews')).toBeTruthy();
     });
 
     it('renders review comments', () => {
@@ -128,12 +128,12 @@ describe('Sitter Profile', () => {
 
     it('renders reviews count text', () => {
         render(<Profile />);
-        expect(screen.getByText('2 reviews')).toBeTruthy();
+        expect(screen.getByText('sitterProfile.reviewCount(2)')).toBeTruthy();
     });
 
     it('renders languages section', () => {
         render(<Profile />);
-        expect(screen.getByText('Languages')).toBeTruthy();
+        expect(screen.getByText('sitterProfile.languages')).toBeTruthy();
     });
 
     it('renders language details', () => {

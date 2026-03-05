@@ -103,7 +103,7 @@ describe('Modal', () => {
                 <p>Content</p>
             </Modal>
         );
-        expect(screen.getByLabelText('Close modal')).toBeInTheDocument();
+        expect(screen.getByLabelText('aria.closeModal')).toBeInTheDocument();
     });
 
     it('hides close button when showCloseButton is false', () => {
@@ -112,7 +112,7 @@ describe('Modal', () => {
                 <p>Content</p>
             </Modal>
         );
-        expect(screen.queryByLabelText('Close modal')).not.toBeInTheDocument();
+        expect(screen.queryByLabelText('aria.closeModal')).not.toBeInTheDocument();
     });
 });
 
