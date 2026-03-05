@@ -316,6 +316,30 @@
   font-weight: 600;
 }
 
+.solutions-pricing-list {
+  list-style: none;
+  padding: 0;
+  margin: var(--space-4) auto 0;
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-3);
+  max-width: 400px;
+  text-align: left;
+}
+
+.solutions-pricing-list li {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+  font-size: var(--text-sm);
+  color: var(--text-primary);
+}
+
+.solutions-pricing-list li svg {
+  color: var(--gold-600);
+  flex-shrink: 0;
+}
+
 /* Scenarios (legacy, kept for compatibility) */
 .solutions-scenario h3 {
   font-family: var(--font-serif);

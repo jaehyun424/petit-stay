@@ -5,6 +5,7 @@ import { motion } from 'framer-motion';
 import {
   ShieldCheck, BarChart3, Headphones, ArrowRight,
   Calendar, Radio, FileText, Settings,
+  Receipt, ClipboardList, TrendingUp,
 } from 'lucide-react';
 import { LandingNav } from '../landing/components/LandingNav';
 import { LandingFooter } from '../landing/components/LandingFooter';
@@ -124,6 +125,11 @@ export default function ForHotelsPage() {
         <ScrollReveal>
           <div className="solutions-pricing-hint">
             <p>{t('solutions.hotelPricingHint')}</p>
+            <ul className="solutions-pricing-list">
+              <li><Receipt size={18} /> {t('solutions.hotelPricing1')}</li>
+              <li><ClipboardList size={18} /> {t('solutions.hotelPricing2')}</li>
+              <li><TrendingUp size={18} /> {t('solutions.hotelPricing3')}</li>
+            </ul>
           </div>
         </ScrollReveal>
       </div>
