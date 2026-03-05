@@ -590,7 +590,11 @@
     "sessions": "sessions",
     "recentPayments": "Recent Payments",
     "hours": "hours",
-    "paid": "Paid"
+    "paid": "Paid",
+    "filterByHotel": "Filter by Hotel",
+    "totalEarned": "Total Earned",
+    "avgPerSession": "Avg / Session",
+    "totalSessions": "Total Sessions"
   },
   "reports": {
     "title": "Reports & Analytics",
@@ -865,7 +869,8 @@
     "snackLogDescription": "Snack served",
     "activityPlaceholder": "What is the child doing?",
     "snackPlaceholder": "What snack was served?",
-    "confirmCompleteDesc": "Are you sure you want to end this session?"
+    "confirmCompleteDesc": "Are you sure you want to end this session?",
+    "activityTimeline": "Activity Timeline"
   },
   "payment": {
     "card": "Card",
@@ -894,7 +899,10 @@
     "languages": "Languages",
     "displayNamePlaceholder": "Display Name",
     "languagesPlaceholder": "English, Korean",
-    "accountHolderPlaceholder": "Account holder name"
+    "accountHolderPlaceholder": "Account holder name",
+    "serviceRegions": "Service Regions",
+    "regionsUpdated": "Service regions updated",
+    "selectRegions": "Select the areas where you are available to work."
   },
   "landing": {
     "navFeatures": "Features",

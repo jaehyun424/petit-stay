@@ -323,7 +323,14 @@
     "assignmentAcceptedDesc": "이 세션을 수락했습니다.",
     "assignmentDeclined": "배정 거절됨",
     "assignmentDeclinedDesc": "예약이 다른 시터에게 재배정됩니다.",
-    "assignmentFailed": "배정 업데이트에 실패했습니다."
+    "assignmentFailed": "배정 업데이트에 실패했습니다.",
+    "availableForAssignment": "배정 가능",
+    "unavailable": "배정 불가",
+    "markedUnavailable": "배정 불가 상태로 변경되었습니다",
+    "markedAvailable": "배정 가능 상태로 변경되었습니다",
+    "toggleAvailability": "근무 가능 여부 전환",
+    "calendarView": "캘린더",
+    "listView": "목록 보기"
   },
   "hotel": {
     "hotelConsole": "호텔 콘솔",
@@ -583,7 +590,11 @@
     "sessions": "세션",
     "recentPayments": "최근 결제",
     "hours": "시간",
-    "paid": "지급됨"
+    "paid": "지급됨",
+    "filterByHotel": "호텔별 필터",
+    "totalEarned": "총 수입",
+    "avgPerSession": "세션당 평균",
+    "totalSessions": "총 세션"
   },
   "reports": {
     "title": "리포트 & 분석",
@@ -858,7 +869,8 @@
     "snackLogDescription": "간식 제공됨",
     "activityPlaceholder": "아이가 무엇을 하고 있나요?",
     "snackPlaceholder": "어떤 간식을 제공했나요?",
-    "confirmCompleteDesc": "이 세션을 종료하시겠습니까?"
+    "confirmCompleteDesc": "이 세션을 종료하시겠습니까?",
+    "activityTimeline": "활동 타임라인"
   },
   "payment": {
     "card": "카드",
@@ -887,7 +899,10 @@
     "languages": "언어",
     "displayNamePlaceholder": "표시 이름",
     "languagesPlaceholder": "영어, 한국어",
-    "accountHolderPlaceholder": "예금주 이름"
+    "accountHolderPlaceholder": "예금주 이름",
+    "serviceRegions": "서비스 지역",
+    "regionsUpdated": "서비스 지역이 업데이트되었습니다",
+    "selectRegions": "근무 가능한 지역을 선택하세요."
   },
   "landing": {
     "navFeatures": "서비스",

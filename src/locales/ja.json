@@ -323,7 +323,14 @@
     "assignmentAcceptedDesc": "このセッションを承諾しました。",
     "assignmentDeclined": "配属辞退済み",
     "assignmentDeclinedDesc": "予約は別のシッターに再配属されます。",
-    "assignmentFailed": "配属の更新に失敗しました。"
+    "assignmentFailed": "配属の更新に失敗しました。",
+    "availableForAssignment": "配属可能",
+    "unavailable": "配属不可",
+    "markedUnavailable": "配属不可に設定しました",
+    "markedAvailable": "配属可能に設定しました",
+    "toggleAvailability": "空き状況の切り替え",
+    "calendarView": "カレンダー",
+    "listView": "リスト表示"
   },
   "hotel": {
     "hotelConsole": "ホテルコンソール",
@@ -583,7 +590,11 @@
     "sessions": "セッション",
     "recentPayments": "最近の支払い",
     "hours": "時間",
-    "paid": "支払い済み"
+    "paid": "支払い済み",
+    "filterByHotel": "ホテル別フィルター",
+    "totalEarned": "総収入",
+    "avgPerSession": "セッション平均",
+    "totalSessions": "総セッション数"
   },
   "reports": {
     "title": "レポート＆分析",
@@ -858,7 +869,8 @@
     "snackLogDescription": "おやつを提供しました",
     "activityPlaceholder": "お子様は何をしていますか？",
     "snackPlaceholder": "どのようなおやつを提供しましたか？",
-    "confirmCompleteDesc": "このセッションを終了してもよろしいですか？"
+    "confirmCompleteDesc": "このセッションを終了してもよろしいですか？",
+    "activityTimeline": "アクティビティタイムライン"
   },
   "payment": {
     "card": "カード",
@@ -887,7 +899,10 @@
     "languages": "言語",
     "displayNamePlaceholder": "表示名",
     "languagesPlaceholder": "英語、日本語",
-    "accountHolderPlaceholder": "口座名義人"
+    "accountHolderPlaceholder": "口座名義人",
+    "serviceRegions": "サービスエリア",
+    "regionsUpdated": "サービスエリアが更新されました",
+    "selectRegions": "勤務可能なエリアを選択してください。"
   },
   "landing": {
     "navFeatures": "特徴",
