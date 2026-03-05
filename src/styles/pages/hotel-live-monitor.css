@@ -275,15 +275,31 @@
   flex: 1;
 }
 
-/* Session actions - touch target */
+/* Mobile layout */
 @media (max-width: 768px) {
+  .live-monitor-grid, .monitor-grid, .sessions-grid {
+    grid-template-columns: 1fr;
+    gap: 12px;
+  }
+  .live-session-card, .monitor-card, .live-monitor-page .session-card {
+    padding: 12px;
+    font-size: 0.875rem;
+  }
+  .monitor-header, .live-monitor-page .page-header {
+    flex-direction: column;
+    gap: 8px;
+  }
   .live-monitor-page .session-actions {
     flex-direction: column;
   }
-
   .live-monitor-page .session-actions .btn {
     min-height: 48px;
   }
+}
+
+.monitor-table-wrapper {
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
 }
 
 /* Detail Modal */
