@@ -204,7 +204,7 @@ export const bookingService = {
     },
 
     // Subscribe to hotel bookings (real-time)
-    subscribeToHotelBookings(hotelId: string, callback: (bookings: Booking[]) => void) {
+    subscribeToHotelBookings(hotelId: string, callback: (bookings: Booking[]) => void, onError?: (error: Error) => void) {
         const q = query(
             collection(db, COLLECTIONS.bookings),
             where('hotelId', '==', hotelId),
@@ -217,6 +217,9 @@ export const bookingService = {
                 ...convertTimestamps(d.data()),
             })) as Booking[];
             callback(bookings);
+        }, (error) => {
+            console.error('Firestore subscription error (hotel bookings):', error);
+            onError?.(error);
         });
     },
 
@@ -309,13 +312,16 @@ export const sessionService = {
     },
 
     // Subscribe to session updates (real-time)
-    subscribeToSession(sessionId: string, callback: (session: CareSession | null) => void) {
+    subscribeToSession(sessionId: string, callback: (session: CareSession | null) => void, onError?: (error: Error) => void) {
         return onSnapshot(doc(db, COLLECTIONS.sessions, sessionId), (doc) => {
             if (doc.exists()) {
                 callback({ id: doc.id, ...convertTimestamps(doc.data()) } as CareSession);
             } else {
                 callback(null);
             }
+        }, (error) => {
+            console.error('Firestore subscription error (session):', error);
+            onError?.(error);
         });
     },
 
@@ -334,7 +340,7 @@ export const sessionService = {
     },
 
     // Subscribe to hotel active sessions (real-time)
-    subscribeToHotelSessions(hotelId: string, callback: (sessions: CareSession[]) => void) {
+    subscribeToHotelSessions(hotelId: string, callback: (sessions: CareSession[]) => void, onError?: (error: Error) => void) {
         const q = query(
             collection(db, COLLECTIONS.sessions),
             where('hotelId', '==', hotelId),
@@ -346,6 +352,9 @@ export const sessionService = {
                 ...convertTimestamps(d.data()),
             })) as CareSession[];
             callback(sessions);
+        }, (error) => {
+            console.error('Firestore subscription error (hotel sessions):', error);
+            onError?.(error);
         });
     },
 
@@ -403,7 +412,7 @@ export const activityService = {
     },
 
     // Subscribe to activity updates (real-time)
-    subscribeToActivities(sessionId: string, callback: (activities: ActivityLog[]) => void) {
+    subscribeToActivities(sessionId: string, callback: (activities: ActivityLog[]) => void, onError?: (error: Error) => void) {
         const q = query(
             collection(db, COLLECTIONS.activityLogs),
             where('sessionId', '==', sessionId),
@@ -416,6 +425,9 @@ export const activityService = {
                 ...convertTimestamps(doc.data()),
             })) as ActivityLog[];
             callback(activities);
+        }, (error) => {
+            console.error('Firestore subscription error (activities):', error);
+            onError?.(error);
         });
     },
 };
@@ -494,7 +506,7 @@ export const sitterService = {
     },
 
     // Subscribe to hotel sitters (real-time)
-    subscribeToHotelSitters(hotelId: string, callback: (sitters: Sitter[]) => void) {
+    subscribeToHotelSitters(hotelId: string, callback: (sitters: Sitter[]) => void, onError?: (error: Error) => void) {
         const q = query(
             collection(db, COLLECTIONS.sitters),
             where('partnerHotels', 'array-contains', hotelId)
@@ -505,6 +517,9 @@ export const sitterService = {
                 ...convertTimestamps(d.data()),
             })) as Sitter[];
             callback(sitters);
+        }, (error) => {
+            console.error('Firestore subscription error (sitters):', error);
+            onError?.(error);
         });
     },
 };
@@ -609,13 +624,16 @@ export const hotelService = {
     },
 
     // Subscribe to hotel (real-time)
-    subscribeToHotel(hotelId: string, callback: (hotel: Hotel | null) => void) {
+    subscribeToHotel(hotelId: string, callback: (hotel: Hotel | null) => void, onError?: (error: Error) => void) {
         return onSnapshot(doc(db, COLLECTIONS.hotels, hotelId), (d) => {
             if (d.exists()) {
                 callback({ id: d.id, ...convertTimestamps(d.data()) } as Hotel);
             } else {
                 callback(null);
             }
+        }, (error) => {
+            console.error('Firestore subscription error (hotel):', error);
+            onError?.(error);
         });
     },
 };
@@ -659,7 +677,7 @@ export const incidentService = {
     },
 
     // Subscribe to hotel incidents (real-time)
-    subscribeToHotelIncidents(hotelId: string, callback: (incidents: Incident[]) => void) {
+    subscribeToHotelIncidents(hotelId: string, callback: (incidents: Incident[]) => void, onError?: (error: Error) => void) {
         const q = query(
             collection(db, COLLECTIONS.incidents),
             where('hotelId', '==', hotelId),
@@ -672,6 +690,9 @@ export const incidentService = {
                 ...convertTimestamps(d.data()),
             })) as Incident[];
             callback(incidents);
+        }, (error) => {
+            console.error('Firestore subscription error (incidents):', error);
+            onError?.(error);
         });
     },
 };
@@ -733,7 +754,7 @@ export const notificationService = {
     },
 
     // Subscribe to user notifications (real-time)
-    subscribeToUserNotifications(userId: string, callback: (notifications: Notification[]) => void) {
+    subscribeToUserNotifications(userId: string, callback: (notifications: Notification[]) => void, onError?: (error: Error) => void) {
         const q = query(
             collection(db, COLLECTIONS.notifications),
             where('userId', '==', userId),
@@ -746,6 +767,9 @@ export const notificationService = {
                 ...convertTimestamps(d.data()),
             })) as Notification[];
             callback(notifications);
+        }, (error) => {
+            console.error('Firestore subscription error (notifications):', error);
+            onError?.(error);
         });
     },
 
