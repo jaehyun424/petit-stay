@@ -9,6 +9,7 @@ import { Button, IconButton } from '../../components/common/Button';
 import { Avatar } from '../../components/common/Avatar';
 import { TierBadge } from '../../components/common/Badge';
 import { EmptyState } from '../../components/common/EmptyState';
+import { Skeleton, SkeletonText } from '../../components/common/Skeleton';
 import { ActivityFeed } from '../../components/parent/ActivityFeed';
 import type { ActivityLog } from '../../components/parent/ActivityFeed';
 import { ChatPanel } from '../../components/common/ChatPanel';
@@ -23,6 +24,24 @@ export default function LiveStatus() {
     useAuth();
     const { logs, sessionInfo, isLoading, error, retry } = useLiveStatus(id);
     const [chatOpen, setChatOpen] = useState(false);
+
+    if (isLoading) {
+        return (
+            <div className="live-status-page">
+                <div className="live-status-container">
+                    <Skeleton width="180px" height="1.75rem" />
+                    <Skeleton width="260px" height="1rem" className="mt-2" />
+                    <Skeleton width="100%" height="60px" borderRadius="var(--radius-lg)" className="mt-4" />
+                    <Skeleton width="100%" height="100px" borderRadius="var(--radius-lg)" className="mt-4" />
+                    <Skeleton width="100%" height="80px" borderRadius="var(--radius-lg)" className="mt-4" />
+                    <div className="mt-4">
+                        <Skeleton width="140px" height="1.25rem" />
+                        <SkeletonText lines={4} className="mt-3" />
+                    </div>
+                </div>
+            </div>
+        );
+    }
 
     if (!isLoading && !id && logs.length === 0) {
         return (

@@ -203,6 +203,8 @@
     "pastSessions": "历史服务",
     "myProfile": "我的资料",
     "myChildren": "我的孩子",
+    "noChildrenYet": "尚未添加孩子",
+    "noChildrenYetDesc": "添加孩子信息以获得个性化护理体验",
     "addChild": "添加孩子",
     "notifications": "通知",
     "paymentMethods": "支付方式",
@@ -776,7 +778,8 @@
     "code": "404",
     "title": "页面未找到",
     "description": "您要查找的页面不存在或已被移动。",
-    "goHome": "返回首页"
+    "goHome": "返回首页",
+    "goBack": "返回"
   },
   "qr": {
     "title": "签到QR码",

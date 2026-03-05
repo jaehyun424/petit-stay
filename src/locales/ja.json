@@ -203,6 +203,8 @@
     "pastSessions": "過去のセッション",
     "myProfile": "マイプロフィール",
     "myChildren": "お子様情報",
+    "noChildrenYet": "お子様がまだ登録されていません",
+    "noChildrenYetDesc": "パーソナライズされたケアのためにお子様の情報を追加してください",
     "addChild": "お子様を追加",
     "notifications": "通知",
     "paymentMethods": "お支払い方法",
@@ -776,7 +778,8 @@
     "code": "404",
     "title": "ページが見つかりません",
     "description": "お探しのページは存在しないか、移動されました。",
-    "goHome": "ホームへ"
+    "goHome": "ホームへ",
+    "goBack": "戻る"
   },
   "qr": {
     "title": "チェックインQRコード",

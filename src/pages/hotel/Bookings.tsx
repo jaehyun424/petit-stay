@@ -12,6 +12,7 @@ import { Badge, StatusBadge, TierBadge } from '../../components/common/Badge';
 import { Avatar } from '../../components/common/Avatar';
 import { Modal } from '../../components/common/Modal';
 import { EmptyState } from '../../components/common/EmptyState';
+import { Skeleton, TableSkeleton } from '../../components/common/Skeleton';
 import { Pagination, usePagination } from '../../components/common/Pagination';
 import ErrorBanner from '../../components/common/ErrorBanner';
 import { useAuth } from '../../contexts/AuthContext';
@@ -47,7 +48,7 @@ const PlusIcon = () => (
 export default function Bookings() {
     const { t } = useTranslation();
     const { user } = useAuth();
-    const { bookings, error, retry } = useHotelBookings(user?.hotelId);
+    const { bookings, isLoading, error, retry } = useHotelBookings(user?.hotelId);
     const { sitters } = useHotelSitters(user?.hotelId);
     const toast = useToast();
     const [searchTerm, setSearchTerm] = useState('');
@@ -259,6 +260,33 @@ export default function Bookings() {
 
     const { totalPages, getPageItems } = usePagination(filteredBookings, 10);
     const paginatedBookings = getPageItems(currentPage);
+
+    if (isLoading) {
+        return (
+            <div className="bookings-page animate-fade-in">
+                <div className="page-header">
+                    <div>
+                        <Skeleton width="160px" height="2rem" />
+                        <Skeleton width="220px" height="1rem" className="mt-2" />
+                    </div>
+                    <Skeleton width="140px" height="40px" borderRadius="var(--radius-lg)" />
+                </div>
+                <Card className="mb-6">
+                    <CardBody>
+                        <div className="filters-row">
+                            <Skeleton width="100%" height="40px" />
+                            <Skeleton width="200px" height="40px" />
+                        </div>
+                    </CardBody>
+                </Card>
+                <Card>
+                    <CardBody>
+                        <TableSkeleton rows={6} columns={6} />
+                    </CardBody>
+                </Card>
+            </div>
+        );
+    }
 
     return (
         <div className="bookings-page animate-fade-in">

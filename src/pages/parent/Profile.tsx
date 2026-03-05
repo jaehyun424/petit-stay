@@ -3,12 +3,14 @@
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
-import { Bell, Globe, Moon, Sun, CreditCard, FileText, Lock, HelpCircle } from 'lucide-react';
+import { Bell, Globe, Moon, Sun, CreditCard, FileText, Lock, HelpCircle, Baby } from 'lucide-react';
 import { Card, CardBody } from '../../components/common/Card';
 import { Button } from '../../components/common/Button';
 import { Avatar } from '../../components/common/Avatar';
 import { Modal, ConfirmModal } from '../../components/common/Modal';
 import { Input, Select } from '../../components/common/Input';
+import { EmptyState } from '../../components/common/EmptyState';
+import { Skeleton } from '../../components/common/Skeleton';
 import { PaymentMethodCardDisplay } from '../../components/common/PaymentMethodCard';
 import { useAuth } from '../../contexts/AuthContext';
 import { useChildren } from '../../hooks/useChildren';
@@ -248,12 +250,16 @@ export default function Profile() {
                     <div className="children-list">
                         {isLoading ? (
                             <div className="profile-empty-state">
-                                <span className="spinner" />
+                                <Skeleton width="100%" height="60px" />
+                                <Skeleton width="100%" height="60px" />
                             </div>
                         ) : children.length === 0 ? (
-                            <p className="profile-no-children">
-                                {t('common.none') || 'None'}
-                            </p>
+                            <EmptyState
+                                icon={<Baby size={28} strokeWidth={1.5} />}
+                                title={t('parent.noChildrenYet', 'No children added yet')}
+                                description={t('parent.noChildrenYetDesc', 'Add your children\'s information for a personalized care experience')}
+                                size="sm"
+                            />
                         ) : (
                             children.map((child) => (
                                 <div className="child-item" key={child.id}>
