@@ -101,7 +101,8 @@ export const auditLogService = {
     /** Subscribe to audit log changes (real-time) */
     subscribeToAuditLog(
         bookingId: string,
-        callback: (entries: AuditLogEntry[]) => void
+        callback: (entries: AuditLogEntry[]) => void,
+        onError?: (error: Error) => void
     ) {
         const q = query(
             collection(db, 'bookings', bookingId, 'auditLog'),
@@ -118,6 +119,9 @@ export const auditLogService = {
                 timestamp: convertTimestamp(d.data().timestamp),
             })) as AuditLogEntry[];
             callback(entries);
+        }, (error) => {
+            console.error('Firestore subscription error (audit log):', error);
+            onError?.(error);
         });
     },
 };

@@ -108,6 +108,7 @@ export const messagingService = {
     subscribeToMessages(
         conversationId: string,
         callback: (messages: Message[]) => void,
+        onError?: (error: Error) => void,
     ) {
         const q = query(
             collection(db, 'conversations', conversationId, 'messages'),
@@ -128,6 +129,9 @@ export const messagingService = {
                 };
             });
             callback(messages);
+        }, (error) => {
+            console.error('Firestore subscription error (messages):', error);
+            onError?.(error);
         });
     },
 
@@ -161,6 +165,7 @@ export const messagingService = {
     subscribeToConversations(
         userId: string,
         callback: (conversations: Conversation[]) => void,
+        onError?: (error: Error) => void,
     ) {
         const q = query(
             collection(db, 'conversations'),
@@ -182,6 +187,9 @@ export const messagingService = {
                 };
             });
             callback(conversations);
+        }, (error) => {
+            console.error('Firestore subscription error (conversations):', error);
+            onError?.(error);
         });
     },
 };

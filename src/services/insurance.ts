@@ -85,7 +85,7 @@ export const insuranceService = {
     },
 
     /** Subscribe to all policies (real-time) */
-    subscribeToPolicies(callback: (policies: InsurancePolicy[]) => void) {
+    subscribeToPolicies(callback: (policies: InsurancePolicy[]) => void, onError?: (error: Error) => void) {
         const q = query(
             collection(db, COLLECTIONS.insurancePolicies),
             orderBy('validTo', 'desc'),
@@ -97,6 +97,9 @@ export const insuranceService = {
                 ...convertTimestamps(d.data()),
             })) as unknown as InsurancePolicy[];
             callback(policies);
+        }, (error) => {
+            console.error('Firestore subscription error (insurance policies):', error);
+            onError?.(error);
         });
     },
 
@@ -153,7 +156,7 @@ export const insuranceService = {
     },
 
     /** Subscribe to all booking insurance (real-time) */
-    subscribeToBookingInsurance(callback: (entries: BookingInsurance[]) => void) {
+    subscribeToBookingInsurance(callback: (entries: BookingInsurance[]) => void, onError?: (error: Error) => void) {
         const q = query(
             collection(db, COLLECTIONS.bookingInsurance),
             limit(200)
@@ -163,6 +166,9 @@ export const insuranceService = {
                 ...convertTimestamps(d.data()),
             })) as unknown as BookingInsurance[];
             callback(entries);
+        }, (error) => {
+            console.error('Firestore subscription error (booking insurance):', error);
+            onError?.(error);
         });
     },
 };
