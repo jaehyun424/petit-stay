@@ -308,7 +308,7 @@
 .day-item.has-sessions .day-date { color: var(--gold-700); font-weight: var(--font-medium); }
 
 .day-session-count {
-  font-size: 10px;
+  font-size: 11px;
   font-weight: var(--font-bold);
   color: var(--gold-600);
   background: rgba(255, 255, 255, 0.7);

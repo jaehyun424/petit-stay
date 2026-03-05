@@ -91,7 +91,7 @@
   gap: var(--space-4);
 }
 .progress-steps-5 .step-label {
-  font-size: 0.625rem;
+  font-size: 0.6875rem;
 }
 .progress-steps-5::before {
   width: 70%;
