@@ -2,6 +2,35 @@
 
 All notable changes to Petit Stay are documented in this file.
 
+## [1.1.0] - 2026-03-05
+
+### Wave 4: Production Hardening
+
+#### Code Quality and Performance
+- Dead code removal and unused import cleanup
+- Component optimization and render performance improvements
+
+#### Project Structure
+- File organization and module boundary cleanup
+
+#### Test Strengthening
+- Test suite fixes and expanded coverage
+
+#### Firebase Cleanup
+- Firestore rules and security configuration review
+- Cloud Functions cleanup
+
+#### Docs and SEO
+- README updated with full project documentation
+- CHANGELOG maintained with all release history
+- Open Graph and Twitter Card meta tags with absolute URLs
+- robots.txt with authenticated route exclusions
+- sitemap.xml with all public pages
+- CONTRIBUTING.md with development and PR guidelines
+- MIT LICENSE added
+
+---
+
 ## [1.0.0-beta] - 2026-03-05
 
 ### Production Upgrade (10-Phase Plan)
