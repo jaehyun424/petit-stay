@@ -2,7 +2,7 @@
 // Petit Stay - Guest Page (Token-based, No Login)
 // ============================================
 
-import { useState } from 'react';
+import { useState, useRef, useCallback } from 'react';
 import { useParams, useSearchParams } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import { motion, AnimatePresence } from 'framer-motion';
@@ -19,11 +19,7 @@ import { BrandLogo } from '../../components/common/BrandLogo';
 import { useWhiteLabel } from '../../hooks/useWhiteLabel';
 import '../../styles/pages/guest.css';
 
-const slideVariants = {
-  enter: { opacity: 0, x: 30 },
-  center: { opacity: 1, x: 0, transition: { duration: 0.3, ease: [0.25, 0.46, 0.45, 0.94] as [number, number, number, number] } },
-  exit: { opacity: 0, x: -30, transition: { duration: 0.2 } },
-};
+const EASE_OUT: [number, number, number, number] = [0.25, 0.46, 0.45, 0.94];
 
 export default function GuestPage() {
   const { reservationId } = useParams<{ reservationId: string }>();
@@ -41,7 +37,19 @@ export default function GuestPage() {
   const { reservation, isLoading, isValid, isExpired, error } = useGuestToken(reservationId, token);
   const { branding } = useWhiteLabel(hotelId);
   const [currentStep, setCurrentStep] = useState(1);
+  const directionRef = useRef(1);
   const totalSteps = 5;
+
+  const goToStep = useCallback((step: number) => {
+    directionRef.current = step > currentStep ? 1 : -1;
+    setCurrentStep(step);
+  }, [currentStep]);
+
+  const slideVariants = {
+    enter: { opacity: 0, x: directionRef.current * 40 },
+    center: { opacity: 1, x: 0, transition: { duration: 0.35, ease: EASE_OUT } },
+    exit: { opacity: 0, x: directionRef.current * -40, transition: { duration: 0.2 } },
+  };
 
   const stepLabels = [t('guest.step1'), t('guest.step2'), t('guest.step3'), t('guest.step4'), t('guest.step5')];
 
@@ -94,9 +102,9 @@ export default function GuestPage() {
   }
 
   return (
-    <div className="guest-page">
+    <div className="guest-page" role="main">
       <div className="guest-container">
-        <div className="guest-header">
+        <header className="guest-header">
           {branding.logoUrl ? (
             <div className="guest-brand-logo">
               <img src={branding.logoUrl} alt={branding.hotelName} className="guest-brand-img" />
@@ -106,31 +114,35 @@ export default function GuestPage() {
             <BrandLogo size="sm" showName />
           )}
           <LanguageSwitcher />
-        </div>
+        </header>
 
         <h1 className="guest-title">{t('guest.pageTitle')}</h1>
 
         <StepIndicator currentStep={currentStep} totalSteps={totalSteps} labels={stepLabels} />
 
-        <AnimatePresence mode="wait">
+        <div aria-live="polite" aria-atomic="true" className="sr-only">
+          {stepLabels[currentStep - 1]}
+        </div>
+
+        <AnimatePresence mode="wait" initial={false}>
           <motion.div key={currentStep} variants={slideVariants} initial="enter" animate="center" exit="exit">
             {currentStep === 1 && (
-              <ReservationInfo reservation={reservation} onNext={() => setCurrentStep(2)} />
+              <ReservationInfo reservation={reservation} onNext={() => goToStep(2)} />
             )}
             {currentStep === 2 && (
-              <ConsentForm bookingId={reservation.id} onNext={() => setCurrentStep(3)} onBack={() => setCurrentStep(1)} />
+              <ConsentForm bookingId={reservation.id} onNext={() => goToStep(3)} onBack={() => goToStep(1)} />
             )}
             {currentStep === 3 && (
               <PaymentStep
                 reservation={reservation}
-                onNext={() => setCurrentStep(4)}
-                onBack={() => setCurrentStep(2)}
+                onNext={() => goToStep(4)}
+                onBack={() => goToStep(2)}
               />
             )}
             {currentStep === 4 && (
               <ConfirmationStep
                 reservation={reservation}
-                onNext={() => setCurrentStep(5)}
+                onNext={() => goToStep(5)}
               />
             )}
             {currentStep === 5 && (

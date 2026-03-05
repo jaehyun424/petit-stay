@@ -97,12 +97,13 @@ export function FeedbackStep({ bookingId, onSubmit }: FeedbackStepProps) {
             className="guest-textarea"
             rows={4}
             placeholder={t('guest.commentPlaceholder')}
+            aria-label={t('guest.commentLabel')}
             value={comment}
             onChange={(e) => setComment(e.target.value)}
           />
         </div>
-        <button className="guest-btn guest-btn-primary" onClick={handleSubmit} disabled={rating === 0 || isSubmitting}>
-          {t('guest.submitFeedback')}
+        <button className="guest-btn guest-btn-primary" onClick={handleSubmit} disabled={rating === 0 || isSubmitting} aria-label={t('guest.submitFeedback')}>
+          {isSubmitting ? <span className="guest-spinner" aria-label="Submitting" /> : t('guest.submitFeedback')}
         </button>
       </div>
 

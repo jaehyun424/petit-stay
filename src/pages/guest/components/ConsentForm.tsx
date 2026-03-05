@@ -56,8 +56,11 @@ export function ConsentForm({ bookingId, onNext, onBack }: ConsentFormProps) {
             type="button"
             className={`guest-consent-btn ${consents[key] ? 'guest-consent-btn-checked' : ''}`}
             onClick={() => toggle(key)}
+            role="checkbox"
+            aria-checked={consents[key]}
+            aria-label={label}
           >
-            <div className={`guest-consent-check ${consents[key] ? 'guest-consent-check-on' : ''}`}>
+            <div className={`guest-consent-check ${consents[key] ? 'guest-consent-check-on' : ''}`} aria-hidden="true">
               {consents[key] && <Check size={14} strokeWidth={3} />}
             </div>
             <span>{label}</span>
@@ -65,9 +68,9 @@ export function ConsentForm({ bookingId, onNext, onBack }: ConsentFormProps) {
         ))}
       </div>
       <div className="guest-btn-row">
-        <button className="guest-btn guest-btn-secondary" onClick={onBack} disabled={isSubmitting}>{t('guest.previousStep')}</button>
-        <button className="guest-btn guest-btn-primary" onClick={handleSubmit} disabled={!allConsented || isSubmitting}>
-          {isSubmitting ? <span className="guest-spinner" /> : t('guest.nextStep')}
+        <button className="guest-btn guest-btn-secondary" onClick={onBack} disabled={isSubmitting} aria-label={t('guest.previousStep')}>{t('guest.previousStep')}</button>
+        <button className="guest-btn guest-btn-primary" onClick={handleSubmit} disabled={!allConsented || isSubmitting} aria-label={t('guest.nextStep')}>
+          {isSubmitting ? <span className="guest-spinner" aria-label="Loading" /> : t('guest.nextStep')}
         </button>
       </div>
     </div>
