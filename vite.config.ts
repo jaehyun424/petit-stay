@@ -143,7 +143,6 @@ export default defineConfig({
           'pdf': ['jspdf'],
           'animation': ['framer-motion'],
           'recharts': ['recharts'],
-          'date-fns': ['date-fns'],
         },
       },
     },
