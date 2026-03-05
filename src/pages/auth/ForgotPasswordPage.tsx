@@ -1,10 +1,12 @@
 // ============================================
-// Petit Stay - Forgot Password Page
+// Petit Stay - Forgot Password Page (3-Step Flow)
 // ============================================
 
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
+import { Mail, ArrowRight, CheckCircle } from 'lucide-react';
+import { motion, AnimatePresence } from 'framer-motion';
 import { useToast } from '../../contexts/ToastContext';
 import { Button } from '../../components/common/Button';
 import { Input } from '../../components/common/Input';
@@ -15,8 +17,20 @@ import { sendPasswordResetEmail } from 'firebase/auth';
 import { auth } from '../../services/firebase';
 import '../../styles/pages/login.css';
 
-const FORGOT_VIDEO = 'https://videos.pexels.com/video-files/6010489/6010489-uhd_2560_1440_25fps.mp4';
-const FORGOT_POSTER = 'https://images.pexels.com/photos/1134176/pexels-photo-1134176.jpeg?auto=compress&cs=tinysrgb&w=1920';
+const FORGOT_IMAGE = 'https://images.pexels.com/photos/1134176/pexels-photo-1134176.jpeg?auto=compress&cs=tinysrgb&w=1920';
+
+const pageTransition = {
+  initial: { opacity: 0 },
+  animate: { opacity: 1, transition: { duration: 0.4 } },
+  exit: { opacity: 0, transition: { duration: 0.2 } },
+};
+
+const fadeUp = {
+  hidden: { opacity: 0, y: 16 },
+  show: { opacity: 1, y: 0, transition: { duration: 0.4, ease: [0.25, 0.46, 0.45, 0.94] as [number, number, number, number] } },
+};
+
+type Step = 1 | 2 | 3;
 
 export default function ForgotPasswordPage() {
   const { success, error: showError } = useToast();
@@ -24,8 +38,14 @@ export default function ForgotPasswordPage() {
 
   const [email, setEmail] = useState('');
   const [isLoading, setIsLoading] = useState(false);
-  const [isSent, setIsSent] = useState(false);
+  const [currentStep, setCurrentStep] = useState<Step>(1);
   const [emailError, setEmailError] = useState('');
+
+  const stepLabels = [
+    t('auth.forgotStep1'),
+    t('auth.forgotStep2'),
+    t('auth.forgotStep3'),
+  ];
 
   const validate = () => {
     if (!email) {
@@ -44,6 +64,7 @@ export default function ForgotPasswordPage() {
     e.preventDefault();
     if (!validate()) return;
 
+    setCurrentStep(2);
     setIsLoading(true);
     try {
       if (DEMO_MODE) {
@@ -53,113 +74,184 @@ export default function ForgotPasswordPage() {
         await sendPasswordResetEmail(auth, email);
         success(t('auth.resetLinkSent'), t('auth.resetLinkSentDesc'));
       }
-      setIsSent(true);
+      setCurrentStep(3);
     } catch (err: unknown) {
       const message = err instanceof Error ? err.message : t('common.error');
       showError(t('auth.requestFailed'), message);
+      setCurrentStep(1);
     } finally {
       setIsLoading(false);
     }
   };
 
-  return (
-    <div className="login-container login-page">
-      {/* Visual Column (Left - Video) */}
-      <div className="login-visual">
-        <video
-          className="login-visual-video"
-          autoPlay
-          muted
-          loop
-          playsInline
-          preload="auto"
-          poster={FORGOT_POSTER}
-        >
-          <source src={FORGOT_VIDEO} type="video/mp4" />
-        </video>
-        <div className="visual-overlay" />
-        <div className="visual-content">
-          <h1 className="visual-quote">"{t('auth.videoQuote')}"</h1>
-          <p className="visual-author">— {t('auth.hospitalityStandard')}</p>
-        </div>
-      </div>
+  const getStepState = (step: number): 'completed' | 'active' | 'pending' => {
+    if (step < currentStep) return 'completed';
+    if (step === currentStep) return 'active';
+    return 'pending';
+  };
 
-      {/* Form Column (Right) */}
-      <div className="login-form-container">
-        <div className="login-header">
-          <Link to="/" className="brand-logo-link">
-            <BrandLogo size="sm" showName />
-          </Link>
-          <div className="login-header-right">
-            <LanguageSwitcher />
+  return (
+    <AnimatePresence mode="wait">
+      <motion.div
+        className="login-container login-page"
+        key="forgot-password"
+        {...pageTransition}
+      >
+        {/* Visual Column (Left) */}
+        <div className="login-visual">
+          <img
+            className="login-visual-image"
+            src={FORGOT_IMAGE}
+            alt=""
+            loading="eager"
+          />
+          <div className="visual-overlay" />
+          <div className="visual-content">
+            <motion.h1
+              className="visual-quote"
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.8, delay: 0.3 }}
+            >
+              "{t('auth.videoQuote')}"
+            </motion.h1>
+            <motion.p
+              className="visual-author"
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              transition={{ duration: 0.6, delay: 0.6 }}
+            >
+              — {t('auth.hospitalityStandard')}
+            </motion.p>
           </div>
         </div>
 
-        <div className="form-wrapper">
-          {isSent ? (
-            /* Success state */
-            <div className="text-center">
-              <h2 className="text-3xl font-serif mb-2">{t('auth.checkYourEmail')}</h2>
-              <p className="text-charcoal-500 mb-8">
-                {t('auth.resetEmailSent', { email })}
-              </p>
-              <Link to="/login">
-                <Button variant="primary" fullWidth>
-                  {t('auth.backToLogin')}
-                </Button>
-              </Link>
+        {/* Form Column (Right) */}
+        <div className="login-form-container">
+          <div className="login-header">
+            <Link to="/" className="brand-logo-link">
+              <BrandLogo size="sm" showName />
+            </Link>
+            <div className="login-header-right">
+              <LanguageSwitcher />
             </div>
-          ) : (
-            /* Form state */
-            <>
-              <div className="text-center mb-8">
-                <h2 className="text-3xl font-serif mb-2">
-                  {t('auth.forgotPassword')}
-                </h2>
-                <p className="text-charcoal-500">
-                  {t('auth.resetDescription')}
-                </p>
-              </div>
+          </div>
 
-              <form onSubmit={handleSubmit} className="flex flex-col gap-4">
-                <Input
-                  label={t('auth.emailAccessId')}
-                  type="email"
-                  value={email}
-                  onChange={(e) => setEmail(e.target.value)}
-                  placeholder={t('auth.loginEmailPlaceholder')}
-                  error={emailError}
-                  autoComplete="email"
-                />
+          <div className="form-wrapper">
+            {/* Step Indicator */}
+            <div className="step-indicator">
+              {stepLabels.map((label, idx) => {
+                const step = idx + 1;
+                const state = getStepState(step);
+                return (
+                  <React.Fragment key={step}>
+                    {idx > 0 && (
+                      <div className={`step-connector${state !== 'pending' ? ' step-connector-active' : ''}`} />
+                    )}
+                    <div className="step-item">
+                      <div className={`step-circle${state === 'active' ? ' step-active' : ''}${state === 'completed' ? ' step-completed' : ''}`}>
+                        {state === 'completed' ? <CheckCircle size={16} /> : step}
+                      </div>
+                      <span className={`step-label${state === 'active' ? ' step-label-active' : ''}`}>
+                        {label}
+                      </span>
+                    </div>
+                  </React.Fragment>
+                );
+              })}
+            </div>
 
-                <div className="mt-4">
-                  <Button
-                    type="submit"
-                    variant="primary"
-                    fullWidth
-                    isLoading={isLoading}
-                  >
-                    {t('auth.sendResetLink')}
-                  </Button>
-                </div>
-              </form>
-
-              <div className="mt-8 text-center">
-                <p className="text-sm text-charcoal-500">
-                  {t('auth.rememberPassword')}{' '}
-                  <Link to="/login" className="text-charcoal-900 border-b border-gold-500 pb-0.5 hover:text-gold-600">
-                    {t('auth.backToLogin')}
+            <AnimatePresence mode="wait">
+              {currentStep === 3 ? (
+                /* Step 3: Success confirmation */
+                <motion.div
+                  key="success"
+                  className="text-center"
+                  initial="hidden"
+                  animate="show"
+                  exit="hidden"
+                  variants={fadeUp}
+                >
+                  <div className="success-icon">
+                    <Mail size={28} strokeWidth={1.5} />
+                  </div>
+                  <h2 className="text-2xl font-serif mb-2">{t('auth.checkYourEmail')}</h2>
+                  <p className="text-sm text-charcoal-500 mb-8" style={{ lineHeight: 1.6 }}>
+                    {t('auth.resetSuccessDesc')}
+                  </p>
+                  <Link to="/login">
+                    <Button variant="primary" fullWidth>
+                      {t('auth.returnToLogin')}
+                    </Button>
                   </Link>
-                </p>
-              </div>
-            </>
-          )}
-        </div>
+                </motion.div>
+              ) : (
+                /* Step 1-2: Email form */
+                <motion.div
+                  key="form"
+                  initial="hidden"
+                  animate="show"
+                  exit="hidden"
+                  variants={fadeUp}
+                >
+                  <div className="text-center mb-8">
+                    <h2 className="text-2xl font-serif mb-2">
+                      {t('auth.forgotTitle')}
+                    </h2>
+                    <p className="text-sm text-charcoal-500">
+                      {t('auth.resetDescription')}
+                    </p>
+                  </div>
 
-        <div className="login-footer">
-          <p>&copy; {new Date().getFullYear()} {t('auth.footerText')}</p>
+                  <form onSubmit={handleSubmit} className="flex flex-col gap-4">
+                    <Input
+                      label={t('auth.emailAccessId')}
+                      type="email"
+                      value={email}
+                      onChange={(e) => {
+                        setEmail(e.target.value);
+                        if (emailError) setEmailError('');
+                      }}
+                      placeholder={t('auth.loginEmailPlaceholder')}
+                      error={emailError}
+                      autoComplete="email"
+                      disabled={isLoading}
+                      icon={<Mail size={18} strokeWidth={1.75} />}
+                    />
+
+                    <div className="mt-4">
+                      <Button
+                        type="submit"
+                        variant="primary"
+                        fullWidth
+                        isLoading={isLoading}
+                        disabled={isLoading}
+                        icon={!isLoading ? <ArrowRight size={18} /> : undefined}
+                        iconPosition="right"
+                      >
+                        {t('auth.sendResetLink')}
+                      </Button>
+                    </div>
+                  </form>
+
+                  <div className="mt-8 text-center">
+                    <p className="text-sm text-charcoal-500">
+                      {t('auth.rememberPassword')}{' '}
+                      <Link to="/login" className="text-charcoal-900 border-b border-gold-500 pb-0.5 hover:text-gold-600">
+                        {t('auth.backToLogin')}
+                      </Link>
+                    </p>
+                  </div>
+                </motion.div>
+              )}
+            </AnimatePresence>
+          </div>
+
+          <div className="login-footer">
+            <p>&copy; {new Date().getFullYear()} {t('auth.footerText')}</p>
+          </div>
         </div>
-      </div>
-    </div>
+      </motion.div>
+    </AnimatePresence>
   );
 }
