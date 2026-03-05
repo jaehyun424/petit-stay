@@ -1,10 +1,10 @@
 {
-  "name": "Petit Stay - Hospitality Childcare",
+  "name": "Petit Stay - Premium Hotel Childcare",
   "short_name": "Petit Stay",
-  "description": "Premium childcare management for luxury hotels. Real-time monitoring, booking, and sitter coordination.",
+  "description": "Trusted childcare for luxury hotels. Certified sitters, real-time monitoring, instant booking, and QR check-in.",
   "start_url": "/",
   "display": "standalone",
-  "theme_color": "#1C1C1C",
+  "theme_color": "#1a1a2e",
   "background_color": "#FBFBF9",
   "orientation": "portrait-primary",
   "scope": "/",

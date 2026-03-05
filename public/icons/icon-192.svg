@@ -1,11 +1,19 @@
 <svg xmlns="http://www.w3.org/2000/svg" width="192" height="192" viewBox="0 0 192 192">
-  <rect x="8" y="8" width="176" height="176" rx="40" fill="url(#g)"/>
-  <path d="M64 144V48h34c11.2 0 19.6 2.8 25.6 8.4 6 5.6 8.8 13.2 8.8 22.8 0 9.6-2.8 17.2-8.8 22.8-6 5.6-14.4 8.4-25.6 8.4H82v33.6H64z M82 96h16c6 0 10.4-1.6 13.6-4.4 3.2-3.2 4.8-7.2 4.8-12.4s-1.6-9.2-4.8-12.4C108.4 63.6 104 62 98 62H82v34z" fill="white"/>
-  <path d="M136 40l3.6 7.2 8 1.2-6 5.6 1.6 8-7.2-3.8-7.2 3.8 1.6-8-6-5.6 8-1.2z" fill="white" opacity="0.85"/>
+  <rect x="8" y="8" width="176" height="176" rx="40" fill="url(#n)"/>
+  <!-- House motif — top left -->
+  <path d="M48 72l16-14 16 14v20H70V80H58v12H48V72z" fill="url(#g)" opacity="0.85"/>
+  <!-- Stylized "ps" -->
+  <text x="104" y="128" text-anchor="middle" fill="white" font-family="'Playfair Display', Georgia, serif" font-weight="600" font-style="italic" font-size="88" letter-spacing="-2">ps</text>
+  <!-- Star accent -->
+  <path d="M148 36l2.4 4.8 5.3.8-3.8 3.7 0.9 5.3-4.8-2.5-4.8 2.5 0.9-5.3-3.8-3.7 5.3-.8z" fill="url(#g)" opacity="0.9"/>
   <defs>
     <linearGradient id="g" x1="0" y1="0" x2="192" y2="192">
       <stop offset="0%" stop-color="#D3B167"/>
-      <stop offset="100%" stop-color="#9E8047"/>
+      <stop offset="100%" stop-color="#C5A059"/>
+    </linearGradient>
+    <linearGradient id="n" x1="0" y1="0" x2="192" y2="192">
+      <stop offset="0%" stop-color="#1a1a2e"/>
+      <stop offset="100%" stop-color="#16213e"/>
     </linearGradient>
   </defs>
 </svg>
