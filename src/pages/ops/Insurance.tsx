@@ -2,12 +2,14 @@
 // Petit Stay - Ops Insurance Dashboard
 // ============================================
 
+import { useState, useMemo } from 'react';
 import { useTranslation } from 'react-i18next';
 import { motion } from 'framer-motion';
 import { staggerContainer, staggerItem } from '../../utils/animations';
 import { Shield, FileCheck, AlertCircle, DollarSign } from 'lucide-react';
 import { Card, CardHeader, CardTitle, CardBody } from '../../components/common/Card';
 import { Badge } from '../../components/common/Badge';
+import { Select } from '../../components/common/Input';
 import { AnimatedCounter } from '../../components/common/AnimatedCounter';
 import { EmptyState } from '../../components/common/EmptyState';
 import { Skeleton } from '../../components/common/Skeleton';
@@ -37,6 +39,7 @@ function getClaimStatusVariant(status: string): 'success' | 'primary' | 'warning
 
 export default function OpsInsurance() {
     const { t } = useTranslation();
+    const [claimStatusFilter, setClaimStatusFilter] = useState('');
     const {
         policies,
         bookingInsurance,
@@ -49,12 +52,21 @@ export default function OpsInsurance() {
         isLoading,
     } = useInsurance();
 
+    const filteredBookingInsurance = useMemo(() => {
+        if (!claimStatusFilter) return bookingInsurance;
+        return bookingInsurance.filter((b) => b.status === claimStatusFilter);
+    }, [bookingInsurance, claimStatusFilter]);
+
     if (isLoading) {
         return (
             <div className="ops-dashboard animate-fade-in">
                 <Skeleton width="260px" height="2rem" />
-                <div className="ops-stats-grid">
+                <div className="ops-stats-grid" style={{ marginTop: 'var(--space-6)' }}>
                     {[1, 2, 3, 4].map((i) => <Skeleton key={i} height="100px" />)}
+                </div>
+                <div className="ops-grid-2" style={{ marginTop: 'var(--space-4)' }}>
+                    <Skeleton height="300px" />
+                    <Skeleton height="300px" />
                 </div>
             </div>
         );
@@ -164,7 +176,7 @@ export default function OpsInsurance() {
                                 {bookingInsurance
                                     .filter((b) => b.status === 'claimed')
                                     .map((bi) => (
-                                        <div key={bi.bookingId} className="ops-issue-item" style={{ borderLeft: '3px solid #BC8B4C' }}>
+                                        <div key={bi.bookingId} className="ops-issue-item" style={{ borderLeft: '3px solid var(--gold-500)' }}>
                                             <div className="ops-issue-header">
                                                 <Badge variant="primary" size="sm">
                                                     {bi.bookingId}
@@ -185,7 +197,7 @@ export default function OpsInsurance() {
                 </Card>
             </div>
 
-            {/* All Booking Insurance */}
+            {/* All Booking Insurance with Filter */}
             <Card>
                 <CardHeader>
                     <CardTitle subtitle={t('insurance.totalBookingsCovered', { count: bookingInsurance.length })}>
@@ -193,6 +205,15 @@ export default function OpsInsurance() {
                     </CardTitle>
                 </CardHeader>
                 <CardBody>
+                    <div style={{ marginBottom: 'var(--space-4)', maxWidth: 240 }}>
+                        <Select value={claimStatusFilter} onChange={(e) => setClaimStatusFilter(e.target.value)} options={[
+                            { value: '', label: t('ops.allStatuses') },
+                            { value: 'active', label: t('insurance.status_active') },
+                            { value: 'pending', label: t('insurance.status_pending') },
+                            { value: 'claimed', label: t('insurance.status_claimed') },
+                            { value: 'expired', label: t('insurance.status_expired') },
+                        ]} />
+                    </div>
                     <div className="ops-table-wrapper">
                         <table className="ops-table">
                             <thead>
@@ -204,7 +225,7 @@ export default function OpsInsurance() {
                                 </tr>
                             </thead>
                             <motion.tbody initial="hidden" animate="show" variants={staggerContainer}>
-                                {bookingInsurance.map((bi) => (
+                                {filteredBookingInsurance.map((bi) => (
                                     <motion.tr key={bi.bookingId} variants={staggerItem} className="ops-table-row-hover">
                                         <td><span className="booking-code">{bi.bookingId}</span></td>
                                         <td>{bi.policyId}</td>
