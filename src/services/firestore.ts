@@ -297,17 +297,19 @@ export const sessionService = {
         const sessionRef = doc(collection(db, COLLECTIONS.sessions));
         await setDoc(sessionRef, {
             ...session,
-            startTime: serverTimestamp(),
+            'actualTimes.startedAt': serverTimestamp(),
+            createdAt: serverTimestamp(),
+            updatedAt: serverTimestamp(),
         });
         return sessionRef.id;
     },
 
     // End a session
-    async endSession(sessionId: string, notes?: string): Promise<void> {
+    async endSession(sessionId: string, _notes?: string): Promise<void> {
         await updateDoc(doc(db, COLLECTIONS.sessions, sessionId), {
             status: 'completed',
-            endTime: serverTimestamp(),
-            notes: notes || '',
+            'actualTimes.completedAt': serverTimestamp(),
+            updatedAt: serverTimestamp(),
         });
     },
 
