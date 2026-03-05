@@ -55,7 +55,10 @@
     "signHere": "ここに署名",
     "demoBanner": "デモモード — データはシミュレーションであり保存されません",
     "tierGold": "GOLD",
-    "tierSilver": "SILVER"
+    "tierSilver": "SILVER",
+    "yearsOldShort": "歳",
+    "active": "アクティブ",
+    "unread": "未読"
   },
   "validation": {
     "required": "必須",
@@ -220,7 +223,9 @@
     "sessionHotel": "ジョソンパレスソウル",
     "sessionRoom": "スイート1201",
     "startedAt": "開始",
-    "sessionStartTime": "午後6:00"
+    "sessionStartTime": "午後6:00",
+    "noSessionHistory": "セッション履歴はまだありません",
+    "noSessionHistoryDesc": "完了した予約とセッションがここに表示されます。"
   },
   "booking": {
     "newBooking": "新規予約",
@@ -270,7 +275,13 @@
     "chargeToRoom": "ホテル客室に請求",
     "chargeToRoomDesc": "合計金額がホテルの客室料金に加算されます。チェックアウト時にフロントデスクでご確認ください。",
     "selectChildrenError": "お子様未選択",
-    "selectAtLeastOneChild": "セッションに参加するお子様を1名以上選択してください。"
+    "selectAtLeastOneChild": "セッションに参加するお子様を1名以上選択してください。",
+    "dateMustBeFuture": "本日以降の日付を選択してください",
+    "createFailed": "予約の作成に失敗しました",
+    "anyTier": "全ティア",
+    "goldTier": "Goldティア（プレミアム）",
+    "silverTier": "Silverティア",
+    "specialRequestsPlaceholder": "例: アレルギー、就寝ルーティン、言語の希望..."
   },
   "sitter": {
     "todaySchedule": "本日のスケジュール",
@@ -316,7 +327,13 @@
     "childrenInfo": "お子様情報",
     "sessionAmount": "金額",
     "noSessionsScheduled": "予定されたセッションなし",
-    "noSessionsScheduledDesc": "本日のセッションはありません。後ほどご確認ください。"
+    "noSessionsScheduledDesc": "本日のセッションはありません。後ほどご確認ください。",
+    "profile": {
+      "updateSuccess": "プロフィールが更新されました",
+      "updateError": "プロフィールの更新に失敗しました",
+      "languages": "対応言語",
+      "languagesHint": "カンマ区切り、例: 英語、韓国語"
+    }
   },
   "hotel": {
     "activeSessionsNow": "現在{{count}}件のセッション進行中",
@@ -381,7 +398,11 @@
       "actSessionStarted2": "セッション開始 - 2305号室 (キム・ミンジョン)",
       "actSitterConfirmed": "佐藤はるか 明日確定",
       "actSessionCompleted": "セッション完了 - 2108号室 (イ・ジヘ)"
-    }
+    },
+    "hotelProfileSubtitle": "ホテルの基本情報",
+    "serviceSettingsSubtitle": "サービス提供のカスタマイズ",
+    "displaySettingsSubtitle": "外観設定",
+    "notificationSettingsSubtitle": "通知設定の管理"
   },
   "trustCheckin": {
     "trustProtocol": "トラストプロトコル チェックイン",
@@ -541,7 +562,8 @@
     "minAgo": "{{count}}分前",
     "hourAgo": "{{count}}時間前",
     "dayAgo": "1日前",
-    "daysAgo": "{{count}}日前"
+    "daysAgo": "{{count}}日前",
+    "summaryTooShort": "要約は10文字以上で入力してください"
   },
   "settings": {
     "title": "ホテル設定",
@@ -718,7 +740,9 @@
     "moodLabel": "機嫌：",
     "energyLabel": "エネルギー：",
     "activityTimeline": "活動タイムライン：",
-    "realtimeUpdates": "リアルタイム更新"
+    "realtimeUpdates": "リアルタイム更新",
+    "remaining": "残り",
+    "endsAt": "終了時刻"
   },
   "scan": {
     "title": "QRチェックイン",
@@ -889,7 +913,9 @@
     "timelineBuildingBlocks": "ブロック遊び中",
     "timelineSnackServed": "りんごスライスとミルク提供",
     "timelinePhotoUploaded": "工作活動の写真アップロード",
-    "timelineReadingBooks": "一緒に絵本を読む"
+    "timelineReadingBooks": "一緒に絵本を読む",
+    "activityLogFailed": "アクティビティの記録に失敗しました。",
+    "snackLogFailed": "おやつの記録に失敗しました。"
   },
   "payment": {
     "card": "カード",
@@ -1370,7 +1396,8 @@
     "messageSitter": "シッターにメッセージ",
     "sessionActive": "セッション進行中、経過時間: {{time}}",
     "hidePassword": "パスワードを隠す",
-    "showPassword": "パスワードを表示"
+    "showPassword": "パスワードを表示",
+    "closeMenu": "メニューを閉じる"
   },
   "review": {
     "leaveReview": "レビューを書く",
@@ -1692,12 +1719,25 @@
     "previewBookings": "予約",
     "previewActive": "アクティブ",
     "previewRating": "評価",
-    "previewNewBooking": "新規予約"
+    "previewNewBooking": "新規予約",
+    "fullPreview": "フルプレビュー",
+    "previewTitle": "ブランディングプレビュー",
+    "previewDesc": "ゲストとスタッフに表示されるブランディングのプレビューです。"
   },
   "pwa": {
     "installTitle": "Petit Stayをインストール",
     "installDesc": "ホーム画面に追加して最高の体験を",
     "install": "インストール",
     "offline": "オフラインです"
+  },
+  "dashboard": {
+    "weeklyTrend": "今週の予約と売上",
+    "weeklyOverview": "今週",
+    "performanceSummary": "主要指標の概要",
+    "thisWeekSummary": "今週のまとめ",
+    "totalBookingsWeek": "今週の予約",
+    "weeklyRevenue": "週間売上",
+    "avgPerDay": "1日あたり平均売上",
+    "sittersAvailable": "現在対応可能なシッター"
   }
 }

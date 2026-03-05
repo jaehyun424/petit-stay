@@ -55,7 +55,10 @@
     "signHere": "Sign Here",
     "demoBanner": "Demo Mode — Data is simulated and will not persist",
     "tierGold": "GOLD",
-    "tierSilver": "SILVER"
+    "tierSilver": "SILVER",
+    "yearsOldShort": "y",
+    "active": "Active",
+    "unread": "unread"
   },
   "validation": {
     "required": "Required",
@@ -220,7 +223,9 @@
     "sessionHotel": "Josun Palace Seoul",
     "sessionRoom": "Suite 1201",
     "startedAt": "Started",
-    "sessionStartTime": "6:00 PM"
+    "sessionStartTime": "6:00 PM",
+    "noSessionHistory": "No session history yet",
+    "noSessionHistoryDesc": "Your past bookings and sessions will appear here once completed."
   },
   "booking": {
     "newBooking": "New Booking",
@@ -270,7 +275,13 @@
     "chargeToRoom": "Charge to Hotel Room",
     "chargeToRoomDesc": "The total amount will be added to your hotel room bill. Please confirm with the front desk upon checkout.",
     "selectChildrenError": "No Children Selected",
-    "selectAtLeastOneChild": "Please select at least one child for the session."
+    "selectAtLeastOneChild": "Please select at least one child for the session.",
+    "dateMustBeFuture": "Date must be today or later",
+    "createFailed": "Failed to create booking",
+    "anyTier": "Any Tier",
+    "goldTier": "Gold Tier (Premium)",
+    "silverTier": "Silver Tier",
+    "specialRequestsPlaceholder": "e.g. Allergies, bedtime routine, language preference..."
   },
   "sitter": {
     "todaySchedule": "Today's Schedule",
@@ -316,7 +327,13 @@
     "childrenInfo": "Children",
     "sessionAmount": "Amount",
     "noSessionsScheduled": "No sessions scheduled",
-    "noSessionsScheduledDesc": "You have no sessions scheduled for today. Check back later."
+    "noSessionsScheduledDesc": "You have no sessions scheduled for today. Check back later.",
+    "profile": {
+      "updateSuccess": "Profile updated successfully",
+      "updateError": "Failed to update profile",
+      "languages": "Languages",
+      "languagesHint": "Comma-separated, e.g. English, Korean"
+    }
   },
   "hotel": {
     "activeSessionsNow": "{{count}} active sessions right now",
@@ -381,7 +398,11 @@
       "actSessionStarted2": "Session started - Room 2305 (Kim Minjung)",
       "actSitterConfirmed": "Sato Haruka confirmed for tomorrow",
       "actSessionCompleted": "Session completed - Room 2108 (Lee Jihye)"
-    }
+    },
+    "hotelProfileSubtitle": "Basic information about your hotel",
+    "serviceSettingsSubtitle": "Customize service availability",
+    "displaySettingsSubtitle": "Appearance preferences",
+    "notificationSettingsSubtitle": "Manage notification preferences"
   },
   "trustCheckin": {
     "trustProtocol": "Trust Protocol Check-In",
@@ -541,7 +562,8 @@
     "minAgo": "{{count}}min ago",
     "hourAgo": "{{count}}h ago",
     "dayAgo": "1 day ago",
-    "daysAgo": "{{count}} days ago"
+    "daysAgo": "{{count}} days ago",
+    "summaryTooShort": "Summary must be at least 10 characters"
   },
   "settings": {
     "title": "Hotel Settings",
@@ -718,7 +740,9 @@
     "moodLabel": "Mood:",
     "energyLabel": "Energy:",
     "activityTimeline": "Activity Timeline:",
-    "realtimeUpdates": "Real-time updates"
+    "realtimeUpdates": "Real-time updates",
+    "remaining": "remaining",
+    "endsAt": "Ends at"
   },
   "scan": {
     "title": "QR Check-In",
@@ -889,7 +913,9 @@
     "timelineBuildingBlocks": "Playing with building blocks",
     "timelineSnackServed": "Apple slices and milk served",
     "timelinePhotoUploaded": "Photo of art activity uploaded",
-    "timelineReadingBooks": "Reading storybooks together"
+    "timelineReadingBooks": "Reading storybooks together",
+    "activityLogFailed": "Failed to log activity.",
+    "snackLogFailed": "Failed to log snack."
   },
   "payment": {
     "card": "Card",
@@ -1370,7 +1396,8 @@
     "messageSitter": "Message Sitter",
     "sessionActive": "Session active, elapsed time: {{time}}",
     "hidePassword": "Hide password",
-    "showPassword": "Show password"
+    "showPassword": "Show password",
+    "closeMenu": "Close menu"
   },
   "review": {
     "leaveReview": "Leave a Review",
@@ -1692,12 +1719,25 @@
     "previewBookings": "Bookings",
     "previewActive": "Active",
     "previewRating": "Rating",
-    "previewNewBooking": "New Booking"
+    "previewNewBooking": "New Booking",
+    "fullPreview": "Full Preview",
+    "previewTitle": "Branding Preview",
+    "previewDesc": "This is how your branding will appear to guests and staff."
   },
   "pwa": {
     "installTitle": "Install Petit Stay",
     "installDesc": "Add to home screen for the best experience",
     "install": "Install",
     "offline": "You are offline"
+  },
+  "dashboard": {
+    "weeklyTrend": "Bookings & revenue this week",
+    "weeklyOverview": "This Week",
+    "performanceSummary": "Key metrics at a glance",
+    "thisWeekSummary": "This Week Summary",
+    "totalBookingsWeek": "bookings this week",
+    "weeklyRevenue": "weekly revenue",
+    "avgPerDay": "avg. revenue per day",
+    "sittersAvailable": "sitters available now"
   }
 }

@@ -55,7 +55,10 @@
     "signHere": "여기에 서명",
     "demoBanner": "데모 모드 — 데이터는 시뮬레이션이며 저장되지 않습니다",
     "tierGold": "GOLD",
-    "tierSilver": "SILVER"
+    "tierSilver": "SILVER",
+    "yearsOldShort": "세",
+    "active": "활성",
+    "unread": "읽지 않음"
   },
   "validation": {
     "required": "필수 항목",
@@ -220,7 +223,9 @@
     "sessionHotel": "조선 팰리스 서울",
     "sessionRoom": "스위트 1201",
     "startedAt": "시작",
-    "sessionStartTime": "오후 6:00"
+    "sessionStartTime": "오후 6:00",
+    "noSessionHistory": "아직 세션 내역이 없습니다",
+    "noSessionHistoryDesc": "완료된 예약과 세션이 여기에 표시됩니다."
   },
   "booking": {
     "newBooking": "새 예약",
@@ -270,7 +275,13 @@
     "chargeToRoom": "객실 요금에 추가",
     "chargeToRoomDesc": "총 금액이 호텔 객실 요금에 추가됩니다. 체크아웃 시 프런트 데스크에서 확인해 주세요.",
     "selectChildrenError": "아이 미선택",
-    "selectAtLeastOneChild": "세션에 참여할 아이를 한 명 이상 선택해 주세요."
+    "selectAtLeastOneChild": "세션에 참여할 아이를 한 명 이상 선택해 주세요.",
+    "dateMustBeFuture": "오늘 이후 날짜를 선택해주세요",
+    "createFailed": "예약 생성에 실패했습니다",
+    "anyTier": "전체 등급",
+    "goldTier": "Gold 등급 (프리미엄)",
+    "silverTier": "Silver 등급",
+    "specialRequestsPlaceholder": "예: 알레르기, 취침 루틴, 언어 선호..."
   },
   "sitter": {
     "todaySchedule": "오늘 일정",
@@ -316,7 +327,13 @@
     "childrenInfo": "아이 정보",
     "sessionAmount": "금액",
     "noSessionsScheduled": "예정된 세션 없음",
-    "noSessionsScheduledDesc": "오늘 예정된 세션이 없습니다. 나중에 다시 확인해 주세요."
+    "noSessionsScheduledDesc": "오늘 예정된 세션이 없습니다. 나중에 다시 확인해 주세요.",
+    "profile": {
+      "updateSuccess": "프로필이 업데이트되었습니다",
+      "updateError": "프로필 업데이트에 실패했습니다",
+      "languages": "구사 언어",
+      "languagesHint": "쉼표로 구분, 예: 영어, 한국어"
+    }
   },
   "hotel": {
     "activeSessionsNow": "현재 {{count}}개 세션 진행 중",
@@ -381,7 +398,11 @@
       "actSessionStarted2": "세션 시작 - 2305호 (김민정)",
       "actSitterConfirmed": "사토 하루카 내일 확정",
       "actSessionCompleted": "세션 완료 - 2108호 (이지혜)"
-    }
+    },
+    "hotelProfileSubtitle": "호텔 기본 정보",
+    "serviceSettingsSubtitle": "서비스 제공 설정",
+    "displaySettingsSubtitle": "화면 표시 설정",
+    "notificationSettingsSubtitle": "알림 설정 관리"
   },
   "trustCheckin": {
     "trustProtocol": "신뢰 프로토콜 체크인",
@@ -541,7 +562,8 @@
     "minAgo": "{{count}}분 전",
     "hourAgo": "{{count}}시간 전",
     "dayAgo": "1일 전",
-    "daysAgo": "{{count}}일 전"
+    "daysAgo": "{{count}}일 전",
+    "summaryTooShort": "요약은 최소 10자 이상이어야 합니다"
   },
   "settings": {
     "title": "호텔 설정",
@@ -718,7 +740,9 @@
     "moodLabel": "기분:",
     "energyLabel": "에너지:",
     "activityTimeline": "활동 타임라인:",
-    "realtimeUpdates": "실시간 업데이트"
+    "realtimeUpdates": "실시간 업데이트",
+    "remaining": "남음",
+    "endsAt": "종료 시간"
   },
   "scan": {
     "title": "QR 체크인",
@@ -889,7 +913,9 @@
     "timelineBuildingBlocks": "블록 놀이 중",
     "timelineSnackServed": "사과 조각과 우유 제공",
     "timelinePhotoUploaded": "미술 활동 사진 업로드",
-    "timelineReadingBooks": "함께 동화책 읽기"
+    "timelineReadingBooks": "함께 동화책 읽기",
+    "activityLogFailed": "활동 기록에 실패했습니다.",
+    "snackLogFailed": "간식 기록에 실패했습니다."
   },
   "payment": {
     "card": "카드",
@@ -1370,7 +1396,8 @@
     "messageSitter": "시터에게 메시지",
     "sessionActive": "세션 진행 중, 경과 시간: {{time}}",
     "hidePassword": "비밀번호 숨기기",
-    "showPassword": "비밀번호 표시"
+    "showPassword": "비밀번호 표시",
+    "closeMenu": "메뉴 닫기"
   },
   "review": {
     "leaveReview": "리뷰 남기기",
@@ -1692,12 +1719,25 @@
     "previewBookings": "예약",
     "previewActive": "진행중",
     "previewRating": "평점",
-    "previewNewBooking": "새 예약"
+    "previewNewBooking": "새 예약",
+    "fullPreview": "전체 미리보기",
+    "previewTitle": "브랜딩 미리보기",
+    "previewDesc": "게스트와 직원에게 표시되는 브랜딩 미리보기입니다."
   },
   "pwa": {
     "installTitle": "Petit Stay 설치",
     "installDesc": "홈 화면에 추가하여 더 나은 경험을 즐기세요",
     "install": "설치",
     "offline": "오프라인 상태입니다"
+  },
+  "dashboard": {
+    "weeklyTrend": "이번 주 예약 및 매출",
+    "weeklyOverview": "이번 주",
+    "performanceSummary": "주요 지표 한눈에 보기",
+    "thisWeekSummary": "이번 주 요약",
+    "totalBookingsWeek": "이번 주 예약",
+    "weeklyRevenue": "주간 매출",
+    "avgPerDay": "일 평균 매출",
+    "sittersAvailable": "현재 가용 시터"
   }
 }

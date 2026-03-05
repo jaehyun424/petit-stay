@@ -55,7 +55,10 @@
     "signHere": "在此签名",
     "demoBanner": "演示模式 — 数据为模拟数据，不会被保存",
     "tierGold": "GOLD",
-    "tierSilver": "SILVER"
+    "tierSilver": "SILVER",
+    "yearsOldShort": "岁",
+    "active": "活跃",
+    "unread": "未读"
   },
   "validation": {
     "required": "必填",
@@ -220,7 +223,9 @@
     "sessionHotel": "朝鲜宫殿首尔",
     "sessionRoom": "套房1201",
     "startedAt": "开始",
-    "sessionStartTime": "下午6:00"
+    "sessionStartTime": "下午6:00",
+    "noSessionHistory": "暂无会话记录",
+    "noSessionHistoryDesc": "您过去的预订和会话完成后将显示在此处。"
   },
   "booking": {
     "newBooking": "新建预约",
@@ -270,7 +275,13 @@
     "chargeToRoom": "计入房费",
     "chargeToRoomDesc": "总金额将计入您的酒店房费。请在退房时与前台确认。",
     "selectChildrenError": "未选择儿童",
-    "selectAtLeastOneChild": "请至少选择一名参加服务的儿童。"
+    "selectAtLeastOneChild": "请至少选择一名参加服务的儿童。",
+    "dateMustBeFuture": "日期必须是今天或之后",
+    "createFailed": "创建预订失败",
+    "anyTier": "所有等级",
+    "goldTier": "Gold等级（高级）",
+    "silverTier": "Silver等级",
+    "specialRequestsPlaceholder": "例如：过敏症、睡前习惯、语言偏好..."
   },
   "sitter": {
     "todaySchedule": "今日日程",
@@ -316,7 +327,13 @@
     "childrenInfo": "儿童信息",
     "sessionAmount": "金额",
     "noSessionsScheduled": "暂无预定",
-    "noSessionsScheduledDesc": "今天没有预定的服务。请稍后再查看。"
+    "noSessionsScheduledDesc": "今天没有预定的服务。请稍后再查看。",
+    "profile": {
+      "updateSuccess": "个人资料已更新",
+      "updateError": "更新个人资料失败",
+      "languages": "语言能力",
+      "languagesHint": "用逗号分隔，例如：英语、韩语"
+    }
   },
   "hotel": {
     "activeSessionsNow": "当前{{count}}个服务进行中",
@@ -381,7 +398,11 @@
       "actSessionStarted2": "会话开始 - 2305房 (金敏贞)",
       "actSitterConfirmed": "佐藤遥明天已确认",
       "actSessionCompleted": "会话完成 - 2108房 (李智慧)"
-    }
+    },
+    "hotelProfileSubtitle": "酒店基本信息",
+    "serviceSettingsSubtitle": "自定义服务可用性",
+    "displaySettingsSubtitle": "外观偏好设置",
+    "notificationSettingsSubtitle": "管理通知偏好"
   },
   "trustCheckin": {
     "trustProtocol": "信任协议签到",
@@ -541,7 +562,8 @@
     "minAgo": "{{count}}分钟前",
     "hourAgo": "{{count}}小时前",
     "dayAgo": "1天前",
-    "daysAgo": "{{count}}天前"
+    "daysAgo": "{{count}}天前",
+    "summaryTooShort": "摘要至少需要10个字符"
   },
   "settings": {
     "title": "酒店设置",
@@ -718,7 +740,9 @@
     "moodLabel": "心情：",
     "energyLabel": "精力：",
     "activityTimeline": "活动时间线：",
-    "realtimeUpdates": "实时更新"
+    "realtimeUpdates": "实时更新",
+    "remaining": "剩余",
+    "endsAt": "结束时间"
   },
   "scan": {
     "title": "QR签到",
@@ -889,7 +913,9 @@
     "timelineBuildingBlocks": "正在玩积木",
     "timelineSnackServed": "提供了苹果片和牛奶",
     "timelinePhotoUploaded": "已上传美术活动照片",
-    "timelineReadingBooks": "一起阅读故事书"
+    "timelineReadingBooks": "一起阅读故事书",
+    "activityLogFailed": "活动记录失败。",
+    "snackLogFailed": "零食记录失败。"
   },
   "payment": {
     "card": "卡",
@@ -1370,7 +1396,8 @@
     "messageSitter": "给看护人发消息",
     "sessionActive": "服务进行中，已用时间：{{time}}",
     "hidePassword": "隐藏密码",
-    "showPassword": "显示密码"
+    "showPassword": "显示密码",
+    "closeMenu": "关闭菜单"
   },
   "review": {
     "leaveReview": "留下评价",
@@ -1692,12 +1719,25 @@
     "previewBookings": "预订",
     "previewActive": "进行中",
     "previewRating": "评分",
-    "previewNewBooking": "新预订"
+    "previewNewBooking": "新预订",
+    "fullPreview": "完整预览",
+    "previewTitle": "品牌预览",
+    "previewDesc": "这是您的品牌在客人和员工面前的呈现效果。"
   },
   "pwa": {
     "installTitle": "安装 Petit Stay",
     "installDesc": "添加到主屏幕以获得最佳体验",
     "install": "安装",
     "offline": "您处于离线状态"
+  },
+  "dashboard": {
+    "weeklyTrend": "本周预订和收入",
+    "weeklyOverview": "本周",
+    "performanceSummary": "关键指标一览",
+    "thisWeekSummary": "本周概要",
+    "totalBookingsWeek": "本周预订",
+    "weeklyRevenue": "周收入",
+    "avgPerDay": "日均收入",
+    "sittersAvailable": "当前可用的看护人"
   }
 }
