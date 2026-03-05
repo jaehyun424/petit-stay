@@ -1,5 +1,5 @@
 /* ============================================
-   Petit Stay - Login Page Styles
+   Petit Stay - Auth Page Styles
    ============================================ */
 
 .login-container {
@@ -8,6 +8,9 @@
   background-color: var(--cream-100);
 }
 
+/* ----------------------------------------
+   Visual Column (Left side - image/video)
+   ---------------------------------------- */
 .login-visual {
   display: none;
 }
@@ -25,6 +28,15 @@
 }
 
 .login-visual-video {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  z-index: 0;
+}
+
+.login-visual-image {
   position: absolute;
   inset: 0;
   width: 100%;
@@ -63,6 +75,35 @@
   text-transform: none;
 }
 
+.visual-title {
+  font-family: var(--font-serif);
+  font-size: 3rem;
+  margin-bottom: 2rem;
+  line-height: 1.1;
+  color: white;
+  text-shadow: 0 4px 12px rgba(0,0,0,0.3);
+}
+
+.visual-list {
+  list-style: none;
+  padding: 0;
+}
+
+.visual-list li {
+  font-family: var(--font-action);
+  font-size: 1rem;
+  margin-bottom: 1rem;
+  letter-spacing: 0.05em;
+  color: var(--cream-200);
+}
+
+.visual-list li::before {
+  content: "\2022 ";
+}
+
+/* ----------------------------------------
+   Form Column (Right side)
+   ---------------------------------------- */
 .login-form-container {
   flex: 1;
   max-width: 100%;
@@ -110,18 +151,27 @@
   display: flex;
   flex-direction: column;
   justify-content: center;
-  max-width: 400px;
+  max-width: 420px;
   width: 100%;
   margin: 0 auto;
 }
 
+/* ----------------------------------------
+   Utility Classes (scoped to .login-page)
+   ---------------------------------------- */
 .login-page .mb-2 { margin-bottom: 0.5rem; }
 .login-page .mb-4 { margin-bottom: 1rem; }
+.login-page .mb-6 { margin-bottom: 1.5rem; }
 .login-page .mb-8 { margin-bottom: 2rem; }
+.login-page .mt-2 { margin-top: 0.5rem; }
 .login-page .mt-4 { margin-top: 1rem; }
+.login-page .mt-6 { margin-top: 1.5rem; }
 .login-page .mt-8 { margin-top: 2rem; }
 .login-page .pt-6 { padding-top: 1.5rem; }
 
+/* ----------------------------------------
+   Demo Quick-Access Buttons
+   ---------------------------------------- */
 .demo-btn {
   background: white;
   border: 1px solid var(--cream-200);
@@ -138,6 +188,232 @@
   background: var(--cream-100);
 }
 
+/* ----------------------------------------
+   Forgot Password Link
+   ---------------------------------------- */
+.forgot-password-link {
+  display: inline-block;
+  font-size: 0.8125rem;
+  color: var(--charcoal-500);
+  text-decoration: none;
+  transition: color 0.2s;
+}
+
+.forgot-password-link:hover {
+  color: var(--gold-600);
+}
+
+/* ----------------------------------------
+   Role Selection Cards
+   ---------------------------------------- */
+.role-cards {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 0.75rem;
+}
+
+@media (min-width: 480px) {
+  .role-cards {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+
+.role-card {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 1.25rem 0.75rem;
+  border: 2px solid var(--cream-300);
+  border-radius: var(--radius-lg);
+  background: white;
+  cursor: pointer;
+  transition: all 0.25s ease;
+  text-align: center;
+}
+
+.role-card:hover {
+  border-color: var(--gold-400);
+  background: var(--cream-100);
+}
+
+.role-card.role-card--active {
+  border-color: var(--gold-500);
+  background: var(--gold-100);
+  box-shadow: 0 0 0 1px var(--gold-500);
+}
+
+.role-card-icon {
+  width: 40px;
+  height: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  background: var(--cream-200);
+  color: var(--charcoal-600);
+  transition: all 0.25s;
+}
+
+.role-card.role-card--active .role-card-icon {
+  background: var(--gold-500);
+  color: white;
+}
+
+.role-card-label {
+  font-family: var(--font-sans);
+  font-size: 0.8125rem;
+  font-weight: 600;
+  color: var(--charcoal-800);
+}
+
+.role-card-desc {
+  font-family: var(--font-sans);
+  font-size: 0.6875rem;
+  color: var(--charcoal-500);
+  line-height: 1.3;
+}
+
+/* ----------------------------------------
+   Password Strength Indicator
+   ---------------------------------------- */
+.password-strength {
+  margin-top: 0.5rem;
+}
+
+.password-strength-bar {
+  display: flex;
+  gap: 4px;
+  margin-bottom: 0.25rem;
+}
+
+.password-strength-segment {
+  flex: 1;
+  height: 3px;
+  border-radius: 2px;
+  background: var(--cream-300);
+  transition: background 0.3s;
+}
+
+.password-strength-segment.active {
+  background: var(--cream-400);
+}
+
+.password-strength[data-strength="1"] .password-strength-segment.active {
+  background: var(--error-500);
+}
+
+.password-strength[data-strength="2"] .password-strength-segment.active {
+  background: var(--warning-500);
+}
+
+.password-strength[data-strength="3"] .password-strength-segment.active {
+  background: var(--gold-500);
+}
+
+.password-strength[data-strength="4"] .password-strength-segment.active {
+  background: var(--success-500);
+}
+
+.password-strength-label {
+  font-size: 0.6875rem;
+  color: var(--charcoal-400);
+  font-family: var(--font-sans);
+}
+
+/* ----------------------------------------
+   Forgot Password Step Indicator
+   ---------------------------------------- */
+.step-indicator {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0;
+  margin-bottom: 2rem;
+}
+
+.step-item {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.step-circle {
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.75rem;
+  font-weight: 600;
+  font-family: var(--font-sans);
+  border: 2px solid var(--cream-300);
+  background: white;
+  color: var(--charcoal-400);
+  transition: all 0.3s;
+}
+
+.step-circle.step-active {
+  border-color: var(--gold-500);
+  background: var(--gold-500);
+  color: white;
+}
+
+.step-circle.step-completed {
+  border-color: var(--success-500);
+  background: var(--success-500);
+  color: white;
+}
+
+.step-label {
+  font-size: 0.75rem;
+  font-family: var(--font-sans);
+  color: var(--charcoal-400);
+  display: none;
+}
+
+@media (min-width: 480px) {
+  .step-label {
+    display: block;
+  }
+}
+
+.step-label.step-label-active {
+  color: var(--charcoal-800);
+  font-weight: 600;
+}
+
+.step-connector {
+  width: 40px;
+  height: 2px;
+  background: var(--cream-300);
+  margin: 0 0.5rem;
+  transition: background 0.3s;
+}
+
+.step-connector.step-connector-active {
+  background: var(--gold-500);
+}
+
+/* ----------------------------------------
+   Success Check Animation
+   ---------------------------------------- */
+.success-icon {
+  width: 64px;
+  height: 64px;
+  border-radius: 50%;
+  background: var(--success-bg);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0 auto 1.5rem;
+  color: var(--success-500);
+}
+
+/* ----------------------------------------
+   Footer
+   ---------------------------------------- */
 .login-footer {
   display: flex;
   flex-direction: column;
@@ -150,44 +426,6 @@
   padding-top: 1.5rem;
   font-family: var(--font-action);
   letter-spacing: 0.05em;
-}
-
-.visual-title {
-  font-family: var(--font-serif);
-  font-size: 3rem;
-  margin-bottom: 2rem;
-  line-height: 1.1;
-  color: white;
-  text-shadow: 0 4px 12px rgba(0,0,0,0.3);
-}
-
-.visual-list {
-  list-style: none;
-  padding: 0;
-}
-
-.visual-list li {
-  font-family: var(--font-action);
-  font-size: 1rem;
-  margin-bottom: 1rem;
-  letter-spacing: 0.05em;
-  color: var(--cream-200);
-}
-
-.visual-list li::before {
-  content: "• ";
-}
-
-.forgot-password-link {
-  display: inline-block;
-  font-size: 0.8125rem;
-  color: var(--charcoal-500);
-  text-decoration: none;
-  transition: color 0.2s;
-}
-
-.forgot-password-link:hover {
-  color: var(--gold-600);
 }
 
 /* ============================================
@@ -220,4 +458,50 @@
 
 :root[data-theme="dark"] .login-footer {
   color: var(--text-tertiary);
+}
+
+:root[data-theme="dark"] .role-card {
+  border-color: var(--border-color);
+  background: var(--bg-card);
+}
+
+:root[data-theme="dark"] .role-card:hover {
+  border-color: var(--gold-400);
+  background: var(--glass-hover);
+}
+
+:root[data-theme="dark"] .role-card.role-card--active {
+  border-color: var(--gold-500);
+  background: rgba(197, 160, 89, 0.15);
+}
+
+:root[data-theme="dark"] .role-card-icon {
+  background: var(--bg-secondary);
+  color: var(--text-secondary);
+}
+
+:root[data-theme="dark"] .role-card-label {
+  color: var(--text-primary);
+}
+
+:root[data-theme="dark"] .role-card-desc {
+  color: var(--text-tertiary);
+}
+
+:root[data-theme="dark"] .step-circle {
+  border-color: var(--border-color);
+  background: var(--bg-card);
+  color: var(--text-tertiary);
+}
+
+:root[data-theme="dark"] .step-connector {
+  background: var(--border-color);
+}
+
+:root[data-theme="dark"] .password-strength-segment {
+  background: var(--border-color);
+}
+
+:root[data-theme="dark"] .success-icon {
+  background: rgba(74, 111, 88, 0.2);
 }
