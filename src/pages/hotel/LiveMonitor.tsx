@@ -118,7 +118,15 @@ export default function LiveMonitor() {
               {t('hotel.live')}
             </span>
           </h1>
-          <p className="page-subtitle" aria-live="polite">{t('hotel.activeSessionsNow', { count: sessions.length })}</p>
+          <p className="page-subtitle" aria-live="polite">
+            {t('hotel.activeSessionsNow', { count: sessions.length })}
+            {sessions.length > 0 && (
+              <span className="realtime-indicator" style={{ marginLeft: 'var(--space-3)' }}>
+                <span className="realtime-pulse" aria-hidden="true" />
+                {t('liveMonitor.realtimeUpdates', 'Real-time updates')}
+              </span>
+            )}
+          </p>
         </div>
         <Button variant="danger" icon={<AlertTriangle size={16} strokeWidth={2} />} onClick={() => setShowEmergency(true)}>
           {t('hotel.emergencyProtocol')}
