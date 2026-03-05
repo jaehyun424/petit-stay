@@ -50,12 +50,37 @@
 
 ## Quick Start
 
+### Prerequisites
+
+- Node.js 18+ (recommended: 20 LTS)
+- npm 9+
+
+### Installation
+
 ```bash
+git clone https://github.com/anthropics/petit-stay.git
+cd petit-stay
 npm install
-npm run dev
 ```
 
-Access at: **http://localhost:5173**
+### Development
+
+```bash
+npm run dev          # Start dev server (http://localhost:5173)
+npm run build        # Production build
+npm run test         # Run test suite (Vitest)
+npx tsc --noEmit     # TypeScript type check
+```
+
+### Firebase (optional)
+
+```bash
+cp .env.example .env              # Add your Firebase config
+firebase emulators:start           # Start local emulators
+firebase deploy                    # Deploy to Firebase Hosting
+```
+
+> Without Firebase config, the app runs in **demo mode** with mock data.
 
 ### Demo Accounts
 
@@ -125,6 +150,21 @@ src/
 ```
 
 ---
+
+## Architecture
+
+```
+Browser --> React SPA (Vite) --> Firebase (Firestore, Auth, Storage)
+                |
+                ├── DEMO_MODE branch: mock data from src/data/demo.ts
+                └── REAL branch: Firestore via src/services/firestore.ts
+```
+
+- **B2B2C model**: Hotels subscribe, parents book childcare, sitters provide care
+- **4 user roles**: `parent`, `sitter`, `hotel_staff`, `admin`
+- **Dual-mode hooks**: Each hook checks `DEMO_MODE` and switches between demo data and Firestore
+- **Lazy-loaded routes**: All pages are code-split via `React.lazy()`
+- **i18n**: 4 languages with 1,250+ translation keys per locale
 
 ## Deployment
 
