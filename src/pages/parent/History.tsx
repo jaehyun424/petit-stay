@@ -19,12 +19,16 @@ import { useToast } from '../../contexts/ToastContext';
 import { formatCurrency } from '../../utils/format';
 import '../../styles/pages/parent-history.css';
 
+const STATUS_FILTERS = ['all', 'completed', 'cancelled', 'in_progress'] as const;
+
 export default function History() {
     const { t } = useTranslation();
     const { user } = useAuth();
     const { history, isLoading } = useParentBookings(user?.id);
     const [currentPage, setCurrentPage] = useState(1);
-    const { totalPages, getPageItems } = usePagination(history, 10);
+    const [statusFilter, setStatusFilter] = useState<string>('all');
+    const filteredHistory = statusFilter === 'all' ? history : history.filter(item => item.status === statusFilter);
+    const { totalPages, getPageItems } = usePagination(filteredHistory, 10);
     const paginatedHistory = getPageItems(currentPage);
     const { submitReview } = useReviews();
     const toast = useToast();
@@ -56,9 +60,22 @@ export default function History() {
     return (
         <div className="history-page animate-fade-in">
             <h1 className="page-title">{t('parent.bookingHistory')}</h1>
-            <p className="page-subtitle">{history.length} {t('sitter.completedSessions').toLowerCase()}</p>
+            <p className="page-subtitle">{filteredHistory.length} {t('sitter.completedSessions').toLowerCase()}</p>
 
-            {history.length > 0 ? (
+            {/* Status Filters */}
+            <div className="history-filters" role="group" aria-label={t('common.filter')}>
+                {STATUS_FILTERS.map(filter => (
+                    <button
+                        key={filter}
+                        className={`history-filter-btn ${statusFilter === filter ? 'active' : ''}`}
+                        onClick={() => { setStatusFilter(filter); setCurrentPage(1); }}
+                    >
+                        {filter === 'all' ? t('common.all') : t(`status.${filter}`, filter)}
+                    </button>
+                ))}
+            </div>
+
+            {filteredHistory.length > 0 ? (
                 <motion.div className="history-list" initial="hidden" animate="show" variants={staggerContainer}>
                     {paginatedHistory.map((item) => (
                         <motion.div key={item.id} variants={staggerItem}>
