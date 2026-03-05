@@ -59,7 +59,7 @@ export function ReservationInfo({ reservation, onNext }: ReservationInfoProps) {
         <span className="guest-info-total-amount">{formatCurrency(reservation.totalAmount)}</span>
       </div>
 
-      <button className="guest-btn guest-btn-primary" onClick={onNext}>
+      <button className="guest-btn guest-btn-primary" onClick={onNext} aria-label={t('guest.nextStep')}>
         {t('guest.nextStep')}
       </button>
     </div>
