@@ -34,9 +34,9 @@ export async function sendEmail(
   try {
     // Dynamic import to avoid issues when SendGrid is not configured
     const sgMail = await import("@sendgrid/mail");
-    sgMail.default.setApiKey(sendgridApiKey.value());
+    sgMail.setApiKey(sendgridApiKey.value());
 
-    await sgMail.default.send({
+    await sgMail.send({
       to,
       from: { email: from, name: "Petit Stay" },
       subject: template.subject,
