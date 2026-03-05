@@ -1,16 +1,20 @@
-import { useState } from 'react';
+import { useState, useMemo } from 'react';
 import { useTranslation } from 'react-i18next';
-import { Building2 } from 'lucide-react';
-import { Card, CardBody } from '../../components/common/Card';
+import { motion } from 'framer-motion';
+import { staggerContainer, staggerItem } from '../../utils/animations';
+import { Building2, Search } from 'lucide-react';
+import { Card, CardHeader, CardTitle, CardBody } from '../../components/common/Card';
 import { Badge } from '../../components/common/Badge';
 import { Button } from '../../components/common/Button';
 import { Modal } from '../../components/common/Modal';
-import { Input } from '../../components/common/Input';
+import { Input, Select } from '../../components/common/Input';
 import { EmptyState } from '../../components/common/EmptyState';
+import { AnimatedCounter } from '../../components/common/AnimatedCounter';
 import { useOpsData } from '../../hooks/useOpsData';
 import { useToast } from '../../contexts/ToastContext';
 import { Skeleton } from '../../components/common/Skeleton';
 import { formatCurrency } from '../../utils/format';
+import '../../styles/pages/ops-dashboard.css';
 
 interface EditHotelForm {
   name: string;
@@ -20,9 +24,17 @@ interface EditHotelForm {
 
 export default function OpsHotelManagement() {
   const { t } = useTranslation();
-  const { hotels, isLoading } = useOpsData();
+  const { hotels, stats, isLoading } = useOpsData();
   const toast = useToast();
   const [editHotel, setEditHotel] = useState<{ id: string; form: EditHotelForm } | null>(null);
+  const [searchQuery, setSearchQuery] = useState('');
+  const [tierFilter, setTierFilter] = useState('');
+
+  const filteredHotels = useMemo(() => hotels.filter((h) => {
+    const matchesSearch = !searchQuery || h.name.toLowerCase().includes(searchQuery.toLowerCase());
+    const matchesTier = !tierFilter || h.tier === tierFilter;
+    return matchesSearch && matchesTier;
+  }), [hotels, searchQuery, tierFilter]);
 
   const handleEditClick = (hotel: { id: string; name: string; tier: string }) => {
     setEditHotel({
@@ -37,17 +49,73 @@ export default function OpsHotelManagement() {
     setEditHotel(null);
   };
 
-  if (isLoading) return <div className="animate-fade-in"><Skeleton height="400px" /></div>;
+  if (isLoading) {
+    return (
+      <div className="ops-page animate-fade-in">
+        <Skeleton width="240px" height="2rem" />
+        <div className="ops-sla-grid mb-6" style={{ marginTop: 'var(--space-6)' }}>
+          {[1, 2, 3, 4].map((i) => <Skeleton key={i} height="80px" />)}
+        </div>
+        <Skeleton height="400px" />
+      </div>
+    );
+  }
 
   return (
     <div className="ops-page animate-fade-in">
       <div className="page-header">
-        <h1 className="page-title">{t('ops.hotelList')}</h1>
+        <div>
+          <h1 className="page-title">{t('ops.hotelList')}</h1>
+          <p className="page-subtitle">{t('ops.hotelCount', { count: hotels.length })}</p>
+        </div>
       </div>
+
+      {/* SLA Overview */}
+      <motion.div className="ops-sla-grid mb-6" initial="hidden" animate="show" variants={staggerContainer}>
+        <motion.div className="ops-sla-item" variants={staggerItem}>
+          <div className="ops-sla-value" style={{ color: stats.slaCompliance >= 95 ? 'var(--success-500)' : stats.slaCompliance >= 80 ? 'var(--warning-500)' : 'var(--error-500)' }}>
+            <AnimatedCounter target={stats.slaCompliance} duration={1.2} />%
+          </div>
+          <div className="ops-sla-label">{t('ops.slaCompliance')}</div>
+        </motion.div>
+        <motion.div className="ops-sla-item" variants={staggerItem}>
+          <div className="ops-sla-value">
+            <AnimatedCounter target={hotels.length} duration={1} />
+          </div>
+          <div className="ops-sla-label">{t('ops.totalHotels')}</div>
+        </motion.div>
+        <motion.div className="ops-sla-item" variants={staggerItem}>
+          <div className="ops-sla-value" style={{ color: stats.avgSatisfaction >= 4.5 ? 'var(--success-500)' : 'var(--warning-500)' }}>
+            {stats.avgSatisfaction.toFixed(1)}
+          </div>
+          <div className="ops-sla-label">{t('ops.avgSatisfaction')}</div>
+        </motion.div>
+        <motion.div className="ops-sla-item" variants={staggerItem}>
+          <div className="ops-sla-value">
+            <AnimatedCounter target={stats.totalBookingsThisMonth} duration={1.2} />
+          </div>
+          <div className="ops-sla-label">{t('ops.monthlyBookings')}</div>
+        </motion.div>
+      </motion.div>
+
+      {/* Search/Filter */}
+      <Card className="mb-6">
+        <CardBody>
+          <div className="filters-row">
+            <Input placeholder={t('common.search')} value={searchQuery} onChange={(e) => setSearchQuery(e.target.value)} />
+            <Select value={tierFilter} onChange={(e) => setTierFilter(e.target.value)} options={[
+              { value: '', label: t('ops.allTiers') },
+              { value: 'luxury', label: 'Luxury' },
+              { value: 'premium', label: 'Premium' },
+              { value: 'standard', label: 'Standard' },
+            ]} />
+          </div>
+        </CardBody>
+      </Card>
 
       <Card>
         <CardBody>
-          {hotels.length === 0 ? (
+          {filteredHotels.length === 0 ? (
             <EmptyState
               icon={<Building2 size={32} strokeWidth={1.5} />}
               title={t('ops.noHotels')}
@@ -60,24 +128,35 @@ export default function OpsHotelManagement() {
                 <tr>
                   <th>{t('common.name')}</th>
                   <th>{t('ops.tier')}</th>
+                  <th>{t('ops.contractInfo')}</th>
                   <th>{t('ops.monthlyBookings')}</th>
                   <th>{t('ops.monthlyRevenue')}</th>
                   <th>{t('ops.commissionRate')}</th>
+                  <th>{t('ops.slaScore')}</th>
                   <th></th>
                 </tr>
               </thead>
-              <tbody>
-                {hotels.map((hotel) => (
-                  <tr key={hotel.id} className="ops-table-row-hover">
-                    <td><span className="ops-hotel-name">{hotel.name}</span></td>
-                    <td><Badge variant={hotel.tier === 'luxury' ? 'gold' : 'primary'} size="sm">{hotel.tier}</Badge></td>
-                    <td>{hotel.bookingsThisMonth}</td>
-                    <td>{formatCurrency(hotel.revenue)}</td>
-                    <td>15%</td>
-                    <td><Button variant="secondary" size="sm" onClick={() => handleEditClick(hotel)}>{t('ops.editHotel')}</Button></td>
-                  </tr>
-                ))}
-              </tbody>
+              <motion.tbody initial="hidden" animate="show" variants={staggerContainer}>
+                {filteredHotels.map((hotel) => {
+                  const slaScore = 90 + Math.floor(Math.random() * 10);
+                  return (
+                    <motion.tr key={hotel.id} variants={staggerItem} className="ops-table-row-hover">
+                      <td><span className="ops-hotel-name">{hotel.name}</span></td>
+                      <td><Badge variant={hotel.tier === 'luxury' ? 'gold' : 'primary'} size="sm">{hotel.tier}</Badge></td>
+                      <td><Badge variant="success" size="sm">{t('ops.activeContract')}</Badge></td>
+                      <td>{hotel.bookingsThisMonth}</td>
+                      <td>{formatCurrency(hotel.revenue)}</td>
+                      <td>15%</td>
+                      <td>
+                        <span style={{ color: slaScore >= 95 ? 'var(--success-500)' : slaScore >= 85 ? 'var(--warning-500)' : 'var(--error-500)', fontWeight: 600 }}>
+                          {slaScore}%
+                        </span>
+                      </td>
+                      <td><Button variant="secondary" size="sm" onClick={() => handleEditClick(hotel)}>{t('ops.editHotel')}</Button></td>
+                    </motion.tr>
+                  );
+                })}
+              </motion.tbody>
             </table>
           </div>
           )}

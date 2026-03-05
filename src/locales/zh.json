@@ -1119,7 +1119,9 @@
     "filterByPeriod": "按周期筛选",
     "allPeriods": "所有周期",
     "reservationCount": "共{{count}}条预订",
-    "sitterCount": "已注册保姆{{count}}名"
+    "sitterCount": "已注册保姆{{count}}名",
+    "hotelCount": "合作酒店{{count}}家",
+    "allTiers": "所有等级"
   },
   "info": {
     "about": {
