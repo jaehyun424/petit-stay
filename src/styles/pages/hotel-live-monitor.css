@@ -4,25 +4,11 @@
   margin: 0 auto;
 }
 
-.live-monitor-page .page-header {
-  display: flex;
-  justify-content: space-between;
-  align-items: flex-end;
-  margin-bottom: var(--space-8);
-  padding-bottom: var(--space-6);
-  border-bottom: 1px solid var(--cream-200);
-}
-
+/* Page header uses common styles from hotel-layout.css */
 .live-monitor-page .page-title {
-  font-family: var(--font-serif);
-  font-size: 2.5rem;
-  font-weight: 400;
-  margin-bottom: 0.5rem;
-  color: var(--charcoal-900);
   display: flex;
   align-items: center;
   gap: 1rem;
-  letter-spacing: -0.03em;
 }
 
 .live-indicator {
@@ -49,10 +35,7 @@
   animation: pulse 2s ease infinite;
 }
 
-.live-monitor-page .page-subtitle {
-  color: var(--charcoal-600);
-  font-size: 1.125rem;
-}
+/* page-subtitle uses common styles from hotel-layout.css */
 
 .sessions-grid {
   display: grid;
