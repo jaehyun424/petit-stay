@@ -149,6 +149,29 @@ export function HotelLayout() {
           </AnimatePresence>
         </div>
       </main>
+
+      {/* Bottom Navigation (mobile only) */}
+      <nav className="bottom-nav hotel-mobile-only">
+        {[
+          navItems[0],
+          navItems[1],
+          navItems[2],
+          navItems[3],
+          navItems[7],
+        ].map((item) => (
+          <NavLink
+            key={item.to}
+            to={item.to}
+            end={item.end}
+            className={({ isActive }) =>
+              `bottom-nav-item ${isActive ? 'bottom-nav-item-active' : ''}`
+            }
+          >
+            <span className="bottom-nav-icon">{item.icon}</span>
+            <span className="bottom-nav-label">{t(item.labelKey)}</span>
+          </NavLink>
+        ))}
+      </nav>
     </div>
   );
 }

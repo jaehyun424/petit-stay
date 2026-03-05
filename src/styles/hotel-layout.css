@@ -299,6 +299,18 @@
 @media (max-width: 768px) {
   .page-content {
     padding: 1rem;
+    padding-bottom: calc(1rem + 70px);
+  }
+}
+
+/* Hotel mobile bottom nav */
+.hotel-mobile-only {
+  display: none;
+}
+
+@media (max-width: 768px) {
+  .hotel-mobile-only {
+    display: flex;
   }
 }
 
