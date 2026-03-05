@@ -4,13 +4,14 @@ import { useTranslation } from 'react-i18next';
 import { motion } from 'framer-motion';
 import {
   ShieldCheck, Globe, Camera, Clock, ArrowRight,
+  Heart, Star, MapPin,
 } from 'lucide-react';
 import { LandingNav } from '../landing/components/LandingNav';
 import { LandingFooter } from '../landing/components/LandingFooter';
 import { ScrollReveal } from '../landing/components/ScrollReveal';
 import '../../styles/pages/solutions.css';
 
-const HERO_IMG = 'https://images.pexels.com/photos/3807517/pexels-photo-3807517.jpeg?auto=compress&cs=tinysrgb&w=1920';
+const HERO_IMG = 'https://images.unsplash.com/photo-1566073771259-6a8506099945?w=1200&q=80';
 
 const fadeUp = {
   hidden: { opacity: 0, y: 20 },
@@ -31,9 +32,9 @@ export default function ForFamiliesPage() {
   ];
 
   const scenarios = [
-    { emoji: '🍷', titleKey: 'solutions.famScene1Title', descKey: 'solutions.famScene1Desc' },
-    { emoji: '🏔️', titleKey: 'solutions.famScene2Title', descKey: 'solutions.famScene2Desc' },
-    { emoji: '💼', titleKey: 'solutions.famScene3Title', descKey: 'solutions.famScene3Desc' },
+    { icon: <Heart size={28} />, titleKey: 'solutions.famScene1Title', descKey: 'solutions.famScene1Desc' },
+    { icon: <MapPin size={28} />, titleKey: 'solutions.famScene2Title', descKey: 'solutions.famScene2Desc' },
+    { icon: <Star size={28} />, titleKey: 'solutions.famScene3Title', descKey: 'solutions.famScene3Desc' },
   ];
 
   return (
@@ -58,10 +59,10 @@ export default function ForFamiliesPage() {
             <h2>{t('solutions.famTrustTitle')}</h2>
           </div>
         </ScrollReveal>
-        <div className="solutions-cards">
+        <div className="solutions-cards solutions-cards--4">
           {trustItems.map((item, i) => (
             <ScrollReveal key={item.titleKey} delay={i * 0.1}>
-              <div className="solutions-card">
+              <div className="solutions-card solutions-card--uniform">
                 <div className="solutions-card-icon">{item.icon}</div>
                 <h3>{t(item.titleKey)}</h3>
                 <p>{t(item.descKey)}</p>
@@ -80,11 +81,11 @@ export default function ForFamiliesPage() {
               <p>{t('solutions.famSceneSubtitle')}</p>
             </div>
           </ScrollReveal>
-          <div className="solutions-scenarios">
+          <div className="solutions-cards solutions-cards--3">
             {scenarios.map((item, i) => (
               <ScrollReveal key={item.titleKey} delay={i * 0.1}>
-                <div className="solutions-scenario">
-                  <div className="solutions-scenario-icon">{item.emoji}</div>
+                <div className="solutions-card solutions-card--uniform solutions-card--centered">
+                  <div className="solutions-card-icon">{item.icon}</div>
                   <h3>{t(item.titleKey)}</h3>
                   <p>{t(item.descKey)}</p>
                 </div>
@@ -94,18 +95,18 @@ export default function ForFamiliesPage() {
         </div>
       </div>
 
-      {/* How it works (brief) */}
+      {/* How it works */}
       <div className="solutions-section">
         <ScrollReveal>
           <div className="solutions-section-header">
             <h2>{t('solutions.famProcessTitle')}</h2>
           </div>
         </ScrollReveal>
-        <div className="solutions-cards">
+        <div className="solutions-cards solutions-cards--3">
           {(['solutions.famStep1', 'solutions.famStep2', 'solutions.famStep3'] as const).map((key, i) => (
             <ScrollReveal key={key} delay={i * 0.1}>
-              <div className="solutions-card" style={{ textAlign: 'center' }}>
-                <span className="solutions-stat-value" style={{ fontSize: '1.5rem' }}>0{i + 1}</span>
+              <div className="solutions-card solutions-card--uniform solutions-card--centered">
+                <span className="solutions-step-number">0{i + 1}</span>
                 <h3>{t(`${key}Title`)}</h3>
                 <p>{t(`${key}Desc`)}</p>
               </div>
