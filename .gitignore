@@ -37,3 +37,8 @@ functions/lib/
 S*.md
 run_sessions.sh
 logs/
+
+# Test output
+coverage/
+playwright-report/
+test-results/
