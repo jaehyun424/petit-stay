@@ -1,6 +1,6 @@
 import { useParams, Link } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
-import { Copy } from 'lucide-react';
+import { Copy, Smartphone } from 'lucide-react';
 import { BookingQR } from '../../components/common/BookingQR';
 import { Button } from '../../components/common/Button';
 import { useAuth } from '../../contexts/AuthContext';
@@ -69,6 +69,11 @@ export default function QRDisplay() {
                         hotelId={booking.hotel}
                         size={260}
                     />
+                </div>
+
+                <div className="qr-display-instruction">
+                    <Smartphone size={16} strokeWidth={1.75} />
+                    <span>{t('qr.showToSitter')}</span>
                 </div>
 
                 <div className="qr-display-details">
