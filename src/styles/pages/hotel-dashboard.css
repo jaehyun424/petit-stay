@@ -65,7 +65,7 @@
 .stats-grid {
   display: grid;
   grid-template-columns: repeat(4, 1fr);
-  gap: var(--space-5);
+  gap: 16px;
   margin-bottom: var(--space-8);
 }
 
@@ -85,7 +85,7 @@
   display: flex;
   flex-direction: column;
   gap: var(--space-3);
-  padding: var(--space-5);
+  padding: 20px;
   background: var(--bg-card);
   border: 1px solid var(--cream-200);
   border-radius: var(--radius-xl);
@@ -150,7 +150,7 @@
 .dashboard-grid {
   display: grid;
   grid-template-columns: 1.5fr 1fr;
-  gap: var(--space-5);
+  gap: 24px;
 }
 
 @media (max-width: 1024px) {

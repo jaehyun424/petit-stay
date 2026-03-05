@@ -6,15 +6,15 @@
 .ops-stats-grid {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
-  gap: var(--space-4);
-  margin-bottom: var(--space-8);
+  gap: 16px;
+  margin-bottom: 24px;
 }
 
 .ops-stat-card {
   display: flex;
   align-items: center;
   gap: 0.75rem;
-  padding: 1rem;
+  padding: 20px 24px;
   background: var(--bg-card, white);
   border-radius: 12px;
   box-shadow: 0 1px 3px rgba(0, 0, 0, 0.04);
@@ -53,8 +53,8 @@
 .ops-grid-2 {
   display: grid;
   grid-template-columns: 1fr 1fr;
-  gap: var(--space-4);
-  margin-bottom: var(--space-8);
+  gap: 24px;
+  margin-bottom: 24px;
 }
 
 @media (max-width: 768px) {
