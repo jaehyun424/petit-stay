@@ -369,6 +369,7 @@
     "paymentStatus": "Payment",
     "paid": "Paid",
     "paymentPending": "Pending",
+    "hotelVerified": "Hotel Verified",
     "dashboard": {
       "avgRevenue": "avg. revenue per day",
       "sittersAvailable": "sitters available now",
@@ -1450,7 +1451,7 @@
     "famCtaSubtitle": "Sign up and book your first session in minutes.",
     "famCtaBtn": "Get Started",
     "specEyebrow": "For Specialists",
-    "specTitle": "A Rewarding Career in Premium Childcare",
+    "specTitle": "A Career in Premium Childcare",
     "specSubtitle": "Join our network of elite childcare professionals working with the world's best hotels.",
     "specBenefitTitle": "Why Join Petit Stay",
     "specBenefit1Title": "Gold/Silver Tier System",

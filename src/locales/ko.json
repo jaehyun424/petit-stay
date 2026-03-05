@@ -369,7 +369,19 @@
     "paymentStatus": "결제",
     "paid": "결제 완료",
     "paymentPending": "결제 대기",
-    "hotelVerified": "호텔 인증"
+    "hotelVerified": "호텔 인증",
+    "dashboard": {
+      "avgRevenue": "일 평균 매출",
+      "sittersAvailable": "현재 가용 시터",
+      "weeklyRevenue": "주간 매출",
+      "latestEvents": "최신 이벤트 및 업데이트",
+      "actNewBooking": "신규 예약 KCP-2026-0046 생성",
+      "actSessionStarted1": "세션 시작 - 1102호 (박수연)",
+      "actCheckinCompleted": "신뢰 체크인 완료 - 2305호",
+      "actSessionStarted2": "세션 시작 - 2305호 (김민정)",
+      "actSitterConfirmed": "사토 하루카 내일 확정",
+      "actSessionCompleted": "세션 완료 - 2108호 (이지혜)"
+    }
   },
   "trustCheckin": {
     "trustProtocol": "신뢰 프로토콜 체크인",
@@ -1439,7 +1451,7 @@
     "famCtaSubtitle": "가입하고 몇 분 만에 첫 세션을 예약하세요.",
     "famCtaBtn": "시작하기",
     "specEyebrow": "전문가 모집",
-    "specTitle": "프리미엄 차일드케어의 보람 있는 커리어",
+    "specTitle": "프리미엄 차일드케어 분야의 커리어",
     "specSubtitle": "세계 최고의 호텔과 함께하는 엘리트 돌봄 전문가 네트워크에 합류하세요.",
     "specBenefitTitle": "Petit Stay에 합류하는 이유",
     "specBenefit1Title": "Gold/Silver 등급제",

@@ -368,7 +368,20 @@
     "noBookingsFoundDesc": "検索条件やフィルターを調整してみてください。",
     "paymentStatus": "支払い",
     "paid": "支払済",
-    "paymentPending": "未払い"
+    "paymentPending": "未払い",
+    "hotelVerified": "ホテル認証済",
+    "dashboard": {
+      "avgRevenue": "1日あたり平均売上",
+      "sittersAvailable": "現在対応可能なシッター",
+      "weeklyRevenue": "週間売上",
+      "latestEvents": "最新のイベントと更新",
+      "actNewBooking": "新規予約 KCP-2026-0046 作成",
+      "actSessionStarted1": "セッション開始 - 1102号室 (パク・スヨン)",
+      "actCheckinCompleted": "トラストチェックイン完了 - 2305号室",
+      "actSessionStarted2": "セッション開始 - 2305号室 (キム・ミンジョン)",
+      "actSitterConfirmed": "佐藤はるか 明日確定",
+      "actSessionCompleted": "セッション完了 - 2108号室 (イ・ジヘ)"
+    }
   },
   "trustCheckin": {
     "trustProtocol": "トラストプロトコル チェックイン",
@@ -1438,7 +1451,7 @@
     "famCtaSubtitle": "ご登録いただき、数分で最初のセッションをご予約ください。",
     "famCtaBtn": "始めましょう",
     "specEyebrow": "スペシャリスト募集",
-    "specTitle": "プレミアムチャイルドケアのやりがいあるキャリア",
+    "specTitle": "プレミアムチャイルドケア分野でのキャリア",
     "specSubtitle": "世界最高のホテルと共に働くエリートチャイルドケアプロフェッショナルのネットワークにご参加ください。",
     "specBenefitTitle": "Petit Stayに参加する理由",
     "specBenefit1Title": "Gold/Silverティアシステム",

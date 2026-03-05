@@ -368,7 +368,8 @@
     "noBookingsFoundDesc": "请尝试调整搜索条件或筛选条件。",
     "paymentStatus": "付款",
     "paid": "已付款",
-    "paymentPending": "待付款"
+    "paymentPending": "待付款",
+    "hotelVerified": "酒店认证"
   },
   "trustCheckin": {
     "trustProtocol": "信任协议签到",
@@ -1438,7 +1439,7 @@
     "famCtaSubtitle": "注册并在几分钟内预订您的第一次服务。",
     "famCtaBtn": "开始使用",
     "specEyebrow": "专家招募",
-    "specTitle": "高端托幼领域的理想职业",
+    "specTitle": "高端托幼领域的职业机会",
     "specSubtitle": "加入与世界顶级酒店合作的精英托幼专业人员网络。",
     "specBenefitTitle": "加入 Petit Stay 的理由",
     "specBenefit1Title": "Gold/Silver等级体系",
