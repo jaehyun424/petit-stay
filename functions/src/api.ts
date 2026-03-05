@@ -479,6 +479,24 @@ apiRouter.post("/bookings", async (req: AuthenticatedRequest, res: Response) => 
       return;
     }
 
+    // Validate input lengths and types
+    if (typeof body.hotelId !== "string" || body.hotelId.length > 128) {
+      res.status(400).json(apiError("BAD_REQUEST", "Invalid hotelId", req.requestId || ""));
+      return;
+    }
+    if (body.children.length > 10) {
+      res.status(400).json(apiError("BAD_REQUEST", "Maximum 10 children per booking", req.requestId || ""));
+      return;
+    }
+    if (!/^\d{4}-\d{2}-\d{2}$/.test(body.schedule.date)) {
+      res.status(400).json(apiError("BAD_REQUEST", "Invalid date format (YYYY-MM-DD required)", req.requestId || ""));
+      return;
+    }
+    if (!/^\d{2}:\d{2}$/.test(body.schedule.startTime) || !/^\d{2}:\d{2}$/.test(body.schedule.endTime)) {
+      res.status(400).json(apiError("BAD_REQUEST", "Invalid time format (HH:MM required)", req.requestId || ""));
+      return;
+    }
+
     // Scope check
     if (req.apiKey?.hotelId && req.apiKey.hotelId !== body.hotelId) {
       res.status(403).json(apiError("FORBIDDEN", "Access denied to this hotel", req.requestId || ""));
