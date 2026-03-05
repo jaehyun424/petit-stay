@@ -107,20 +107,22 @@
 /* Navigation */
 .sidebar-nav {
   flex: 1;
-  padding: 1.5rem 1rem;
+  padding: 1rem 0.75rem;
   overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
 }
 
 .sidebar-nav-item {
   display: flex;
   align-items: center;
   gap: 0.875rem;
-  padding: 0.75rem 1rem;
+  padding: 0.625rem 1rem;
   border-radius: var(--radius-lg);
   color: var(--sidebar-text-muted);
   text-decoration: none;
   transition: all var(--transition-fast);
-  margin-bottom: 0.125rem;
   font-family: var(--font-action);
   letter-spacing: 0.01em;
 }
@@ -212,11 +214,11 @@
 .main-header {
   display: flex;
   align-items: center;
-  padding: 0.75rem 2rem;
+  padding: 0 2rem;
   background: rgba(255, 255, 255, 0.85);
   backdrop-filter: blur(16px);
   -webkit-backdrop-filter: blur(16px);
-  border-bottom: 1px solid rgba(0, 0, 0, 0.03);
+  border-bottom: 1px solid rgba(0, 0, 0, 0.04);
   position: sticky;
   top: 0;
   z-index: var(--z-sticky);
