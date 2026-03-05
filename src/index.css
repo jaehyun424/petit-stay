@@ -355,10 +355,14 @@ p {
   text-transform: none;
   border-radius: var(--radius-full);
   white-space: nowrap;
+  line-height: 1.4;
 }
 
 .badge-sm { font-size: 0.625rem; padding: 0.125rem 0.5rem; }
 
+/* Badge variants - unified color scheme:
+   pending = warning (yellow), confirmed/in_progress = info (blue),
+   active = success (green), completed = neutral (grey), cancelled = error (red) */
 .badge-primary { background: var(--cream-200); color: var(--charcoal-900); }
 .badge-gold { background: var(--gold-100); color: var(--gold-700); }
 .badge-success { background: var(--success-bg); color: var(--success-500); }

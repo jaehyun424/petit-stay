@@ -8,7 +8,7 @@ import { useTranslation } from 'react-i18next';
 // ----------------------------------------
 // Types
 // ----------------------------------------
-type BadgeVariant = 'primary' | 'gold' | 'success' | 'warning' | 'error' | 'neutral';
+type BadgeVariant = 'primary' | 'gold' | 'success' | 'warning' | 'error' | 'neutral' | 'info';
 type BadgeSize = 'sm' | 'md';
 
 interface BadgeProps {
@@ -58,16 +58,16 @@ export function Badge({
 // ----------------------------------------
 const statusConfig: Record<StatusBadgeProps['status'], { variant: BadgeVariant; labelKey: string }> = {
     pending: { variant: 'warning', labelKey: 'status.pending' },
-    confirmed: { variant: 'primary', labelKey: 'status.confirmed' },
-    in_progress: { variant: 'primary', labelKey: 'status.inProgress' },
+    confirmed: { variant: 'info', labelKey: 'status.confirmed' },
+    in_progress: { variant: 'info', labelKey: 'status.inProgress' },
     active: { variant: 'success', labelKey: 'status.active' },
-    completed: { variant: 'success', labelKey: 'status.completed' },
-    cancelled: { variant: 'neutral', labelKey: 'status.cancelled' },
+    completed: { variant: 'neutral', labelKey: 'status.completed' },
+    cancelled: { variant: 'error', labelKey: 'status.cancelled' },
     no_show: { variant: 'error', labelKey: 'status.noShow' },
     emergency: { variant: 'error', labelKey: 'status.emergency' },
     pending_guest_consent: { variant: 'warning', labelKey: 'status.pendingGuestConsent' },
     pending_assignment: { variant: 'warning', labelKey: 'status.pendingAssignment' },
-    sitter_assigned: { variant: 'primary', labelKey: 'status.sitterAssigned' },
+    sitter_assigned: { variant: 'info', labelKey: 'status.sitterAssigned' },
     sitter_confirmed: { variant: 'success', labelKey: 'status.sitterConfirmed' },
     issue_reported: { variant: 'error', labelKey: 'status.issueReported' },
 };
@@ -78,7 +78,7 @@ export function StatusBadge({ status }: StatusBadgeProps) {
 
     return (
         <Badge variant={config.variant}>
-            <span className={`status-dot status-dot-${config.variant === 'success' ? 'success' : config.variant === 'error' ? 'error' : config.variant === 'warning' ? 'warning' : 'neutral'}`} />
+            <span className="status-dot" />
             {t(config.labelKey)}
         </Badge>
     );
