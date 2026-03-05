@@ -3,7 +3,7 @@
 // Desktop: sidebar + content | Mobile: header + bottom nav
 // ============================================
 
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { NavLink, Outlet, useNavigate, useLocation } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import { Home, Layers, Clock, User, Sun, Moon, Menu, X, LogOut } from 'lucide-react';
@@ -34,6 +34,11 @@ export function ParentLayout() {
     const navigate = useNavigate();
     const [sidebarCollapsed, setSidebarCollapsed] = useState(false);
     const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+
+    useEffect(() => {
+        document.body.style.overflow = mobileMenuOpen ? 'hidden' : '';
+        return () => { document.body.style.overflow = ''; };
+    }, [mobileMenuOpen]);
 
     const navItems = [
         { to: '/parent', icon: <Home size={22} strokeWidth={1.75} />, labelKey: 'nav.home', end: true },
