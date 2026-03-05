@@ -185,12 +185,17 @@ export default function SafetyDashboard() {
 
     // Handlers
     const openModal = () => {
-        setFormSeverity('low');
-        setFormCategory('injury');
-        setFormSitterName('');
-        setFormSummary('');
-        setFormSummaryError('');
-        setIsModalOpen(true);
+        try {
+            setFormSeverity('low');
+            setFormCategory('injury');
+            setFormSitterName('');
+            setFormSummary('');
+            setFormSummaryError('');
+            setIsModalOpen(true);
+        } catch (err) {
+            console.error('Failed to open incident report modal:', err);
+            toast.error(t('common.error'), t('safety.reportFailed'));
+        }
     };
 
     const closeModal = () => {
