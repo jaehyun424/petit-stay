@@ -143,6 +143,10 @@ export function useHotelBookings(hotelId?: string) {
             } finally {
                 setIsLoading(false);
             }
+        }, (error) => {
+            console.error('Firestore subscription error (hotel bookings):', error);
+            setError('Failed to load bookings');
+            setIsLoading(false);
         });
 
         return () => unsubscribe();

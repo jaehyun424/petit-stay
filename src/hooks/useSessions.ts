@@ -129,6 +129,11 @@ export function useHotelSessions(hotelId?: string) {
                         setError('Failed to load sessions');
                         setIsLoading(false);
                     }
+                },
+                (error) => {
+                    console.error('Firestore subscription error (hotel sessions):', error);
+                    setError('Failed to load sessions');
+                    setIsLoading(false);
                 }
             );
         } catch (err) {
