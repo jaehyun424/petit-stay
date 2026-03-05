@@ -378,7 +378,10 @@
     "guestNamePlaceholder": "e.g. Sarah Johnson",
     "noBookingsToday": "No bookings today",
     "noBookingsFound": "No bookings found",
-    "noBookingsFoundDesc": "Try adjusting your search or filter criteria."
+    "noBookingsFoundDesc": "Try adjusting your search or filter criteria.",
+    "paymentStatus": "Payment",
+    "paid": "Paid",
+    "paymentPending": "Pending"
   },
   "trustCheckin": {
     "trustProtocol": "Trust Protocol Check-In",
@@ -1116,7 +1119,9 @@
     "filterByPeriod": "Filter by period",
     "allPeriods": "All Periods",
     "reservationCount": "{{count}} reservations total",
-    "sitterCount": "{{count}} sitters registered"
+    "sitterCount": "{{count}} sitters registered",
+    "hotelCount": "{{count}} partner hotels",
+    "allTiers": "All Tiers"
   },
   "info": {
     "about": {

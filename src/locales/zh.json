@@ -378,7 +378,10 @@
     "guestNamePlaceholder": "例：张明",
     "noBookingsToday": "今日没有预订",
     "noBookingsFound": "未找到预订",
-    "noBookingsFoundDesc": "请尝试调整搜索条件或筛选条件。"
+    "noBookingsFoundDesc": "请尝试调整搜索条件或筛选条件。",
+    "paymentStatus": "付款",
+    "paid": "已付款",
+    "paymentPending": "待付款"
   },
   "trustCheckin": {
     "trustProtocol": "信任协议签到",
@@ -674,7 +677,15 @@
     "assignSitterToBooking": "将{{name}}分配到预约",
     "noAvailableSitters": "没有可用的看护人",
     "noSitters": "暂无注册保姆",
-    "noSittersDesc": "添加您的第一位保姆以开始使用。"
+    "noSittersDesc": "添加您的第一位保姆以开始使用。",
+    "filterByTier": "按等级筛选",
+    "goldTier": "金牌",
+    "silverTier": "银牌",
+    "availableHours": "可用时间",
+    "weekdayHours": "工作日 17:00 - 23:00，周末 10:00 - 23:00",
+    "sitterAdded": "保姆已添加",
+    "sitterRegistered": "{{name}}已注册",
+    "sitterAssignedToast": "保姆已分配"
   },
   "liveMonitor": {
     "noActiveSessions": "没有进行中的服务",
@@ -690,7 +701,8 @@
     "elapsedLabel": "已过：",
     "moodLabel": "心情：",
     "energyLabel": "精力：",
-    "activityTimeline": "活动时间线："
+    "activityTimeline": "活动时间线：",
+    "realtimeUpdates": "实时更新"
   },
   "scan": {
     "title": "QR签到",

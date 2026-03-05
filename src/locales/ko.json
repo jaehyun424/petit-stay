@@ -378,7 +378,10 @@
     "guestNamePlaceholder": "예: 김서연",
     "noBookingsToday": "오늘 예약이 없습니다",
     "noBookingsFound": "예약을 찾을 수 없습니다",
-    "noBookingsFoundDesc": "검색어나 필터를 조정해 보세요."
+    "noBookingsFoundDesc": "검색어나 필터를 조정해 보세요.",
+    "paymentStatus": "결제",
+    "paid": "결제 완료",
+    "paymentPending": "결제 대기"
   },
   "trustCheckin": {
     "trustProtocol": "신뢰 프로토콜 체크인",
@@ -674,7 +677,15 @@
     "assignSitterToBooking": "{{name}}을(를) 예약에 배정",
     "noAvailableSitters": "가용 시터가 없습니다",
     "noSitters": "등록된 시터가 없습니다",
-    "noSittersDesc": "첫 시터를 등록하여 시작하세요."
+    "noSittersDesc": "첫 시터를 등록하여 시작하세요.",
+    "filterByTier": "등급별 필터",
+    "goldTier": "골드",
+    "silverTier": "실버",
+    "availableHours": "가용 시간",
+    "weekdayHours": "평일 17:00 - 23:00, 주말 10:00 - 23:00",
+    "sitterAdded": "시터 추가 완료",
+    "sitterRegistered": "{{name}}이(가) 등록되었습니다",
+    "sitterAssignedToast": "시터 배정 완료"
   },
   "liveMonitor": {
     "noActiveSessions": "진행 중인 세션 없음",
@@ -690,7 +701,8 @@
     "elapsedLabel": "경과:",
     "moodLabel": "기분:",
     "energyLabel": "에너지:",
-    "activityTimeline": "활동 타임라인:"
+    "activityTimeline": "활동 타임라인:",
+    "realtimeUpdates": "실시간 업데이트"
   },
   "scan": {
     "title": "QR 체크인",
@@ -1107,7 +1119,9 @@
     "filterByPeriod": "기간 필터",
     "allPeriods": "전체 기간",
     "reservationCount": "총 {{count}}건의 예약",
-    "sitterCount": "등록된 시터 {{count}}명"
+    "sitterCount": "등록된 시터 {{count}}명",
+    "hotelCount": "제휴 호텔 {{count}}곳",
+    "allTiers": "전체 등급"
   },
   "info": {
     "about": {

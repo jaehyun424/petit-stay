@@ -378,7 +378,10 @@
     "guestNamePlaceholder": "例：田中太郎",
     "noBookingsToday": "本日の予約はありません",
     "noBookingsFound": "予約が見つかりません",
-    "noBookingsFoundDesc": "検索条件やフィルターを調整してみてください。"
+    "noBookingsFoundDesc": "検索条件やフィルターを調整してみてください。",
+    "paymentStatus": "支払い",
+    "paid": "支払済",
+    "paymentPending": "未払い"
   },
   "trustCheckin": {
     "trustProtocol": "トラストプロトコル チェックイン",
@@ -674,7 +677,15 @@
     "assignSitterToBooking": "{{name}}を予約に割り当て",
     "noAvailableSitters": "対応可能なシッターがいません",
     "noSitters": "登録されたシッターはいません",
-    "noSittersDesc": "最初のシッターを追加して始めましょう。"
+    "noSittersDesc": "最初のシッターを追加して始めましょう。",
+    "filterByTier": "ティア別フィルター",
+    "goldTier": "ゴールド",
+    "silverTier": "シルバー",
+    "availableHours": "対応可能時間",
+    "weekdayHours": "平日 17:00 - 23:00、週末 10:00 - 23:00",
+    "sitterAdded": "シッター追加完了",
+    "sitterRegistered": "{{name}}が登録されました",
+    "sitterAssignedToast": "シッター配置完了"
   },
   "liveMonitor": {
     "noActiveSessions": "進行中のセッションなし",
@@ -690,7 +701,8 @@
     "elapsedLabel": "経過：",
     "moodLabel": "機嫌：",
     "energyLabel": "エネルギー：",
-    "activityTimeline": "活動タイムライン："
+    "activityTimeline": "活動タイムライン：",
+    "realtimeUpdates": "リアルタイム更新"
   },
   "scan": {
     "title": "QRチェックイン",
@@ -1107,7 +1119,9 @@
     "filterByPeriod": "期間で絞り込み",
     "allPeriods": "全期間",
     "reservationCount": "合計{{count}}件の予約",
-    "sitterCount": "登録シッター{{count}}名"
+    "sitterCount": "登録シッター{{count}}名",
+    "hotelCount": "提携ホテル{{count}}件",
+    "allTiers": "全ティア"
   },
   "info": {
     "about": {
