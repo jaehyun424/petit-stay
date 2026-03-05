@@ -194,12 +194,12 @@ describe('Sitter Profile', () => {
 
     it('renders edit profile button', () => {
         render(<Profile />);
-        expect(screen.getByText(/common\.edit.*sitter\.profile\.title|sitter\.profile\.title.*common\.edit/)).toBeTruthy();
+        expect(screen.getByText(/sitterProfile\.editProfile/)).toBeTruthy();
     });
 
     it('opens edit profile modal when edit clicked', async () => {
         render(<Profile />);
-        const editButtons = screen.getAllByText(/common\.edit/);
+        const editButtons = screen.getAllByText(/sitterProfile\.editProfile/);
         fireEvent.click(editButtons[0]);
 
         await waitFor(() => {
