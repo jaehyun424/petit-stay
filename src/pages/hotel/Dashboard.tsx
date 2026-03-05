@@ -2,12 +2,15 @@
 // Petit Stay - Hotel Dashboard
 // ============================================
 
-import React, { useState } from 'react';
+import React, { useState, useMemo } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import { motion } from 'framer-motion';
 import { staggerContainer, staggerItem } from '../../utils/animations';
-import { Calendar, Radio, CheckCircle, DollarSign, Plus, ArrowRight, Clock, DoorOpen, User } from 'lucide-react';
+import {
+  BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer,
+} from 'recharts';
+import { Calendar, Radio, CheckCircle, DollarSign, Plus, ArrowRight, Clock, DoorOpen, User, TrendingUp, Activity, UserCheck, Baby } from 'lucide-react';
 import { Card, CardHeader, CardTitle, CardBody } from '../../components/common/Card';
 import { Button } from '../../components/common/Button';
 import { Badge, StatusBadge, TierBadge, SafetyBadge } from '../../components/common/Badge';
@@ -27,6 +30,68 @@ import { useHotelSitters } from '../../hooks/useSitters';
 import type { DemoBooking } from '../../data/demo';
 import { formatCurrency } from '../../utils/format';
 import '../../styles/pages/hotel-dashboard.css';
+
+// ----------------------------------------
+// Demo chart data for the week
+// ----------------------------------------
+function getWeekdayLabel(offset: number): string {
+  const d = new Date();
+  d.setDate(d.getDate() + offset);
+  return d.toLocaleDateString('en-US', { weekday: 'short' });
+}
+
+const DEMO_WEEK_CHART = [
+  { label: getWeekdayLabel(-6), bookings: 4, revenue: 960000 },
+  { label: getWeekdayLabel(-5), bookings: 6, revenue: 1440000 },
+  { label: getWeekdayLabel(-4), bookings: 3, revenue: 720000 },
+  { label: getWeekdayLabel(-3), bookings: 7, revenue: 1890000 },
+  { label: getWeekdayLabel(-2), bookings: 5, revenue: 1350000 },
+  { label: getWeekdayLabel(-1), bookings: 8, revenue: 2160000 },
+  { label: getWeekdayLabel(0), bookings: 5, revenue: 900000 },
+];
+
+// Demo recent activity timeline
+function timeAgo(minutes: number): string {
+  if (minutes < 60) return `${minutes}m ago`;
+  return `${Math.floor(minutes / 60)}h ${minutes % 60}m ago`;
+}
+
+const DEMO_ACTIVITY_TIMELINE = [
+  { icon: 'booking', text: 'New booking KCP-2026-0046 created', time: timeAgo(12), color: 'var(--charcoal-900)' },
+  { icon: 'session', text: 'Session started - Room 1102 (Park Sooyeon)', time: timeAgo(45), color: 'var(--warning-500)' },
+  { icon: 'checkin', text: 'Trust check-in completed - Room 2305', time: timeAgo(68), color: 'var(--success-500)' },
+  { icon: 'session', text: 'Session started - Room 2305 (Kim Minjung)', time: timeAgo(90), color: 'var(--warning-500)' },
+  { icon: 'sitter', text: 'Sato Haruka confirmed for tomorrow', time: timeAgo(120), color: 'var(--gold-600)' },
+  { icon: 'completed', text: 'Session completed - Room 2108 (Lee Jihye)', time: timeAgo(180), color: 'var(--success-500)' },
+];
+
+function getActivityIcon(type: string) {
+  switch (type) {
+    case 'booking': return <Calendar size={14} strokeWidth={1.75} />;
+    case 'session': return <Activity size={14} strokeWidth={1.75} />;
+    case 'checkin': return <UserCheck size={14} strokeWidth={1.75} />;
+    case 'sitter': return <User size={14} strokeWidth={1.75} />;
+    case 'completed': return <CheckCircle size={14} strokeWidth={1.75} />;
+    default: return <Clock size={14} strokeWidth={1.75} />;
+  }
+}
+
+// ----------------------------------------
+// Chart Tooltip
+// ----------------------------------------
+function ChartTooltip({ active, payload, label }: { active?: boolean; payload?: Array<{ value: number; name: string }>; label?: string }) {
+  if (!active || !payload?.length) return null;
+  return (
+    <div className="dashboard-chart-tooltip">
+      <p className="dashboard-tooltip-label">{label}</p>
+      {payload.map((entry, i) => (
+        <p key={i} className="dashboard-tooltip-value">
+          {entry.name}: {entry.name.toLowerCase().includes('revenue') ? formatCurrency(entry.value) : entry.value}
+        </p>
+      ))}
+    </div>
+  );
+}
 
 // ----------------------------------------
 // Stat Card Component
@@ -83,6 +148,14 @@ export default function Dashboard() {
   const toast = useToast();
   const isLoading = bookingsLoading || sessionsLoading;
   const [period, setPeriod] = useState('today');
+
+  // Week summary stats
+  const weekSummary = useMemo(() => {
+    const totalBookings = DEMO_WEEK_CHART.reduce((s, d) => s + d.bookings, 0);
+    const totalRevenue = DEMO_WEEK_CHART.reduce((s, d) => s + d.revenue, 0);
+    const avgPerDay = Math.round(totalRevenue / DEMO_WEEK_CHART.length);
+    return { totalBookings, totalRevenue, avgPerDay };
+  }, []);
 
   // New Booking modal
   const [showNewBooking, setShowNewBooking] = useState(false);
@@ -239,10 +312,83 @@ export default function Dashboard() {
         ))}
       </motion.div>
 
+      {/* This Week Summary + Chart */}
+      <div className="dashboard-grid" style={{ marginBottom: 'var(--space-6)' }}>
+        {/* Weekly Bookings Chart */}
+        <Card className="animate-fade-in-up stagger-1">
+          <CardHeader action={
+            <Link to="/hotel/reports" className="card-link">
+              {t('reports.title', 'Reports')} <ArrowRight size={16} strokeWidth={2} />
+            </Link>
+          }>
+            <CardTitle subtitle={t('dashboard.weeklyTrend', 'Bookings & revenue this week')}>
+              <span style={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
+                <TrendingUp size={18} strokeWidth={2} />
+                {t('dashboard.weeklyOverview', 'This Week')}
+              </span>
+            </CardTitle>
+          </CardHeader>
+          <CardBody>
+            <div className="dashboard-chart-container">
+              <ResponsiveContainer width="100%" height={200}>
+                <BarChart data={DEMO_WEEK_CHART} margin={{ top: 5, right: 10, left: 10, bottom: 5 }}>
+                  <CartesianGrid strokeDasharray="3 3" stroke="var(--border-color)" />
+                  <XAxis dataKey="label" tick={{ fontSize: 11, fill: 'var(--text-secondary)' }} />
+                  <YAxis tick={{ fontSize: 11, fill: 'var(--text-tertiary)' }} />
+                  <Tooltip content={<ChartTooltip />} />
+                  <Bar dataKey="bookings" name={t('nav.bookings', 'Bookings')} fill="#6366F1" radius={[4, 4, 0, 0]} />
+                </BarChart>
+              </ResponsiveContainer>
+            </div>
+          </CardBody>
+        </Card>
+
+        {/* This Week Summary Text */}
+        <Card className="animate-fade-in-up stagger-2">
+          <CardHeader>
+            <CardTitle subtitle={t('dashboard.performanceSummary', 'Key metrics at a glance')}>
+              {t('dashboard.thisWeekSummary', 'This Week Summary')}
+            </CardTitle>
+          </CardHeader>
+          <CardBody>
+            <div className="week-summary">
+              <div className="week-summary-item">
+                <span className="week-summary-icon"><Calendar size={16} strokeWidth={1.75} /></span>
+                <div className="week-summary-text">
+                  <span className="week-summary-value">{weekSummary.totalBookings}</span>
+                  <span className="week-summary-label">{t('dashboard.totalBookingsWeek', 'bookings this week')}</span>
+                </div>
+              </div>
+              <div className="week-summary-item">
+                <span className="week-summary-icon"><DollarSign size={16} strokeWidth={1.75} /></span>
+                <div className="week-summary-text">
+                  <span className="week-summary-value">{formatCurrency(weekSummary.totalRevenue)}</span>
+                  <span className="week-summary-label">{t('dashboard.weeklyRevenue', 'weekly revenue')}</span>
+                </div>
+              </div>
+              <div className="week-summary-item">
+                <span className="week-summary-icon"><TrendingUp size={16} strokeWidth={1.75} /></span>
+                <div className="week-summary-text">
+                  <span className="week-summary-value">{formatCurrency(weekSummary.avgPerDay)}</span>
+                  <span className="week-summary-label">{t('dashboard.avgPerDay', 'avg. revenue per day')}</span>
+                </div>
+              </div>
+              <div className="week-summary-item">
+                <span className="week-summary-icon"><Baby size={16} strokeWidth={1.75} /></span>
+                <div className="week-summary-text">
+                  <span className="week-summary-value">{sitters.filter(s => s.availability === 'Available').length}/{sitters.length}</span>
+                  <span className="week-summary-label">{t('dashboard.sittersAvailable', 'sitters available now')}</span>
+                </div>
+              </div>
+            </div>
+          </CardBody>
+        </Card>
+      </div>
+
       {/* Main Content Grid */}
       <div className="dashboard-grid">
         {/* Today's Bookings */}
-        <Card className="animate-fade-in-up stagger-2">
+        <Card className="animate-fade-in-up stagger-3">
           <CardHeader action={
             <Link to="/hotel/bookings" className="card-link">
               {t('parent.viewAll')} <ArrowRight size={16} strokeWidth={2} />
@@ -309,49 +455,33 @@ export default function Dashboard() {
           </CardBody>
         </Card>
 
-        {/* Live Monitor Preview */}
-        <Card className="animate-fade-in-up stagger-3">
+        {/* Recent Activity Timeline */}
+        <Card className="animate-fade-in-up stagger-4">
           <CardHeader action={
             <Link to="/hotel/live" className="card-link">
               {t('nav.liveMonitor')} <ArrowRight size={16} strokeWidth={2} />
             </Link>
           }>
-            <CardTitle subtitle={t('hotel.recentActivity')}>
+            <CardTitle subtitle={t('dashboard.recentEvents', 'Latest events and updates')}>
               <span className="live-monitor-title-row">
-                {t('nav.liveMonitor')}
+                {t('hotel.recentActivity')}
                 <span className="status-dot status-dot-success" aria-hidden="true" />
               </span>
             </CardTitle>
           </CardHeader>
           <CardBody>
-            <div className="live-list">
-              {activeSessions.length === 0 ? (
-                <EmptyState
-                  icon={<Radio size={32} strokeWidth={1.5} />}
-                  title={t('liveMonitor.noActiveSessions')}
-                  description={t('liveMonitor.noActiveSessionsDesc')}
-                />
-              ) : (
-                activeSessions.map((session) => (
-                  <div key={session.id} className="live-item">
-                    <div className="live-item-header">
-                      <Avatar src={session.sitter.avatar ?? undefined} name={session.sitter.name} size="sm" variant={session.sitter.tier === 'gold' ? 'gold' : 'default'} />
-                      <div className="live-item-info">
-                        <span className="live-item-name">{session.sitter.name}</span>
-                        <span className="live-item-room">{t('common.room')} {session.room}</span>
-                      </div>
-                      <div className="live-item-time">
-                        <span className="live-item-elapsed">{session.elapsed}</span>
-                        <span className="live-item-start">{t('hotel.started')} {session.startTime}</span>
-                      </div>
-                    </div>
-                    <div className="live-item-activity">
-                      <span className="status-dot status-dot-success" aria-hidden="true" />
-                      {session.lastActivity}
-                    </div>
+            <div className="activity-timeline-list">
+              {DEMO_ACTIVITY_TIMELINE.map((item, i) => (
+                <div key={i} className="activity-timeline-item">
+                  <span className="activity-timeline-icon" style={{ color: item.color }}>
+                    {getActivityIcon(item.icon)}
+                  </span>
+                  <div className="activity-timeline-content">
+                    <span className="activity-timeline-text">{item.text}</span>
+                    <span className="activity-timeline-time">{item.time}</span>
                   </div>
-                ))
-              )}
+                </div>
+              ))}
             </div>
           </CardBody>
         </Card>
