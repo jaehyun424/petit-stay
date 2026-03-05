@@ -88,13 +88,22 @@
 
 /* 5-step progress: tighter spacing */
 .progress-steps-5 {
-  gap: var(--space-4);
+  gap: var(--space-3);
 }
 .progress-steps-5 .step-label {
-  font-size: 0.6875rem;
+  font-size: 0.625rem;
+  max-width: 56px;
+  text-align: center;
+  line-height: 1.2;
+  word-break: keep-all;
+}
+.progress-steps-5 .step-number {
+  width: 28px;
+  height: 28px;
+  font-size: var(--text-xs);
 }
 .progress-steps-5::before {
-  width: 70%;
+  width: 75%;
 }
 
 /* Step description */
@@ -532,8 +541,23 @@
   }
 
   .progress-steps {
-    gap: var(--space-6);
+    gap: var(--space-4);
     margin-bottom: var(--space-6);
+  }
+
+  .progress-steps-5 {
+    gap: var(--space-2);
+  }
+
+  .progress-steps-5 .step-number {
+    width: 24px;
+    height: 24px;
+    font-size: 0.625rem;
+  }
+
+  .progress-steps-5 .step-label {
+    font-size: 0.5625rem;
+    max-width: 48px;
   }
 
   .booking-card h2 {

@@ -157,6 +157,13 @@
   letter-spacing: -0.03em;
 }
 
+/* Two-column grid gap */
+.parent-home-grid {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
 /* Recent Sessions */
 .session-card {
   margin-bottom: 0.75rem;

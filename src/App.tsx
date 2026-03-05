@@ -2,8 +2,8 @@
 // Petit Stay - Main App Router
 // ============================================
 
-import React, { Suspense, lazy } from 'react';
-import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
+import React, { Suspense, lazy, useEffect } from 'react';
+import { BrowserRouter, Routes, Route, Navigate, useLocation } from 'react-router-dom';
 import { AuthProvider, useAuth } from './contexts/AuthContext';
 import { ThemeProvider } from './contexts/ThemeContext';
 import { ToastProvider } from './contexts/ToastContext';
@@ -132,11 +132,23 @@ function ProtectedRoute({ children, allowedRoles }: ProtectedRouteProps) {
 }
 
 // ----------------------------------------
+// Scroll to top on route change
+// ----------------------------------------
+function ScrollToTop() {
+  const { pathname } = useLocation();
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, [pathname]);
+  return null;
+}
+
+// ----------------------------------------
 // App Routes
 // ----------------------------------------
 function AppRoutes() {
   return (
     <Suspense fallback={<PageLoader />}>
+      <ScrollToTop />
       <Routes>
         {/* Auth Routes */}
         <Route path="/login" element={<LoginPage />} />
