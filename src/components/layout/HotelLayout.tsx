@@ -7,7 +7,7 @@ import { NavLink, Outlet, useNavigate, useLocation } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import {
   LayoutDashboard, Calendar, Radio, Users, FileText, QrCode,
-  ShieldCheck, Settings, Menu, Sun, Moon, LogOut,
+  ShieldCheck, Settings, Menu, X, Sun, Moon, LogOut,
 } from 'lucide-react';
 import { useAuth } from '../../contexts/AuthContext';
 import { useTheme } from '../../contexts/ThemeContext';
@@ -79,6 +79,12 @@ export function HotelLayout() {
             onClick={() => setSidebarCollapsed(!sidebarCollapsed)}
             aria-label={t('aria.toggleSidebar')}
             className="sidebar-toggle desktop-only"
+          />
+          <IconButton
+            icon={<X size={20} strokeWidth={1.75} />}
+            onClick={() => setMobileMenuOpen(false)}
+            aria-label={t('aria.closeMenu', 'Close menu')}
+            className="sidebar-close-btn mobile-only-btn"
           />
         </div>
 

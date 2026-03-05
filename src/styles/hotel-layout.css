@@ -104,6 +104,26 @@
   background: var(--sidebar-hover);
 }
 
+/* Close button - visible only in mobile sidebar */
+.sidebar-close-btn {
+  display: none;
+  color: var(--sidebar-text-muted);
+}
+.sidebar-close-btn:hover {
+  color: var(--sidebar-text);
+  background: var(--sidebar-hover);
+}
+
+.mobile-only-btn {
+  display: none;
+}
+
+@media (max-width: 768px) {
+  .mobile-only-btn {
+    display: flex;
+  }
+}
+
 /* Navigation */
 .sidebar-nav {
   flex: 1;

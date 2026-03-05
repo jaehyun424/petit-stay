@@ -7,7 +7,7 @@ import { NavLink, Outlet, useNavigate, useLocation } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import {
   LayoutDashboard, Calendar, Users, Building2, Wallet, AlertTriangle,
-  BarChart3, Shield, Menu, Sun, Moon, LogOut, ChevronRight,
+  BarChart3, Shield, Menu, X, Sun, Moon, LogOut, ChevronRight,
 } from 'lucide-react';
 import { useAuth } from '../../contexts/AuthContext';
 import { useTheme } from '../../contexts/ThemeContext';
@@ -67,6 +67,12 @@ export function OpsLayout() {
             onClick={() => setSidebarCollapsed(!sidebarCollapsed)}
             aria-label={t('aria.toggleSidebar')}
             className="sidebar-toggle desktop-only"
+          />
+          <IconButton
+            icon={<X size={20} strokeWidth={1.75} />}
+            onClick={() => setMobileMenuOpen(false)}
+            aria-label={t('aria.closeMenu', 'Close menu')}
+            className="sidebar-close-btn mobile-only-btn"
           />
         </div>
 
