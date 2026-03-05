@@ -1,6 +1,6 @@
 import { useTranslation } from 'react-i18next';
 import { motion } from 'framer-motion';
-import { Shield, Heart, Globe, Eye, Users } from 'lucide-react';
+import { Shield, Heart, Globe, Eye, Users, Award } from 'lucide-react';
 import { InfoLayout } from './InfoLayout';
 
 const values = [
@@ -9,6 +9,7 @@ const values = [
   { icon: Globe, key: 'accessibility' },
   { icon: Eye, key: 'transparency' },
   { icon: Users, key: 'partnership' },
+  { icon: Award, key: 'excellence' },
 ] as const;
 
 export default function AboutPage() {
