@@ -96,10 +96,10 @@
     flex-direction: row;
   }
 
-  /* Show sidebar - Gold Theme */
+  /* Show sidebar - Gold Theme (consistent 248px with Hotel/Ops) */
   .parent-sidebar {
     display: flex;
-    width: 220px;
+    width: 248px;
     flex-direction: column;
     position: fixed;
     top: 0;
@@ -114,7 +114,16 @@
   }
 
   .parent-sidebar.sidebar-collapsed {
-    width: 64px;
+    width: 80px;
+  }
+
+  .parent-sidebar.sidebar-collapsed .sidebar-nav-label {
+    display: none;
+  }
+
+  .parent-sidebar.sidebar-collapsed .sidebar-nav-item {
+    justify-content: center;
+    padding: 0.875rem 0;
   }
 
   /* Hide mobile header, show desktop header */
@@ -141,23 +150,23 @@
     border-bottom-color: rgba(255, 255, 255, 0.03);
   }
 
-  /* Main area gets margin for sidebar */
+  /* Main area gets margin for sidebar (consistent 248px/80px with Hotel/Ops) */
   .parent-main-area {
-    margin-left: 220px;
+    margin-left: 248px;
     transition: margin-left var(--transition-base);
   }
 
   .parent-sidebar.sidebar-collapsed ~ .parent-main-area,
   .parent-layout:has(.parent-sidebar.sidebar-collapsed) .parent-main-area {
-    margin-left: 64px;
+    margin-left: 80px;
   }
 
-  /* Content - remove bottom padding */
+  /* Content - consistent padding with Hotel/Ops */
   .parent-content {
-    padding: 2rem;
-    padding-bottom: 2rem;
-    max-width: 1200px;
+    padding: 2.5rem;
+    max-width: 1600px;
     width: 100%;
+    margin: 0 auto;
   }
 
   /* Hide bottom nav on desktop */
