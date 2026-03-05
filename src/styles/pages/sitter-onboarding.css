@@ -569,7 +569,7 @@
 @media (max-width: 480px) {
   .sitter-onboarding { padding: var(--space-3); }
 
-  .progress-step-label { font-size: 10px; }
+  .progress-step-label { font-size: 11px; }
 
   .progress-step-dot { width: 30px; height: 30px; font-size: 11px; }
 
