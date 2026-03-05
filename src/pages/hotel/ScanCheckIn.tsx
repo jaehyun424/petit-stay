@@ -63,8 +63,7 @@ export default function ScanCheckIn() {
                 videoRef.current.srcObject = stream;
                 videoRef.current.play();
             }
-        } catch (err) {
-            console.error('Camera access failed:', err);
+        } catch {
             setCameraError(t('scan.cameraDenied'));
             setScanStatus('idle');
         }

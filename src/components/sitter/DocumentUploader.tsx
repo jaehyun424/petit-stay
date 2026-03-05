@@ -67,8 +67,8 @@ export function DocumentUploader({ sitterId, documents, onDocumentsChange }: Doc
                 size: file.size,
             };
             onDocumentsChange([...documents, newDoc]);
-        } catch (err) {
-            console.error('Upload failed:', err);
+        } catch {
+            // upload error handled by UI state
         } finally {
             setUploading(false);
             setProgress(0);

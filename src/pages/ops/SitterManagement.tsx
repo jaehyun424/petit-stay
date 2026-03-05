@@ -94,8 +94,8 @@ function usePendingSitters() {
         };
       });
       setPending(items);
-    } catch (err) {
-      console.error('Failed to load pending sitters:', err);
+    } catch {
+      // load failure handled by empty state
     } finally {
       setIsLoading(false);
     }

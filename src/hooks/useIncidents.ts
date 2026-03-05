@@ -58,8 +58,7 @@ export function useHotelIncidents(hotelId?: string) {
                     setIsLoading(false);
                 }
             );
-        } catch (err) {
-            console.error('Failed to subscribe to incidents:', err);
+        } catch {
             setError('Failed to load incidents');
             setIsLoading(false);
         }

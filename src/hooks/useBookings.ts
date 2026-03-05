@@ -137,14 +137,12 @@ export function useHotelBookings(hotelId?: string) {
                     pendingBookings: fbBookings.filter(b => b.status === 'pending').length,
                 });
                 setError(null);
-            } catch (err) {
-                console.error('Failed to process hotel bookings:', err);
+            } catch {
                 setError('Failed to process bookings');
             } finally {
                 setIsLoading(false);
             }
-        }, (error) => {
-            console.error('Firestore subscription error (hotel bookings):', error);
+        }, () => {
             setError('Failed to load bookings');
             setIsLoading(false);
         });
@@ -253,8 +251,7 @@ export function useParentBookings(parentId?: string) {
 
                 setError(null);
                 setIsLoading(false);
-            } catch (err) {
-                console.error('Failed to load parent bookings:', err);
+            } catch {
                 if (!cancelled) {
                     setError('Failed to load bookings');
                     setIsLoading(false);
@@ -352,8 +349,7 @@ export function useSitterBookings(sitterId?: string) {
                 setWeekSchedule(weekDays);
                 setError(null);
                 setIsLoading(false);
-            } catch (err) {
-                console.error('Failed to load sitter bookings:', err);
+            } catch {
                 if (!cancelled) {
                     setError('Failed to load schedule');
                     setIsLoading(false);
@@ -384,8 +380,7 @@ export function useSitterBookings(sitterId?: string) {
         }
         try {
             await bookingService.updateBookingStatus(bookingId, 'sitter_confirmed');
-        } catch (err) {
-            console.error('Failed to accept assignment:', err);
+        } catch {
             setError('Failed to accept assignment');
         }
     }, []);
@@ -401,8 +396,7 @@ export function useSitterBookings(sitterId?: string) {
                 status: 'pending_assignment',
                 sitterId: '',
             });
-        } catch (err) {
-            console.error('Failed to reject assignment:', err);
+        } catch {
             setError('Failed to reject assignment');
         }
     }, []);
@@ -453,8 +447,7 @@ export function useRecommendedSitters(booking: Booking | null, hotelId?: string)
 
             const matches = getRecommendedSitters(booking, sitters, hotel);
             setRecommendations(matches);
-        } catch (err) {
-            console.error('Failed to get recommended sitters:', err);
+        } catch {
             setError('Failed to load recommendations');
         } finally {
             setIsLoading(false);

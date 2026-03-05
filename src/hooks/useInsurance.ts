@@ -101,8 +101,7 @@ export function useInsurance() {
                 setBookingInsurance(data);
             });
             setIsLoading(false);
-        } catch (err) {
-            console.error('Failed to load insurance data:', err);
+        } catch {
             setError('Failed to load insurance data');
             setIsLoading(false);
         }

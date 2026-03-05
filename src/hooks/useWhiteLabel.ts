@@ -59,8 +59,8 @@ export function useWhiteLabel(hotelId?: string) {
         if (cancelled) return;
         setBranding(data);
         applyBranding(data);
-      } catch (err) {
-        console.error('Failed to load branding:', err);
+      } catch {
+        // Falls back to DEFAULT_BRANDING
       } finally {
         if (!cancelled) setIsLoading(false);
       }

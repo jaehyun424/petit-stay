@@ -38,8 +38,8 @@ export function ConsentForm({ bookingId, onNext, onBack }: ConsentFormProps) {
         });
       }
       onNext();
-    } catch (err) {
-      console.error('Failed to submit consent:', err);
+    } catch {
+      // consent submission failed
     } finally {
       setIsSubmitting(false);
     }

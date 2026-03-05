@@ -72,8 +72,7 @@ export function useAuditLog(bookingId?: string) {
                 setError(null);
                 setIsLoading(false);
             });
-        } catch (err) {
-            console.error('Failed to subscribe to audit log:', err);
+        } catch {
             setError('Failed to load audit log');
             setIsLoading(false);
         }

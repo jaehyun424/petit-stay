@@ -233,8 +233,7 @@ export default function Dashboard() {
       setShowNewBooking(false);
       setNewBookingForm({ guestName: '', room: '', date: '', time: '18:00', duration: '4', childrenCount: '1' });
       setFormErrors({});
-    } catch (err) {
-      console.error('Failed to create booking:', err);
+    } catch {
       toast.error(t('common.error'), t('booking.createFailed', 'Failed to create booking'));
     }
   };

@@ -184,8 +184,7 @@ export default function Booking() {
             }
             success(t('booking.bookingConfirmed'), t('booking.bookingConfirmed'));
             navigate('/parent');
-        } catch (err) {
-            console.error('Booking creation failed:', err);
+        } catch {
             showError(t('errors.unknownError', 'An error occurred'), t('booking.bookingFailed', 'Failed to create booking. Please try again.'));
         } finally {
             setIsLoading(false);

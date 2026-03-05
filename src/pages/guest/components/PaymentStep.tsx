@@ -64,8 +64,7 @@ export function PaymentStep({ reservation, onNext, onBack }: PaymentStepProps) {
         });
       }
       onNext();
-    } catch (err) {
-      console.error('Payment processing failed:', err);
+    } catch {
       setPaymentError(t('guest.paymentError'));
     } finally {
       setIsProcessing(false);

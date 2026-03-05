@@ -157,8 +157,7 @@ export function AuthProvider({ children }: AuthProviderProps) {
             }
 
             return null;
-        } catch (error) {
-            console.error('Error fetching user data:', error);
+        } catch {
             return null;
         }
     }, []);

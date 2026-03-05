@@ -184,7 +184,6 @@ export function useOpsData(): UseOpsDataReturn {
         setError(null);
         setIsLoading(false);
       } catch (err) {
-        console.error('Failed to load ops data:', err);
         if (!cancelled) {
           setError('Failed to load operations data');
           setIsLoading(false);

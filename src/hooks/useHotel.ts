@@ -81,8 +81,7 @@ export function useHotel(hotelId?: string) {
                 setError(null);
                 setIsLoading(false);
             });
-        } catch (err) {
-            console.error('Failed to subscribe to hotel:', err);
+        } catch {
             setError('Failed to load hotel data');
             setIsLoading(false);
         }
@@ -138,8 +137,7 @@ export function useHotels() {
                 }));
                 setHotels(mapped);
                 setError(null);
-            } catch (err) {
-                console.error('Failed to load hotels:', err);
+            } catch {
                 if (!cancelled) {
                     setError('Failed to load hotels');
                     // Fallback to demo data on error

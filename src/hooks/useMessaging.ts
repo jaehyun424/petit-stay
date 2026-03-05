@@ -35,9 +35,7 @@ export function useMessaging(userId?: string, conversationId?: string) {
     // Register FCM token for push notifications
     useEffect(() => {
         if (DEMO_MODE || !userId) return;
-        fcmService.registerToken(userId).catch((err) => {
-            console.warn('FCM token registration failed:', err);
-        });
+        fcmService.registerToken(userId).catch(() => { /* non-critical */ });
     }, [userId]);
 
     // Subscribe to conversations list
@@ -54,8 +52,7 @@ export function useMessaging(userId?: string, conversationId?: string) {
                 setError(null);
                 setIsLoading(false);
             });
-        } catch (err) {
-            console.error('Failed to subscribe to conversations:', err);
+        } catch {
             setError('Failed to load conversations');
             setIsLoading(false);
         }
@@ -80,8 +77,7 @@ export function useMessaging(userId?: string, conversationId?: string) {
                 setError(null);
                 setIsLoading(false);
             });
-        } catch (err) {
-            console.error('Failed to subscribe to messages:', err);
+        } catch {
             setError('Failed to load messages');
             setIsLoading(false);
         }
@@ -107,8 +103,7 @@ export function useMessaging(userId?: string, conversationId?: string) {
         if (!activeConversationId || !userId) return;
         try {
             await messagingService.sendMessage(activeConversationId, userId, senderName, text);
-        } catch (err) {
-            console.error('Failed to send message:', err);
+        } catch {
             setError('Failed to send message');
         }
     }, [activeConversationId, userId]);
@@ -131,8 +126,7 @@ export function useMessaging(userId?: string, conversationId?: string) {
             );
             setActiveConversationId(convId);
             return convId;
-        } catch (err) {
-            console.error('Failed to open conversation:', err);
+        } catch {
             setError('Failed to open conversation');
             return '';
         }
@@ -143,9 +137,7 @@ export function useMessaging(userId?: string, conversationId?: string) {
         if (DEMO_MODE || !activeConversationId || !userId) return;
         try {
             await messagingService.setTyping(activeConversationId, userId, isTyping);
-        } catch (err) {
-            console.error('Failed to set typing status:', err);
-        }
+        } catch { /* non-critical */ }
     }, [activeConversationId, userId]);
 
     // Mark messages as read
@@ -153,9 +145,7 @@ export function useMessaging(userId?: string, conversationId?: string) {
         if (DEMO_MODE || !activeConversationId || !userId) return;
         try {
             await messagingService.markAsRead(activeConversationId, userId);
-        } catch (err) {
-            console.error('Failed to mark messages as read:', err);
-        }
+        } catch { /* non-critical */ }
     }, [activeConversationId, userId]);
 
     return {

@@ -146,8 +146,7 @@ export function useSitterOnboarding(userId?: string) {
       }
       setStatus('applied');
       nextStep();
-    } catch (err) {
-      console.error('Failed to submit basic info:', err);
+    } catch {
       setError('Failed to save basic information');
     } finally {
       setIsSubmitting(false);
@@ -187,8 +186,7 @@ export function useSitterOnboarding(userId?: string) {
       }
 
       setStatus('documents_submitted');
-    } catch (err) {
-      console.error('Failed to upload document:', err);
+    } catch {
       setError('Failed to upload document');
     } finally {
       setIsSubmitting(false);
@@ -218,8 +216,7 @@ export function useSitterOnboarding(userId?: string) {
       }
 
       nextStep();
-    } catch (err) {
-      console.error('Failed to update training status:', err);
+    } catch {
       setError('Failed to save training completion');
     } finally {
       setIsSubmitting(false);
@@ -256,8 +253,7 @@ export function useSitterOnboarding(userId?: string) {
       }
 
       return passed;
-    } catch (err) {
-      console.error('Failed to submit quiz:', err);
+    } catch {
       setError('Failed to submit quiz');
       return false;
     } finally {

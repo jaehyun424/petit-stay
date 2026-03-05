@@ -92,8 +92,7 @@ export function useInfiniteBookings(hotelId?: string) {
                     setHasMore(snapshot.docs.length === PAGE_SIZE);
                 }
             }
-        } catch (err) {
-            console.error('Failed to load bookings page:', err);
+        } catch {
             setError('Failed to load bookings');
         } finally {
             setIsLoading(false);

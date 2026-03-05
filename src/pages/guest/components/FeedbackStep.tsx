@@ -29,8 +29,8 @@ export function FeedbackStep({ bookingId, onSubmit }: FeedbackStepProps) {
       setSubmitted(true);
       setShowToast(true);
       setTimeout(() => setShowToast(false), 3000);
-    } catch (err) {
-      console.error('Failed to submit feedback:', err);
+    } catch {
+      // feedback submission failed silently
     } finally {
       setIsSubmitting(false);
     }

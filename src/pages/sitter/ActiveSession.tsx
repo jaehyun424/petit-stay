@@ -88,8 +88,7 @@ export default function ActiveSession() {
                     type: 'activity',
                     description: activityNote || t('activeSession.activityLogDescription'),
                 });
-            } catch (err) {
-                console.error('Failed to log activity:', err);
+            } catch {
                 error(t('errors.unknownError', 'An error occurred'), t('activeSession.activityLogFailed', 'Failed to log activity.'));
                 return;
             }
@@ -119,8 +118,7 @@ export default function ActiveSession() {
                 mediaUrl: photoUrl,
             });
             success(t('activeSession.photoAdded'), t('activeSession.photoUploaded'));
-        } catch (err) {
-            console.error('Failed to upload photo:', err);
+        } catch {
             error(t('activeSession.uploadFailed'), t('activeSession.uploadFailedDesc'));
         }
         e.target.value = '';
@@ -134,8 +132,7 @@ export default function ActiveSession() {
                     type: 'meal',
                     description: snackNote || t('activeSession.snackLogDescription'),
                 });
-            } catch (err) {
-                console.error('Failed to log snack:', err);
+            } catch {
                 error(t('errors.unknownError', 'An error occurred'), t('activeSession.snackLogFailed', 'Failed to log snack.'));
                 return;
             }
@@ -157,8 +154,7 @@ export default function ActiveSession() {
             await bookingService.updateBookingStatus(sessionId, 'completed');
             success(t('activeSession.sessionComplete'), t('activeSession.sessionCompletedDesc'));
             navigate('/sitter');
-        } catch (err) {
-            console.error('Failed to complete session:', err);
+        } catch {
             error(t('common.error'), t('activeSession.sessionCompleteFailed'));
         }
     };

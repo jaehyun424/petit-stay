@@ -125,20 +125,17 @@ export function useHotelSessions(hotelId?: string) {
                         setSessions(mapped);
                         setError(null);
                         setIsLoading(false);
-                    } catch (err) {
-                        console.error('Failed to process sessions:', err);
+                    } catch {
                         setError('Failed to load sessions');
                         setIsLoading(false);
                     }
                 },
-                (error) => {
-                    console.error('Firestore subscription error (hotel sessions):', error);
+                () => {
                     setError('Failed to load sessions');
                     setIsLoading(false);
                 }
             );
-        } catch (err) {
-            console.error('Failed to subscribe to sessions:', err);
+        } catch {
             setError('Failed to load sessions');
             setIsLoading(false);
         }
@@ -223,14 +220,12 @@ export function useLiveStatus(sessionId?: string) {
 
                     setError(null);
                     setIsLoading(false);
-                } catch (err) {
-                    console.error('Failed to process live status:', err);
+                } catch {
                     setError('Failed to load live status');
                     setIsLoading(false);
                 }
             });
-        } catch (err) {
-            console.error('Failed to subscribe to live status:', err);
+        } catch {
             setError('Failed to load live status');
             setIsLoading(false);
         }
@@ -336,8 +331,7 @@ export function useActiveSession(userId?: string) {
                     setError(null);
                     setIsLoading(false);
                 });
-            } catch (err) {
-                console.error('Failed to load active session:', err);
+            } catch {
                 setError('Failed to load session');
                 setIsLoading(false);
             }
@@ -390,7 +384,7 @@ export function useActiveSession(userId?: string) {
                             emergencyKitReady: false,
                         },
                     },
-                }).catch((err: unknown) => console.error('Failed to sync checklist:', err));
+                }).catch(() => { /* sync failure is non-critical */ });
             }
 
             return updated;

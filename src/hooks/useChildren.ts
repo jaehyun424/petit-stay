@@ -52,8 +52,7 @@ export function useChildren(parentId?: string) {
                 })));
                 setError(null);
                 setIsLoading(false);
-            } catch (err) {
-                console.error('Failed to load children:', err);
+            } catch {
                 if (!cancelled) {
                     setError('Failed to load children');
                     setIsLoading(false);
@@ -95,8 +94,7 @@ export function useChildren(parentId?: string) {
                 gender: c.gender,
             })));
             return id;
-        } catch (err) {
-            console.error('Failed to add child:', err);
+        } catch {
             setError('Failed to add child');
             return '';
         }
@@ -125,8 +123,7 @@ export function useChildren(parentId?: string) {
                 allergies: c.allergies,
                 gender: c.gender,
             })));
-        } catch (err) {
-            console.error('Failed to update child:', err);
+        } catch {
             setError('Failed to update child');
         }
     }, [parentId]);
@@ -141,8 +138,7 @@ export function useChildren(parentId?: string) {
         try {
             await childrenService.deleteChild(childId);
             setChildren((prev) => prev.filter((c) => c.id !== childId));
-        } catch (err) {
-            console.error('Failed to remove child:', err);
+        } catch {
             setError('Failed to remove child');
         }
     }, [parentId]);

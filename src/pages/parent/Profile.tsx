@@ -152,8 +152,7 @@ export default function Profile() {
                 toast.success(t('parent.addChild'), childForm.name.trim());
             }
             closeChildModal();
-        } catch (err) {
-            console.error('Failed to save child:', err);
+        } catch {
             toast.error(t('common.error') || 'Error');
         } finally {
             setIsSaving(false);
@@ -167,8 +166,7 @@ export default function Profile() {
             await removeChild(removeTarget.id);
             toast.success(t('common.remove') || 'Removed', removeTarget.name);
             setRemoveTarget(null);
-        } catch (err) {
-            console.error('Failed to remove child:', err);
+        } catch {
             toast.error(t('common.error') || 'Error');
         } finally {
             setIsRemoving(false);

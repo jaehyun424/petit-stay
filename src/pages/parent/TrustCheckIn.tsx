@@ -196,8 +196,7 @@ export default function TrustCheckIn() {
 
             success(t('trustCheckin.checkInComplete'), t('trustCheckin.sessionStarted'));
             navigate('/parent');
-        } catch (err) {
-            console.error('Check-in failed:', err);
+        } catch {
             error(t('trustCheckin.checkInFailed'), t('trustCheckin.pleaseRetry'));
         } finally {
             setIsSubmitting(false);

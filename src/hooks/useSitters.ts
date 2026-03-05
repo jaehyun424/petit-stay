@@ -66,8 +66,7 @@ export function useHotelSitters(hotelId?: string) {
                     setIsLoading(false);
                 }
             );
-        } catch (err) {
-            console.error('Failed to subscribe to sitters:', err);
+        } catch {
             setError('Failed to load sitters');
             setIsLoading(false);
         }
@@ -125,8 +124,7 @@ export function useSitterStats(sitterId?: string) {
                 }
                 setError(null);
                 setIsLoading(false);
-            } catch (err) {
-                console.error('Failed to load sitter stats:', err);
+            } catch {
                 if (!cancelled) {
                     setError('Failed to load sitter stats');
                     setIsLoading(false);
@@ -196,8 +194,7 @@ export function useSitterProfile(sitterId?: string) {
                 }
                 setError(null);
                 setIsLoading(false);
-            } catch (err) {
-                console.error('Failed to load sitter profile:', err);
+            } catch {
                 if (!cancelled) {
                     setError('Failed to load sitter profile');
                     setIsLoading(false);

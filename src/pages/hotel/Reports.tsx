@@ -297,8 +297,8 @@ export default function Reports() {
             link.click();
             URL.revokeObjectURL(url);
             success(t('reports.pdfGenerated'), t('reports.pdfDownloaded'));
-        } catch (err) {
-            console.error('PDF generation failed:', err);
+        } catch {
+            // PDF generation failed
         } finally {
             setIsGeneratingPdf(false);
         }

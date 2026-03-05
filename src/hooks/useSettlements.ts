@@ -64,8 +64,7 @@ export function useSettlements(hotelId?: string): UseSettlementsReturn {
         setSettlements(mapped);
         setError(null);
         setIsLoading(false);
-      } catch (err) {
-        console.error('Failed to load settlements:', err);
+      } catch {
         if (!cancelled) {
           setError('Failed to load settlements');
           setIsLoading(false);
@@ -89,8 +88,7 @@ export function useSettlements(hotelId?: string): UseSettlementsReturn {
       setSettlements((prev) =>
         prev.map((s) => (s.id === id ? { ...s, status: 'approved' as const } : s))
       );
-    } catch (err) {
-      console.error('Failed to approve settlement:', err);
+    } catch {
       setError('Failed to approve settlement');
     }
   }, []);
@@ -107,8 +105,7 @@ export function useSettlements(hotelId?: string): UseSettlementsReturn {
       setSettlements((prev) =>
         prev.map((s) => (s.id === id ? { ...s, status: 'paid' as const } : s))
       );
-    } catch (err) {
-      console.error('Failed to mark settlement as paid:', err);
+    } catch {
       setError('Failed to mark settlement as paid');
     }
   }, []);

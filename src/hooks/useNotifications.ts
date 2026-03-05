@@ -60,9 +60,7 @@ export function useNotifications(userId?: string) {
         }
         try {
             await notificationService.markAsRead(notificationId);
-        } catch (err) {
-            console.error('Failed to mark notification as read:', err);
-        }
+        } catch { /* non-critical */ }
     }, []);
 
     const markAllAsRead = useCallback(async () => {
@@ -74,9 +72,7 @@ export function useNotifications(userId?: string) {
         if (!userId) return;
         try {
             await notificationService.markAllAsRead(userId);
-        } catch (err) {
-            console.error('Failed to mark all notifications as read:', err);
-        }
+        } catch { /* non-critical */ }
     }, [userId]);
 
     const deleteNotification = useCallback(async (notificationId: string) => {
@@ -86,9 +82,7 @@ export function useNotifications(userId?: string) {
         }
         try {
             await notificationService.deleteNotification(notificationId);
-        } catch (err) {
-            console.error('Failed to delete notification:', err);
-        }
+        } catch { /* non-critical */ }
     }, []);
 
     return { notifications, unreadCount, isLoading, markAsRead, markAllAsRead, deleteNotification };

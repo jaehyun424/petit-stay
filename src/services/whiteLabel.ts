@@ -72,8 +72,7 @@ export async function getHotelBranding(hotelId: string): Promise<HotelBranding> 
       hotelName: data.name || DEFAULT_BRANDING.hotelName,
       tagline: branding.tagline || DEFAULT_BRANDING.tagline,
     };
-  } catch (err) {
-    console.error('Failed to fetch hotel branding:', err);
+  } catch {
     return { ...DEFAULT_BRANDING };
   }
 }

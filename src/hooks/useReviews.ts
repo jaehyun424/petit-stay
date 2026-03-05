@@ -74,8 +74,7 @@ export function useReviews(sitterId?: string) {
                 }
                 setError(null);
                 setIsLoading(false);
-            } catch (err) {
-                console.error('Failed to load reviews:', err);
+            } catch {
                 if (!cancelled) {
                     setError('Failed to load reviews');
                     setIsLoading(false);
