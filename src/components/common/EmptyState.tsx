@@ -4,6 +4,7 @@
 // ============================================
 
 import type { ReactNode } from 'react';
+import { motion } from 'framer-motion';
 import '../../styles/components/empty-state.css';
 
 // ----------------------------------------
@@ -15,6 +16,7 @@ interface EmptyStateProps {
     description?: string;
     action?: ReactNode;
     className?: string;
+    size?: 'sm' | 'md' | 'lg';
 }
 
 // ----------------------------------------
@@ -26,9 +28,18 @@ export function EmptyState({
     description,
     action,
     className = '',
+    size = 'md',
 }: EmptyStateProps) {
+    const sizeClass = size !== 'md' ? `empty-state-${size}` : '';
+
     return (
-        <div className={`empty-state ${className}`} role="status">
+        <motion.div
+            className={`empty-state ${sizeClass} ${className}`}
+            role="status"
+            initial={{ opacity: 0, y: 8 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.3, ease: [0.25, 0.46, 0.45, 0.94] }}
+        >
             {icon && (
                 <div className="empty-state-icon" aria-hidden="true">
                     {icon}
@@ -43,6 +54,6 @@ export function EmptyState({
                     {action}
                 </div>
             )}
-        </div>
+        </motion.div>
     );
 }
