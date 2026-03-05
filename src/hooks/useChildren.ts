@@ -73,27 +73,33 @@ export function useChildren(parentId?: string) {
         }
 
         if (!parentId) return '';
-        const id = await childrenService.addChild({
-            parentId,
-            firstName: data.name,
-            age: data.age,
-            gender: data.gender,
-            allergies: data.allergies,
-            consentGiven: true,
-            consentTimestamp: new Date(),
-            autoDeleteAt: new Date(Date.now() + 1000 * 60 * 60 * 24 * 90), // 90 days
-            createdAt: new Date(),
-        });
-        // Reload
-        const fbChildren = await childrenService.getParentChildren(parentId);
-        setChildren(fbChildren.map((c: { id: string; firstName: string; age: number; allergies: string[]; gender: 'male' | 'female' | 'other' }) => ({
-            id: c.id,
-            name: c.firstName,
-            age: c.age,
-            allergies: c.allergies,
-            gender: c.gender,
-        })));
-        return id;
+        try {
+            const id = await childrenService.addChild({
+                parentId,
+                firstName: data.name,
+                age: data.age,
+                gender: data.gender,
+                allergies: data.allergies,
+                consentGiven: true,
+                consentTimestamp: new Date(),
+                autoDeleteAt: new Date(Date.now() + 1000 * 60 * 60 * 24 * 90), // 90 days
+                createdAt: new Date(),
+            });
+            // Reload
+            const fbChildren = await childrenService.getParentChildren(parentId);
+            setChildren(fbChildren.map((c: { id: string; firstName: string; age: number; allergies: string[]; gender: 'male' | 'female' | 'other' }) => ({
+                id: c.id,
+                name: c.firstName,
+                age: c.age,
+                allergies: c.allergies,
+                gender: c.gender,
+            })));
+            return id;
+        } catch (err) {
+            console.error('Failed to add child:', err);
+            setError('Failed to add child');
+            return '';
+        }
     }, [parentId]);
 
     const updateChild = useCallback(async (childId: string, data: Partial<Omit<DemoChild, 'id'>>) => {
@@ -103,21 +109,26 @@ export function useChildren(parentId?: string) {
         }
 
         if (!parentId) return;
-        await childrenService.updateChild(childId, {
-            ...(data.name !== undefined ? { firstName: data.name } : {}),
-            ...(data.age !== undefined ? { age: data.age } : {}),
-            ...(data.gender !== undefined ? { gender: data.gender } : {}),
-            ...(data.allergies !== undefined ? { allergies: data.allergies } : {}),
-        });
-        // Reload
-        const fbChildren = await childrenService.getParentChildren(parentId);
-        setChildren(fbChildren.map((c: { id: string; firstName: string; age: number; allergies: string[]; gender: 'male' | 'female' | 'other' }) => ({
-            id: c.id,
-            name: c.firstName,
-            age: c.age,
-            allergies: c.allergies,
-            gender: c.gender,
-        })));
+        try {
+            await childrenService.updateChild(childId, {
+                ...(data.name !== undefined ? { firstName: data.name } : {}),
+                ...(data.age !== undefined ? { age: data.age } : {}),
+                ...(data.gender !== undefined ? { gender: data.gender } : {}),
+                ...(data.allergies !== undefined ? { allergies: data.allergies } : {}),
+            });
+            // Reload
+            const fbChildren = await childrenService.getParentChildren(parentId);
+            setChildren(fbChildren.map((c: { id: string; firstName: string; age: number; allergies: string[]; gender: 'male' | 'female' | 'other' }) => ({
+                id: c.id,
+                name: c.firstName,
+                age: c.age,
+                allergies: c.allergies,
+                gender: c.gender,
+            })));
+        } catch (err) {
+            console.error('Failed to update child:', err);
+            setError('Failed to update child');
+        }
     }, [parentId]);
 
     const removeChild = useCallback(async (childId: string) => {
@@ -127,8 +138,13 @@ export function useChildren(parentId?: string) {
         }
 
         if (!parentId) return;
-        await childrenService.deleteChild(childId);
-        setChildren((prev) => prev.filter((c) => c.id !== childId));
+        try {
+            await childrenService.deleteChild(childId);
+            setChildren((prev) => prev.filter((c) => c.id !== childId));
+        } catch (err) {
+            console.error('Failed to remove child:', err);
+            setError('Failed to remove child');
+        }
     }, [parentId]);
 
     return { children, isLoading, addChild, updateChild, removeChild, error, retry };

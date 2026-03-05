@@ -378,7 +378,12 @@ export function useSitterBookings(sitterId?: string) {
             );
             return;
         }
-        await bookingService.updateBookingStatus(bookingId, 'sitter_confirmed');
+        try {
+            await bookingService.updateBookingStatus(bookingId, 'sitter_confirmed');
+        } catch (err) {
+            console.error('Failed to accept assignment:', err);
+            setError('Failed to accept assignment');
+        }
     }, []);
 
     // Reject an assignment (sitter_assigned → pending_assignment)
@@ -387,10 +392,15 @@ export function useSitterBookings(sitterId?: string) {
             setTodaySessions((prev) => prev.filter((s) => s.id !== bookingId));
             return;
         }
-        await bookingService.updateBooking(bookingId, {
-            status: 'pending_assignment',
-            sitterId: '',
-        });
+        try {
+            await bookingService.updateBooking(bookingId, {
+                status: 'pending_assignment',
+                sitterId: '',
+            });
+        } catch (err) {
+            console.error('Failed to reject assignment:', err);
+            setError('Failed to reject assignment');
+        }
     }, []);
 
     return { todaySessions, weekSchedule, isLoading, createBooking, acceptAssignment, rejectAssignment, error, retry };

@@ -105,7 +105,12 @@ export function useMessaging(userId?: string, conversationId?: string) {
         }
 
         if (!activeConversationId || !userId) return;
-        await messagingService.sendMessage(activeConversationId, userId, senderName, text);
+        try {
+            await messagingService.sendMessage(activeConversationId, userId, senderName, text);
+        } catch (err) {
+            console.error('Failed to send message:', err);
+            setError('Failed to send message');
+        }
     }, [activeConversationId, userId]);
 
     // Open or create a conversation
@@ -120,23 +125,37 @@ export function useMessaging(userId?: string, conversationId?: string) {
         }
 
         if (!userId) return '';
-        const convId = await messagingService.getOrCreateConversation(
-            userId, otherUserId, names, bookingId
-        );
-        setActiveConversationId(convId);
-        return convId;
+        try {
+            const convId = await messagingService.getOrCreateConversation(
+                userId, otherUserId, names, bookingId
+            );
+            setActiveConversationId(convId);
+            return convId;
+        } catch (err) {
+            console.error('Failed to open conversation:', err);
+            setError('Failed to open conversation');
+            return '';
+        }
     }, [userId]);
 
     // Set typing status
     const setTyping = useCallback(async (isTyping: boolean) => {
         if (DEMO_MODE || !activeConversationId || !userId) return;
-        await messagingService.setTyping(activeConversationId, userId, isTyping);
+        try {
+            await messagingService.setTyping(activeConversationId, userId, isTyping);
+        } catch (err) {
+            console.error('Failed to set typing status:', err);
+        }
     }, [activeConversationId, userId]);
 
     // Mark messages as read
     const markAsRead = useCallback(async () => {
         if (DEMO_MODE || !activeConversationId || !userId) return;
-        await messagingService.markAsRead(activeConversationId, userId);
+        try {
+            await messagingService.markAsRead(activeConversationId, userId);
+        } catch (err) {
+            console.error('Failed to mark messages as read:', err);
+        }
     }, [activeConversationId, userId]);
 
     return {

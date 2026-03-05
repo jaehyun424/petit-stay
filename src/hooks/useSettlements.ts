@@ -91,6 +91,7 @@ export function useSettlements(hotelId?: string): UseSettlementsReturn {
       );
     } catch (err) {
       console.error('Failed to approve settlement:', err);
+      setError('Failed to approve settlement');
     }
   }, []);
 
@@ -108,6 +109,7 @@ export function useSettlements(hotelId?: string): UseSettlementsReturn {
       );
     } catch (err) {
       console.error('Failed to mark settlement as paid:', err);
+      setError('Failed to mark settlement as paid');
     }
   }, []);
 

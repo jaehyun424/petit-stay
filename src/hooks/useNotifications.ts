@@ -58,7 +58,11 @@ export function useNotifications(userId?: string) {
             setUnreadCount((prev) => Math.max(0, prev - 1));
             return;
         }
-        await notificationService.markAsRead(notificationId);
+        try {
+            await notificationService.markAsRead(notificationId);
+        } catch (err) {
+            console.error('Failed to mark notification as read:', err);
+        }
     }, []);
 
     const markAllAsRead = useCallback(async () => {
@@ -68,7 +72,11 @@ export function useNotifications(userId?: string) {
             return;
         }
         if (!userId) return;
-        await notificationService.markAllAsRead(userId);
+        try {
+            await notificationService.markAllAsRead(userId);
+        } catch (err) {
+            console.error('Failed to mark all notifications as read:', err);
+        }
     }, [userId]);
 
     const deleteNotification = useCallback(async (notificationId: string) => {
@@ -76,7 +84,11 @@ export function useNotifications(userId?: string) {
             setNotifications((prev) => prev.filter((n) => n.id !== notificationId));
             return;
         }
-        await notificationService.deleteNotification(notificationId);
+        try {
+            await notificationService.deleteNotification(notificationId);
+        } catch (err) {
+            console.error('Failed to delete notification:', err);
+        }
     }, []);
 
     return { notifications, unreadCount, isLoading, markAsRead, markAllAsRead, deleteNotification };
