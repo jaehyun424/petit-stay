@@ -42,13 +42,13 @@ export function DatePicker({
     };
 
     return (
-        <div className={`input-group ${error ? 'input-error' : ''} ${className}`}>
-            {label && <label className="input-label">{label}</label>}
+        <div className={`form-group ${className}`}>
+            {label && <label className="form-label">{label}</label>}
             <div className="date-picker-wrapper">
                 <input
                     ref={inputRef}
                     type="date"
-                    className="date-picker-input"
+                    className={`date-picker-input ${error ? 'form-input-error' : ''}`}
                     value={value}
                     onChange={(e) => onChange(e.target.value)}
                     min={min}
@@ -59,7 +59,7 @@ export function DatePicker({
                     <span className="date-picker-display">{formatDisplayDate(value)}</span>
                 )}
             </div>
-            {error && <span className="input-error-text">{error}</span>}
+            {error && <span className="form-error">{error}</span>}
         </div>
     );
 }
@@ -85,7 +85,7 @@ export function DateRangePicker({
 
     return (
         <div className={`date-range-picker ${className}`}>
-            {label && <label className="input-label">{label}</label>}
+            {label && <label className="form-label">{label}</label>}
             <div className="date-range-inputs">
                 <DatePicker
                     value={startDate}
