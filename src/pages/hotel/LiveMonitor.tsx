@@ -229,7 +229,7 @@ export default function LiveMonitor() {
       </div>
       ) : (
         <EmptyState
-          icon={<Radio size={16} strokeWidth={1.75} />}
+          icon={<Radio size={32} strokeWidth={1.5} />}
           title={t('liveMonitor.noActiveSessions')}
           description={t('liveMonitor.noActiveSessionsDesc')}
         />
