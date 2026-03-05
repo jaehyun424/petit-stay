@@ -3,10 +3,10 @@ import { ScrollReveal } from './ScrollReveal';
 import { AnimatedCounter } from '../../../components/common/AnimatedCounter';
 
 const stats = [
-  { key: 'hotels', target: 120, suffix: '+' },
-  { key: 'families', target: 15000, suffix: '+' },
-  { key: 'sessions', target: 50000, suffix: '+' },
-  { key: 'satisfaction', target: 99, suffix: '%' },
+  { key: 'hotels', target: 8, suffix: '+' },
+  { key: 'families', target: 100, suffix: '+' },
+  { key: 'sessions', target: 50, suffix: '+' },
+  { key: 'satisfaction', target: 100, suffix: '%' },
 ];
 
 const TRUST_BG = 'https://images.unsplash.com/photo-1566073771259-6a8506099945?w=1920&q=80';
