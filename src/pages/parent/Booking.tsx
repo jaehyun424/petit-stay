@@ -347,6 +347,7 @@ export default function Booking() {
                                     value={formData.notes}
                                     onChange={handleInputChange}
                                     placeholder={t('booking.allergiesOrNeeds')}
+                                    hint={t('booking.sitterPreferenceHint')}
                                 />
                                 <div className="button-row">
                                     <Button variant="secondary" onClick={() => goToStep(1)}>{t('common.back')}</Button>
