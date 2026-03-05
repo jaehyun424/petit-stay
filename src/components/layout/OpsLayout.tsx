@@ -116,8 +116,8 @@ export function OpsLayout() {
             <span className="ops-breadcrumb-current">{t(currentNav.labelKey)}</span>
           </nav>
           <div className="header-spacer" />
-          <NotificationBell />
           <div className="header-user">
+            <NotificationBell />
             <span className="header-user-name">{user?.profile.firstName} {user?.profile.lastName}</span>
             <Avatar name={`${user?.profile.firstName} ${user?.profile.lastName}`} size="sm" />
           </div>
