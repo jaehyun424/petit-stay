@@ -3,7 +3,7 @@
 import { useState } from 'react';
 import { useParams, Link } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
-import { MessageCircle, Building2, DoorOpen, Clock } from 'lucide-react';
+import { MessageCircle, Building2, DoorOpen, Clock, Star, Shield, Globe } from 'lucide-react';
 import { Card } from '../../components/common/Card';
 import { Button, IconButton } from '../../components/common/Button';
 import { Avatar } from '../../components/common/Avatar';
@@ -104,16 +104,16 @@ export default function LiveStatus() {
                     </div>
                 </Card>
 
-                {/* Sitter Profile (Mini) */}
+                {/* Sitter Profile Card */}
                 <Card className="sitter-profile-card" padding="sm">
                     <div className="sitter-profile-row">
                         <Avatar name={sessionInfo.sitterName} size="lg" variant="gold" />
                         <div className="sitter-profile-info">
                             <div className="sitter-profile-name-row">
                                 <h3 className="sitter-profile-name">{sessionInfo.sitterName}</h3>
-                                <TierBadge tier="gold" />
+                                <TierBadge tier={sessionInfo.sitterTier} />
                             </div>
-                            <p className="sitter-profile-details">{t('parent.certifiedSpecialist')} • {t('sitterProfile.defaultLanguages')}</p>
+                            <p className="sitter-profile-details">{t('parent.certifiedSpecialist')}</p>
                         </div>
                         <IconButton
                             variant="ghost"
@@ -122,6 +122,22 @@ export default function LiveStatus() {
                             icon={<MessageCircle size={20} strokeWidth={1.75} />}
                             onClick={() => setChatOpen(true)}
                         />
+                    </div>
+                    <div className="sitter-profile-stats">
+                        <div className="sitter-stat">
+                            <Star size={12} strokeWidth={1.75} fill="var(--gold-500)" color="var(--gold-500)" />
+                            <span>4.95</span>
+                            <span className="sitter-stat-label">{t('parent.avgRating')}</span>
+                        </div>
+                        <div className="sitter-stat">
+                            <Shield size={12} strokeWidth={1.75} />
+                            <span>280+</span>
+                            <span className="sitter-stat-label">{t('parent.totalSessions')}</span>
+                        </div>
+                        <div className="sitter-stat">
+                            <Globe size={12} strokeWidth={1.75} />
+                            <span>{sessionInfo.sitterLanguages}</span>
+                        </div>
                     </div>
                 </Card>
 

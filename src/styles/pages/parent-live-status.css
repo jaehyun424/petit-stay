@@ -172,6 +172,29 @@
   font-size: var(--text-xl);
 }
 
+/* Sitter Profile Stats */
+.sitter-profile-stats {
+  display: flex;
+  gap: var(--space-4);
+  padding-top: var(--space-3);
+  margin-top: var(--space-3);
+  border-top: 1px solid var(--gold-200);
+}
+
+.sitter-stat {
+  display: flex;
+  align-items: center;
+  gap: var(--space-1);
+  font-size: var(--text-xs);
+  color: var(--charcoal-700);
+  font-weight: 500;
+}
+
+.sitter-stat-label {
+  color: var(--charcoal-400);
+  font-weight: 400;
+}
+
 /* Activity Feed Section */
 .activity-feed-section {
   margin-bottom: var(--space-8);
