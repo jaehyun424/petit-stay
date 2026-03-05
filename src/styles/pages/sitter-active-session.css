@@ -323,14 +323,17 @@
 /* Small mobile */
 @media (max-width: 380px) {
   .quick-actions-grid {
-    grid-template-columns: 1fr;
     gap: var(--space-2);
   }
 
   .quick-action-card {
-    flex-direction: row;
-    padding: var(--space-3);
-    min-height: auto;
+    padding: var(--space-3) var(--space-1);
+    min-height: 72px;
+  }
+
+  .quick-action-icon {
+    width: 32px;
+    height: 32px;
   }
 
   .active-banner {
@@ -356,7 +359,7 @@
 /* Desktop Layout */
 @media (min-width: 1024px) {
   .active-session {
-    max-width: 100%;
+    max-width: 640px;
   }
 
   .active-session .info-grid {

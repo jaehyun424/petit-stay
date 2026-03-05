@@ -188,7 +188,13 @@ export default function Earnings() {
             {/* Monthly Summary Card */}
             <Card className="earnings-summary" variant="gold">
                 <CardBody>
-                    <h3 className="earnings-summary-label">{t('earnings.thisMonth')}</h3>
+                    <h3 className="earnings-summary-label">
+                        {period === 'this_month'
+                            ? t('earnings.thisMonth')
+                            : period === 'last_3_months'
+                                ? t('earnings.last3Months')
+                                : t('earnings.allTime')}
+                    </h3>
                     <div className="earnings-amount">
                         <AnimatedCounter value={summaryAmount} />
                     </div>

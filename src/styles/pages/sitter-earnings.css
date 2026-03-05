@@ -203,6 +203,7 @@
     align-items: center;
     gap: var(--space-3);
     flex: 1;
+    min-width: 0;
 }
 
 .cum-stat-icon {
@@ -507,7 +508,7 @@
 /* Desktop Layout */
 @media (min-width: 1024px) {
     .earnings-page {
-        max-width: 100%;
+        max-width: 640px;
     }
 
     .earnings-desktop-grid {
