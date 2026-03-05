@@ -15,16 +15,6 @@ export default function LandingPage() {
       <HeroSection />
       <TrustBar />
       <FeatureShowcase />
-
-      {/* Parallax image band between sections */}
-      <div className="landing-image-band" aria-hidden="true">
-        <img
-          src="https://images.unsplash.com/photo-1618773928121-c32242e63f39?w=1920&q=80"
-          alt=""
-          loading="lazy"
-        />
-      </div>
-
       <HowItWorks />
       <TestimonialSection />
       <CTASection />
