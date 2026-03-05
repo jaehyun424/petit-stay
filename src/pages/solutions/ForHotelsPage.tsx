@@ -11,7 +11,7 @@ import { LandingFooter } from '../landing/components/LandingFooter';
 import { ScrollReveal } from '../landing/components/ScrollReveal';
 import '../../styles/pages/solutions.css';
 
-const HERO_IMG = 'https://images.pexels.com/photos/258154/pexels-photo-258154.jpeg?auto=compress&cs=tinysrgb&w=1920';
+const HERO_IMG = 'https://images.unsplash.com/photo-1551882547-ff40c63fe5fa?w=1200&q=80';
 
 const fadeUp = {
   hidden: { opacity: 0, y: 20 },
@@ -61,10 +61,10 @@ export default function ForHotelsPage() {
               <p>{t('solutions.hotelPainSubtitle')}</p>
             </div>
           </ScrollReveal>
-          <div className="solutions-cards">
+          <div className="solutions-cards solutions-cards--3">
             {painPoints.map((item, i) => (
               <ScrollReveal key={item.titleKey} delay={i * 0.1}>
-                <div className="solutions-card">
+                <div className="solutions-card solutions-card--uniform">
                   <div className="solutions-card-icon">{item.icon}</div>
                   <h3>{t(item.titleKey)}</h3>
                   <p>{t(item.descKey)}</p>
@@ -82,15 +82,13 @@ export default function ForHotelsPage() {
             <h2>{t('solutions.hotelFeatTitle')}</h2>
           </div>
         </ScrollReveal>
-        <div className="solutions-features">
+        <div className="solutions-cards solutions-cards--4">
           {features.map((item, i) => (
             <ScrollReveal key={item.titleKey} delay={i * 0.08}>
-              <div className="solutions-feature-item">
-                {item.icon}
-                <div>
-                  <h4>{t(item.titleKey)}</h4>
-                  <p>{t(item.descKey)}</p>
-                </div>
+              <div className="solutions-card solutions-card--uniform">
+                <div className="solutions-card-icon">{item.icon}</div>
+                <h3>{t(item.titleKey)}</h3>
+                <p>{t(item.descKey)}</p>
               </div>
             </ScrollReveal>
           ))}
