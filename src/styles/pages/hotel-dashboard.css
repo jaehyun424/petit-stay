@@ -65,7 +65,7 @@
 .stats-grid {
   display: grid;
   grid-template-columns: repeat(4, 1fr);
-  gap: var(--space-4);
+  gap: var(--space-5);
   margin-bottom: var(--space-8);
 }
 
@@ -157,7 +157,7 @@
 .dashboard-grid {
   display: grid;
   grid-template-columns: 1.5fr 1fr;
-  gap: var(--space-4);
+  gap: var(--space-5);
 }
 
 @media (max-width: 1024px) {
@@ -375,7 +375,8 @@
   display: flex;
   align-items: center;
   gap: var(--space-3);
-  padding: var(--space-3);
+  padding: var(--space-3) var(--space-4);
+  min-height: 48px;
   border: 1px solid var(--border-color);
   border-radius: var(--radius-md);
   cursor: pointer;

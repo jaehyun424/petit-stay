@@ -1,5 +1,13 @@
 /* Hotel Safety Dashboard Page */
-.safety-page { max-width: 1400px; margin: 0 auto; }
+.safety-page {
+  max-width: 1400px;
+  margin: 0 auto;
+}
+
+/* Spacing between sibling Cards */
+.safety-page > .card + .card {
+  margin-top: var(--space-6);
+}
 
 .safety-header-actions {
   display: flex;
@@ -41,7 +49,7 @@
 .safety-stats-row {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-  gap: var(--space-6);
+  gap: var(--space-5);
   margin-bottom: var(--space-6);
 }
 

@@ -39,11 +39,11 @@
 
 .sessions-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(400px, 1fr));
-  gap: var(--space-4);
+  grid-template-columns: repeat(auto-fill, minmax(380px, 1fr));
+  gap: var(--space-5);
 }
 
-@media (max-width: 640px) {
+@media (max-width: 768px) {
   .sessions-grid {
     grid-template-columns: 1fr;
   }
@@ -272,6 +272,17 @@
 /* Skeleton helper */
 .skeleton-flex-fill {
   flex: 1;
+}
+
+/* Session actions - touch target */
+@media (max-width: 768px) {
+  .live-monitor-page .session-actions {
+    flex-direction: column;
+  }
+
+  .live-monitor-page .session-actions .btn {
+    min-height: 48px;
+  }
 }
 
 /* Detail Modal */

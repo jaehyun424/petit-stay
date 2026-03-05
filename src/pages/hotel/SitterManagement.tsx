@@ -15,6 +15,7 @@ import { Button } from '../../components/common/Button';
 import { Modal } from '../../components/common/Modal';
 import { Input } from '../../components/common/Input';
 import { EmptyState } from '../../components/common/EmptyState';
+import { Skeleton } from '../../components/common/Skeleton';
 import ErrorBanner from '../../components/common/ErrorBanner';
 import { useAuth } from '../../contexts/AuthContext';
 import { useToast } from '../../contexts/ToastContext';
@@ -27,7 +28,7 @@ import '../../styles/pages/hotel-sitter-mgmt.css';
 export default function SitterManagement() {
   const { t } = useTranslation();
   const { user } = useAuth();
-  const { sitters, error: sittersError, retry: retrySitters } = useHotelSitters(user?.hotelId);
+  const { sitters, isLoading, error: sittersError, retry: retrySitters } = useHotelSitters(user?.hotelId);
   const { bookings } = useHotelBookings(user?.hotelId);
   const toast = useToast();
 
@@ -65,6 +66,27 @@ export default function SitterManagement() {
     toast.success(t('sitterMgmt.sitterAssignedToast'), `${sitterName} → ${bookingCode}`);
     setAssignSitter(null);
   };
+
+  if (isLoading) {
+    return (
+      <div className="sitter-management-page animate-fade-in">
+        <div className="page-header">
+          <div>
+            <Skeleton width="200px" height="2rem" />
+            <Skeleton width="160px" height="1rem" className="mt-2" />
+          </div>
+          <Skeleton width="160px" height="40px" borderRadius="var(--radius-lg)" />
+        </div>
+        <Skeleton width="280px" height="40px" borderRadius="var(--radius-lg)" />
+        <div className="sitters-grid" style={{ marginTop: 'var(--space-6)' }}>
+          {[1, 2, 3, 4].map((i) => (
+            <Skeleton key={i} height="280px" borderRadius="var(--radius-xl)" />
+          ))}
+        </div>
+      </div>
+    );
+  }
+
   return (
     <div className="sitter-management-page animate-fade-in">
       <div className="page-header">
