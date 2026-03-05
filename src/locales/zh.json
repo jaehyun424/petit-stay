@@ -280,7 +280,8 @@
     "nightSurcharge": "夜间附加费（22:00后）",
     "baseRateDetail": "基本费用",
     "additionalChildDetail": "额外儿童附加费",
-    "bookingFailed": "预约创建失败，请重试。"
+    "bookingFailed": "预约创建失败，请重试。",
+    "sitterPreferenceHint": "包括保姆偏好、语言需求或特别说明"
   },
   "sitter": {
     "todaySchedule": "今日日程",
@@ -753,7 +754,8 @@
     "noActiveBooking": "无活跃预约",
     "goBack": "返回",
     "codeCopied": "代码已复制",
-    "copyCode": "复制预约代码"
+    "copyCode": "复制预约代码",
+    "showToSitter": "办理入住时请向保姆出示"
   },
   "profile": {
     "identityVerification": "身份验证",
@@ -1122,7 +1124,10 @@
     "sitterCount": "已注册保姆{{count}}名",
     "hotelCount": "合作酒店{{count}}家",
     "allTiers": "所有等级",
-    "settlementSummary": "结算记录{{count}}条"
+    "settlementSummary": "结算记录{{count}}条",
+    "issueCount": "跟踪中的事件{{count}}件",
+    "child": "儿童",
+    "reportedAt": "报告日期"
   },
   "info": {
     "about": {

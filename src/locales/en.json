@@ -280,7 +280,8 @@
     "nightSurcharge": "Night surcharge (after 22:00)",
     "baseRateDetail": "Base rate",
     "additionalChildDetail": "Additional child surcharge",
-    "bookingFailed": "Failed to create booking. Please try again."
+    "bookingFailed": "Failed to create booking. Please try again.",
+    "sitterPreferenceHint": "Include sitter preferences, language needs, or special instructions"
   },
   "sitter": {
     "todaySchedule": "Today's Schedule",
@@ -753,7 +754,8 @@
     "noActiveBooking": "No active booking",
     "goBack": "Go Back",
     "codeCopied": "Code Copied",
-    "copyCode": "Copy booking code"
+    "copyCode": "Copy booking code",
+    "showToSitter": "Show this to your sitter at check-in"
   },
   "profile": {
     "identityVerification": "Identity Verification",
@@ -1122,7 +1124,10 @@
     "sitterCount": "{{count}} sitters registered",
     "hotelCount": "{{count}} partner hotels",
     "allTiers": "All Tiers",
-    "settlementSummary": "{{count}} settlement records"
+    "settlementSummary": "{{count}} settlement records",
+    "issueCount": "{{count}} incidents tracked",
+    "child": "Child",
+    "reportedAt": "Reported"
   },
   "info": {
     "about": {

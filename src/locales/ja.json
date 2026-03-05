@@ -280,7 +280,8 @@
     "nightSurcharge": "夜間割増（22:00以降）",
     "baseRateDetail": "基本料金",
     "additionalChildDetail": "追加のお子様割増",
-    "bookingFailed": "予約の作成に失敗しました。もう一度お試しください。"
+    "bookingFailed": "予約の作成に失敗しました。もう一度お試しください。",
+    "sitterPreferenceHint": "シッターの希望、言語の要件、特別な指示を含めてください"
   },
   "sitter": {
     "todaySchedule": "本日のスケジュール",
@@ -753,7 +754,8 @@
     "noActiveBooking": "アクティブな予約なし",
     "goBack": "戻る",
     "codeCopied": "コードをコピーしました",
-    "copyCode": "予約コードをコピー"
+    "copyCode": "予約コードをコピー",
+    "showToSitter": "チェックイン時にシッターに見せてください"
   },
   "profile": {
     "identityVerification": "本人確認",
@@ -1122,7 +1124,10 @@
     "sitterCount": "登録シッター{{count}}名",
     "hotelCount": "提携ホテル{{count}}件",
     "allTiers": "全ティア",
-    "settlementSummary": "精算記録{{count}}件"
+    "settlementSummary": "精算記録{{count}}件",
+    "issueCount": "追跡中のインシデント{{count}}件",
+    "child": "お子様",
+    "reportedAt": "報告日"
   },
   "info": {
     "about": {

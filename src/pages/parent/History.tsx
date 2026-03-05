@@ -19,7 +19,12 @@ import { useToast } from '../../contexts/ToastContext';
 import { formatCurrency } from '../../utils/format';
 import '../../styles/pages/parent-history.css';
 
-const STATUS_FILTERS = ['all', 'completed', 'cancelled', 'in_progress'] as const;
+const STATUS_FILTERS = [
+    { value: 'all', labelKey: 'common.all' },
+    { value: 'completed', labelKey: 'status.completed' },
+    { value: 'cancelled', labelKey: 'status.cancelled' },
+    { value: 'in_progress', labelKey: 'status.inProgress' },
+] as const;
 
 export default function History() {
     const { t } = useTranslation();
@@ -27,7 +32,7 @@ export default function History() {
     const { history, isLoading } = useParentBookings(user?.id);
     const [currentPage, setCurrentPage] = useState(1);
     const [statusFilter, setStatusFilter] = useState<string>('all');
-    const filteredHistory = statusFilter === 'all' ? history : history.filter(item => item.status === statusFilter);
+    const filteredHistory = statusFilter === 'all' ? history : history.filter((item: { status: string }) => item.status === statusFilter);
     const { totalPages, getPageItems } = usePagination(filteredHistory, 10);
     const paginatedHistory = getPageItems(currentPage);
     const { submitReview } = useReviews();
@@ -66,11 +71,11 @@ export default function History() {
             <div className="history-filters" role="group" aria-label={t('common.filter')}>
                 {STATUS_FILTERS.map(filter => (
                     <button
-                        key={filter}
-                        className={`history-filter-btn ${statusFilter === filter ? 'active' : ''}`}
-                        onClick={() => { setStatusFilter(filter); setCurrentPage(1); }}
+                        key={filter.value}
+                        className={`history-filter-btn ${statusFilter === filter.value ? 'active' : ''}`}
+                        onClick={() => { setStatusFilter(filter.value); setCurrentPage(1); }}
                     >
-                        {filter === 'all' ? t('common.all') : t(`status.${filter}`, filter)}
+                        {t(filter.labelKey)}
                     </button>
                 ))}
             </div>

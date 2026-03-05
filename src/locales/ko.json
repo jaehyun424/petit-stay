@@ -280,7 +280,8 @@
     "nightSurcharge": "야간 할증 (22:00 이후)",
     "baseRateDetail": "기본 요금",
     "additionalChildDetail": "추가 아동 할증",
-    "bookingFailed": "예약 생성에 실패했습니다. 다시 시도해 주세요."
+    "bookingFailed": "예약 생성에 실패했습니다. 다시 시도해 주세요.",
+    "sitterPreferenceHint": "시터 선호도, 언어 요구사항, 특별 지시사항을 포함해 주세요"
   },
   "sitter": {
     "todaySchedule": "오늘 일정",
@@ -753,7 +754,8 @@
     "noActiveBooking": "활성 예약 없음",
     "goBack": "뒤로 가기",
     "codeCopied": "코드 복사됨",
-    "copyCode": "예약 코드 복사"
+    "copyCode": "예약 코드 복사",
+    "showToSitter": "체크인 시 시터에게 보여주세요"
   },
   "profile": {
     "identityVerification": "신원 확인",
@@ -1122,7 +1124,10 @@
     "sitterCount": "등록된 시터 {{count}}명",
     "hotelCount": "제휴 호텔 {{count}}곳",
     "allTiers": "전체 등급",
-    "settlementSummary": "정산 기록 {{count}}건"
+    "settlementSummary": "정산 기록 {{count}}건",
+    "issueCount": "추적 중인 사건 {{count}}건",
+    "child": "아동",
+    "reportedAt": "보고일"
   },
   "info": {
     "about": {
