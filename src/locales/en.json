@@ -203,6 +203,8 @@
     "pastSessions": "Past Sessions",
     "myProfile": "My Profile",
     "myChildren": "My Children",
+    "noChildrenYet": "No children added yet",
+    "noChildrenYetDesc": "Add your children's information for a personalized care experience",
     "addChild": "Add Child",
     "notifications": "Notifications",
     "paymentMethods": "Payment Methods",
@@ -776,7 +778,8 @@
     "code": "404",
     "title": "Page Not Found",
     "description": "The page you're looking for doesn't exist or has been moved.",
-    "goHome": "Go to Home"
+    "goHome": "Go to Home",
+    "goBack": "Go Back"
   },
   "qr": {
     "title": "Check-in QR Code",

@@ -1,11 +1,13 @@
 // ============================================
 // Petit Stay - Parent Booking Page
+// 5-step wizard: Details -> Children -> Sitter Preference -> Price Confirm -> Payment
 // ============================================
 
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import { motion, AnimatePresence } from 'framer-motion';
+import { Star, Globe, Shield } from 'lucide-react';
 import { Card, CardBody } from '../../components/common/Card';
 import { Button } from '../../components/common/Button';
 import { Input, Select } from '../../components/common/Input';
@@ -20,6 +22,10 @@ import { formatCurrency } from '../../utils/format';
 import '../../styles/pages/parent-booking.css';
 
 const TIME_SLOTS = [
+    { value: '14:00', label: '14:00' },
+    { value: '15:00', label: '15:00' },
+    { value: '16:00', label: '16:00' },
+    { value: '17:00', label: '17:00' },
     { value: '18:00', label: '18:00' },
     { value: '19:00', label: '19:00' },
     { value: '20:00', label: '20:00' },
@@ -44,6 +50,9 @@ export default function Booking() {
         duration: '4',
         children: [] as string[],
         notes: '',
+        sitterPreference: 'any' as 'any' | 'gold' | 'silver',
+        preferredLanguage: 'any' as string,
+        paymentMethod: 'card' as string,
     });
     const [formErrors, setFormErrors] = useState<Record<string, string>>({});
 
@@ -77,6 +86,14 @@ export default function Booking() {
         return Object.keys(errors).length === 0;
     };
 
+    const validateStep2 = () => {
+        if (formData.children.length === 0) {
+            showError(t('booking.selectChildrenError'), t('booking.selectAtLeastOneChild'));
+            return false;
+        }
+        return true;
+    };
+
     const DURATION_OPTIONS = [
         { value: '2', label: `2 ${t('common.hours')}` },
         { value: '3', label: `3 ${t('common.hours')}` },
@@ -88,7 +105,9 @@ export default function Booking() {
     const STEP_LABELS = [
         t('booking.bookingDetails'),
         t('parent.children'),
-        t('common.confirm')
+        t('booking.sitterPreference'),
+        t('booking.priceConfirm'),
+        t('booking.payment'),
     ];
 
     const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
@@ -111,7 +130,7 @@ export default function Booking() {
             } else {
                 const confirmationCode = `KCP-${Date.now().toString(36).toUpperCase()}`;
                 const hours = parseInt(formData.duration) || 4;
-                const baseRate = 60000;
+                const baseRate = formData.sitterPreference === 'gold' ? 90000 : 60000;
                 const baseTotal = baseRate * hours;
 
                 await bookingService.createBooking({
@@ -136,8 +155,8 @@ export default function Booking() {
                         age: c.age,
                     })),
                     requirements: {
-                        sitterTier: 'any',
-                        preferredLanguages: ['en'],
+                        sitterTier: formData.sitterPreference,
+                        preferredLanguages: formData.preferredLanguage === 'any' ? ['en'] : [formData.preferredLanguage],
                         specialRequests: formData.notes || undefined,
                     },
                     pricing: {
@@ -153,7 +172,7 @@ export default function Booking() {
                     },
                     payment: {
                         status: 'pending',
-                        method: 'card',
+                        method: formData.paymentMethod,
                     },
                     trustProtocol: {
                         safeWord: '',
@@ -174,7 +193,7 @@ export default function Booking() {
     };
 
     const calculatePricing = () => {
-        const baseRate = 60000;
+        const baseRate = formData.sitterPreference === 'gold' ? 90000 : 60000;
         const hours = parseInt(formData.duration) || 4;
         const baseTotal = baseRate * hours;
         const childrenCount = formData.children.length || 1;
@@ -187,8 +206,9 @@ export default function Booking() {
         const nightHours = Math.max(0, endHour - 22);
         const nightSurcharge = nightHours > 0 ? Math.round(baseRate * 0.2 * nightHours) : 0;
 
-        const total = subtotal + nightSurcharge;
-        return { baseRate, hours, baseTotal, additionalChildCharge, childrenCount, nightSurcharge, subtotal, total };
+        const goldSurcharge = formData.sitterPreference === 'gold' ? 30000 * hours : 0;
+        const total = subtotal + nightSurcharge + goldSurcharge;
+        return { baseRate, hours, baseTotal, additionalChildCharge, childrenCount, nightSurcharge, goldSurcharge, subtotal, total };
     };
 
     const pricing = calculatePricing();
@@ -212,6 +232,12 @@ export default function Booking() {
                 amount: pricing.nightSurcharge,
             });
         }
+        if (pricing.goldSurcharge > 0) {
+            items.push({
+                labelKey: 'booking.goldSitterSurcharge',
+                amount: pricing.goldSurcharge,
+            });
+        }
         return items;
     };
 
@@ -233,12 +259,26 @@ export default function Booking() {
         }),
     };
 
+    const SITTER_TIERS = [
+        { value: 'any', labelKey: 'booking.anyAvailable', icon: null, desc: 'booking.anyAvailableDesc' },
+        { value: 'silver', labelKey: 'common.tierSilver', icon: Star, desc: 'booking.silverDesc' },
+        { value: 'gold', labelKey: 'common.tierGold', icon: Star, desc: 'booking.goldDesc' },
+    ];
+
+    const LANGUAGE_OPTIONS = [
+        { value: 'any', label: t('booking.anyLanguage') },
+        { value: 'en', label: 'English' },
+        { value: 'ko', label: '한국어' },
+        { value: 'ja', label: '日本語' },
+        { value: 'zh', label: '中文' },
+    ];
+
     return (
         <div className="booking-page animate-fade-in">
             <h1 className="page-title">{t('booking.newBooking')}</h1>
 
             {/* Progress Steps */}
-            <div className="progress-steps" role="group" aria-label="Booking progress">
+            <div className="progress-steps progress-steps-5" role="group" aria-label="Booking progress">
                 {STEP_LABELS.map((label, i) => (
                     <div key={i} className={`step ${i + 1 <= step ? 'step-active' : ''}`} aria-current={i + 1 === step ? 'step' : undefined}>
                         <span className="step-number" aria-hidden="true">{i + 1}</span>
@@ -248,7 +288,7 @@ export default function Booking() {
             </div>
 
             <AnimatePresence mode="wait" custom={direction}>
-                {/* Step 1: Details */}
+                {/* Step 1: Date & Time Details */}
                 {step === 1 && (
                     <motion.div
                         key="step1"
@@ -351,17 +391,80 @@ export default function Booking() {
                                 />
                                 <div className="button-row">
                                     <Button variant="secondary" onClick={() => goToStep(1)}>{t('common.back')}</Button>
-                                    <Button variant="gold" onClick={() => goToStep(3)}>{t('common.next')}</Button>
+                                    <Button variant="gold" onClick={() => { if (validateStep2()) goToStep(3); }}>{t('common.next')}</Button>
                                 </div>
                             </CardBody>
                         </Card>
                     </motion.div>
                 )}
 
-                {/* Step 3: Confirm */}
+                {/* Step 3: Sitter Preference */}
                 {step === 3 && (
                     <motion.div
                         key="step3"
+                        custom={direction}
+                        variants={slideVariants}
+                        initial="enter"
+                        animate="center"
+                        exit="exit"
+                    >
+                        <Card className="booking-card">
+                            <CardBody>
+                                <h2>{t('booking.sitterPreference')}</h2>
+                                <p className="booking-step-desc">{t('booking.sitterPreferenceDesc')}</p>
+
+                                <div className="sitter-tier-options">
+                                    {SITTER_TIERS.map((tier) => (
+                                        <button
+                                            key={tier.value}
+                                            type="button"
+                                            className={`sitter-tier-card ${formData.sitterPreference === tier.value ? 'sitter-tier-selected' : ''}`}
+                                            onClick={() => setFormData({ ...formData, sitterPreference: tier.value as 'any' | 'gold' | 'silver' })}
+                                        >
+                                            <div className="sitter-tier-header">
+                                                {tier.icon && <tier.icon size={16} strokeWidth={1.75} fill={tier.value === 'gold' ? 'var(--gold-500)' : 'none'} />}
+                                                <span className="sitter-tier-name">{t(tier.labelKey)}</span>
+                                            </div>
+                                            <p className="sitter-tier-desc">{t(tier.desc)}</p>
+                                            {tier.value === 'gold' && (
+                                                <span className="sitter-tier-price">+{formatCurrency(30000)}/{t('common.hours')}</span>
+                                            )}
+                                        </button>
+                                    ))}
+                                </div>
+
+                                <div className="sitter-pref-section">
+                                    <div className="sitter-pref-row">
+                                        <Globe size={16} strokeWidth={1.75} />
+                                        <span>{t('booking.languagePreference')}</span>
+                                    </div>
+                                    <div className="sitter-lang-options">
+                                        {LANGUAGE_OPTIONS.map((lang) => (
+                                            <button
+                                                key={lang.value}
+                                                type="button"
+                                                className={`sitter-lang-btn ${formData.preferredLanguage === lang.value ? 'sitter-lang-selected' : ''}`}
+                                                onClick={() => setFormData({ ...formData, preferredLanguage: lang.value })}
+                                            >
+                                                {lang.label}
+                                            </button>
+                                        ))}
+                                    </div>
+                                </div>
+
+                                <div className="button-row">
+                                    <Button variant="secondary" onClick={() => goToStep(2)}>{t('common.back')}</Button>
+                                    <Button variant="gold" onClick={() => goToStep(4)}>{t('common.next')}</Button>
+                                </div>
+                            </CardBody>
+                        </Card>
+                    </motion.div>
+                )}
+
+                {/* Step 4: Price Confirm */}
+                {step === 4 && (
+                    <motion.div
+                        key="step4"
                         custom={direction}
                         variants={slideVariants}
                         initial="enter"
@@ -392,6 +495,16 @@ export default function Booking() {
                                         <span>{t('parent.children')}</span>
                                         <span>{children.filter(c => formData.children.includes(c.id)).map(c => c.name + ' (' + c.age + 'y)').join(', ')}</span>
                                     </div>
+                                    <div className="summary-row">
+                                        <span>{t('booking.sitterPreference')}</span>
+                                        <span>{formData.sitterPreference === 'any' ? t('booking.anyAvailable') : t(`common.tier${formData.sitterPreference === 'gold' ? 'Gold' : 'Silver'}`)}</span>
+                                    </div>
+                                    {formData.preferredLanguage !== 'any' && (
+                                        <div className="summary-row">
+                                            <span>{t('booking.languagePreference')}</span>
+                                            <span>{LANGUAGE_OPTIONS.find(l => l.value === formData.preferredLanguage)?.label}</span>
+                                        </div>
+                                    )}
                                     {formData.notes && (
                                         <div className="summary-row">
                                             <span>{t('booking.specialRequests')}</span>
@@ -402,11 +515,89 @@ export default function Booking() {
 
                                 <PriceBreakdown items={buildPriceItems()} total={pricing.total} />
 
+                                <div className="button-row">
+                                    <Button variant="secondary" onClick={() => goToStep(3)}>{t('common.back')}</Button>
+                                    <Button variant="gold" onClick={() => goToStep(5)}>{t('booking.proceedToPayment')}</Button>
+                                </div>
+                            </CardBody>
+                        </Card>
+                    </motion.div>
+                )}
+
+                {/* Step 5: Payment */}
+                {step === 5 && (
+                    <motion.div
+                        key="step5"
+                        custom={direction}
+                        variants={slideVariants}
+                        initial="enter"
+                        animate="center"
+                        exit="exit"
+                    >
+                        <Card className="booking-card">
+                            <CardBody>
+                                <h2>{t('booking.payment')}</h2>
+
+                                <div className="payment-methods">
+                                    {[
+                                        { value: 'card', label: t('booking.creditCard'), icon: Shield },
+                                        { value: 'hotel_charge', label: t('booking.chargeToRoom'), icon: Shield },
+                                    ].map((method) => (
+                                        <button
+                                            key={method.value}
+                                            type="button"
+                                            className={`payment-method-btn ${formData.paymentMethod === method.value ? 'payment-method-selected' : ''}`}
+                                            onClick={() => setFormData({ ...formData, paymentMethod: method.value })}
+                                        >
+                                            <method.icon size={16} strokeWidth={1.75} />
+                                            <span>{method.label}</span>
+                                        </button>
+                                    ))}
+                                </div>
+
+                                {formData.paymentMethod === 'card' && (
+                                    <div className="form-stack payment-form">
+                                        <Input
+                                            label={t('guest.cardNumber')}
+                                            name="cardNumber"
+                                            placeholder="4242 4242 4242 4242"
+                                        />
+                                        <div className="time-row">
+                                            <Input
+                                                label={t('guest.expiryDate')}
+                                                name="expiry"
+                                                placeholder="MM/YY"
+                                            />
+                                            <Input
+                                                label={t('guest.cvv')}
+                                                name="cvv"
+                                                placeholder="123"
+                                            />
+                                        </div>
+                                        <Input
+                                            label={t('guest.cardHolder')}
+                                            name="holder"
+                                            placeholder="JOHN DOE"
+                                        />
+                                    </div>
+                                )}
+
+                                {formData.paymentMethod === 'hotel_charge' && (
+                                    <div className="hotel-charge-info">
+                                        <p>{t('booking.chargeToRoomDesc')}</p>
+                                    </div>
+                                )}
+
+                                <div className="payment-total-row">
+                                    <span>{t('booking.totalCost')}</span>
+                                    <span className="payment-total-amount">{formatCurrency(pricing.total)}</span>
+                                </div>
+
                                 <p className="terms-note">
                                     {t('auth.termsAgreement')}
                                 </p>
                                 <div className="button-row">
-                                    <Button variant="secondary" onClick={() => goToStep(2)}>{t('common.back')}</Button>
+                                    <Button variant="secondary" onClick={() => goToStep(4)}>{t('common.back')}</Button>
                                     <Button variant="gold" onClick={handleSubmit} isLoading={isLoading}>
                                         {t('booking.confirmBooking')}
                                     </Button>
