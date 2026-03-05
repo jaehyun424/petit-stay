@@ -1,6 +1,6 @@
 /* Parent Live Status Page */
 .live-status-page {
-  min-height: 100vh;
+  min-height: 100%;
   background-color: var(--cream-100);
 }
 

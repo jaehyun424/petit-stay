@@ -102,7 +102,7 @@ export function FeedbackStep({ bookingId, onSubmit }: FeedbackStepProps) {
             onChange={(e) => setComment(e.target.value)}
           />
         </div>
-        <button className="guest-btn guest-btn-primary" onClick={handleSubmit} disabled={rating === 0 || isSubmitting} aria-label={t('guest.submitFeedback')}>
+        <button className="guest-btn guest-btn-primary" style={{ marginTop: '1.5rem' }} onClick={handleSubmit} disabled={rating === 0 || isSubmitting} aria-label={t('guest.submitFeedback')}>
           {isSubmitting ? <span className="guest-spinner" aria-label="Submitting" /> : t('guest.submitFeedback')}
         </button>
       </div>

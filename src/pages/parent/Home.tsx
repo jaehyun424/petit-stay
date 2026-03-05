@@ -182,8 +182,10 @@ export default function Home() {
                   <StatusBadge status={upcomingBooking.status} />
                 </div>
                 <div className="upcoming-details">
-                  <span aria-hidden="true"><Calendar size={20} strokeWidth={1.75} /></span>
-                  <span>{t('parent.tonight')} • {upcomingBooking.time}</span>
+                  <div className="detail-row">
+                    <span aria-hidden="true"><Calendar size={16} strokeWidth={1.75} /></span>
+                    <span>{t('parent.tonight')} • {upcomingBooking.time}</span>
+                  </div>
                   <div className="detail-row">
                     <span aria-hidden="true"><Building2 size={16} strokeWidth={1.75} /></span>
                     <span>{upcomingBooking.hotel} - {t('common.room')} {upcomingBooking.room}</span>

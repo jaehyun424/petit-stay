@@ -28,6 +28,25 @@
   margin-bottom: 1.5rem;
 }
 
+.guest-brand-logo {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.guest-brand-img {
+  height: 32px;
+  width: auto;
+  object-fit: contain;
+}
+
+.guest-brand-name {
+  font-family: var(--font-serif, Georgia, serif);
+  font-size: var(--text-base);
+  font-weight: 600;
+  color: var(--text-primary, #1a1a1a);
+}
+
 .guest-brand {
   font-family: var(--font-serif, Georgia, serif);
   font-size: var(--text-2xl);

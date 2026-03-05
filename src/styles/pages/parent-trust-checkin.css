@@ -1,6 +1,6 @@
 /* Parent Trust Check-In Page */
 .trust-checkin-page {
-  min-height: 100vh;
+  min-height: 100%;
   background-color: var(--cream-100);
 }
 

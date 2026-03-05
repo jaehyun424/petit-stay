@@ -256,7 +256,7 @@
 /* Desktop Layout */
 @media (min-width: 1024px) {
   .profile-page {
-    max-width: 100%;
+    max-width: 640px;
   }
 
   .profile-desktop-grid {
