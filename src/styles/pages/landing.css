@@ -677,7 +677,7 @@
 
 .testimonial-content {
   flex: 1;
-  min-height: 200px;
+  min-height: 240px;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -701,6 +701,10 @@
   line-height: 1.6;
   margin-bottom: 2rem;
   font-style: italic;
+  display: -webkit-box;
+  -webkit-line-clamp: 5;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
 }
 
 .testimonial-name {
