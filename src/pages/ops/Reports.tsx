@@ -4,6 +4,8 @@
 
 import { useMemo } from 'react';
 import { useTranslation } from 'react-i18next';
+import { motion } from 'framer-motion';
+import { staggerContainer, staggerItem } from '../../utils/animations';
 import { Download, BarChart3, Users, Calendar } from 'lucide-react';
 import {
     BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip,
@@ -122,7 +124,21 @@ export default function OpsReports() {
         URL.revokeObjectURL(url);
     };
 
-    if (isLoading) return <div className="animate-fade-in"><Skeleton height="400px" /></div>;
+    if (isLoading) {
+        return (
+            <div className="ops-page animate-fade-in">
+                <Skeleton width="240px" height="2rem" />
+                <div className="ops-grid-2" style={{ marginTop: 'var(--space-6)' }}>
+                    <Skeleton height="340px" />
+                    <Skeleton height="340px" />
+                </div>
+                <div className="ops-grid-2">
+                    <Skeleton height="340px" />
+                    <Skeleton height="340px" />
+                </div>
+            </div>
+        );
+    }
 
     return (
         <div className="ops-page animate-fade-in">
@@ -175,15 +191,15 @@ export default function OpsReports() {
                     <CardBody>
                         <div className="ops-sla-grid">
                             <div className="ops-sla-item">
-                                <div className="ops-sla-value" style={{ color: stats.slaCompliance >= 95 ? '#4A6F58' : stats.slaCompliance >= 80 ? '#C5A059' : '#9E4747' }}>{stats.slaCompliance}%</div>
+                                <div className="ops-sla-value" style={{ color: stats.slaCompliance >= 95 ? 'var(--success-500)' : stats.slaCompliance >= 80 ? 'var(--warning-500)' : 'var(--error-500)' }}>{stats.slaCompliance}%</div>
                                 <div className="ops-sla-label">{t('ops.slaCompliance')}</div>
                             </div>
                             <div className="ops-sla-item">
-                                <div className="ops-sla-value" style={{ color: stats.avgSatisfaction >= 4.5 ? '#4A6F58' : stats.avgSatisfaction >= 3.5 ? '#C5A059' : '#9E4747' }}>{stats.avgSatisfaction}</div>
+                                <div className="ops-sla-value" style={{ color: stats.avgSatisfaction >= 4.5 ? 'var(--success-500)' : stats.avgSatisfaction >= 3.5 ? 'var(--warning-500)' : 'var(--error-500)' }}>{stats.avgSatisfaction}</div>
                                 <div className="ops-sla-label">{t('ops.avgSatisfaction')}</div>
                             </div>
                             <div className="ops-sla-item">
-                                <div className="ops-sla-value" style={{ color: stats.openIssues === 0 ? '#4A6F58' : stats.openIssues <= 3 ? '#C5A059' : '#9E4747' }}>{stats.openIssues}</div>
+                                <div className="ops-sla-value" style={{ color: stats.openIssues === 0 ? 'var(--success-500)' : stats.openIssues <= 3 ? 'var(--warning-500)' : 'var(--error-500)' }}>{stats.openIssues}</div>
                                 <div className="ops-sla-label">{t('ops.openIssues')}</div>
                             </div>
                             <div className="ops-sla-item">
