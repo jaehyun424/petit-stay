@@ -8,7 +8,7 @@ const steps = [
     titleKey: 'step1Title',
     descKey: 'step1Desc',
     number: '01',
-    image: 'https://images.unsplash.com/photo-1602002418082-a4443e081dd1?w=600&q=80',
+    image: 'https://images.unsplash.com/photo-1564501049412-61c2a3083791?w=800&q=80',
     imageAlt: 'Family booking hotel childcare on smartphone',
   },
   {
@@ -16,7 +16,7 @@ const steps = [
     titleKey: 'step2Title',
     descKey: 'step2Desc',
     number: '02',
-    image: 'https://images.unsplash.com/photo-1516627145497-ae6968895b74?w=600&q=80',
+    image: 'https://images.unsplash.com/photo-1587616211892-f743fcca64f9?w=800&q=80',
     imageAlt: 'Professional sitter assigned to family',
   },
   {
