@@ -169,6 +169,7 @@ export function useOpsData(): UseOpsDataReturn {
           startTime: s.actualTimes?.startedAt instanceof Date
             ? s.actualTimes.startedAt.toLocaleTimeString('en-US', { hour: '2-digit', minute: '2-digit', hour12: false })
             : '',
+          endTime: '',
           elapsed: '',
           lastUpdate: '',
           lastActivity: '',

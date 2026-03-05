@@ -154,6 +154,7 @@ export interface DemoActiveSession {
     children: { name: string; age: number }[];
     childrenText: string;
     startTime: string;
+    endTime: string;
     elapsed: string;
     lastUpdate: string;
     lastActivity: string;
@@ -170,6 +171,7 @@ export const DEMO_ACTIVE_SESSIONS: DemoActiveSession[] = [
         children: [{ name: 'Yui', age: 4 }, { name: 'Haeun', age: 6 }],
         childrenText: 'Yui (4), Haeun (6)',
         startTime: '19:00',
+        endTime: '23:00',
         elapsed: '2h 15m',
         lastUpdate: '2 min ago',
         lastActivity: 'Playing with blocks',
@@ -189,6 +191,7 @@ export const DEMO_ACTIVE_SESSIONS: DemoActiveSession[] = [
         children: [{ name: 'Emma', age: 5 }],
         childrenText: 'Emma (5)',
         startTime: '18:00',
+        endTime: '22:00',
         elapsed: '3h 15m',
         lastUpdate: '1 min ago',
         lastActivity: 'Drawing and coloring',
@@ -408,31 +411,59 @@ export interface DemoActivityLog {
 export const DEMO_LIVE_STATUS_LOGS: DemoActivityLog[] = [
     {
         id: '1',
-        timestamp: new Date(Date.now() - 1000 * 60 * 30),
-        type: 'photo',
-        content: 'Having a great time painting!',
-        metadata: { photoUrl: 'https://images.unsplash.com/photo-1596464716127-f9a87ae63648?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80' },
+        timestamp: new Date(Date.now() - 1000 * 60 * 5),
+        type: 'status',
+        content: 'Quiet time — reading picture books together',
+        metadata: { mood: '📚' },
     },
     {
         id: '2',
-        timestamp: new Date(Date.now() - 1000 * 60 * 60),
-        type: 'meal',
-        content: 'Snack Time',
-        metadata: { subtext: 'Sliced apples and juice' },
+        timestamp: new Date(Date.now() - 1000 * 60 * 20),
+        type: 'photo',
+        content: 'Emma drew a beautiful rainbow painting!',
+        metadata: { photoUrl: 'https://images.unsplash.com/photo-1596464716127-f9a87ae63648?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80' },
     },
     {
         id: '3',
-        timestamp: new Date(Date.now() - 1000 * 60 * 90),
+        timestamp: new Date(Date.now() - 1000 * 60 * 35),
         type: 'status',
-        content: 'Building a block castle',
-        metadata: { mood: '🏰' },
+        content: 'Art time — watercolor painting session',
+        metadata: { mood: '🎨' },
     },
     {
         id: '4',
-        timestamp: new Date(Date.now() - 1000 * 60 * 120),
+        timestamp: new Date(Date.now() - 1000 * 60 * 55),
+        type: 'meal',
+        content: 'Snack Time',
+        metadata: { subtext: 'Sliced apples, rice crackers, and apple juice (confirmed peanut-free)' },
+    },
+    {
+        id: '5',
+        timestamp: new Date(Date.now() - 1000 * 60 * 70),
+        type: 'status',
+        content: 'Free play — building a block castle and playing pretend',
+        metadata: { mood: '🏰' },
+    },
+    {
+        id: '6',
+        timestamp: new Date(Date.now() - 1000 * 60 * 85),
+        type: 'note',
+        content: 'Room safety check completed: all windows locked, balcony secured, minibar locked',
+        metadata: { subtext: 'Safety protocol verified' },
+    },
+    {
+        id: '7',
+        timestamp: new Date(Date.now() - 1000 * 60 * 95),
+        type: 'status',
+        content: 'Getting settled — unpacking activity bag and meeting Emma',
+        metadata: { mood: '👋' },
+    },
+    {
+        id: '8',
+        timestamp: new Date(Date.now() - 1000 * 60 * 100),
         type: 'checkin',
         content: 'Trust Check-in Verified',
-        metadata: { subtext: 'Handover complete' },
+        metadata: { subtext: 'Identity confirmed, safe word exchanged, care handover complete' },
     },
 ];
 

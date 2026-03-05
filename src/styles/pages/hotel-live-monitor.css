@@ -115,6 +115,31 @@
   font-weight: 500;
 }
 
+.live-monitor-page .remaining-time {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 4px;
+  font-size: 0.75rem;
+  font-weight: 600;
+  color: var(--success-500);
+  margin-top: 4px;
+  padding: 2px 8px;
+  background: var(--success-bg);
+  border-radius: 9999px;
+}
+
+.live-monitor-page .remaining-urgent {
+  color: var(--error-600);
+  background: var(--error-50);
+  animation: pulse-remaining 2s ease-in-out infinite;
+}
+
+@keyframes pulse-remaining {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.7; }
+}
+
 /* Real-time update indicator */
 .live-monitor-page .realtime-indicator {
   display: inline-flex;

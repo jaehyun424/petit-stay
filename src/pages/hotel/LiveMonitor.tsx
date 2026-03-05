@@ -5,7 +5,7 @@
 
 import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { Phone, AlertTriangle, Baby, Smile, Zap, Radio, Utensils, Gamepad2, Moon, FileText } from 'lucide-react';
+import { Phone, AlertTriangle, Baby, Smile, Zap, Radio, Utensils, Gamepad2, Moon, FileText, Timer } from 'lucide-react';
 import { Card, CardBody, CardHeader } from '../../components/common/Card';
 import { Avatar } from '../../components/common/Avatar';
 import { Badge, TierBadge } from '../../components/common/Badge';
@@ -50,6 +50,24 @@ function getActivityIcon(activity: string) {
   if (lower.includes('sleep') || lower.includes('nap') || lower.includes('rest'))
     return <Moon size={14} strokeWidth={1.75} />;
   return <FileText size={14} strokeWidth={1.75} />;
+}
+
+function getRemainingTime(endTime: string): { text: string; isUrgent: boolean } {
+  if (!endTime) return { text: '', isUrgent: false };
+  const now = new Date();
+  const [endH, endM] = endTime.split(':').map(Number);
+  const endDate = new Date(now);
+  endDate.setHours(endH, endM || 0, 0, 0);
+  // If end time is past midnight relative to now, add a day
+  if (endDate < now && endH < 12) endDate.setDate(endDate.getDate() + 1);
+  const diffMs = endDate.getTime() - now.getTime();
+  if (diffMs <= 0) return { text: 'Overtime', isUrgent: true };
+  const diffMin = Math.floor(diffMs / 60000);
+  const hours = Math.floor(diffMin / 60);
+  const minutes = diffMin % 60;
+  const isUrgent = diffMin <= 30;
+  if (hours > 0) return { text: `${hours}h ${minutes}m`, isUrgent };
+  return { text: `${minutes}m`, isUrgent };
 }
 
 export default function LiveMonitor() {
@@ -152,6 +170,15 @@ export default function LiveMonitor() {
                 <div className="session-time">
                   <span className="elapsed">{session.elapsed}</span>
                   <span className="last-update">{t('hotel.updated')} {session.lastUpdate}</span>
+                  {session.endTime && (() => {
+                    const remaining = getRemainingTime(session.endTime);
+                    return remaining.text ? (
+                      <span className={`remaining-time ${remaining.isUrgent ? 'remaining-urgent' : ''}`}>
+                        <Timer size={12} strokeWidth={2} />
+                        {remaining.text} {t('liveMonitor.remaining', 'remaining')}
+                      </span>
+                    ) : null;
+                  })()}
                 </div>
               </div>
             </CardHeader>
@@ -239,6 +266,9 @@ export default function LiveMonitor() {
               <div><strong>{t('liveMonitor.roomLabel')}</strong> {detailSession.room}</div>
               <div><strong>{t('liveMonitor.startedLabel')}</strong> {detailSession.startTime}</div>
               <div><strong>{t('liveMonitor.elapsedLabel')}</strong> {detailSession.elapsed}</div>
+              {detailSession.endTime && (
+                <div><strong>{t('liveMonitor.endsAt', 'Ends at')}</strong> {detailSession.endTime} ({getRemainingTime(detailSession.endTime).text} {t('liveMonitor.remaining', 'remaining')})</div>
+              )}
               <div><strong>{t('liveMonitor.moodLabel')}</strong> {detailSession.vitals.mood}</div>
               <div><strong>{t('liveMonitor.energyLabel')}</strong> {detailSession.vitals.energy}</div>
             </div>

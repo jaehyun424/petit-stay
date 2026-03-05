@@ -108,6 +108,7 @@ export function useHotelSessions(hotelId?: string) {
                             startTime: s.actualTimes.startedAt
                                 ? new Date(s.actualTimes.startedAt as unknown as string).toLocaleTimeString('en-US', { hour: '2-digit', minute: '2-digit', hour12: false })
                                 : '',
+                            endTime: '',
                             elapsed: '',
                             lastUpdate: '',
                             lastActivity: s.timeline.length > 0 ? s.timeline[s.timeline.length - 1].description : '',
