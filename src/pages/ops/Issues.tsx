@@ -80,19 +80,19 @@ export default function OpsIssues() {
       <div className="ops-summary-bar mb-6">
         <div className="ops-summary-item">
           <div className="ops-summary-value" style={{ color: 'var(--error-500)' }}>{severityCounts.critical}</div>
-          <div className="ops-summary-label">Critical</div>
+          <div className="ops-summary-label">{t('safety.critical')}</div>
         </div>
         <div className="ops-summary-item">
           <div className="ops-summary-value" style={{ color: 'var(--warning-500)' }}>{severityCounts.high}</div>
-          <div className="ops-summary-label">High</div>
+          <div className="ops-summary-label">{t('safety.high')}</div>
         </div>
         <div className="ops-summary-item">
           <div className="ops-summary-value" style={{ color: 'var(--gold-500)' }}>{severityCounts.medium}</div>
-          <div className="ops-summary-label">Medium</div>
+          <div className="ops-summary-label">{t('safety.medium')}</div>
         </div>
         <div className="ops-summary-item">
           <div className="ops-summary-value" style={{ color: 'var(--success-500)' }}>{severityCounts.low}</div>
-          <div className="ops-summary-label">Low</div>
+          <div className="ops-summary-label">{t('safety.low')}</div>
         </div>
       </div>
 
@@ -102,17 +102,17 @@ export default function OpsIssues() {
             <Input placeholder={t('common.search')} value={searchQuery} onChange={(e) => setSearchQuery(e.target.value)} />
             <Select value={severityFilter} onChange={(e) => setSeverityFilter(e.target.value)} options={[
               { value: '', label: t('ops.allSeverities') },
-              { value: 'critical', label: 'Critical' },
-              { value: 'high', label: 'High' },
-              { value: 'medium', label: 'Medium' },
-              { value: 'low', label: 'Low' },
+              { value: 'critical', label: t('safety.critical') },
+              { value: 'high', label: t('safety.high') },
+              { value: 'medium', label: t('safety.medium') },
+              { value: 'low', label: t('safety.low') },
             ]} />
             <Select value={statusFilter} onChange={(e) => setStatusFilter(e.target.value)} options={[
               { value: '', label: t('ops.allStatuses') },
-              { value: 'open', label: 'Open' },
-              { value: 'investigating', label: 'Investigating' },
-              { value: 'resolved', label: 'Resolved' },
-              { value: 'closed', label: 'Closed' },
+              { value: 'open', label: t('safety.open') },
+              { value: 'investigating', label: t('safety.investigating') },
+              { value: 'resolved', label: t('safety.resolved') },
+              { value: 'closed', label: t('safety.closed') },
             ]} />
           </div>
         </CardBody>
