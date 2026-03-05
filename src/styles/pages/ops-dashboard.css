@@ -88,19 +88,21 @@
 
 .ops-table th {
   text-align: left;
-  padding: 0.75rem;
+  padding: var(--space-3) var(--space-4);
   font-weight: 600;
   color: var(--text-secondary, #666);
-  font-size: 0.75rem;
-  text-transform: uppercase;
-  letter-spacing: 0.05em;
-  border-bottom: 1px solid var(--border-light, #f0ece7);
+  font-size: var(--text-xs);
+  text-transform: none;
+  letter-spacing: 0.06em;
+  border-bottom: 2px solid var(--border-light, #f0ece7);
+  white-space: nowrap;
 }
 
 .ops-table td {
-  padding: 0.75rem;
+  padding: var(--space-3) var(--space-4);
   border-bottom: 1px solid var(--border-light, #f0ece7);
   color: var(--text-primary, #1a1a1a);
+  vertical-align: middle;
 }
 
 .ops-table-row-hover {
@@ -108,7 +110,7 @@
 }
 
 .ops-table-row-hover:hover {
-  background: var(--glass-hover, rgba(0, 0, 0, 0.02));
+  background: var(--cream-50, rgba(0, 0, 0, 0.02));
 }
 
 .ops-table-total td {
