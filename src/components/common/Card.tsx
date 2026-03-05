@@ -10,7 +10,7 @@ import { motion } from 'framer-motion';
 interface CardProps extends React.AriaAttributes {
     children: React.ReactNode;
     className?: string;
-    variant?: 'default' | 'gold' | 'hover';
+    variant?: 'default' | 'gold' | 'hover' | 'elevated' | 'outlined';
     padding?: 'none' | 'sm' | 'md' | 'lg';
     onClick?: () => void;
 }
@@ -48,7 +48,13 @@ export function Card({
     onClick,
     ...ariaProps
 }: CardProps) {
-    const variantClass = variant === 'gold' ? 'card-gold' : '';
+    const variantMap: Record<string, string> = {
+        gold: 'card-gold',
+        hover: 'card-hoverable',
+        elevated: 'card-elevated',
+        outlined: 'card-outlined',
+    };
+    const variantClass = variantMap[variant] || '';
     const paddingClass = padding === 'none' ? 'p-0' : padding === 'sm' ? 'p-sm' : padding === 'lg' ? 'p-lg' : '';
     const clickableClass = onClick ? 'card-clickable' : '';
 
