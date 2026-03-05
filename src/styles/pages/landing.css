@@ -427,6 +427,7 @@
    ---------------------------------------- */
 .trust-bar {
   background: var(--charcoal-950);
+  padding-top: 80px;
 }
 
 .trust-bar-grid {
