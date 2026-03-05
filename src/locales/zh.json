@@ -877,7 +877,14 @@
     "activityPlaceholder": "孩子在做什么？",
     "snackPlaceholder": "提供了什么零食？",
     "confirmCompleteDesc": "您确定要结束此会话吗？",
-    "activityTimeline": "活动时间线"
+    "activityTimeline": "活动时间线",
+    "activityCategory": "类别",
+    "categoryPlay": "游戏",
+    "categoryReading": "阅读",
+    "categorySnack": "零食",
+    "categorySleep": "睡眠",
+    "categoryDiaper": "换尿布",
+    "categoryOther": "其他"
   },
   "payment": {
     "card": "卡",

@@ -281,7 +281,24 @@
     "baseRateDetail": "Base rate",
     "additionalChildDetail": "Additional child surcharge",
     "bookingFailed": "Failed to create booking. Please try again.",
-    "sitterPreferenceHint": "Include sitter preferences, language needs, or special instructions"
+    "sitterPreferenceHint": "Include sitter preferences, language needs, or special instructions",
+    "sitterPreference": "Sitter Preference",
+    "sitterPreferenceDesc": "Choose your preferred specialist tier and language.",
+    "priceConfirm": "Review",
+    "payment": "Payment",
+    "anyAvailable": "Any Available",
+    "anyAvailableDesc": "Match me with the best available specialist.",
+    "silverDesc": "Experienced specialist with verified credentials.",
+    "goldDesc": "Premium specialist with advanced certifications and 100+ sessions.",
+    "goldSitterSurcharge": "Gold Sitter surcharge",
+    "languagePreference": "Language Preference",
+    "anyLanguage": "Any Language",
+    "proceedToPayment": "Proceed to Payment",
+    "creditCard": "Credit / Debit Card",
+    "chargeToRoom": "Charge to Hotel Room",
+    "chargeToRoomDesc": "The total amount will be added to your hotel room bill. Please confirm with the front desk upon checkout.",
+    "selectChildrenError": "No Children Selected",
+    "selectAtLeastOneChild": "Please select at least one child for the session."
   },
   "sitter": {
     "todaySchedule": "Today's Schedule",
@@ -877,7 +894,14 @@
     "activityPlaceholder": "What is the child doing?",
     "snackPlaceholder": "What snack was served?",
     "confirmCompleteDesc": "Are you sure you want to end this session?",
-    "activityTimeline": "Activity Timeline"
+    "activityTimeline": "Activity Timeline",
+    "activityCategory": "Category",
+    "categoryPlay": "Play",
+    "categoryReading": "Reading",
+    "categorySnack": "Snack",
+    "categorySleep": "Sleep",
+    "categoryDiaper": "Diaper Change",
+    "categoryOther": "Other"
   },
   "payment": {
     "card": "Card",

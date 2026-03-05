@@ -877,7 +877,14 @@
     "activityPlaceholder": "お子様は何をしていますか？",
     "snackPlaceholder": "どのようなおやつを提供しましたか？",
     "confirmCompleteDesc": "このセッションを終了してもよろしいですか？",
-    "activityTimeline": "アクティビティタイムライン"
+    "activityTimeline": "アクティビティタイムライン",
+    "activityCategory": "カテゴリー",
+    "categoryPlay": "遊び",
+    "categoryReading": "読書",
+    "categorySnack": "おやつ",
+    "categorySleep": "睡眠",
+    "categoryDiaper": "おむつ交換",
+    "categoryOther": "その他"
   },
   "payment": {
     "card": "カード",

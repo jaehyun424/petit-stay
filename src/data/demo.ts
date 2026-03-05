@@ -530,9 +530,12 @@ export const DEMO_CHECKLIST_ITEMS: DemoChecklistItem[] = [
     { id: '2', label: 'Verify child identity with photo', completed: true },
     { id: '3', label: 'Review allergies & medical info', completed: true },
     { id: '4', label: 'Check emergency contact info', completed: true },
-    { id: '5', label: 'First activity started', completed: false },
-    { id: '6', label: 'Snack served (if applicable)', completed: false },
-    { id: '7', label: 'Document any incidents', completed: false },
+    { id: '5', label: 'Check window locks and balcony doors', completed: true },
+    { id: '6', label: 'Remove small objects from child reach', completed: false },
+    { id: '7', label: 'Verify emergency exit route', completed: false },
+    { id: '8', label: 'First activity started', completed: false },
+    { id: '9', label: 'Snack served (if applicable)', completed: false },
+    { id: '10', label: 'Document any incidents before session end', completed: false },
 ];
 
 export interface DemoActiveSessionInfo {

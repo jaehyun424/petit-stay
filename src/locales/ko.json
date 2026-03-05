@@ -281,7 +281,24 @@
     "baseRateDetail": "기본 요금",
     "additionalChildDetail": "추가 아동 할증",
     "bookingFailed": "예약 생성에 실패했습니다. 다시 시도해 주세요.",
-    "sitterPreferenceHint": "시터 선호도, 언어 요구사항, 특별 지시사항을 포함해 주세요"
+    "sitterPreferenceHint": "시터 선호도, 언어 요구사항, 특별 지시사항을 포함해 주세요",
+    "sitterPreference": "시터 선호",
+    "sitterPreferenceDesc": "선호하는 전문가 등급과 언어를 선택하세요.",
+    "priceConfirm": "확인",
+    "payment": "결제",
+    "anyAvailable": "누구든 가능",
+    "anyAvailableDesc": "최적의 전문가를 매칭해 주세요.",
+    "silverDesc": "검증된 자격을 갖춘 경험 있는 전문가.",
+    "goldDesc": "고급 자격증과 100회 이상 세션 경험의 프리미엄 전문가.",
+    "goldSitterSurcharge": "골드 시터 추가 요금",
+    "languagePreference": "언어 선호",
+    "anyLanguage": "언어 무관",
+    "proceedToPayment": "결제 진행",
+    "creditCard": "신용/체크카드",
+    "chargeToRoom": "객실 요금에 추가",
+    "chargeToRoomDesc": "총 금액이 호텔 객실 요금에 추가됩니다. 체크아웃 시 프런트 데스크에서 확인해 주세요.",
+    "selectChildrenError": "아이 미선택",
+    "selectAtLeastOneChild": "세션에 참여할 아이를 한 명 이상 선택해 주세요."
   },
   "sitter": {
     "todaySchedule": "오늘 일정",
@@ -877,7 +894,14 @@
     "activityPlaceholder": "아이가 무엇을 하고 있나요?",
     "snackPlaceholder": "어떤 간식을 제공했나요?",
     "confirmCompleteDesc": "이 세션을 종료하시겠습니까?",
-    "activityTimeline": "활동 타임라인"
+    "activityTimeline": "활동 타임라인",
+    "activityCategory": "카테고리",
+    "categoryPlay": "놀이",
+    "categoryReading": "독서",
+    "categorySnack": "간식",
+    "categorySleep": "수면",
+    "categoryDiaper": "기저귀 교체",
+    "categoryOther": "기타"
   },
   "payment": {
     "card": "카드",

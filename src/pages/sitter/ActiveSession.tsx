@@ -63,6 +63,7 @@ export default function ActiveSession() {
     // Modal states
     const [showActivityModal, setShowActivityModal] = useState(false);
     const [activityNote, setActivityNote] = useState('');
+    const [activityCategory, setActivityCategory] = useState('play');
     const [showSnackModal, setShowSnackModal] = useState(false);
     const [snackNote, setSnackNote] = useState('');
     const [showReportIssue, setShowReportIssue] = useState(false);
@@ -302,6 +303,19 @@ export default function ActiveSession() {
                 }
             >
                 <div className="modal-form-stack">
+                    <Select
+                        label={t('activeSession.activityCategory', 'Category')}
+                        value={activityCategory}
+                        onChange={(e) => setActivityCategory(e.target.value)}
+                        options={[
+                            { value: 'play', label: t('activeSession.categoryPlay', 'Play') },
+                            { value: 'reading', label: t('activeSession.categoryReading', 'Reading') },
+                            { value: 'snack', label: t('activeSession.categorySnack', 'Snack') },
+                            { value: 'sleep', label: t('activeSession.categorySleep', 'Sleep') },
+                            { value: 'diaper', label: t('activeSession.categoryDiaper', 'Diaper Change') },
+                            { value: 'other', label: t('activeSession.categoryOther', 'Other') },
+                        ]}
+                    />
                     <Input
                         label={t('activeSession.description')}
                         value={activityNote}
