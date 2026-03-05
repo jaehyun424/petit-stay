@@ -1,15 +1,29 @@
 /* Sitter Onboarding Page */
 .sitter-onboarding { max-width: 640px; margin: 0 auto; padding: var(--space-4); }
 
-/* Progress Bar */
+/* Progress Bar - Redesigned */
 .onboarding-progress {
-  display: flex;
-  align-items: center;
-  gap: var(--space-2);
   margin-bottom: var(--space-6);
-  padding: var(--space-4);
-  background: var(--glass-bg);
-  border-radius: var(--radius-xl);
+}
+
+.progress-bar-track {
+  width: 100%;
+  height: 4px;
+  background: var(--cream-300);
+  border-radius: var(--radius-pill);
+  overflow: hidden;
+  margin-bottom: var(--space-4);
+}
+
+.progress-bar-fill {
+  height: 100%;
+  background: var(--gold-500);
+  border-radius: var(--radius-pill);
+}
+
+.progress-steps {
+  display: flex;
+  justify-content: space-between;
 }
 
 .progress-step {
@@ -21,8 +35,8 @@
 }
 
 .progress-step-dot {
-  width: 32px;
-  height: 32px;
+  width: 36px;
+  height: 36px;
   border-radius: 50%;
   border: 2px solid var(--border-primary);
   background: var(--bg-primary);
@@ -37,45 +51,33 @@
 }
 
 .progress-step.active .progress-step-dot {
-  border-color: var(--primary-400);
-  background: var(--primary-400);
-  color: var(--cream-100);
+  border-color: var(--gold-500);
+  background: var(--gold-500);
+  color: white;
+  box-shadow: 0 0 0 4px var(--gold-100);
 }
 
 .progress-step.completed .progress-step-dot {
-  border-color: var(--green-500, #22c55e);
-  background: var(--green-500, #22c55e);
+  border-color: var(--success-500);
+  background: var(--success-500);
   color: white;
 }
 
 .progress-step-label {
   font-size: var(--text-xs);
   color: var(--text-tertiary);
-  margin-top: var(--space-1);
+  margin-top: var(--space-2);
   text-align: center;
   white-space: nowrap;
 }
 
 .progress-step.active .progress-step-label {
-  color: var(--primary-400);
+  color: var(--gold-text);
   font-weight: var(--font-semibold);
 }
 
 .progress-step.completed .progress-step-label {
-  color: var(--green-500, #22c55e);
-}
-
-.progress-connector {
-  flex: 1;
-  height: 2px;
-  background: var(--border-primary);
-  margin: 0 var(--space-1);
-  align-self: flex-start;
-  margin-top: 15px;
-}
-
-.progress-connector.active {
-  background: var(--primary-400);
+  color: var(--success-500);
 }
 
 /* Step Container */
@@ -100,6 +102,12 @@
 .onboarding-form {
   display: flex;
   flex-direction: column;
+  gap: var(--space-5);
+}
+
+.onboarding-field-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
   gap: var(--space-4);
 }
 
@@ -108,28 +116,29 @@
   font-size: var(--text-sm);
   font-weight: var(--font-semibold);
   color: var(--text-primary);
-  margin-bottom: var(--space-1);
+  margin-bottom: var(--space-2);
 }
 
 .onboarding-field input,
 .onboarding-field textarea,
 .onboarding-field select {
   width: 100%;
-  padding: var(--space-3);
+  padding: var(--space-3) var(--space-4);
   border: 1px solid var(--border-primary);
   border-radius: var(--radius-lg);
   background: var(--bg-primary);
   color: var(--text-primary);
   font-size: var(--text-base);
   font-family: var(--font-sans);
-  transition: border-color 0.2s;
+  transition: border-color 0.2s, box-shadow 0.2s;
 }
 
 .onboarding-field input:focus,
 .onboarding-field textarea:focus,
 .onboarding-field select:focus {
   outline: none;
-  border-color: var(--primary-400);
+  border-color: var(--gold-500);
+  box-shadow: 0 0 0 3px var(--gold-100);
 }
 
 .onboarding-field textarea {
@@ -138,6 +147,7 @@
 }
 
 .onboarding-field .field-hint {
+  display: block;
   font-size: var(--text-xs);
   color: var(--text-tertiary);
   margin-top: var(--space-1);
@@ -152,26 +162,29 @@
   cursor: pointer;
   transition: all 0.2s;
   background: var(--bg-secondary);
+  position: relative;
 }
 
 .upload-zone:hover {
-  border-color: var(--primary-400);
-  background: var(--glass-bg);
+  border-color: var(--gold-400);
+  background: var(--gold-100);
 }
 
 .upload-zone.dragging {
-  border-color: var(--primary-400);
-  background: color-mix(in srgb, var(--primary-400) 10%, transparent);
+  border-color: var(--gold-500);
+  background: var(--gold-100);
+  box-shadow: inset 0 0 0 2px var(--gold-300);
 }
 
 .upload-zone-icon {
-  color: var(--text-tertiary);
-  margin-bottom: var(--space-2);
+  color: var(--gold-500);
+  margin-bottom: var(--space-3);
 }
 
 .upload-zone-text {
   font-size: var(--text-sm);
-  color: var(--text-secondary);
+  font-weight: var(--font-medium);
+  color: var(--text-primary);
 }
 
 .upload-zone-hint {
@@ -184,7 +197,7 @@
   display: flex;
   flex-direction: column;
   gap: var(--space-2);
-  margin-top: var(--space-3);
+  margin-top: var(--space-4);
 }
 
 .uploaded-doc {
@@ -200,7 +213,19 @@
 .uploaded-doc-info {
   display: flex;
   align-items: center;
-  gap: var(--space-2);
+  gap: var(--space-3);
+}
+
+.uploaded-doc-icon {
+  width: 32px;
+  height: 32px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: var(--radius-md);
+  background: var(--gold-100);
+  color: var(--gold-600);
+  flex-shrink: 0;
 }
 
 .uploaded-doc-name {
@@ -219,20 +244,23 @@
   border: none;
   color: var(--text-tertiary);
   cursor: pointer;
-  padding: var(--space-1);
+  padding: var(--space-2);
   border-radius: var(--radius-md);
-  transition: color 0.2s;
+  transition: all 0.2s;
+  display: flex;
+  align-items: center;
 }
 
 .uploaded-doc-remove:hover {
-  color: var(--red-500, #ef4444);
+  color: var(--error-500);
+  background: var(--error-bg);
 }
 
 /* Document type selector */
 .doc-type-select {
   display: flex;
   gap: var(--space-2);
-  margin-bottom: var(--space-3);
+  margin-bottom: var(--space-4);
   flex-wrap: wrap;
 }
 
@@ -245,12 +273,18 @@
   font-size: var(--text-sm);
   cursor: pointer;
   transition: all 0.2s;
+  font-weight: var(--font-medium);
 }
 
 .doc-type-btn.active {
-  border-color: var(--primary-400);
-  background: var(--primary-400);
-  color: var(--cream-100);
+  border-color: var(--gold-500);
+  background: var(--gold-500);
+  color: white;
+}
+
+.doc-type-btn:hover:not(.active) {
+  border-color: var(--gold-300);
+  background: var(--gold-100);
 }
 
 /* Training Video */
@@ -270,6 +304,25 @@
   color: var(--cream-200, #ccc);
 }
 
+.training-play-btn {
+  width: 64px;
+  height: 64px;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.15);
+  backdrop-filter: blur(8px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0 auto var(--space-3);
+  transition: all 0.2s;
+  cursor: pointer;
+}
+
+.training-play-btn:hover {
+  background: rgba(255, 255, 255, 0.25);
+  transform: scale(1.05);
+}
+
 .training-video-placeholder svg {
   margin-bottom: var(--space-2);
 }
@@ -283,12 +336,17 @@
   border-radius: var(--radius-lg);
   border: 1px solid var(--border-primary);
   cursor: pointer;
+  transition: all 0.2s;
+}
+
+.training-checkbox:hover {
+  border-color: var(--gold-300);
 }
 
 .training-checkbox input[type="checkbox"] {
   width: 20px;
   height: 20px;
-  accent-color: var(--primary-400);
+  accent-color: var(--gold-500);
 }
 
 .training-checkbox span {
@@ -298,7 +356,7 @@
 
 /* Quiz */
 .quiz-question {
-  padding: var(--space-4);
+  padding: var(--space-5);
   background: var(--glass-bg);
   border-radius: var(--radius-xl);
   margin-bottom: var(--space-4);
@@ -308,16 +366,18 @@
 .quiz-question h3 {
   font-size: var(--text-base);
   color: var(--text-primary);
-  margin-bottom: var(--space-3);
+  margin-bottom: var(--space-4);
   font-weight: var(--font-semibold);
+  line-height: 1.5;
 }
 
 .quiz-question-number {
   font-size: var(--text-xs);
-  color: var(--text-tertiary);
+  color: var(--gold-text);
   text-transform: uppercase;
   letter-spacing: 0.05em;
-  margin-bottom: var(--space-1);
+  margin-bottom: var(--space-2);
+  font-weight: var(--font-semibold);
 }
 
 .quiz-options {
@@ -330,56 +390,98 @@
   display: flex;
   align-items: center;
   gap: var(--space-3);
-  padding: var(--space-3);
+  padding: var(--space-3) var(--space-4);
   border: 1px solid var(--border-primary);
   border-radius: var(--radius-lg);
   cursor: pointer;
   transition: all 0.2s;
   background: var(--bg-primary);
+  min-height: 48px;
 }
 
 .quiz-option:hover {
-  border-color: var(--primary-400);
+  border-color: var(--gold-300);
+  background: var(--gold-100);
 }
 
 .quiz-option.selected {
-  border-color: var(--primary-400);
-  background: color-mix(in srgb, var(--primary-400) 10%, transparent);
+  border-color: var(--gold-500);
+  background: var(--gold-100);
 }
 
 .quiz-option input[type="radio"] {
-  accent-color: var(--primary-400);
+  display: none;
 }
 
-.quiz-option span {
+.quiz-option-indicator {
+  width: 18px;
+  height: 18px;
+  border-radius: 50%;
+  border: 2px solid var(--border-primary);
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.2s;
+}
+
+.quiz-option.selected .quiz-option-indicator {
+  border-color: var(--gold-500);
+  background: var(--gold-500);
+  box-shadow: inset 0 0 0 3px white;
+}
+
+.quiz-option span:last-child {
   font-size: var(--text-sm);
   color: var(--text-primary);
+  line-height: 1.4;
 }
 
 .quiz-result {
   text-align: center;
-  padding: var(--space-6);
+  padding: var(--space-8) var(--space-4);
   background: var(--glass-bg);
   border-radius: var(--radius-xl);
   margin-top: var(--space-4);
 }
 
 .quiz-result.passed {
-  border: 1px solid var(--green-500, #22c55e);
+  border: 1px solid var(--success-500);
 }
 
 .quiz-result.failed {
-  border: 1px solid var(--red-500, #ef4444);
+  border: 1px solid var(--error-500);
+}
+
+.quiz-result-icon {
+  width: 56px;
+  height: 56px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0 auto var(--space-3);
+}
+
+.quiz-result-icon.passed {
+  background: var(--success-bg);
+  color: var(--success-500);
+}
+
+.quiz-result-icon.failed {
+  background: var(--error-bg);
+  color: var(--error-500);
 }
 
 .quiz-score {
   font-size: var(--text-3xl);
   font-weight: var(--font-bold);
   margin-bottom: var(--space-1);
+  font-family: var(--font-serif);
 }
 
-.quiz-result.passed .quiz-score { color: var(--green-500, #22c55e); }
-.quiz-result.failed .quiz-score { color: var(--red-500, #ef4444); }
+.quiz-result.passed .quiz-score { color: var(--success-500); }
+.quiz-result.failed .quiz-score { color: var(--error-500); }
 
 /* Pending Approval */
 .pending-approval {
@@ -391,12 +493,12 @@
   width: 80px;
   height: 80px;
   border-radius: 50%;
-  background: color-mix(in srgb, var(--primary-400) 15%, transparent);
+  background: var(--gold-100);
   display: flex;
   align-items: center;
   justify-content: center;
   margin: 0 auto var(--space-4);
-  color: var(--primary-400);
+  color: var(--gold-500);
 }
 
 .pending-approval h2 {
@@ -407,8 +509,37 @@
   font-size: var(--text-sm);
   color: var(--text-secondary);
   max-width: 400px;
-  margin: 0 auto;
+  margin: 0 auto var(--space-6);
   line-height: 1.6;
+}
+
+.pending-checklist {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+  max-width: 280px;
+  margin: 0 auto;
+  text-align: left;
+}
+
+.pending-check-item {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+  font-size: var(--text-sm);
+  padding: var(--space-2) var(--space-3);
+  border-radius: var(--radius-md);
+}
+
+.pending-check-item.done {
+  color: var(--success-500);
+  background: var(--success-bg);
+}
+
+.pending-check-item.current {
+  color: var(--gold-600);
+  background: var(--gold-100);
+  font-weight: var(--font-semibold);
 }
 
 /* Navigation Buttons */
@@ -424,10 +555,10 @@
 /* Error message */
 .onboarding-error {
   padding: var(--space-3);
-  background: color-mix(in srgb, var(--red-500, #ef4444) 10%, transparent);
-  border: 1px solid var(--red-500, #ef4444);
+  background: var(--error-bg);
+  border: 1px solid var(--error-500);
   border-radius: var(--radius-lg);
-  color: var(--red-500, #ef4444);
+  color: var(--error-500);
   font-size: var(--text-sm);
   margin-bottom: var(--space-4);
 }
@@ -438,9 +569,32 @@
 
   .progress-step-label { font-size: 10px; }
 
-  .progress-step-dot { width: 28px; height: 28px; font-size: 11px; }
+  .progress-step-dot { width: 30px; height: 30px; font-size: 11px; }
 
   .doc-type-select { gap: var(--space-1); }
 
   .doc-type-btn { font-size: var(--text-xs); padding: var(--space-1) var(--space-2); }
+
+  .onboarding-field-row {
+    grid-template-columns: 1fr;
+    gap: var(--space-4);
+  }
+
+  .quiz-question {
+    padding: var(--space-3);
+  }
+
+  .quiz-option {
+    padding: var(--space-2) var(--space-3);
+    min-height: 44px;
+  }
+
+  .pending-checklist {
+    max-width: 100%;
+  }
+
+  .training-play-btn {
+    width: 48px;
+    height: 48px;
+  }
 }

@@ -1,10 +1,10 @@
-// Sitter Onboarding Page — 5-step wizard
+// Sitter Onboarding Page -- 5-step wizard
 
 import { useState, useCallback, useRef } from 'react';
 import { useTranslation } from 'react-i18next';
 import { motion, AnimatePresence } from 'framer-motion';
 import {
-  Upload, FileText, Play, HelpCircle, Clock, Check, X, ChevronRight,
+  Upload, FileText, Play, HelpCircle, Clock, Check, X, ChevronRight, Sparkles,
 } from 'lucide-react';
 import { Card, CardBody } from '../../components/common/Card';
 import { Button } from '../../components/common/Button';
@@ -75,27 +75,29 @@ function BasicInfoStep({
           />
           <span className="field-hint">{t('common.commaSeparated')}</span>
         </div>
-        <div className="onboarding-field">
-          <label>{t('onboarding.experience')}</label>
-          <input
-            type="number"
-            min={0}
-            value={form.experience}
-            onChange={(e) => setForm({ ...form, experience: parseInt(e.target.value) || 0 })}
-          />
-          <span className="field-hint">{t('onboarding.experienceHint')}</span>
-        </div>
-        <div className="onboarding-field">
-          <label>{t('onboarding.specialties')}</label>
-          <input
-            type="text"
-            value={form.specialties.join(', ')}
-            onChange={(e) =>
-              setForm({ ...form, specialties: e.target.value.split(',').map((s) => s.trim()).filter(Boolean) })
-            }
-            placeholder={t('onboarding.specialtiesPlaceholder')}
-          />
-          <span className="field-hint">{t('common.commaSeparated')}</span>
+        <div className="onboarding-field-row">
+          <div className="onboarding-field">
+            <label>{t('onboarding.experience')}</label>
+            <input
+              type="number"
+              min={0}
+              value={form.experience}
+              onChange={(e) => setForm({ ...form, experience: parseInt(e.target.value) || 0 })}
+            />
+            <span className="field-hint">{t('onboarding.experienceHint')}</span>
+          </div>
+          <div className="onboarding-field">
+            <label>{t('onboarding.specialties')}</label>
+            <input
+              type="text"
+              value={form.specialties.join(', ')}
+              onChange={(e) =>
+                setForm({ ...form, specialties: e.target.value.split(',').map((s) => s.trim()).filter(Boolean) })
+              }
+              placeholder={t('onboarding.specialtiesPlaceholder')}
+            />
+            <span className="field-hint">{t('common.commaSeparated')}</span>
+          </div>
         </div>
         <div className="onboarding-field">
           <label>{t('onboarding.bio')}</label>
@@ -204,11 +206,23 @@ function DocumentUploadStep({
       </div>
 
       {documents.length > 0 && (
-        <div className="uploaded-docs">
+        <motion.div
+          className="uploaded-docs"
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+        >
           {documents.map((d, i) => (
-            <div key={i} className="uploaded-doc">
+            <motion.div
+              key={i}
+              className="uploaded-doc"
+              initial={{ opacity: 0, y: 8 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: i * 0.05 }}
+            >
               <div className="uploaded-doc-info">
-                <FileText size={16} />
+                <div className="uploaded-doc-icon">
+                  <FileText size={16} />
+                </div>
                 <div>
                   <div className="uploaded-doc-name">{d.name}</div>
                   <div className="uploaded-doc-type">{t(`onboarding.docType_${d.type}`)}</div>
@@ -217,9 +231,9 @@ function DocumentUploadStep({
               <button className="uploaded-doc-remove" onClick={() => onRemove(i)}>
                 <X size={16} />
               </button>
-            </div>
+            </motion.div>
           ))}
-        </div>
+        </motion.div>
       )}
 
       <div className="onboarding-nav">
@@ -255,7 +269,9 @@ function TrainingVideoStep({
 
       <div className="training-video-container">
         <div className="training-video-placeholder">
-          <Play size={48} />
+          <div className="training-play-btn">
+            <Play size={32} fill="currentColor" />
+          </div>
           <p>{t('onboarding.trainingVideoPlaceholder')}</p>
         </div>
       </div>
@@ -316,10 +332,18 @@ function QuizStep({
     return (
       <div className="onboarding-step">
         <h2>{t('onboarding.quizTitle')}</h2>
-        <div className={`quiz-result ${passed ? 'passed' : 'failed'}`}>
+        <motion.div
+          className={`quiz-result ${passed ? 'passed' : 'failed'}`}
+          initial={{ scale: 0.9, opacity: 0 }}
+          animate={{ scale: 1, opacity: 1 }}
+          transition={{ duration: 0.3 }}
+        >
+          <div className={`quiz-result-icon ${passed ? 'passed' : 'failed'}`}>
+            {passed ? <Check size={32} /> : <X size={32} />}
+          </div>
           <div className="quiz-score">{Math.round(quizScore * 100)}%</div>
           <p>{passed ? t('onboarding.quizPassed') : t('onboarding.quizFailed')}</p>
-        </div>
+        </motion.div>
         {!passed && (
           <div className="onboarding-nav">
             <Button variant="secondary" onClick={onBack}>{t('common.back')}</Button>
@@ -351,6 +375,7 @@ function QuizStep({
                   checked={answers[q.id] === oi}
                   onChange={() => setAnswers({ ...answers, [q.id]: oi })}
                 />
+                <span className="quiz-option-indicator" />
                 <span>{t(`onboarding.${opt}`)}</span>
               </label>
             ))}
@@ -376,13 +401,45 @@ function PendingApprovalStep() {
 
   return (
     <div className="onboarding-step">
-      <div className="pending-approval">
+      <motion.div
+        className="pending-approval"
+        initial={{ opacity: 0, y: 20 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.4 }}
+      >
         <div className="pending-approval-icon">
-          <Clock size={40} />
+          <motion.div
+            animate={{ rotate: 360 }}
+            transition={{ duration: 20, repeat: Infinity, ease: 'linear' }}
+          >
+            <Clock size={40} />
+          </motion.div>
         </div>
         <h2>{t('onboarding.pendingTitle')}</h2>
         <p>{t('onboarding.pendingDesc')}</p>
-      </div>
+        <div className="pending-checklist">
+          <div className="pending-check-item done">
+            <Check size={14} strokeWidth={2.5} />
+            <span>{t('onboarding.stepBasicInfo')}</span>
+          </div>
+          <div className="pending-check-item done">
+            <Check size={14} strokeWidth={2.5} />
+            <span>{t('onboarding.stepDocuments')}</span>
+          </div>
+          <div className="pending-check-item done">
+            <Check size={14} strokeWidth={2.5} />
+            <span>{t('onboarding.stepTraining')}</span>
+          </div>
+          <div className="pending-check-item done">
+            <Check size={14} strokeWidth={2.5} />
+            <span>{t('onboarding.stepQuiz')}</span>
+          </div>
+          <div className="pending-check-item current">
+            <Sparkles size={14} strokeWidth={2} />
+            <span>{t('onboarding.stepApproval')}</span>
+          </div>
+        </div>
+      </motion.div>
     </div>
   );
 }
@@ -440,28 +497,37 @@ export default function SitterOnboarding() {
     completeTraining();
   };
 
+  const progressPercent = ((stepIndex + 1) / STEP_LABELS.length) * 100;
+
   return (
     <div className="sitter-onboarding animate-fade-in">
       {/* Progress Bar */}
       <div className="onboarding-progress">
-        {STEP_LABELS.map((label, i) => {
-          const Icon = STEP_ICONS[i];
-          return (
-            <div key={i} style={{ display: 'contents' }}>
-              {i > 0 && (
-                <div className={`progress-connector ${i <= stepIndex ? 'active' : ''}`} />
-              )}
-              <div
-                className={`progress-step ${i === stepIndex ? 'active' : ''} ${i < stepIndex ? 'completed' : ''}`}
-              >
-                <div className="progress-step-dot">
-                  {i < stepIndex ? <Check size={14} /> : <Icon size={14} />}
+        <div className="progress-bar-track">
+          <motion.div
+            className="progress-bar-fill"
+            initial={{ width: 0 }}
+            animate={{ width: `${progressPercent}%` }}
+            transition={{ duration: 0.4, ease: 'easeOut' }}
+          />
+        </div>
+        <div className="progress-steps">
+          {STEP_LABELS.map((label, i) => {
+            const Icon = STEP_ICONS[i];
+            return (
+              <div key={i} style={{ display: 'contents' }}>
+                <div
+                  className={`progress-step ${i === stepIndex ? 'active' : ''} ${i < stepIndex ? 'completed' : ''}`}
+                >
+                  <div className="progress-step-dot">
+                    {i < stepIndex ? <Check size={14} /> : <Icon size={14} />}
+                  </div>
+                  <span className="progress-step-label">{label}</span>
                 </div>
-                <span className="progress-step-label">{label}</span>
               </div>
-            </div>
-          );
-        })}
+            );
+          })}
+        </div>
       </div>
 
       {error && <div className="onboarding-error">{error}</div>}
