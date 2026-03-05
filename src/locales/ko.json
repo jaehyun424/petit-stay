@@ -1106,7 +1106,8 @@
     "totalPaid": "지급됨",
     "filterByPeriod": "기간 필터",
     "allPeriods": "전체 기간",
-    "reservationCount": "총 {{count}}건의 예약"
+    "reservationCount": "총 {{count}}건의 예약",
+    "sitterCount": "등록된 시터 {{count}}명"
   },
   "info": {
     "about": {

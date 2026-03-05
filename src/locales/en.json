@@ -674,7 +674,15 @@
     "assignSitterToBooking": "Assign {{name}} to Booking",
     "noAvailableSitters": "No available sitters",
     "noSitters": "No sitters registered",
-    "noSittersDesc": "Add your first sitter to get started."
+    "noSittersDesc": "Add your first sitter to get started.",
+    "filterByTier": "Filter by tier",
+    "goldTier": "Gold",
+    "silverTier": "Silver",
+    "availableHours": "Available Hours",
+    "weekdayHours": "Weekdays 17:00 - 23:00, Weekends 10:00 - 23:00",
+    "sitterAdded": "Sitter Added",
+    "sitterRegistered": "{{name}} has been registered",
+    "sitterAssignedToast": "Sitter Assigned"
   },
   "liveMonitor": {
     "noActiveSessions": "No active sessions",
@@ -690,7 +698,8 @@
     "elapsedLabel": "Elapsed:",
     "moodLabel": "Mood:",
     "energyLabel": "Energy:",
-    "activityTimeline": "Activity Timeline:"
+    "activityTimeline": "Activity Timeline:",
+    "realtimeUpdates": "Real-time updates"
   },
   "scan": {
     "title": "QR Check-In",
@@ -1106,7 +1115,8 @@
     "totalPaid": "Paid",
     "filterByPeriod": "Filter by period",
     "allPeriods": "All Periods",
-    "reservationCount": "{{count}} reservations total"
+    "reservationCount": "{{count}} reservations total",
+    "sitterCount": "{{count}} sitters registered"
   },
   "info": {
     "about": {

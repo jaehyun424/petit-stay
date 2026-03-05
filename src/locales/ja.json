@@ -1106,7 +1106,8 @@
     "totalPaid": "支払済み",
     "filterByPeriod": "期間で絞り込み",
     "allPeriods": "全期間",
-    "reservationCount": "合計{{count}}件の予約"
+    "reservationCount": "合計{{count}}件の予約",
+    "sitterCount": "登録シッター{{count}}名"
   },
   "info": {
     "about": {
