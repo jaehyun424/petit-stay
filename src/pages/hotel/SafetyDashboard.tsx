@@ -46,10 +46,10 @@ function getRelativeTime(date: Date, t: (key: string, opts?: Record<string, unkn
 
 function getSeverityColor(severity: string): string {
     switch (severity) {
-        case 'low': return '#4A6F58';
-        case 'medium': return '#C5A059';
-        case 'high': return '#BC8B4C';
-        case 'critical': return '#9E4747';
+        case 'low': return 'var(--success-500)';
+        case 'medium': return 'var(--gold-500)';
+        case 'high': return 'var(--warning-500)';
+        case 'critical': return 'var(--error-500)';
         default: return 'var(--text-tertiary)';
     }
 }
