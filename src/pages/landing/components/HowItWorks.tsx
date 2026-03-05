@@ -24,7 +24,7 @@ const steps = [
     titleKey: 'step3Title',
     descKey: 'step3Desc',
     number: '03',
-    image: 'https://images.unsplash.com/photo-1587654780291-39c9404d7dd0?w=600&q=80',
+    image: 'https://images.unsplash.com/photo-1596394516093-501ba68a0ba6?w=800&q=80',
     imageAlt: 'Happy child enjoying care activities',
   },
 ];

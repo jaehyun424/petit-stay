@@ -21,7 +21,7 @@ const features = [
     icon: <ClipboardList size={28} strokeWidth={1.5} />,
     titleKey: 'feature3Title',
     descKey: 'feature3Desc',
-    image: 'https://images.unsplash.com/photo-1587654780291-39c9404d7dd0?w=800&q=80',
+    image: 'https://images.unsplash.com/photo-1434030216411-0b793f4b4173?w=800&q=80',
     imageAlt: 'Structured childcare activities and checklist',
   },
   {
