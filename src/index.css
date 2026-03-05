@@ -538,9 +538,13 @@ p {
 }
 
 .toast-success { border-left-color: var(--success-500); }
+.toast-success .toast-icon { color: var(--success-500); }
 .toast-error { border-left-color: var(--error-500); }
+.toast-error .toast-icon { color: var(--error-500); }
 .toast-warning { border-left-color: var(--warning-500); }
+.toast-warning .toast-icon { color: var(--warning-500); }
 .toast-info { border-left-color: var(--charcoal-900); }
+.toast-info .toast-icon { color: var(--charcoal-900); }
 
 .toast-icon {
   display: flex;
