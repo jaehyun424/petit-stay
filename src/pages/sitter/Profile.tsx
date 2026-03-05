@@ -3,7 +3,9 @@
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
-import { Star, Building2, BadgeCheck, Scale, Moon, Sun, Calendar, Wallet, FileText, HelpCircle, Check } from 'lucide-react';
+import { motion } from 'framer-motion';
+import { staggerContainer, staggerItem } from '../../utils/animations';
+import { Star, Building2, BadgeCheck, Scale, Moon, Sun, Calendar, Wallet, FileText, HelpCircle, Check, MapPin, Globe } from 'lucide-react';
 import { Card, CardBody } from '../../components/common/Card';
 import { Button } from '../../components/common/Button';
 import { Avatar } from '../../components/common/Avatar';
@@ -30,6 +32,8 @@ const getBankOptions = (t: (key: string) => string) => [
     { value: 'nh', label: t('sitterProfile.bankNh') },
     { value: 'ibk', label: t('sitterProfile.bankIbk') },
 ];
+
+const DEMO_REGIONS = ['Gangnam', 'Jongno', 'Yongsan', 'Mapo', 'Songpa'];
 
 interface EditForm {
     displayName: string;
@@ -66,6 +70,10 @@ export default function Profile() {
     // Documents modal
     const [showDocsModal, setShowDocsModal] = useState(false);
     const [documents, setDocuments] = useState<UploadedDocument[]>(DEMO_SITTER_DOCUMENTS);
+
+    // Region modal
+    const [showRegionModal, setShowRegionModal] = useState(false);
+    const [selectedRegions, setSelectedRegions] = useState<string[]>(['Gangnam', 'Yongsan']);
 
     const openEditModal = () => {
         setEditForm({
@@ -112,6 +120,17 @@ export default function Profile() {
         setShowBankModal(false);
     };
 
+    const toggleRegion = (region: string) => {
+        setSelectedRegions((prev) =>
+            prev.includes(region) ? prev.filter((r) => r !== region) : [...prev, region]
+        );
+    };
+
+    const handleSaveRegions = () => {
+        success(t('common.save'), t('sitterProfile.regionsUpdated', 'Service regions updated'));
+        setShowRegionModal(false);
+    };
+
     return (
         <div className="sitter-profile animate-fade-in">
             {/* Profile Header */}
@@ -122,17 +141,34 @@ export default function Profile() {
                         <div className="profile-info">
                             <h2>{profile.name}</h2>
                             <TierBadge tier={profile.tier} />
-                            <div className="profile-rating"><Star size={14} strokeWidth={1.75} fill="currentColor" /> {profile.rating} ({profile.reviewCount} {t('sitterProfile.reviewsCount')})</div>
+                            <div className="profile-rating">
+                                <Star size={14} strokeWidth={1.75} fill="currentColor" />
+                                {profile.rating} ({profile.reviewCount} {t('sitterProfile.reviewsCount')})
+                            </div>
                             <Button variant="ghost" size="sm" onClick={openEditModal}>
                                 {t('common.edit')} {t('sitter.profile.title', 'Profile')}
                             </Button>
                         </div>
                     </div>
-                    <div className="profile-stats">
-                        <div className="pstat"><span className="pvalue">{profile.totalSessions}</span><span className="plabel">{t('sitterProfile.sessions')}</span></div>
-                        <div className="pstat"><span className="pvalue">{profile.safetyDays}</span><span className="plabel">{t('sitterProfile.safeDays')}</span></div>
-                        <div className="pstat"><span className="pvalue">{profile.onTimeRate}</span><span className="plabel">{t('sitterProfile.onTime')}</span></div>
-                    </div>
+                    <motion.div
+                        className="profile-stats"
+                        initial="hidden"
+                        animate="show"
+                        variants={staggerContainer}
+                    >
+                        <motion.div className="pstat" variants={staggerItem}>
+                            <span className="pvalue">{profile.totalSessions}</span>
+                            <span className="plabel">{t('sitterProfile.sessions')}</span>
+                        </motion.div>
+                        <motion.div className="pstat" variants={staggerItem}>
+                            <span className="pvalue">{profile.safetyDays}</span>
+                            <span className="plabel">{t('sitterProfile.safeDays')}</span>
+                        </motion.div>
+                        <motion.div className="pstat" variants={staggerItem}>
+                            <span className="pvalue">{profile.onTimeRate}</span>
+                            <span className="plabel">{t('sitterProfile.onTime')}</span>
+                        </motion.div>
+                    </motion.div>
                 </CardBody>
             </Card>
 
@@ -145,7 +181,7 @@ export default function Profile() {
                             <span className="verify-icon" aria-hidden="true"><Building2 size={16} strokeWidth={1.75} /></span>
                             <div className="verify-text">
                                 <span className="verify-label">{t('profile.hotelPartnerVerified')}</span>
-                                <span className="verify-sub">Grand Hyatt • 2024</span>
+                                <span className="verify-sub">Grand Hyatt - 2024</span>
                             </div>
                             <span className="verify-check" aria-label="Verified"><Check size={16} strokeWidth={2.5} /></span>
                         </div>
@@ -181,6 +217,45 @@ export default function Profile() {
                 </CardBody>
             </Card>
 
+            {/* Languages */}
+            <Card>
+                <CardBody>
+                    <h3 className="section-title">
+                        <Globe size={14} strokeWidth={1.75} /> {t('sitterProfile.languages')}
+                    </h3>
+                    <div className="lang-list">
+                        {profile.languages.map((lang, i) => (
+                            <div key={i} className="lang-item">
+                                <span className="lang-flag">{lang.flag}</span>
+                                <span className="lang-name">{lang.name}</span>
+                                <span className="lang-level">{lang.level}</span>
+                            </div>
+                        ))}
+                    </div>
+                </CardBody>
+            </Card>
+
+            {/* Service Regions */}
+            <Card>
+                <CardBody>
+                    <div className="region-header">
+                        <h3 className="section-title">
+                            <MapPin size={14} strokeWidth={1.75} /> {t('sitterProfile.serviceRegions', 'Service Regions')}
+                        </h3>
+                        <Button variant="ghost" size="sm" onClick={() => setShowRegionModal(true)}>
+                            {t('common.edit')}
+                        </Button>
+                    </div>
+                    <div className="region-tags">
+                        {selectedRegions.map((region) => (
+                            <span key={region} className="region-tag">
+                                <MapPin size={10} strokeWidth={2} /> {region}
+                            </span>
+                        ))}
+                    </div>
+                </CardBody>
+            </Card>
+
             {/* Reviews */}
             <Card>
                 <CardBody>
@@ -190,7 +265,10 @@ export default function Profile() {
                     ) : reviews.length > 0 ? (
                         <>
                             <div className="reviews-summary">
-                                <StarRating rating={averageRating} />
+                                <div className="reviews-score-big">
+                                    <span className="reviews-avg">{averageRating.toFixed(1)}</span>
+                                    <StarRating rating={averageRating} />
+                                </div>
                                 <span className="reviews-count">{t('sitterProfile.reviewCount', { count: reviews.length })}</span>
                             </div>
                             <div className="reviews-list">
@@ -216,30 +294,31 @@ export default function Profile() {
                 </CardBody>
             </Card>
 
-            {/* Languages */}
-            <Card>
-                <CardBody>
-                    <h3 className="section-title">{t('sitterProfile.languages')}</h3>
-                    <div className="lang-list">
-                        {profile.languages.map((lang, i) => (
-                            <span key={i}>{lang.flag} {lang.name} ({lang.level})</span>
-                        ))}
-                    </div>
-                </CardBody>
-            </Card>
-
             {/* Settings */}
             <Card>
                 <CardBody>
                     <div className="settings-menu" role="navigation" aria-label={t('profile.settings')}>
                         <button className="menu-btn" onClick={toggleTheme}>
-                            <span aria-hidden="true">{isDark ? <Moon size={20} strokeWidth={1.75} /> : <Sun size={20} strokeWidth={1.75} />}</span> {t('common.theme')}
+                            <span className="menu-btn-icon" aria-hidden="true">{isDark ? <Moon size={20} strokeWidth={1.75} /> : <Sun size={20} strokeWidth={1.75} />}</span>
+                            <span className="menu-btn-text">{t('common.theme')}</span>
                             <span className="menu-item-value">{isDark ? t('common.dark') : t('common.light')}</span>
                         </button>
-                        <button className="menu-btn" onClick={() => setShowAvailModal(true)}><span aria-hidden="true"><Calendar size={20} strokeWidth={1.75} /></span> {t('profile.availability')}</button>
-                        <button className="menu-btn" onClick={() => setShowBankModal(true)}><span aria-hidden="true"><Wallet size={20} strokeWidth={1.75} /></span> {t('profile.bankAccount')}</button>
-                        <button className="menu-btn" onClick={() => setShowDocsModal(true)}><span aria-hidden="true"><FileText size={20} strokeWidth={1.75} /></span> {t('profile.documents')}</button>
-                        <button className="menu-btn" onClick={() => success(t('profile.helpLabel'), t('profile.supportEmail'))}><span aria-hidden="true"><HelpCircle size={20} strokeWidth={1.75} /></span> {t('profile.helpLabel')}</button>
+                        <button className="menu-btn" onClick={() => setShowAvailModal(true)}>
+                            <span className="menu-btn-icon" aria-hidden="true"><Calendar size={20} strokeWidth={1.75} /></span>
+                            <span className="menu-btn-text">{t('profile.availability')}</span>
+                        </button>
+                        <button className="menu-btn" onClick={() => setShowBankModal(true)}>
+                            <span className="menu-btn-icon" aria-hidden="true"><Wallet size={20} strokeWidth={1.75} /></span>
+                            <span className="menu-btn-text">{t('profile.bankAccount')}</span>
+                        </button>
+                        <button className="menu-btn" onClick={() => setShowDocsModal(true)}>
+                            <span className="menu-btn-icon" aria-hidden="true"><FileText size={20} strokeWidth={1.75} /></span>
+                            <span className="menu-btn-text">{t('profile.documents')}</span>
+                        </button>
+                        <button className="menu-btn" onClick={() => success(t('profile.helpLabel'), t('profile.supportEmail'))}>
+                            <span className="menu-btn-icon" aria-hidden="true"><HelpCircle size={20} strokeWidth={1.75} /></span>
+                            <span className="menu-btn-text">{t('profile.helpLabel')}</span>
+                        </button>
                     </div>
                 </CardBody>
             </Card>
@@ -349,6 +428,35 @@ export default function Profile() {
                     documents={documents}
                     onDocumentsChange={setDocuments}
                 />
+            </Modal>
+
+            {/* Region Modal */}
+            <Modal
+                isOpen={showRegionModal}
+                onClose={() => setShowRegionModal(false)}
+                title={t('sitterProfile.serviceRegions', 'Service Regions')}
+                size="sm"
+                footer={
+                    <>
+                        <Button variant="secondary" onClick={() => setShowRegionModal(false)}>{t('common.cancel')}</Button>
+                        <Button variant="primary" onClick={handleSaveRegions}>{t('common.save')}</Button>
+                    </>
+                }
+            >
+                <p className="region-modal-desc">{t('sitterProfile.selectRegions', 'Select the areas where you are available to work.')}</p>
+                <div className="region-select-grid">
+                    {DEMO_REGIONS.map((region) => (
+                        <button
+                            key={region}
+                            className={`region-select-btn ${selectedRegions.includes(region) ? 'active' : ''}`}
+                            onClick={() => toggleRegion(region)}
+                        >
+                            <MapPin size={14} strokeWidth={1.75} />
+                            <span>{region}</span>
+                            {selectedRegions.includes(region) && <Check size={14} strokeWidth={2.5} />}
+                        </button>
+                    ))}
+                </div>
             </Modal>
         </div>
     );
