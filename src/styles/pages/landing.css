@@ -598,12 +598,13 @@
   margin: 0 auto;
   display: grid;
   grid-template-columns: 1fr;
-  gap: 2rem;
+  gap: 24px;
   align-items: stretch;
 }
 
 @media (min-width: 640px) {
   .steps-grid { grid-template-columns: repeat(3, 1fr); }
+  .step-card { min-height: 420px; }
 }
 
 .step-card {
