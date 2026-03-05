@@ -416,15 +416,15 @@ export const DEMO_SITTER_STATS: DemoSitterStats = { totalSessions: 312, avgRatin
 export interface DemoChecklistItem { id: string; label: string; completed: boolean; }
 
 export const DEMO_CHECKLIST_ITEMS: DemoChecklistItem[] = [
-    { id: '1', label: 'Pre-session: Wash hands', completed: true },
-    { id: '2', label: 'Verify child identity with photo', completed: true },
-    { id: '3', label: 'Review allergies & medical info', completed: true },
-    { id: '4', label: 'Check emergency contact info', completed: true },
-    { id: '5', label: 'Room safety inspection (windows, balcony, hazards)', completed: true },
-    { id: '6', label: 'First activity started', completed: true },
-    { id: '7', label: 'Snack served (allergy-safe confirmed)', completed: false },
-    { id: '8', label: 'Photo update sent to parent', completed: false },
-    { id: '9', label: 'Document any incidents', completed: false },
+    { id: '1', label: 'activeSession.checklistWashHands', completed: true },
+    { id: '2', label: 'activeSession.checklistVerifyChild', completed: true },
+    { id: '3', label: 'activeSession.checklistReviewAllergies', completed: true },
+    { id: '4', label: 'activeSession.checklistEmergencyContact', completed: true },
+    { id: '5', label: 'activeSession.checklistRoomSafety', completed: true },
+    { id: '6', label: 'activeSession.checklistFirstActivity', completed: true },
+    { id: '7', label: 'activeSession.checklistSnackServed', completed: false },
+    { id: '8', label: 'activeSession.checklistPhotoUpdate', completed: false },
+    { id: '9', label: 'activeSession.checklistDocumentIncidents', completed: false },
 ];
 
 export interface DemoActiveSessionInfo { room: string; children: string; parent: string; endTime: string; elapsedTime: string; }

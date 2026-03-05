@@ -319,13 +319,13 @@ export function useActiveSession(userId?: string) {
 
                     const cl = liveSession.checklist;
                     setChecklist([
-                        { id: '1', label: 'Pre-session: Wash hands', completed: true },
-                        { id: '2', label: 'Verify child identity with photo', completed: cl.childInfo.allergiesConfirmed },
-                        { id: '3', label: 'Review allergies & medical info', completed: cl.childInfo.allergiesConfirmed },
-                        { id: '4', label: 'Check emergency contact info', completed: cl.roomSafety.emergencyExitKnown },
-                        { id: '5', label: 'First activity started', completed: liveSession.timeline.length > 0 },
-                        { id: '6', label: 'Snack served (if applicable)', completed: false },
-                        { id: '7', label: 'Document any incidents', completed: false },
+                        { id: '1', label: 'activeSession.checklistWashHands', completed: true },
+                        { id: '2', label: 'activeSession.checklistVerifyChild', completed: cl.childInfo.allergiesConfirmed },
+                        { id: '3', label: 'activeSession.checklistReviewAllergies', completed: cl.childInfo.allergiesConfirmed },
+                        { id: '4', label: 'activeSession.checklistEmergencyContact', completed: cl.roomSafety.emergencyExitKnown },
+                        { id: '5', label: 'activeSession.checklistFirstActivity', completed: liveSession.timeline.length > 0 },
+                        { id: '6', label: 'activeSession.checklistSnackServed', completed: false },
+                        { id: '7', label: 'activeSession.checklistDocumentIncidents', completed: false },
                     ]);
 
                     setError(null);

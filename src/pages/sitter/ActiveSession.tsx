@@ -43,13 +43,21 @@ interface TimelineEntry {
     description: string;
 }
 
-const DEMO_TIMELINE: TimelineEntry[] = [
-    { id: '1', time: '14:00', type: 'checklist', description: 'Session started, room safety check completed' },
-    { id: '2', time: '14:15', type: 'activity', description: 'Playing with building blocks' },
-    { id: '3', time: '14:45', type: 'snack', description: 'Apple slices and milk served' },
-    { id: '4', time: '15:30', type: 'photo', description: 'Photo of art activity uploaded' },
-    { id: '5', time: '16:00', type: 'activity', description: 'Reading storybooks together' },
+const DEMO_TIMELINE_KEYS: Omit<TimelineEntry, 'description'>[] = [
+    { id: '1', time: '14:00', type: 'checklist' },
+    { id: '2', time: '14:15', type: 'activity' },
+    { id: '3', time: '14:45', type: 'snack' },
+    { id: '4', time: '15:30', type: 'photo' },
+    { id: '5', time: '16:00', type: 'activity' },
 ];
+
+const TIMELINE_I18N: Record<string, string> = {
+    '1': 'activeSession.timelineSessionStarted',
+    '2': 'activeSession.timelineBuildingBlocks',
+    '3': 'activeSession.timelineSnackServed',
+    '4': 'activeSession.timelinePhotoUploaded',
+    '5': 'activeSession.timelineReadingBooks',
+};
 
 export default function ActiveSession() {
     const { t } = useTranslation();
@@ -69,7 +77,10 @@ export default function ActiveSession() {
     const [showReportIssue, setShowReportIssue] = useState(false);
     const [issueForm, setIssueForm] = useState({ description: '', severity: 'low' });
     const [showCompleteConfirm, setShowCompleteConfirm] = useState(false);
-    const [timeline] = useState<TimelineEntry[]>(DEMO_TIMELINE);
+    const timeline: TimelineEntry[] = DEMO_TIMELINE_KEYS.map((entry) => ({
+        ...entry,
+        description: t(TIMELINE_I18N[entry.id], entry.id),
+    }));
 
     const completedCount = checklist.filter((item) => item.completed).length;
     const progressPercent = checklist.length > 0 ? (completedCount / checklist.length) * 100 : 0;
@@ -250,7 +261,7 @@ export default function ActiveSession() {
                                     checked={item.completed}
                                     onChange={() => toggleChecklistItem(item.id)}
                                 />
-                                <span className={item.completed ? 'completed' : ''}>{item.label}</span>
+                                <span className={item.completed ? 'completed' : ''}>{t(item.label, item.label)}</span>
                             </label>
                         ))}
                     </div>

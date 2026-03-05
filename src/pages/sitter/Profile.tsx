@@ -33,7 +33,7 @@ const getBankOptions = (t: (key: string) => string) => [
     { value: 'ibk', label: t('sitterProfile.bankIbk') },
 ];
 
-const DEMO_REGIONS = ['Gangnam', 'Jongno', 'Yongsan', 'Mapo', 'Songpa'];
+const DEMO_REGION_KEYS = ['regionGangnam', 'regionJongno', 'regionYongsan', 'regionMapo', 'regionSongpa'];
 
 interface EditForm {
     displayName: string;
@@ -73,7 +73,7 @@ export default function Profile() {
 
     // Region modal
     const [showRegionModal, setShowRegionModal] = useState(false);
-    const [selectedRegions, setSelectedRegions] = useState<string[]>(['Gangnam', 'Yongsan']);
+    const [selectedRegions, setSelectedRegions] = useState<string[]>(['regionGangnam', 'regionYongsan']);
 
     const openEditModal = () => {
         setEditForm({
@@ -146,7 +146,7 @@ export default function Profile() {
                                 {profile.rating} ({profile.reviewCount} {t('sitterProfile.reviewsCount')})
                             </div>
                             <Button variant="ghost" size="sm" onClick={openEditModal}>
-                                {t('common.edit')} {t('sitter.profile.title', 'Profile')}
+                                {t('sitterProfile.editProfile', 'Edit Profile')}
                             </Button>
                         </div>
                     </div>
@@ -249,7 +249,7 @@ export default function Profile() {
                     <div className="region-tags">
                         {selectedRegions.map((region) => (
                             <span key={region} className="region-tag">
-                                <MapPin size={10} strokeWidth={2} /> {region}
+                                <MapPin size={10} strokeWidth={2} /> {t(`sitterProfile.${region}`, region)}
                             </span>
                         ))}
                     </div>
@@ -329,7 +329,7 @@ export default function Profile() {
             <Modal
                 isOpen={editModalOpen}
                 onClose={() => setEditModalOpen(false)}
-                title={t('common.edit') + ' ' + t('sitter.profile.title', 'Profile')}
+                title={t('sitterProfile.editProfile', 'Edit Profile')}
                 size="sm"
                 footer={
                     <>
@@ -445,15 +445,15 @@ export default function Profile() {
             >
                 <p className="region-modal-desc">{t('sitterProfile.selectRegions', 'Select the areas where you are available to work.')}</p>
                 <div className="region-select-grid">
-                    {DEMO_REGIONS.map((region) => (
+                    {DEMO_REGION_KEYS.map((regionKey) => (
                         <button
-                            key={region}
-                            className={`region-select-btn ${selectedRegions.includes(region) ? 'active' : ''}`}
-                            onClick={() => toggleRegion(region)}
+                            key={regionKey}
+                            className={`region-select-btn ${selectedRegions.includes(regionKey) ? 'active' : ''}`}
+                            onClick={() => toggleRegion(regionKey)}
                         >
                             <MapPin size={14} strokeWidth={1.75} />
-                            <span>{region}</span>
-                            {selectedRegions.includes(region) && <Check size={14} strokeWidth={2.5} />}
+                            <span>{t(`sitterProfile.${regionKey}`, regionKey)}</span>
+                            {selectedRegions.includes(regionKey) && <Check size={14} strokeWidth={2.5} />}
                         </button>
                     ))}
                 </div>
