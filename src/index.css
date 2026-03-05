@@ -1442,6 +1442,8 @@ p {
 :root[data-theme="dark"] .skeleton-list-item { border-bottom-color: var(--border-color); }
 :root[data-theme="dark"] .skeleton-table-header { border-bottom-color: var(--border-color); }
 :root[data-theme="dark"] .skeleton-table-row { border-bottom-color: var(--cream-200); }
+.skeleton-dashboard-stats { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 1rem; }
+.skeleton-dashboard-main { display: grid; gap: 1rem; }
 
 /* Input */
 .form-input-wrapper { position: relative; display: flex; align-items: center; }
