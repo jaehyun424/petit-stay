@@ -3,9 +3,30 @@ import { ScrollReveal } from './ScrollReveal';
 import { Search, CalendarCheck, Smile } from 'lucide-react';
 
 const steps = [
-  { icon: <Search size={32} strokeWidth={1.5} />, titleKey: 'step1Title', descKey: 'step1Desc', number: '01' },
-  { icon: <CalendarCheck size={32} strokeWidth={1.5} />, titleKey: 'step2Title', descKey: 'step2Desc', number: '02' },
-  { icon: <Smile size={32} strokeWidth={1.5} />, titleKey: 'step3Title', descKey: 'step3Desc', number: '03' },
+  {
+    icon: <Search size={32} strokeWidth={1.5} />,
+    titleKey: 'step1Title',
+    descKey: 'step1Desc',
+    number: '01',
+    image: 'https://images.unsplash.com/photo-1602002418082-a4443e081dd1?w=600&q=80',
+    imageAlt: 'Family booking hotel childcare on smartphone',
+  },
+  {
+    icon: <CalendarCheck size={32} strokeWidth={1.5} />,
+    titleKey: 'step2Title',
+    descKey: 'step2Desc',
+    number: '02',
+    image: 'https://images.unsplash.com/photo-1516627145497-ae6968895b74?w=600&q=80',
+    imageAlt: 'Professional sitter assigned to family',
+  },
+  {
+    icon: <Smile size={32} strokeWidth={1.5} />,
+    titleKey: 'step3Title',
+    descKey: 'step3Desc',
+    number: '03',
+    image: 'https://images.unsplash.com/photo-1587654780291-39c9404d7dd0?w=600&q=80',
+    imageAlt: 'Happy child enjoying care activities',
+  },
 ];
 
 export function HowItWorks() {
@@ -24,6 +45,13 @@ export function HowItWorks() {
         {steps.map((step, index) => (
           <ScrollReveal key={step.titleKey} delay={index * 0.15} direction="up">
             <div className="step-card">
+              <div className="step-card-image">
+                <img
+                  src={step.image}
+                  alt={step.imageAlt}
+                  loading="lazy"
+                />
+              </div>
               <span className="step-number">{step.number}</span>
               <div className="step-icon">{step.icon}</div>
               <h3 className="step-title">{t(`landing.${step.titleKey}`)}</h3>

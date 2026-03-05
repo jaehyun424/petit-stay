@@ -9,11 +9,20 @@ const stats = [
   { key: 'satisfaction', target: 99, suffix: '%' },
 ];
 
+const TRUST_BG = 'https://images.unsplash.com/photo-1566073771259-6a8506099945?w=1920&q=80';
+
 export function TrustBar() {
   const { t } = useTranslation();
 
   return (
-    <section className="trust-bar section-padded">
+    <section className="trust-bar section-padded trust-bar-with-bg">
+      <img
+        className="trust-bar-bg-image"
+        src={TRUST_BG}
+        alt="Premium hotel lobby"
+        loading="lazy"
+      />
+      <div className="trust-bar-overlay" />
       <ScrollReveal>
         <div className="trust-bar-grid">
           {stats.map((stat) => (
