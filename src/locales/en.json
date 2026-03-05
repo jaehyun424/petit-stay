@@ -368,7 +368,19 @@
     "noBookingsFoundDesc": "Try adjusting your search or filter criteria.",
     "paymentStatus": "Payment",
     "paid": "Paid",
-    "paymentPending": "Pending"
+    "paymentPending": "Pending",
+    "dashboard": {
+      "avgRevenue": "avg. revenue per day",
+      "sittersAvailable": "sitters available now",
+      "weeklyRevenue": "weekly revenue",
+      "latestEvents": "Latest events and updates",
+      "actNewBooking": "New booking KCP-2026-0046 created",
+      "actSessionStarted1": "Session started - Room 1102 (Park Sooyeon)",
+      "actCheckinCompleted": "Trust check-in completed - Room 2305",
+      "actSessionStarted2": "Session started - Room 2305 (Kim Minjung)",
+      "actSitterConfirmed": "Sato Haruka confirmed for tomorrow",
+      "actSessionCompleted": "Session completed - Room 2108 (Lee Jihye)"
+    }
   },
   "trustCheckin": {
     "trustProtocol": "Trust Protocol Check-In",
@@ -1133,7 +1145,7 @@
       "whereTitle": "Where We Operate",
       "whereDesc": "Currently based in Seoul, with Tokyo expansion in preparation. We target five-star hotels in both cities, starting with premium properties in Gangnam, Jongno, and Yeouido. Our operations team is available 24/7 to support active sessions in all markets.",
       "teamTitle": "Our Team",
-      "teamDesc": "Founded in 2025, Petit Stay is led by a team passionate about solving real problems in the hospitality industry. Our growing team includes childcare operations specialists, hotel partnership managers, and product engineers dedicated to building the safest childcare platform in Asia.",
+      "teamDesc": "Founded in 2025, Petit Stay is led by a hospitality technology expert with travel experience across 20 countries and active participation in child welfare programs. Our growing team of childcare operations specialists, hotel partnership managers, and product engineers is dedicated to building the safest childcare platform in Asia.",
       "visionTitle": "Our Vision",
       "visionDesc": "We envision a world where every traveling family has access to safe, professional childcare — no matter where they stay. By embedding trusted childcare into the hotel experience, we are building a new standard for family hospitality across Asia and beyond. Our goal is to make premium childcare as natural a hotel amenity as room service or spa access.",
       "storyTitle": "Our Founding Story",
