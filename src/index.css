@@ -1524,6 +1524,10 @@ p {
 .language-option-flag { font-size: 1.2em; line-height: 1; }
 .language-option-label { flex: 1; }
 .language-option-check { color: var(--gold-500); flex-shrink: 0; }
+@media (max-width: 640px) {
+  .language-switcher { padding: 8px 14px; min-height: 44px; }
+  .language-option { padding: 12px 14px; min-height: 44px; }
+}
 
 /* AuthLayout */
 .auth-layout { min-height: 100vh; min-height: 100dvh; display: flex; flex-direction: column; align-items: center; justify-content: center; padding: var(--space-4); position: relative; }
