@@ -5,7 +5,7 @@
 import React, { useState, useMemo } from 'react';
 import { Link, useNavigate, useSearchParams } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
-import { Eye, EyeOff, Users, Baby, Hotel } from 'lucide-react';
+import { Eye, EyeOff } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { useAuth } from '../../contexts/AuthContext';
 import { useToast } from '../../contexts/ToastContext';
@@ -16,7 +16,7 @@ import { LanguageSwitcher } from '../../components/common/LanguageSwitcher';
 import type { UserRole } from '../../types';
 import '../../styles/pages/login.css';
 
-const REGISTER_IMAGE = 'https://images.unsplash.com/photo-1606868306217-dbf5046868d2?w=1920&q=80';
+const REGISTER_IMAGE = 'https://images.unsplash.com/photo-1602002418082-a4443e081dd1?w=1920&q=80';
 
 const pageTransition = {
   initial: { opacity: 0 },
@@ -44,11 +44,6 @@ function getPasswordStrength(password: string): number {
   return score;
 }
 
-const ROLE_CONFIG = [
-  { value: 'parent' as const, icon: Baby, labelKey: 'auth.guestFamily', descKey: 'auth.roleParentDesc' },
-  { value: 'sitter' as const, icon: Users, labelKey: 'auth.childcareSpecialist', descKey: 'auth.roleSitterDesc' },
-  { value: 'hotel_staff' as const, icon: Hotel, labelKey: 'auth.hotelPartner', descKey: 'auth.roleHotelDesc' },
-];
 
 export default function RegisterPage() {
     const navigate = useNavigate();
@@ -96,9 +91,11 @@ export default function RegisterPage() {
         if (name === 'language') i18n.changeLanguage(value);
     };
 
-    const handleRoleSelect = (role: UserRole) => {
-        setFormData((prev) => ({ ...prev, role }));
-    };
+    const ROLE_OPTIONS = [
+        { value: 'parent', label: t('auth.guestFamily') },
+        { value: 'sitter', label: t('auth.childcareSpecialist') },
+        { value: 'hotel_staff', label: t('auth.hotelPartner') },
+    ];
 
     const validate = () => {
         const newErrors: Record<string, string> = {};
@@ -195,37 +192,27 @@ export default function RegisterPage() {
                         initial="hidden"
                         animate="show"
                     >
-                        <motion.div className="text-center mb-6" variants={fadeUp}>
+                        <motion.div className="text-center mb-4" variants={fadeUp}>
                             <h2 className="text-2xl font-serif text-charcoal-900">{t('auth.registerTitle')}</h2>
                             <p className="text-sm text-charcoal-500">{t('auth.registerSubtitle')}</p>
                         </motion.div>
 
                         <form onSubmit={handleSubmit} className="flex flex-col gap-4">
-                            {/* Role Selection Cards */}
-                            <motion.div variants={fadeUp}>
-                                <label className="text-xs text-charcoal-500" style={{ display: 'block', marginBottom: '0.5rem', fontFamily: 'var(--font-sans)', fontWeight: 600, letterSpacing: '0.025em' }}>
-                                    {t('auth.roleSelectTitle')}
-                                </label>
-                                <div className="role-cards">
-                                    {ROLE_CONFIG.map((role) => {
-                                        const Icon = role.icon;
-                                        const isActive = formData.role === role.value;
-                                        return (
-                                            <button
-                                                key={role.value}
-                                                type="button"
-                                                className={`role-card${isActive ? ' role-card--active' : ''}`}
-                                                onClick={() => handleRoleSelect(role.value)}
-                                            >
-                                                <div className="role-card-icon">
-                                                    <Icon size={18} strokeWidth={1.75} />
-                                                </div>
-                                                <span className="role-card-label">{t(role.labelKey)}</span>
-                                                <span className="role-card-desc">{t(role.descKey)}</span>
-                                            </button>
-                                        );
-                                    })}
-                                </div>
+                            <motion.div className="grid grid-cols-2 gap-4" variants={fadeUp}>
+                                <Select
+                                    label={t('auth.roleSelectTitle')}
+                                    name="role"
+                                    value={formData.role}
+                                    onChange={handleChange}
+                                    options={ROLE_OPTIONS}
+                                />
+                                <Select
+                                    label={t('auth.language')}
+                                    name="language"
+                                    value={formData.language}
+                                    onChange={handleChange}
+                                    options={LANGUAGE_OPTIONS}
+                                />
                             </motion.div>
 
                             <motion.div className="grid grid-cols-2 gap-4" variants={fadeUp}>
@@ -310,17 +297,7 @@ export default function RegisterPage() {
                                 />
                             </motion.div>
 
-                            <motion.div variants={fadeUp}>
-                                <Select
-                                    label={t('auth.language')}
-                                    name="language"
-                                    value={formData.language}
-                                    onChange={handleChange}
-                                    options={LANGUAGE_OPTIONS}
-                                />
-                            </motion.div>
-
-                            <motion.div className="mt-4" variants={fadeUp}>
+                            <motion.div className="mt-2" variants={fadeUp}>
                                 <Button
                                     type="submit"
                                     variant="gold"
@@ -333,7 +310,7 @@ export default function RegisterPage() {
                             </motion.div>
                         </form>
 
-                        <motion.div className="mt-6 text-center" variants={fadeUp}>
+                        <motion.div className="mt-4 text-center" variants={fadeUp}>
                             <p className="text-sm text-charcoal-500">
                                 {t('auth.alreadyMember')} <Link to="/login" className="text-charcoal-900 border-b border-gold-500 pb-0.5 hover:text-gold-600">{t('auth.signIn')}</Link>
                             </p>
