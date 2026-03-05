@@ -157,13 +157,13 @@
    Utility Classes (scoped to .login-page)
    ---------------------------------------- */
 .login-page .mb-2 { margin-bottom: 0.5rem; }
-.login-page .mb-4 { margin-bottom: 1rem; }
-.login-page .mb-6 { margin-bottom: 1.5rem; }
-.login-page .mb-8 { margin-bottom: 2rem; }
-.login-page .mt-2 { margin-top: 0.5rem; }
-.login-page .mt-4 { margin-top: 1rem; }
-.login-page .mt-6 { margin-top: 1.5rem; }
-.login-page .mt-8 { margin-top: 2rem; }
+.login-page .mb-4 { margin-bottom: 0.75rem; }
+.login-page .mb-6 { margin-bottom: 1rem; }
+.login-page .mb-8 { margin-bottom: 1.5rem; }
+.login-page .mt-2 { margin-top: 0.25rem; }
+.login-page .mt-4 { margin-top: 0.75rem; }
+.login-page .mt-6 { margin-top: 1rem; }
+.login-page .mt-8 { margin-top: 1.5rem; }
 
 /* ----------------------------------------
    Demo Quick-Access Buttons
@@ -172,12 +172,6 @@
   display: grid;
   grid-template-columns: repeat(2, 1fr);
   gap: 0.5rem;
-}
-
-@media (min-width: 480px) {
-  .demo-grid {
-    grid-template-columns: repeat(4, 1fr);
-  }
 }
 
 .demo-btn {
