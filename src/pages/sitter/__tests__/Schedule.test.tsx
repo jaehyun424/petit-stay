@@ -70,8 +70,9 @@ describe('Sitter Schedule', () => {
 
     it('renders session times', () => {
         render(<Schedule />);
-        expect(screen.getByText('18:00-22:00')).toBeTruthy();
-        expect(screen.getByText('14:00-17:00')).toBeTruthy();
+        // Session time appears in both header and detail grid
+        expect(screen.getAllByText('18:00-22:00').length).toBeGreaterThanOrEqual(1);
+        expect(screen.getAllByText('14:00-17:00').length).toBeGreaterThanOrEqual(1);
     });
 
     it('renders room numbers', () => {

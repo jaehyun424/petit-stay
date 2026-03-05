@@ -48,9 +48,9 @@ describe('RegisterPage', () => {
         expect(screen.getByText('auth.confirmPlaceholder')).toBeTruthy();
     });
 
-    it('renders account type select', () => {
+    it('renders role selection cards', () => {
         render(<RegisterPage />);
-        expect(screen.getByText('auth.accountType')).toBeTruthy();
+        expect(screen.getByText('auth.roleSelectTitle')).toBeTruthy();
     });
 
     it('renders language select', () => {

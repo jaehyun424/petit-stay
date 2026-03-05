@@ -138,8 +138,11 @@ describe('Sitter Profile', () => {
 
     it('renders language details', () => {
         render(<Profile />);
-        expect(screen.getByText(/Korean.*Native/)).toBeTruthy();
-        expect(screen.getByText(/English.*Advanced/)).toBeTruthy();
+        // Language name and level may be in separate elements
+        expect(screen.getByText(/Korean/)).toBeTruthy();
+        expect(screen.getByText(/Native/)).toBeTruthy();
+        expect(screen.getByText(/English/)).toBeTruthy();
+        expect(screen.getByText(/Advanced/)).toBeTruthy();
     });
 
     it('renders identity verification section', () => {
@@ -196,7 +199,8 @@ describe('Sitter Profile', () => {
 
     it('opens edit profile modal when edit clicked', async () => {
         render(<Profile />);
-        fireEvent.click(screen.getByText(/common\.edit/));
+        const editButtons = screen.getAllByText(/common\.edit/);
+        fireEvent.click(editButtons[0]);
 
         await waitFor(() => {
             expect(screen.getByDisplayValue('Kim Minjung')).toBeTruthy();

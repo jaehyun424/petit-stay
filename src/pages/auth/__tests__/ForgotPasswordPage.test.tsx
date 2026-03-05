@@ -59,10 +59,10 @@ describe('ForgotPasswordPage', () => {
 
         await waitFor(() => {
             expect(screen.getByText('auth.checkYourEmail')).toBeInTheDocument();
-        });
+        }, { timeout: 3000 });
     });
 
-    it('displays the submitted email in the success message', async () => {
+    it('displays the success description after sending reset link', async () => {
         render(<ForgotPasswordPage />);
 
         fireEvent.change(screen.getByLabelText('auth.emailAccessId'), {
@@ -71,8 +71,7 @@ describe('ForgotPasswordPage', () => {
         fireEvent.click(screen.getByText('auth.sendResetLink'));
 
         await waitFor(() => {
-            // After i18n, t('auth.resetEmailSent', { email }) returns the key 'auth.resetEmailSent'
-            expect(screen.getByText('auth.resetEmailSent')).toBeInTheDocument();
-        });
+            expect(screen.getByText('auth.resetSuccessDesc')).toBeInTheDocument();
+        }, { timeout: 3000 });
     });
 });

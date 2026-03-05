@@ -22,7 +22,8 @@ describe('Button', () => {
         const btn = screen.getByRole('button');
         expect(btn).toBeDisabled();
         expect(btn.querySelector('.spinner')).toBeInTheDocument();
-        expect(screen.queryByText('Loading')).not.toBeInTheDocument();
+        // Loading text is still in DOM but visually hidden via btn-loading-text class
+        expect(btn.querySelector('.btn-loading-text')).toBeInTheDocument();
     });
 
     it('is disabled when disabled prop is true', () => {
