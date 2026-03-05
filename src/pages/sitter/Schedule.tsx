@@ -61,7 +61,14 @@ function useCountdown(todaySessions: { time: string; status: string }[]) {
 
 type ViewMode = 'list' | 'calendar';
 
-const DAYS_OF_WEEK = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
+function getDaysOfWeek(locale: string) {
+    const base = new Date(2024, 0, 7); // Sunday
+    return Array.from({ length: 7 }, (_, i) => {
+        const d = new Date(base);
+        d.setDate(base.getDate() + i);
+        return new Intl.DateTimeFormat(locale, { weekday: 'short' }).format(d);
+    });
+}
 
 function getMonthDays(year: number, month: number) {
     const firstDay = new Date(year, month, 1).getDay();
@@ -73,10 +80,11 @@ function getMonthDays(year: number, month: number) {
 }
 
 export default function Schedule() {
-    const { t } = useTranslation();
+    const { t, i18n } = useTranslation();
     const navigate = useNavigate();
     const { user } = useAuth();
     const toast = useToast();
+    const daysOfWeek = getDaysOfWeek(i18n.language);
     const sitterId = user?.sitterInfo?.sitterId || user?.id;
     const { todaySessions, weekSchedule, isLoading, acceptAssignment, rejectAssignment } = useSitterBookings(sitterId);
     const { stats, isLoading: isStatsLoading } = useSitterStats(sitterId);
@@ -382,7 +390,7 @@ export default function Schedule() {
                                     </button>
                                 </div>
                                 <div className="calendar-grid">
-                                    {DAYS_OF_WEEK.map((d) => (
+                                    {daysOfWeek.map((d) => (
                                         <div key={d} className="calendar-day-header">{d}</div>
                                     ))}
                                     {calendarDays.map((day, i) => {
