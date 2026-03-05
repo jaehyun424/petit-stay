@@ -21,7 +21,7 @@ vi.mock('../../../components/common/SignaturePad', () => ({
     SignaturePad: vi.fn(() => <div data-testid="signature-pad">Signature Pad Mock</div>),
 }));
 
-import { render, screen, fireEvent, waitFor, act } from '../../../test/utils';
+import { render, screen, fireEvent, waitFor } from '../../../test/utils';
 import TrustCheckIn from '../TrustCheckIn';
 
 describe('TrustCheckIn', () => {
@@ -108,13 +108,11 @@ describe('TrustCheckIn', () => {
             expect(screen.getByText('trustCheckin.emergencyProtocol')).toBeTruthy();
         });
 
-        // Step 2 -> 3 (wait for animation to settle)
-        await act(async () => {
-            fireEvent.click(screen.getByText('trustCheckin.nextStep'));
-        });
+        // Step 2 -> 3
+        fireEvent.click(screen.getByText('trustCheckin.nextStep'));
         await waitFor(() => {
             expect(screen.getByText('trustCheckin.safetyProtocols')).toBeTruthy();
-        }, { timeout: 3000 });
+        });
     });
 
     it('shows confirm handover button on step 4', async () => {

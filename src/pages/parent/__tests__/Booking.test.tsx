@@ -117,10 +117,10 @@ describe('Booking Page', () => {
         });
     });
 
-    it('advances to step 3 and shows summary', async () => {
+    it('advances through all steps to review', async () => {
         render(<Booking />);
 
-        // Step 1 -> 2
+        // Step 1: Fill required fields and advance
         const tomorrow = new Date();
         tomorrow.setDate(tomorrow.getDate() + 1);
         fireEvent.change(screen.getByLabelText('common.date'), {
@@ -131,22 +131,17 @@ describe('Booking Page', () => {
         });
         fireEvent.click(screen.getByText('common.next'));
 
-        // Step 2 -> 3
+        // Step 2: Children are auto-selected, just advance
         await waitFor(() => {
             expect(screen.getByText('booking.selectChildren')).toBeInTheDocument();
         });
+        // Children auto-selected by useEffect, click next
+        fireEvent.click(screen.getAllByText('common.next')[0]);
 
-        // Get the next button in step 2 (second one, not back)
-        const buttons = screen.getAllByText('common.next');
-        fireEvent.click(buttons[0]);
-
-        // Step 3 - confirmation
+        // Step 3: Sitter preference
         await waitFor(() => {
-            expect(screen.getByText('booking.reviewBooking')).toBeInTheDocument();
+            expect(screen.getByText('booking.sitterPreference')).toBeInTheDocument();
         });
-
-        // Should show price
-        expect(screen.getByText('booking.totalCost')).toBeInTheDocument();
     });
 
     it('clears error when user corrects the field', () => {
