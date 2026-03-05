@@ -246,8 +246,25 @@ function errorHandler(err: Error, req: AuthenticatedRequest, res: Response, _nex
 // ============================================
 export const app = express();
 
-app.use(cors({ origin: true }));
-app.use(express.json());
+// Restrict CORS to known origins
+const ALLOWED_ORIGINS = [
+  "https://petit-stay.web.app",
+  "https://petit-stay.firebaseapp.com",
+  "https://petitstay.com",
+  ...(process.env.NODE_ENV !== "production" ? ["http://localhost:5173", "http://localhost:3000"] : []),
+];
+
+app.use(cors({
+  origin: (origin, callback) => {
+    // Allow requests with no origin (server-to-server, curl, etc.)
+    if (!origin || ALLOWED_ORIGINS.includes(origin)) {
+      callback(null, true);
+    } else {
+      callback(new Error("Not allowed by CORS"));
+    }
+  },
+}));
+app.use(express.json({ limit: "100kb" }));
 app.use(attachRequestId);
 
 // Apply auth + rate limiting to all /api/v1 routes
