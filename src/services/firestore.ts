@@ -284,7 +284,7 @@ export const sessionService = {
         const q = query(
             collection(db, COLLECTIONS.sessions),
             where('bookingId', '==', bookingId),
-            where('status', '==', 'in_progress')
+            where('status', 'in', ['active', 'checked_in', 'preparing'])
         );
         const snapshot = await getDocs(q);
         if (snapshot.empty) return null;
