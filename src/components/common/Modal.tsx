@@ -65,16 +65,14 @@ export function Modal({
     return (
         <AnimatePresence>
             {isOpen && (
-                <div className="modal-root">
-                    <motion.div
-                        className="overlay"
-                        onClick={closeOnOverlayClick ? onClose : undefined}
-                        aria-hidden="true"
-                        initial={{ opacity: 0 }}
-                        animate={{ opacity: 1 }}
-                        exit={{ opacity: 0 }}
-                        transition={{ duration: 0.2 }}
-                    />
+                <motion.div
+                    className="modal-overlay"
+                    onClick={closeOnOverlayClick ? (e) => { if (e.target === e.currentTarget) onClose(); } : undefined}
+                    initial={{ opacity: 0 }}
+                    animate={{ opacity: 1 }}
+                    exit={{ opacity: 0 }}
+                    transition={{ duration: 0.2 }}
+                >
                     <motion.div
                         className={`modal ${sizeClass} ${className}`}
                         role="dialog"
@@ -101,7 +99,7 @@ export function Modal({
                         <div className="modal-body">{children}</div>
                         {footer && <div className="modal-footer">{footer}</div>}
                     </motion.div>
-                </div>
+                </motion.div>
             )}
         </AnimatePresence>
     );
