@@ -27,6 +27,7 @@ vi.mock('../../../hooks/useReviews', () => ({
 
 import { render, screen, fireEvent, waitFor } from '../../../test/utils';
 import History from '../History';
+import * as useBookingsModule from '../../../hooks/useBookings';
 
 describe('Parent History', () => {
     it('renders booking history title', () => {
@@ -94,31 +95,27 @@ describe('Parent History', () => {
 
 describe('Parent History - Empty state', () => {
     beforeEach(() => {
-        vi.doMock('../../../hooks/useBookings', () => ({
-            useParentBookings: () => ({
-                upcomingBooking: null,
-                recentSessions: [],
-                history: [],
-                isLoading: false,
-                error: null,
-                retry: vi.fn(),
-            }),
-        }));
+        vi.spyOn(useBookingsModule, 'useParentBookings').mockReturnValue({
+            upcomingBooking: null,
+            recentSessions: [],
+            history: [],
+            isLoading: false,
+            error: null,
+            retry: vi.fn(),
+        } as any);
     });
 
     afterEach(() => {
         vi.restoreAllMocks();
     });
 
-    it('shows empty state when no history', async () => {
-        const { default: HistoryEmpty } = await import('../History');
-        render(<HistoryEmpty />);
+    it('shows empty state when no history', () => {
+        render(<History />);
         expect(screen.getByText('parent.noSessionHistory')).toBeTruthy();
     });
 
-    it('shows empty state description', async () => {
-        const { default: HistoryEmpty } = await import('../History');
-        render(<HistoryEmpty />);
+    it('shows empty state description', () => {
+        render(<History />);
         expect(screen.getByText('parent.noSessionHistoryDesc')).toBeTruthy();
     });
 });

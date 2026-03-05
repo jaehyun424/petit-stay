@@ -44,8 +44,8 @@ describe('Booking Page', () => {
         fireEvent.click(screen.getByText('common.next'));
 
         // Should show errors, stay on step 1
-        expect(screen.getByText('Date is required')).toBeInTheDocument();
-        expect(screen.getByText('Start time is required')).toBeInTheDocument();
+        expect(screen.getByText('validation.dateRequired')).toBeInTheDocument();
+        expect(screen.getByText('validation.startTimeRequired')).toBeInTheDocument();
         expect(screen.getByRole('heading', { name: 'booking.bookingDetails' })).toBeInTheDocument();
     });
 
@@ -63,7 +63,7 @@ describe('Booking Page', () => {
         // Click Next
         fireEvent.click(screen.getByText('common.next'));
 
-        expect(screen.getByText('Cannot select a past date')).toBeInTheDocument();
+        expect(screen.getByText('validation.pastDate')).toBeInTheDocument();
     });
 
     it('advances to step 2 with valid data', async () => {
@@ -154,7 +154,7 @@ describe('Booking Page', () => {
 
         // Trigger validation error
         fireEvent.click(screen.getByText('common.next'));
-        expect(screen.getByText('Date is required')).toBeInTheDocument();
+        expect(screen.getByText('validation.dateRequired')).toBeInTheDocument();
 
         // Fix the date
         const tomorrow = new Date();
@@ -164,6 +164,6 @@ describe('Booking Page', () => {
         });
 
         // Error should clear
-        expect(screen.queryByText('Date is required')).not.toBeInTheDocument();
+        expect(screen.queryByText('validation.dateRequired')).not.toBeInTheDocument();
     });
 });

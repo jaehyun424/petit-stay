@@ -61,7 +61,7 @@ describe('Bookings', () => {
 
     it('renders booking items', () => {
         render(<Bookings />);
-        expect(screen.getByText('KCP-ABC123')).toBeTruthy();
-        expect(screen.getByText('KCP-DEF456')).toBeTruthy();
+        expect(screen.getAllByText('KCP-ABC123').length).toBeGreaterThanOrEqual(1);
+        expect(screen.getAllByText('KCP-DEF456').length).toBeGreaterThanOrEqual(1);
     });
 });

@@ -43,6 +43,11 @@ vi.mock('../../../hooks/useMessaging', () => ({
         messages: [],
         sendMessage: vi.fn(),
         isLoading: false,
+        typingUsers: [],
+        setTyping: vi.fn(),
+        markAsRead: vi.fn(),
+        openConversation: vi.fn(),
+        activeConversationId: null,
     }),
 }));
 
@@ -103,7 +108,7 @@ describe('LiveStatus', () => {
 
     it('renders message sitter icon button', () => {
         render(<LiveStatus />);
-        expect(screen.getByLabelText('Message Sitter')).toBeTruthy();
+        expect(screen.getByLabelText('aria.messageSitter')).toBeTruthy();
     });
 
     it('renders certified specialist text', () => {

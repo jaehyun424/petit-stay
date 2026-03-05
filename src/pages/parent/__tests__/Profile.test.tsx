@@ -35,12 +35,12 @@ import Profile from '../Profile';
 describe('Parent Profile', () => {
     it('renders user first name', () => {
         render(<Profile />);
-        expect(screen.getByText('Sarah')).toBeTruthy();
+        expect(screen.getByText(/Sarah/)).toBeTruthy();
     });
 
     it('renders user last name', () => {
         render(<Profile />);
-        expect(screen.getByText('Johnson')).toBeTruthy();
+        expect(screen.getByText(/Johnson/)).toBeTruthy();
     });
 
     it('renders user email', () => {

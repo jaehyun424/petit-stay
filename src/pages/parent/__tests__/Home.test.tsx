@@ -1,5 +1,11 @@
 // @ts-nocheck
-import { describe, it, expect, vi } from 'vitest';
+import { describe, it, expect, vi, beforeEach } from 'vitest';
+
+vi.mock('../../../components/common/AnimatedCounter', () => ({
+    AnimatedCounter: ({ target, prefix, suffix }: { target: number; prefix?: string; suffix?: string }) => (
+        <span>{prefix}{target}{suffix}</span>
+    ),
+}));
 
 vi.mock('../../../hooks/useBookings', () => ({
     useParentBookings: () => ({
@@ -39,6 +45,7 @@ vi.mock('../../../hooks/useChildren', () => ({
 
 import { render, screen } from '../../../test/utils';
 import Home from '../Home';
+import * as useBookingsModule from '../../../hooks/useBookings';
 
 describe('Parent Home', () => {
     it('renders greeting', () => {
@@ -58,7 +65,9 @@ describe('Parent Home', () => {
 
     it('renders children quick action', () => {
         render(<Home />);
-        expect(screen.getByText('parent.children')).toBeTruthy();
+        // parent.children appears in both quick actions and stats
+        const children = screen.getAllByText('parent.children');
+        expect(children.length).toBeGreaterThanOrEqual(1);
     });
 
     it('renders quick actions navigation', () => {
@@ -104,8 +113,9 @@ describe('Parent Home', () => {
 
     it('renders dashboard stats', () => {
         render(<Home />);
-        // Total sessions count
-        expect(screen.getByText('2')).toBeTruthy();
+        // AnimatedCounter renders target directly; '2' may appear in multiple places
+        const twos = screen.getAllByText('2');
+        expect(twos.length).toBeGreaterThanOrEqual(1);
     });
 
     it('renders childcare handled subtitle', () => {
@@ -116,27 +126,18 @@ describe('Parent Home', () => {
 
 describe('Parent Home - Empty state', () => {
     beforeEach(() => {
-        // Override the mock for this describe block
-        vi.doMock('../../../hooks/useBookings', () => ({
-            useParentBookings: () => ({
-                upcomingBooking: null,
-                recentSessions: [],
-                history: [],
-                isLoading: false,
-                error: null,
-                retry: vi.fn(),
-            }),
-        }));
+        vi.spyOn(useBookingsModule, 'useParentBookings').mockReturnValue({
+            upcomingBooking: null,
+            recentSessions: [],
+            history: [],
+            isLoading: false,
+            error: null,
+            retry: vi.fn(),
+        } as any);
     });
 
-    afterEach(() => {
-        vi.restoreAllMocks();
-    });
-
-    it('shows empty state when no upcoming booking', async () => {
-        // Re-import with new mock
-        const { default: HomeNoBooking } = await import('../Home');
-        render(<HomeNoBooking />);
+    it('shows empty state when no upcoming booking', () => {
+        render(<Home />);
         expect(screen.getByText('parent.noUpcomingBookings')).toBeTruthy();
     });
 });

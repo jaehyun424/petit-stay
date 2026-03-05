@@ -221,7 +221,7 @@ describe('RegisterPage', () => {
 
     it('renders password toggle button', () => {
         render(<RegisterPage />);
-        const toggleBtn = screen.getByLabelText(/show password|hide password/i);
+        const toggleBtn = screen.getByLabelText(/aria\.showPassword|aria\.hidePassword/);
         expect(toggleBtn).toBeTruthy();
     });
 

@@ -32,7 +32,7 @@ describe('TrustCheckIn', () => {
 
     it('renders step indicators', () => {
         render(<TrustCheckIn />);
-        const indicators = document.querySelectorAll('.step-indicator');
+        const indicators = document.querySelectorAll('.step-indicator-icon');
         expect(indicators.length).toBe(3);
     });
 
@@ -48,7 +48,8 @@ describe('TrustCheckIn', () => {
 
     it('renders allergies input on step 1', () => {
         render(<TrustCheckIn />);
-        expect(screen.getByDisplayValue('None')).toBeTruthy();
+        const noneInputs = screen.getAllByDisplayValue('None');
+        expect(noneInputs.length).toBeGreaterThanOrEqual(1);
     });
 
     it('renders next step button on step 1', () => {

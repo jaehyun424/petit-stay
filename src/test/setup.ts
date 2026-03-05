@@ -40,6 +40,9 @@ const localStorageMock = (() => {
 
 Object.defineProperty(window, 'localStorage', { value: localStorageMock });
 
+// Mock Element.scrollIntoView (not available in jsdom)
+Element.prototype.scrollIntoView = vi.fn();
+
 // Mock IntersectionObserver
 class MockIntersectionObserver {
     observe = vi.fn();

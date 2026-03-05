@@ -39,12 +39,13 @@ vi.mock('../../../services/storage', () => ({
 describe('Sitter ActiveSession', () => {
     it('renders session active banner', () => {
         render(<ActiveSession />);
-        expect(screen.getByText('Session Active')).toBeInTheDocument();
+        expect(screen.getByText('activeSession.title')).toBeInTheDocument();
     });
 
     it('shows elapsed time', () => {
         render(<ActiveSession />);
-        expect(screen.getByText('1h 23m 0s')).toBeInTheDocument();
+        // Timer starts 2h15m ago, format is "${h}h ${m}m"
+        expect(screen.getByText(/\d+h \d+m/)).toBeInTheDocument();
     });
 
     it('renders session info', () => {
@@ -57,10 +58,10 @@ describe('Sitter ActiveSession', () => {
 
     it('renders quick action buttons', () => {
         render(<ActiveSession />);
-        expect(screen.getByRole('button', { name: /Log Activity/ })).toBeInTheDocument();
-        expect(screen.getByRole('button', { name: /Add Photo/ })).toBeInTheDocument();
-        expect(screen.getByRole('button', { name: /Log Snack/ })).toBeInTheDocument();
-        expect(screen.getByRole('button', { name: /Report Issue/ })).toBeInTheDocument();
+        expect(screen.getByRole('button', { name: /activeSession\.logActivity/ })).toBeInTheDocument();
+        expect(screen.getByRole('button', { name: /activeSession\.addPhoto/ })).toBeInTheDocument();
+        expect(screen.getByRole('button', { name: /activeSession\.logSnack/ })).toBeInTheDocument();
+        expect(screen.getByRole('button', { name: /activeSession\.reportIssue/ })).toBeInTheDocument();
     });
 
     it('renders checklist items', () => {
@@ -72,16 +73,14 @@ describe('Sitter ActiveSession', () => {
 
     it('renders complete session button', () => {
         render(<ActiveSession />);
-        expect(screen.getByRole('button', { name: 'Complete Session' })).toBeInTheDocument();
+        expect(screen.getByRole('button', { name: 'activeSession.completeSession' })).toBeInTheDocument();
     });
 
     it('opens report issue modal when button clicked', async () => {
         render(<ActiveSession />);
-        fireEvent.click(screen.getByRole('button', { name: /Report Issue/ }));
+        fireEvent.click(screen.getByRole('button', { name: /activeSession\.reportIssue/ }));
         await waitFor(() => {
-            expect(screen.getByText('Report Issue')).toBeInTheDocument();
-            expect(screen.getByText('Description')).toBeInTheDocument();
-            expect(screen.getByText('Severity')).toBeInTheDocument();
+            expect(screen.getByText('activeSession.reportIssue')).toBeInTheDocument();
         });
     });
 

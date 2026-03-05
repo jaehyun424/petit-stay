@@ -1,4 +1,12 @@
 import { render, screen, fireEvent, waitFor } from '../../../test/utils';
+
+// Mock AnimatedCounter to render target value directly
+vi.mock('../../../components/common/AnimatedCounter', () => ({
+    AnimatedCounter: ({ target, prefix, suffix }: { target: number; prefix?: string; suffix?: string }) => (
+        <span>{prefix}{target.toLocaleString()}{suffix}</span>
+    ),
+}));
+
 import Dashboard from '../Dashboard';
 
 // Mock hooks used by Dashboard
@@ -100,7 +108,7 @@ describe('Hotel Dashboard', () => {
         render(<Dashboard />);
         fireEvent.click(screen.getByText('hotel.newBooking'));
         await waitFor(() => {
-            expect(screen.getByText('Guest Name')).toBeInTheDocument();
+            expect(screen.getByText('hotel.guestInfo')).toBeInTheDocument();
         });
     });
 
