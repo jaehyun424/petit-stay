@@ -92,7 +92,6 @@ export function SitterLayout() {
                         onClick={toggleTheme}
                         aria-label={t('aria.toggleTheme')}
                     />
-                    <LanguageSwitcher />
                     <IconButton
                         icon={<LogOut size={20} strokeWidth={1.75} />}
                         onClick={handleSignOut}
@@ -114,6 +113,7 @@ export function SitterLayout() {
                         <BrandLogo size="sm" showName />
                     </div>
                     <div className="sitter-header-right">
+                        <LanguageSwitcher />
                         <TierBadge tier="gold" showLabel={false} />
                         <NotificationBell />
                         <IconButton
@@ -129,6 +129,7 @@ export function SitterLayout() {
                     <h2 className="desktop-page-title">{getPageTitle(location.pathname, t)}</h2>
                     <div className="header-spacer" />
                     <div className="header-user">
+                        <LanguageSwitcher />
                         <IconButton
                             icon={isDark ? <Sun size={20} strokeWidth={1.75} /> : <Moon size={20} strokeWidth={1.75} />}
                             onClick={toggleTheme}

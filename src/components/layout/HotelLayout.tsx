@@ -107,7 +107,6 @@ export function HotelLayout() {
             onClick={toggleTheme}
             aria-label={t('aria.toggleTheme')}
           />
-          <LanguageSwitcher />
           <IconButton
             icon={<LogOut size={20} strokeWidth={1.75} />}
             onClick={handleSignOut}
@@ -128,6 +127,7 @@ export function HotelLayout() {
           />
           <div className="header-spacer" />
           <div className="header-user">
+            <LanguageSwitcher />
             <NotificationBell />
             <span className="header-user-name">{user?.profile.firstName} {user?.profile.lastName}</span>
             <Avatar name={`${user?.profile.firstName} ${user?.profile.lastName}`} size="sm" />
