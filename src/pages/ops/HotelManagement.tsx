@@ -1,4 +1,4 @@
-import { useState, useMemo } from 'react';
+import { useState, useMemo, useRef } from 'react';
 import { useTranslation } from 'react-i18next';
 import { motion } from 'framer-motion';
 import { staggerContainer, staggerItem } from '../../utils/animations';
@@ -29,6 +29,15 @@ export default function OpsHotelManagement() {
   const [editHotel, setEditHotel] = useState<{ id: string; form: EditHotelForm } | null>(null);
   const [searchQuery, setSearchQuery] = useState('');
   const [tierFilter, setTierFilter] = useState('');
+
+  // Stable SLA scores per hotel (avoid Math.random in render)
+  const slaScoresRef = useRef<Record<string, number>>({});
+  const getSlaScore = (hotelId: string) => {
+    if (!(hotelId in slaScoresRef.current)) {
+      slaScoresRef.current[hotelId] = 90 + Math.floor(Math.random() * 10);
+    }
+    return slaScoresRef.current[hotelId];
+  };
 
   const filteredHotels = useMemo(() => hotels.filter((h) => {
     const matchesSearch = !searchQuery || h.name.toLowerCase().includes(searchQuery.toLowerCase());
@@ -138,7 +147,7 @@ export default function OpsHotelManagement() {
               </thead>
               <motion.tbody initial="hidden" animate="show" variants={staggerContainer}>
                 {filteredHotels.map((hotel) => {
-                  const slaScore = 90 + Math.floor(Math.random() * 10);
+                  const slaScore = getSlaScore(hotel.id);
                   return (
                     <motion.tr key={hotel.id} variants={staggerItem} className="ops-table-row-hover">
                       <td><span className="ops-hotel-name">{hotel.name}</span></td>

@@ -1,4 +1,4 @@
-import { useState, useMemo } from 'react';
+import { useState, useMemo, useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
 import { motion } from 'framer-motion';
 import { staggerContainer, staggerItem } from '../../utils/animations';
@@ -27,13 +27,17 @@ export default function OpsReservations() {
   const [page, setPage] = useState(1);
 
   const filtered = useMemo(() => {
-    setPage(1);
     return bookings.filter((b) => {
       const matchesSearch = !search || b.confirmationCode.toLowerCase().includes(search.toLowerCase()) || b.parent.name.toLowerCase().includes(search.toLowerCase());
       const matchesStatus = !statusFilter || b.status === statusFilter;
       return matchesSearch && matchesStatus;
     });
   }, [bookings, search, statusFilter]);
+
+  // Reset page when filters change
+  useEffect(() => {
+    setPage(1);
+  }, [search, statusFilter]);
 
   const totalPages = Math.max(1, Math.ceil(filtered.length / PAGE_SIZE));
   const paged = filtered.slice((page - 1) * PAGE_SIZE, page * PAGE_SIZE);
