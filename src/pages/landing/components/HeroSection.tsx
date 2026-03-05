@@ -4,8 +4,7 @@ import { motion, useScroll, useTransform } from 'framer-motion';
 import { ArrowRight, Play } from 'lucide-react';
 import { useRef } from 'react';
 
-const HERO_VIDEO = 'https://videos.pexels.com/video-files/7884081/7884081-uhd_2560_1440_25fps.mp4';
-const HERO_POSTER = 'https://images.pexels.com/videos/7884081/pexels-photo-7884081.jpeg?auto=compress&cs=tinysrgb&w=1920';
+const HERO_IMAGE = 'https://images.unsplash.com/photo-1606868306217-dbf5046868d2?w=1920&q=80';
 
 export function HeroSection() {
   const { t } = useTranslation();
@@ -16,19 +15,14 @@ export function HeroSection() {
 
   return (
     <section ref={ref} className="hero-section section-fullscreen">
-      {/* Video background with parallax */}
+      {/* Image background with parallax */}
       <motion.div className="hero-video-wrap" style={{ y }}>
-        <video
+        <img
           className="video-bg"
-          autoPlay
-          muted
-          loop
-          playsInline
-          preload="none"
-          poster={HERO_POSTER}
-        >
-          <source src={HERO_VIDEO} type="video/mp4" />
-        </video>
+          src={HERO_IMAGE}
+          alt=""
+          loading="eager"
+        />
       </motion.div>
       <div className="video-overlay video-overlay-dark" />
 
