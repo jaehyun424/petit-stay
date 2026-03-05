@@ -112,8 +112,16 @@
 /* Cards grid */
 .solutions-cards {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
   gap: var(--space-6);
+}
+
+.solutions-cards--3 {
+  grid-template-columns: repeat(3, 1fr);
+}
+
+.solutions-cards--4 {
+  grid-template-columns: repeat(4, 1fr);
 }
 
 .solutions-card {
@@ -122,6 +130,17 @@
   border-radius: var(--radius-xl);
   padding: var(--space-6);
   transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.solutions-card--uniform {
+  display: flex;
+  flex-direction: column;
+  min-height: 200px;
+}
+
+.solutions-card--centered {
+  align-items: center;
+  text-align: center;
 }
 
 .solutions-card:hover {
@@ -141,6 +160,11 @@
   margin-bottom: var(--space-4);
 }
 
+.solutions-card--centered .solutions-card-icon {
+  margin-left: auto;
+  margin-right: auto;
+}
+
 .solutions-card h3 {
   font-family: var(--font-serif);
   font-size: var(--text-lg);
@@ -155,7 +179,16 @@
   line-height: 1.6;
 }
 
-/* Features list */
+/* Step number */
+.solutions-step-number {
+  font-family: var(--font-serif);
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: var(--gold-500);
+  margin-bottom: var(--space-3);
+}
+
+/* Features list (legacy, kept for compatibility) */
 .solutions-features {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
@@ -280,7 +313,7 @@
   font-weight: 600;
 }
 
-/* Scenarios */
+/* Scenarios (legacy, kept for compatibility) */
 .solutions-scenarios {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
@@ -312,6 +345,12 @@
 }
 
 /* Responsive */
+@media (max-width: 1024px) {
+  .solutions-cards--4 {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
 @media (max-width: 768px) {
   .solutions-hero {
     min-height: 50vh;
@@ -320,6 +359,15 @@
 
   .solutions-section {
     padding: var(--space-10) var(--space-4);
+  }
+
+  .solutions-cards--3,
+  .solutions-cards--4 {
+    grid-template-columns: 1fr;
+  }
+
+  .solutions-card--uniform {
+    min-height: auto;
   }
 
   .solutions-cta {
