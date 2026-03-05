@@ -144,13 +144,7 @@ export default function RegisterPage() {
                 {...pageTransition}
             >
                 {/* Visual Column (Left) */}
-                <div className="login-visual">
-                    <img
-                        className="login-visual-image"
-                        src={IMAGES.auth.background}
-                        alt=""
-                        loading="eager"
-                    />
+                <div className="login-visual" style={{ backgroundImage: `url(${IMAGES.auth.register})` }}>
                     <div className="visual-overlay" />
                     <div className="visual-content">
                         <motion.h1

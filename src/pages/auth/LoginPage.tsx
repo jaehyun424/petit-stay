@@ -116,13 +116,7 @@ export default function LoginPage() {
         {...pageTransition}
       >
         {/* Visual Column (Left) */}
-        <div className="login-visual">
-          <img
-            className="login-visual-image"
-            src={IMAGES.auth.background}
-            alt=""
-            loading="eager"
-          />
+        <div className="login-visual" style={{ backgroundImage: `url(${IMAGES.auth.background})` }}>
           <div className="visual-overlay" />
           <div className="visual-content">
             <motion.h1
