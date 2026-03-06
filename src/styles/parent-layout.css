@@ -230,15 +230,10 @@
   }
 }
 
-/* Tablet: phone-frame layout removed */
+/* Tablet: full-width layout */
 @media (min-width: 768px) and (max-width: 1023px) {
   .parent-layout {
-    max-width: 640px;
+    max-width: 100%;
     margin: 0 auto;
-  }
-  .bottom-nav {
-    max-width: 640px;
-    left: 50%;
-    transform: translateX(-50%);
   }
 }

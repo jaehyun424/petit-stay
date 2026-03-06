@@ -175,7 +175,7 @@ export default function Home() {
         {/* Upcoming Booking */}
         <div>
           {upcomingBooking ? (
-            <Card className="upcoming-card" variant="gold">
+            <Card className="upcoming-card">
               <CardBody>
                 <div className="upcoming-header">
                   <h3>{t('parent.upcomingBooking')}</h3>

@@ -444,7 +444,7 @@ export default function Profile() {
             >
                 <div className="profile-form-stack">
                     {paymentMethods.length === 0 ? (
-                        <p style={{ textAlign: 'center', color: 'var(--text-muted)', fontSize: '0.875rem' }}>
+                        <p className="profile-empty-state">
                             {t('profile.noPaymentMethods')}
                         </p>
                     ) : (
@@ -458,26 +458,28 @@ export default function Profile() {
                     )}
 
                     {showAddCard ? (
-                        <div style={{ borderTop: '1px solid var(--border)', paddingTop: '1rem', marginTop: '0.5rem' }}>
-                            <Input
-                                label={t('profile.cardNumber')}
-                                value={cardForm.number}
-                                onChange={(e) => setCardForm({ ...cardForm, number: e.target.value })}
-                                placeholder={t('profile.cardNumberPlaceholder')}
-                            />
-                            <Input
-                                label={t('profile.expiry')}
-                                value={cardForm.expiry}
-                                onChange={(e) => setCardForm({ ...cardForm, expiry: e.target.value })}
-                                placeholder={t('profile.expiryPlaceholder')}
-                            />
-                            <Input
-                                label={t('profile.cardHolder')}
-                                value={cardForm.holder}
-                                onChange={(e) => setCardForm({ ...cardForm, holder: e.target.value })}
-                                placeholder={t('profile.cardHolderPlaceholder')}
-                            />
-                            <div style={{ display: 'flex', gap: '0.5rem', marginTop: '0.5rem' }}>
+                        <div className="payment-add-card-form">
+                            <div className="profile-form-stack">
+                                <Input
+                                    label={t('profile.cardNumber')}
+                                    value={cardForm.number}
+                                    onChange={(e) => setCardForm({ ...cardForm, number: e.target.value })}
+                                    placeholder={t('profile.cardNumberPlaceholder')}
+                                />
+                                <Input
+                                    label={t('profile.expiry')}
+                                    value={cardForm.expiry}
+                                    onChange={(e) => setCardForm({ ...cardForm, expiry: e.target.value })}
+                                    placeholder={t('profile.expiryPlaceholder')}
+                                />
+                                <Input
+                                    label={t('profile.cardHolder')}
+                                    value={cardForm.holder}
+                                    onChange={(e) => setCardForm({ ...cardForm, holder: e.target.value })}
+                                    placeholder={t('profile.cardHolderPlaceholder')}
+                                />
+                            </div>
+                            <div className="payment-add-card-actions">
                                 <Button variant="secondary" onClick={() => setShowAddCard(false)} fullWidth>{t('common.cancel')}</Button>
                                 <Button variant="gold" onClick={handleAddCard} fullWidth>{t('common.save')}</Button>
                             </div>

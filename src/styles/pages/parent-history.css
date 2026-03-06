@@ -1,6 +1,6 @@
 /* Parent History Page */
 .history-page {
-  max-width: 520px;
+  max-width: 100%;
   margin: 0 auto;
   padding: var(--space-6) var(--space-4);
 }
@@ -179,6 +179,10 @@
 @media (min-width: 1024px) {
   .history-page {
     max-width: 100%;
+  }
+
+  .history-page .page-title {
+    font-size: 2.5rem;
   }
 
   .history-list {
