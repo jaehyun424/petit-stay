@@ -217,7 +217,7 @@ export default function LoginPage() {
             </form>
 
             {/* Demo Accounts */}
-            <motion.div className="mt-4 border-t border-cream-300 pt-4" variants={fadeUp}>
+            <motion.div className="mt-4 border-t pt-4" variants={fadeUp}>
               <p className="text-xs text-charcoal-400 text-center uppercase tracking-widest mb-3">{t('auth.quickAccessSimulation')}</p>
               <div className="demo-grid">
                 {DEMO_ACCOUNTS.map((account) => (

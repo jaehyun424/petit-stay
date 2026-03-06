@@ -122,7 +122,7 @@
   align-items: center;
   justify-content: space-between;
   gap: 1rem;
-  margin-bottom: 0.75rem;
+  margin-bottom: 0;
   position: relative;
   z-index: 20;
 }
@@ -138,15 +138,22 @@
   position: relative;
 }
 
+/* Compact form gaps across both pages */
+.login-page .flex.flex-col.gap-4 {
+  gap: 0.875rem;
+}
+
 /* Make register form more compact on mobile */
 @media (max-width: 479px) {
   .login-page .grid-cols-2 {
     grid-template-columns: 1fr;
-    gap: 0.5rem;
+    gap: 0.625rem;
   }
+}
 
-  .login-page .gap-4 {
-    gap: 0.5rem;
+@media (min-width: 480px) {
+  .login-page .grid-cols-2.gap-4 {
+    gap: 0.875rem;
   }
 }
 
@@ -162,41 +169,33 @@
 }
 
 /* ----------------------------------------
-   Form Wrapper (Unified card style)
+   Form Wrapper (Borderless minimal style)
    ---------------------------------------- */
 .form-wrapper {
   flex: 1;
   display: flex;
   flex-direction: column;
   justify-content: center;
-  max-width: 420px;
+  max-width: 380px;
   width: 100%;
   margin: 0 auto;
-  background: white;
-  border-radius: var(--radius-xl);
-  padding: 1.5rem;
-  border: 1px solid var(--cream-200);
-  box-shadow: 0 4px 24px rgba(0, 0, 0, 0.06);
+  padding: 0;
 }
 
 .form-wrapper h2 {
-  font-size: 1.5rem;
-  font-weight: 700;
+  font-size: 1.375rem;
+  font-weight: 600;
   text-align: center;
-  margin-bottom: 1.5rem;
+  margin-bottom: 0.25rem;
+  letter-spacing: -0.01em;
 }
 
 .form-wrapper .btn-primary {
   width: 100%;
   min-height: 48px;
-  font-size: 1rem;
+  font-size: 0.9375rem;
   font-weight: 600;
-}
-
-@media (min-width: 480px) {
-  .form-wrapper {
-    padding: 2rem;
-  }
+  letter-spacing: 0.02em;
 }
 
 /* ----------------------------------------
@@ -212,44 +211,89 @@
 .login-page .mt-6 { margin-top: 1rem; }
 .login-page .mt-8 { margin-top: 1.5rem; }
 
+/* Subtle divider for demo section */
+.login-page .border-t {
+  border-top: none;
+  position: relative;
+}
+
+.login-page .border-t::before {
+  content: '';
+  display: block;
+  width: 40px;
+  height: 1px;
+  background: var(--cream-300);
+  margin: 0 auto 0.75rem;
+}
+
 /* ----------------------------------------
    Demo Quick-Access Buttons
    ---------------------------------------- */
 .demo-grid {
-  display: grid;
-  grid-template-columns: repeat(2, 1fr);
-  gap: 0.5rem;
+  display: flex;
+  justify-content: center;
+  gap: 0;
+  flex-wrap: wrap;
 }
 
 .demo-btn {
-  background: white;
-  border: 1px solid var(--cream-200);
-  padding: 0.625rem 0.75rem;
-  border-radius: var(--radius-lg);
-  transition: all 0.3s;
-  color: var(--charcoal-600);
+  background: transparent;
+  border: none;
+  padding: 0.5rem 0.75rem;
+  transition: color 0.2s;
+  color: var(--charcoal-400);
   cursor: pointer;
-  min-height: 44px;
+  font-family: var(--font-action);
+  letter-spacing: 0.04em;
+  position: relative;
+  min-height: 36px;
+}
+
+.demo-btn::after {
+  content: '';
+  position: absolute;
+  bottom: 0.375rem;
+  left: 50%;
+  transform: translateX(-50%) scaleX(0);
+  width: 60%;
+  height: 1px;
+  background: var(--gold-500);
+  transition: transform 0.3s ease;
 }
 
 .demo-btn:hover {
-  border-color: var(--gold-500);
-  color: var(--gold-600);
-  background: var(--cream-100);
+  color: var(--charcoal-700);
+}
+
+.demo-btn:hover::after {
+  transform: translateX(-50%) scaleX(1);
+}
+
+/* Divider dots between demo buttons */
+.demo-btn + .demo-btn::before {
+  content: '·';
+  position: absolute;
+  left: -2px;
+  top: 50%;
+  transform: translateY(-50%);
+  color: var(--cream-400);
+  font-size: 0.875rem;
+  pointer-events: none;
 }
 
 /* ----------------------------------------
    Forgot Password Link
    ---------------------------------------- */
 .forgot-password-link {
-  display: inline-block;
+  display: inline-flex;
+  align-items: center;
   font-size: 0.8125rem;
-  color: var(--charcoal-500);
+  color: var(--charcoal-400);
   text-decoration: none;
   transition: color 0.2s;
-  min-height: 44px;
-  display: flex;
-  align-items: center;
+  min-height: 36px;
+  font-family: var(--font-action);
+  letter-spacing: 0.02em;
 }
 
 .forgot-password-link:hover {
@@ -260,7 +304,7 @@
    Password Strength Indicator
    ---------------------------------------- */
 .password-strength {
-  margin-top: 0.5rem;
+  margin-top: 0.375rem;
 }
 
 .password-strength-bar {
@@ -400,14 +444,15 @@
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 0.75rem;
+  gap: 0.5rem;
   text-align: center;
-  font-size: 0.75rem;
-  color: var(--charcoal-400);
+  font-size: 0.6875rem;
+  color: var(--charcoal-300);
   margin-top: auto;
-  padding-top: 1rem;
+  padding-top: 0.75rem;
   font-family: var(--font-action);
-  letter-spacing: 0.05em;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
 }
 
 /* ============================================
@@ -423,8 +468,7 @@
 }
 
 :root[data-theme="dark"] .form-wrapper {
-  background: var(--bg-card);
-  border-color: var(--border-color);
+  background: transparent;
 }
 
 :root[data-theme="dark"] .brand-logo-link {
@@ -432,15 +476,20 @@
 }
 
 :root[data-theme="dark"] .demo-btn {
-  background: var(--bg-card);
-  border-color: var(--border-color);
-  color: var(--text-secondary);
+  background: transparent;
+  color: var(--text-tertiary);
 }
 
 :root[data-theme="dark"] .demo-btn:hover {
-  border-color: var(--gold-500);
   color: var(--gold-400);
-  background: var(--glass-hover);
+}
+
+:root[data-theme="dark"] .demo-btn + .demo-btn::before {
+  color: var(--border-color);
+}
+
+:root[data-theme="dark"] .login-page .border-t::before {
+  background: var(--border-color);
 }
 
 :root[data-theme="dark"] .login-footer {
