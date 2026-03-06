@@ -24,6 +24,14 @@ export default function OpsIssues() {
   const [searchQuery, setSearchQuery] = useState('');
   const [selectedIncident, setSelectedIncident] = useState<typeof incidents[0] | null>(null);
 
+  const severityCounts = useMemo(() => {
+    const counts = { critical: 0, high: 0, medium: 0, low: 0 };
+    for (const inc of incidents) {
+      if (inc.severity in counts) counts[inc.severity as keyof typeof counts]++;
+    }
+    return counts;
+  }, [incidents]);
+
   const handleResolve = (id: string) => {
     setResolvedIds((prev) => new Set(prev).add(id));
     toast.success(t('ops.issueResolved'), `#${id}`);
@@ -47,14 +55,6 @@ export default function OpsIssues() {
       const matchesSearch = !searchQuery || String(inc.summary || '').toLowerCase().includes(searchQuery.toLowerCase()) || String(inc.sitterName || '').toLowerCase().includes(searchQuery.toLowerCase());
       return matchesSeverity && matchesStatus && matchesSearch;
     });
-
-  const severityCounts = useMemo(() => {
-    const counts = { critical: 0, high: 0, medium: 0, low: 0 };
-    for (const inc of incidents) {
-      if (inc.severity in counts) counts[inc.severity as keyof typeof counts]++;
-    }
-    return counts;
-  }, [incidents]);
 
   const severityBorderColor: Record<string, string> = {
     critical: 'var(--error-500)',
