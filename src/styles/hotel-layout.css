@@ -42,6 +42,20 @@
 
   .sidebar-mobile-open {
     transform: translateX(0);
+    width: 248px;
+  }
+
+  .sidebar-mobile-open.sidebar-collapsed {
+    width: 248px;
+  }
+
+  .sidebar-mobile-open.sidebar-collapsed .sidebar-nav-label {
+    display: block !important;
+  }
+
+  .sidebar-mobile-open.sidebar-collapsed .sidebar-nav-item {
+    justify-content: flex-start;
+    padding: 0.625rem 1rem;
   }
 
   .sidebar-overlay {

@@ -71,11 +71,15 @@
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(340px, 1fr));
   gap: var(--space-6);
+  align-items: stretch;
 }
 
 .sitter-card {
   transition: all 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94);
   min-height: 200px;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
 }
 
 .sitter-card:hover {
@@ -120,6 +124,7 @@
   background: var(--glass-bg);
   border-radius: var(--radius-lg);
   margin-bottom: var(--space-4);
+  flex: 1;
 }
 
 .sitter-management-page .detail-row {
@@ -148,6 +153,7 @@
 .sitter-actions {
   display: flex;
   gap: var(--space-3);
+  margin-top: auto;
 }
 
 /* Verified badge (replaces Tailwind utility classes) */

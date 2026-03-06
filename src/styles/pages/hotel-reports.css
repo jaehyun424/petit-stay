@@ -55,6 +55,7 @@
     grid-template-columns: repeat(4, 1fr);
     gap: 16px;
     margin-bottom: 24px;
+    align-items: stretch;
 }
 
 @media (max-width: 1024px) {
@@ -129,6 +130,7 @@
     display: grid;
     grid-template-columns: 1.2fr 1fr;
     gap: 24px;
+    align-items: stretch;
 }
 
 @media (max-width: 1024px) {
@@ -188,6 +190,7 @@
 /* Chart card - unified height for left/right charts */
 .reports-chart-card {
     min-height: 350px;
+    height: 100%;
 }
 
 /* Recharts container - unified height for all chart cards */

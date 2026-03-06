@@ -487,7 +487,7 @@ p {
   bottom: 0;
   z-index: 9999;
   display: flex;
-  align-items: flex-start;
+  align-items: center;
   justify-content: center;
   overflow-y: auto;
   padding: 2rem 1rem;

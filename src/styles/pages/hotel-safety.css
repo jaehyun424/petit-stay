@@ -51,12 +51,14 @@
   grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
   gap: var(--space-5);
   margin-bottom: var(--space-6);
+  align-items: stretch;
 }
 
 .safety-grid {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
   gap: var(--space-6);
+  align-items: stretch;
 }
 
 .safety-stat {

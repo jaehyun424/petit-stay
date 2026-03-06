@@ -50,6 +50,8 @@
   line-height: 1.2;
   margin-bottom: 1.5rem;
   text-shadow: 0 4px 12px rgba(0,0,0,0.3);
+  word-break: keep-all;
+  max-width: 520px;
 }
 
 .visual-author {

@@ -241,8 +241,8 @@ export default function Dashboard() {
   // Assign sitter modal
   const [assignTarget, setAssignTarget] = useState<DemoBooking | null>(null);
 
-  const handleAssignSitter = (sitterName: string) => {
-    toast.success(t('hotel.assign'), `${sitterName} → ${assignTarget?.confirmationCode}`);
+  const handleAssignSitter = (sitter: typeof sitters[number]) => {
+    toast.success(t('hotel.assign'), `${sitter.name} → ${assignTarget?.confirmationCode}`);
     setAssignTarget(null);
   };
 
@@ -518,7 +518,7 @@ export default function Dashboard() {
       >
         <div className="modal-form-stack-sm">
           {sitters.filter((s) => s.availability === 'Available').map((sitter) => (
-            <div key={sitter.id} className="sitter-option-row" onClick={() => handleAssignSitter(sitter.name)}>
+            <div key={sitter.id} className="sitter-option-row" onClick={() => handleAssignSitter(sitter)}>
               <Avatar name={sitter.name} size="sm" variant={sitter.tier === 'gold' ? 'gold' : 'default'} />
               <div className="sitter-option-info">
                 <div className="sitter-option-name">{sitter.name}</div>
