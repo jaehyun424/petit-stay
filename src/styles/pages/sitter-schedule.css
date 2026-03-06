@@ -78,7 +78,64 @@
   color: var(--success-500);
 }
 
-/* Countdown Banner */
+/* Next Booking Card */
+.next-booking-card {
+  border-radius: var(--radius-xl);
+}
+
+.next-booking-label {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: var(--space-2);
+}
+
+.next-booking-countdown {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-1);
+  font-size: var(--text-sm);
+  font-weight: var(--font-semibold);
+  color: var(--gold-700);
+  background: rgba(255, 255, 255, 0.6);
+  padding: var(--space-1) var(--space-3);
+  border-radius: var(--radius-full);
+}
+
+.next-booking-time {
+  font-size: var(--text-2xl);
+  font-weight: var(--font-bold);
+  font-family: var(--font-serif);
+  color: var(--text-primary);
+  margin-bottom: var(--space-3);
+}
+
+.next-booking-details {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+  margin-bottom: var(--space-3);
+}
+
+.next-booking-detail {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+  font-size: var(--text-sm);
+  color: var(--text-secondary);
+}
+
+.next-booking-detail svg {
+  color: var(--gold-600);
+  flex-shrink: 0;
+}
+
+.next-booking-amount {
+  font-weight: var(--font-semibold);
+  color: var(--gold-text);
+}
+
+/* Countdown Banner (legacy) */
 .countdown-banner {
   display: flex;
   align-items: center;

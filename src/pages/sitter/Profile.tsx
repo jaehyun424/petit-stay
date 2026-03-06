@@ -77,9 +77,9 @@ export default function Profile() {
 
     const openEditModal = () => {
         setEditForm({
-            displayName: profile.name,
+            displayName: profile?.name || '',
             phone: user?.profile?.phone || '',
-            languages: profile.languages.map((l) => l.name).join(', '),
+            languages: (profile?.languages || []).map((l) => l.name).join(', '),
         });
         setEditModalOpen(true);
     };
@@ -131,19 +131,27 @@ export default function Profile() {
         setShowRegionModal(false);
     };
 
+    if (!profile) {
+        return (
+            <div className="sitter-profile animate-fade-in">
+                <Card><CardBody><p>{t('common.loading')}</p></CardBody></Card>
+            </div>
+        );
+    }
+
     return (
         <div className="sitter-profile animate-fade-in">
             {/* Profile Header */}
             <Card variant="gold">
                 <CardBody>
                     <div className="profile-header">
-                        <Avatar src={profile.avatar} name={profile.name} size="xl" variant="gold" />
+                        <Avatar src={profile.avatar} name={profile.name || ''} size="xl" variant="gold" />
                         <div className="profile-info">
-                            <h2>{profile.name}</h2>
-                            <TierBadge tier={profile.tier} />
+                            <h2>{profile.name || ''}</h2>
+                            <TierBadge tier={profile.tier || 'silver'} />
                             <div className="profile-rating">
                                 <Star size={14} strokeWidth={1.75} fill="currentColor" />
-                                {profile.rating} ({profile.reviewCount} {t('sitterProfile.reviewsCount')})
+                                {profile.rating || 0} ({profile.reviewCount || 0} {t('sitterProfile.reviewsCount')})
                             </div>
                             <Button variant="ghost" size="sm" onClick={openEditModal}>
                                 {t('sitterProfile.editProfile', 'Edit Profile')}

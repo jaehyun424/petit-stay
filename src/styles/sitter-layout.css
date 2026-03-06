@@ -209,6 +209,13 @@
   .sitter-layout [class*="user-name"], .sitter-layout [class*="userName"] {
     display: none;
   }
+
+  /* Hide hamburger and sidebar on mobile — bottom nav is sufficient */
+  .sitter-layout .sidebar-toggle,
+  .sitter-layout [class*="hamburger"],
+  .sitter-layout .mobile-menu-toggle {
+    display: none !important;
+  }
 }
 
 /* Tablet: full-width layout (consistent with Parent) */

@@ -68,6 +68,8 @@
   .ops-layout .page-content {
     padding: 1rem;
     padding-bottom: calc(1rem + 70px);
+    max-width: 100vw;
+    overflow-x: hidden;
   }
 
   /* Mobile header adjustments */
@@ -82,6 +84,12 @@
   /* Hide header logout on mobile (available in sidebar) */
   .ops-layout .header-user > button:last-child {
     display: none;
+  }
+
+  /* Prevent horizontal scroll */
+  .ops-layout .main-content {
+    max-width: 100vw;
+    overflow-x: hidden;
   }
 }
 

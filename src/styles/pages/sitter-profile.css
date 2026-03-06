@@ -407,6 +407,19 @@
 @media (max-width: 480px) {
   .sitter-profile {
     max-width: 100%;
+    gap: var(--space-4);
+  }
+
+  .sitter-profile .profile-header {
+    flex-direction: column;
+    text-align: center;
+    gap: var(--space-3);
+  }
+
+  .sitter-profile .profile-info {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
   }
 
   .sitter-profile .profile-info h2 {
@@ -447,5 +460,14 @@
 
   .region-tags {
     gap: var(--space-2);
+  }
+
+  .sitter-profile .profile-desktop-grid {
+    gap: var(--space-4);
+  }
+
+  .reviews-summary {
+    flex-direction: column;
+    align-items: flex-start;
   }
 }

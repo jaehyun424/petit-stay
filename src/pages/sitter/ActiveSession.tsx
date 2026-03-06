@@ -72,6 +72,8 @@ export default function ActiveSession() {
     const [showActivityModal, setShowActivityModal] = useState(false);
     const [activityNote, setActivityNote] = useState('');
     const [activityCategory, setActivityCategory] = useState('play');
+    const [activityPhoto, setActivityPhoto] = useState<string | null>(null);
+    const activityPhotoRef = useRef<HTMLInputElement>(null);
     const [showSnackModal, setShowSnackModal] = useState(false);
     const [snackNote, setSnackNote] = useState('');
     const [showReportIssue, setShowReportIssue] = useState(false);
@@ -207,12 +209,28 @@ export default function ActiveSession() {
                 </CardBody>
             </Card>
 
-            {/* Emergency Report - prominent */}
-            <button className="emergency-report-btn" onClick={() => setShowReportIssue(true)}>
-                <Shield size={18} strokeWidth={2} />
-                <span>{t('activeSession.reportIssue')}</span>
-                <AlertTriangle size={14} strokeWidth={2} />
-            </button>
+            {/* Activity Timeline — chronological record */}
+            <Card>
+                <CardBody>
+                    <h3 className="section-title">{t('activeSession.activityTimeline', 'Activity Timeline')}</h3>
+                    <div className="timeline">
+                        {timeline.map((entry, i) => (
+                            <div key={entry.id} className={`timeline-item timeline-item--${entry.type}`}>
+                                <div className="timeline-line-container">
+                                    <div className="timeline-dot">
+                                        {getTimelineIcon(entry.type)}
+                                    </div>
+                                    {i < timeline.length - 1 && <div className="timeline-line" />}
+                                </div>
+                                <div className="timeline-content">
+                                    <span className="timeline-time">{entry.time}</span>
+                                    <span className="timeline-desc">{entry.description}</span>
+                                </div>
+                            </div>
+                        ))}
+                    </div>
+                </CardBody>
+            </Card>
 
             {/* Quick Actions + Checklist — side by side on desktop */}
             <div className="desktop-two-col">
@@ -273,28 +291,12 @@ export default function ActiveSession() {
             </Card>
             </div>
 
-            {/* Activity Timeline */}
-            <Card>
-                <CardBody>
-                    <h3 className="section-title">{t('activeSession.activityTimeline', 'Activity Timeline')}</h3>
-                    <div className="timeline">
-                        {timeline.map((entry, i) => (
-                            <div key={entry.id} className={`timeline-item timeline-item--${entry.type}`}>
-                                <div className="timeline-line-container">
-                                    <div className="timeline-dot">
-                                        {getTimelineIcon(entry.type)}
-                                    </div>
-                                    {i < timeline.length - 1 && <div className="timeline-line" />}
-                                </div>
-                                <div className="timeline-content">
-                                    <span className="timeline-time">{entry.time}</span>
-                                    <span className="timeline-desc">{entry.description}</span>
-                                </div>
-                            </div>
-                        ))}
-                    </div>
-                </CardBody>
-            </Card>
+            {/* Emergency Report */}
+            <button className="emergency-report-btn" onClick={() => setShowReportIssue(true)}>
+                <Shield size={18} strokeWidth={2} />
+                <span>{t('activeSession.reportIssue')}</span>
+                <AlertTriangle size={14} strokeWidth={2} />
+            </button>
 
             {/* End Session */}
             <Button variant="gold" fullWidth onClick={() => setShowCompleteConfirm(true)}>
@@ -304,12 +306,12 @@ export default function ActiveSession() {
             {/* Activity Log Modal */}
             <Modal
                 isOpen={showActivityModal}
-                onClose={() => setShowActivityModal(false)}
+                onClose={() => { setShowActivityModal(false); setActivityPhoto(null); }}
                 title={t('activeSession.logActivity')}
                 size="sm"
                 footer={
                     <>
-                        <Button variant="secondary" onClick={() => setShowActivityModal(false)}>{t('common.cancel')}</Button>
+                        <Button variant="secondary" onClick={() => { setShowActivityModal(false); setActivityPhoto(null); }}>{t('common.cancel')}</Button>
                         <Button variant="primary" onClick={logActivity}>{t('common.submit')}</Button>
                     </>
                 }
@@ -334,6 +336,35 @@ export default function ActiveSession() {
                         onChange={(e) => setActivityNote(e.target.value)}
                         placeholder={t('activeSession.activityPlaceholder', 'What is the child doing?')}
                     />
+                    <div className="activity-photo-section">
+                        <Button
+                            variant="secondary"
+                            size="sm"
+                            onClick={() => activityPhotoRef.current?.click()}
+                        >
+                            <Camera size={16} strokeWidth={1.75} /> {t('activeSession.addPhoto')}
+                        </Button>
+                        <input
+                            ref={activityPhotoRef}
+                            type="file"
+                            accept="image/*"
+                            style={{ display: 'none' }}
+                            onChange={(e) => {
+                                const file = e.target.files?.[0];
+                                if (file) {
+                                    const reader = new FileReader();
+                                    reader.onload = (ev) => setActivityPhoto(ev.target?.result as string);
+                                    reader.readAsDataURL(file);
+                                }
+                                e.target.value = '';
+                            }}
+                        />
+                        {activityPhoto && (
+                            <div className="activity-photo-preview">
+                                <img src={activityPhoto} alt="Activity" />
+                            </div>
+                        )}
+                    </div>
                 </div>
             </Modal>
 

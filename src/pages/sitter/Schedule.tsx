@@ -155,19 +155,83 @@ export default function Schedule() {
         );
     }
 
+    // Extract next upcoming session for prominent display
+    const nextSession = todaySessions.find((s) => s.status === 'confirmed' || s.status === 'sitter_assigned' || s.status === 'pending');
+    const remainingSessions = todaySessions.filter((s) => s !== nextSession);
+
     return (
         <div className="sitter-schedule animate-fade-in">
-            {/* Countdown — most important info first */}
-            {countdown && (
+            {/* Next Booking Card — most important info first */}
+            {nextSession ? (
                 <motion.div
-                    className="countdown-banner"
                     initial={{ opacity: 0, y: -8 }}
                     animate={{ opacity: 1, y: 0 }}
                     transition={{ duration: 0.3 }}
                 >
-                    <Clock size={16} strokeWidth={1.75} />
-                    <span>{t('sitter.nextSessionIn', 'Next session in')} <strong>{countdown}</strong></span>
+                    <Card className="next-booking-card" variant="gold">
+                        <CardBody>
+                            <div className="next-booking-label">
+                                {countdown && (
+                                    <span className="next-booking-countdown">
+                                        <Clock size={14} strokeWidth={1.75} />
+                                        {countdown}
+                                    </span>
+                                )}
+                                <StatusBadge status={nextSession.status} />
+                            </div>
+                            <div className="next-booking-time">{nextSession.time}</div>
+                            <div className="next-booking-details">
+                                <div className="next-booking-detail">
+                                    <Building2 size={16} strokeWidth={1.75} />
+                                    <span>{nextSession.hotel} - {t('common.room')} {nextSession.room}</span>
+                                </div>
+                                <div className="next-booking-detail">
+                                    <Baby size={16} strokeWidth={1.75} />
+                                    <span>{nextSession.children.map((c) => typeof c === 'string' ? c : `${c.name} (${c.age})`).join(', ')}</span>
+                                </div>
+                                {nextSession.amount && (
+                                    <div className="next-booking-detail next-booking-amount">
+                                        <DollarSign size={16} strokeWidth={1.75} />
+                                        <span>{nextSession.amount}</span>
+                                    </div>
+                                )}
+                            </div>
+                            {nextSession.children.some((c) => typeof c !== 'string' && c.allergies?.length) && (
+                                <div className="allergy-info">
+                                    <AlertCircle size={14} strokeWidth={1.75} />
+                                    <span>{t('sitter.allergies', 'Allergies')}: {nextSession.children
+                                        .filter((c) => typeof c !== 'string' && c.allergies?.length)
+                                        .map((c) => typeof c !== 'string' ? `${c.name}: ${c.allergies!.join(', ')}` : '')
+                                        .join(' | ')}</span>
+                                </div>
+                            )}
+                            <div className="session-actions">
+                                {nextSession.status === 'confirmed' && (
+                                    <Button variant="gold" fullWidth onClick={() => { toast.success(t('sitter.startSession'), `Room ${nextSession.room}`); navigate('/sitter/active'); }}>{t('sitter.startSession')}</Button>
+                                )}
+                                {nextSession.status === 'sitter_assigned' && (
+                                    <div className="assignment-actions">
+                                        <Button variant="primary" onClick={() => setConfirmAccept({ id: nextSession.id, hotel: nextSession.hotel, room: nextSession.room, time: nextSession.time })}>
+                                            <Check size={16} strokeWidth={1.75} /> {t('sitter.acceptAssignment', 'Accept')}
+                                        </Button>
+                                        <Button variant="danger" onClick={() => handleReject(nextSession.id)}>
+                                            <X size={16} strokeWidth={1.75} /> {t('sitter.declineAssignment', 'Decline')}
+                                        </Button>
+                                    </div>
+                                )}
+                                {nextSession.status === 'pending' && (
+                                    <Button variant="secondary" fullWidth disabled>{t('status.pending')}</Button>
+                                )}
+                            </div>
+                        </CardBody>
+                    </Card>
                 </motion.div>
+            ) : !todaySessions.length && (
+                <EmptyState
+                    icon={<Calendar size={20} strokeWidth={1.75} />}
+                    title={t('sitter.noSessionsScheduled', 'No sessions scheduled')}
+                    description={t('sitter.noSessionsScheduledDesc', 'You have no sessions scheduled for today. Check back later.')}
+                />
             )}
 
             {/* Availability Toggle */}
@@ -235,10 +299,10 @@ export default function Schedule() {
                         exit={{ opacity: 0, x: -20 }}
                         transition={{ duration: 0.2 }}
                     >
-                        {/* Session Cards */}
-                        {todaySessions.length > 0 ? (
+                        {/* Remaining Session Cards */}
+                        {remainingSessions.length > 0 && (
                             <motion.div className="sessions-list" initial="hidden" animate="show" variants={staggerContainer}>
-                                {todaySessions.map((session) => (
+                                {remainingSessions.map((session) => (
                                     <motion.div key={session.id} variants={staggerItem}>
                                         <Card className={`session-card session-card--${session.status}`}>
                                             <CardBody>
@@ -273,36 +337,7 @@ export default function Schedule() {
                                                             <span className="detail-value">{session.children.map((c) => typeof c === 'string' ? c : `${c.name} (${c.age})`).join(', ')}</span>
                                                         </div>
                                                     </div>
-                                                    <div className="session-detail">
-                                                        <div className="session-detail-icon">
-                                                            <Clock size={14} strokeWidth={1.75} />
-                                                        </div>
-                                                        <div>
-                                                            <span className="detail-label">{t('common.time')}</span>
-                                                            <span className="detail-value">{session.time}</span>
-                                                        </div>
-                                                    </div>
-                                                    {session.amount && (
-                                                        <div className="session-detail">
-                                                            <div className="session-detail-icon icon-gold">
-                                                                <DollarSign size={14} strokeWidth={1.75} />
-                                                            </div>
-                                                            <div>
-                                                                <span className="detail-label">{t('sitter.sessionAmount', 'Amount')}</span>
-                                                                <span className="detail-value detail-value-gold">{session.amount}</span>
-                                                            </div>
-                                                        </div>
-                                                    )}
                                                 </div>
-                                                {session.children.some((c) => typeof c !== 'string' && c.allergies?.length) && (
-                                                    <div className="allergy-info">
-                                                        <AlertCircle size={14} strokeWidth={1.75} />
-                                                        <span>{t('sitter.allergies', 'Allergies')}: {session.children
-                                                            .filter((c) => typeof c !== 'string' && c.allergies?.length)
-                                                            .map((c) => typeof c !== 'string' ? `${c.name}: ${c.allergies!.join(', ')}` : '')
-                                                            .join(' | ')}</span>
-                                                    </div>
-                                                )}
                                                 <div className="session-actions">
                                                     {session.status === 'confirmed' && (
                                                         <Button variant="gold" fullWidth onClick={() => { toast.success(t('sitter.startSession'), `Room ${session.room}`); navigate('/sitter/active'); }}>{t('sitter.startSession')}</Button>
@@ -326,12 +361,6 @@ export default function Schedule() {
                                     </motion.div>
                                 ))}
                             </motion.div>
-                        ) : (
-                            <EmptyState
-                                icon={<Calendar size={20} strokeWidth={1.75} />}
-                                title={t('sitter.noSessionsScheduled', 'No sessions scheduled')}
-                                description={t('sitter.noSessionsScheduledDesc', 'You have no sessions scheduled for today. Check back later.')}
-                            />
                         )}
 
                         {/* Week View */}
