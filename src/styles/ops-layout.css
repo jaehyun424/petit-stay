@@ -63,6 +63,26 @@
   [class*="user-name"], [class*="userName"] {
     display: none;
   }
+
+  /* Mobile page content padding for bottom nav */
+  .ops-layout .page-content {
+    padding: 1rem;
+    padding-bottom: calc(1rem + 80px);
+  }
+
+  /* Mobile header adjustments */
+  .ops-layout .main-header {
+    padding: 0.5rem 1rem;
+  }
+
+  .ops-layout .header-user {
+    gap: 0.25rem;
+  }
+
+  /* Hide header logout on mobile (available in sidebar) */
+  .ops-layout .header-user > button:last-child {
+    display: none;
+  }
 }
 
 .ops-layout .header-actions, .ops-layout [class*="header-right"], .ops-layout [class*="header-actions"] {

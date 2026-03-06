@@ -2,12 +2,12 @@
 // Petit Stay - Ops Console Layout
 // ============================================
 
-import { useState } from 'react';
+import { useState, useRef, useEffect } from 'react';
 import { NavLink, Outlet, useNavigate, useLocation } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import {
   LayoutDashboard, Calendar, Users, Building2, Wallet, AlertTriangle,
-  BarChart3, Shield, Menu, X, Sun, Moon, LogOut, ChevronRight,
+  BarChart3, Shield, Menu, X, Sun, Moon, LogOut, ChevronRight, MoreHorizontal,
 } from 'lucide-react';
 import { useAuth } from '../../contexts/AuthContext';
 import { useTheme } from '../../contexts/ThemeContext';
@@ -29,6 +29,22 @@ export function OpsLayout() {
   const location = useLocation();
   const [sidebarCollapsed, setSidebarCollapsed] = useState(false);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+  const [moreMenuOpen, setMoreMenuOpen] = useState(false);
+  const moreMenuRef = useRef<HTMLDivElement>(null);
+
+  // Close "more" menu on outside click
+  useEffect(() => {
+    const handleClickOutside = (e: MouseEvent) => {
+      if (moreMenuRef.current && !moreMenuRef.current.contains(e.target as Node)) {
+        setMoreMenuOpen(false);
+      }
+    };
+    if (moreMenuOpen) document.addEventListener('mousedown', handleClickOutside);
+    return () => document.removeEventListener('mousedown', handleClickOutside);
+  }, [moreMenuOpen]);
+
+  // Close "more" menu on route change
+  useEffect(() => { setMoreMenuOpen(false); }, [location.pathname]);
 
   const navItems = [
     { to: '/ops', icon: <LayoutDashboard size={20} strokeWidth={1.75} />, labelKey: 'ops.dashboard', end: true },
@@ -40,6 +56,12 @@ export function OpsLayout() {
     { to: '/ops/insurance', icon: <Shield size={20} strokeWidth={1.75} />, labelKey: 'ops.insurance' },
     { to: '/ops/reports', icon: <BarChart3 size={20} strokeWidth={1.75} />, labelKey: 'ops.reports' },
   ];
+
+  const bottomNavItems = navItems.slice(0, 5); // First 5 items
+  const moreNavItems = navItems.slice(5); // Issues, Insurance, Reports
+  const isMoreActive = moreNavItems.some((item) =>
+    item.end ? location.pathname === item.to : location.pathname.startsWith(item.to)
+  );
 
   const currentNav = navItems.find((item) =>
     item.end ? location.pathname === item.to : location.pathname.startsWith(item.to)
@@ -142,14 +164,7 @@ export function OpsLayout() {
 
       {/* Bottom Navigation (mobile only) */}
       <nav className="bottom-nav ops-mobile-only">
-        {[
-          navItems[0],
-          navItems[1],
-          navItems[2],
-          navItems[3],
-          navItems[4],
-          navItems[5],
-        ].map((item) => (
+        {bottomNavItems.map((item) => (
           <NavLink
             key={item.to}
             to={item.to}
@@ -162,6 +177,34 @@ export function OpsLayout() {
             <span className="bottom-nav-label">{t(item.labelKey)}</span>
           </NavLink>
         ))}
+        {/* "More" tab for Insurance, Reports, Issues */}
+        <div className="bottom-nav-more-wrapper" ref={moreMenuRef}>
+          <button
+            className={`bottom-nav-item ${isMoreActive ? 'bottom-nav-item-active' : ''}`}
+            onClick={() => setMoreMenuOpen(!moreMenuOpen)}
+          >
+            <span className="bottom-nav-icon"><MoreHorizontal size={20} strokeWidth={1.75} /></span>
+            <span className="bottom-nav-label">{t('common.more', 'More')}</span>
+          </button>
+          {moreMenuOpen && (
+            <div className="ops-more-menu">
+              {moreNavItems.map((item) => (
+                <NavLink
+                  key={item.to}
+                  to={item.to}
+                  end={item.end}
+                  className={({ isActive }) =>
+                    `ops-more-menu-item ${isActive ? 'ops-more-menu-item-active' : ''}`
+                  }
+                  onClick={() => setMoreMenuOpen(false)}
+                >
+                  <span className="ops-more-menu-icon">{item.icon}</span>
+                  <span>{t(item.labelKey)}</span>
+                </NavLink>
+              ))}
+            </div>
+          )}
+        </div>
       </nav>
     </div>
   );

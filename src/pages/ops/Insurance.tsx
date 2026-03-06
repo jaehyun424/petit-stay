@@ -119,41 +119,76 @@ export default function OpsInsurance() {
                                 description={t('insurance.noPoliciesDesc')}
                             />
                         ) : (
-                            <div className="ops-table-wrapper">
-                                <table className="ops-table">
-                                    <thead>
-                                        <tr>
-                                            <th>{t('insurance.provider')}</th>
-                                            <th>{t('insurance.policyNumber')}</th>
-                                            <th>{t('insurance.coverageType')}</th>
-                                            <th>{t('insurance.maxCoverage')}</th>
-                                            <th>{t('insurance.status')}</th>
-                                        </tr>
-                                    </thead>
-                                    <motion.tbody initial="hidden" animate="show" variants={staggerContainer}>
-                                        {policies.map((policy) => {
-                                            const isActive = policy.validTo >= new Date();
-                                            return (
-                                                <motion.tr key={policy.id} variants={staggerItem} className="ops-table-row-hover">
-                                                    <td><span className="ops-hotel-name">{policy.provider}</span></td>
-                                                    <td><span className="booking-code">{policy.policyNumber}</span></td>
-                                                    <td>
+                            <>
+                                {/* Desktop Table */}
+                                <div className="ops-table-wrapper ops-desktop-only">
+                                    <table className="ops-table">
+                                        <thead>
+                                            <tr>
+                                                <th>{t('insurance.provider')}</th>
+                                                <th>{t('insurance.policyNumber')}</th>
+                                                <th>{t('insurance.coverageType')}</th>
+                                                <th>{t('insurance.maxCoverage')}</th>
+                                                <th>{t('insurance.status')}</th>
+                                            </tr>
+                                        </thead>
+                                        <motion.tbody initial="hidden" animate="show" variants={staggerContainer}>
+                                            {policies.map((policy) => {
+                                                const isActive = policy.validTo >= new Date();
+                                                return (
+                                                    <motion.tr key={policy.id} variants={staggerItem} className="ops-table-row-hover">
+                                                        <td><span className="ops-hotel-name">{policy.provider}</span></td>
+                                                        <td><span className="booking-code">{policy.policyNumber}</span></td>
+                                                        <td>
+                                                            <Badge variant={getCoverageVariant(policy.coverageType)} size="sm">
+                                                                {t(`insurance.type_${policy.coverageType}`)}
+                                                            </Badge>
+                                                        </td>
+                                                        <td className="ops-amount-bold">{formatCurrency(policy.maxCoverage)}</td>
+                                                        <td>
+                                                            <Badge variant={isActive ? 'success' : 'error'} size="sm">
+                                                                {isActive ? t('insurance.active') : t('insurance.expired')}
+                                                            </Badge>
+                                                        </td>
+                                                    </motion.tr>
+                                                );
+                                            })}
+                                        </motion.tbody>
+                                    </table>
+                                </div>
+                                {/* Mobile Cards */}
+                                <div className="ops-mobile-card-list ops-mobile-only-block">
+                                    {policies.map((policy) => {
+                                        const isActive = policy.validTo >= new Date();
+                                        return (
+                                            <div key={policy.id} className="ops-mobile-card">
+                                                <div className="ops-mobile-card-header">
+                                                    <span className="ops-mobile-card-title">{policy.provider}</span>
+                                                    <Badge variant={isActive ? 'success' : 'error'} size="sm">
+                                                        {isActive ? t('insurance.active') : t('insurance.expired')}
+                                                    </Badge>
+                                                </div>
+                                                <div className="ops-mobile-card-body">
+                                                    <div className="ops-mobile-card-row">
+                                                        <span className="ops-mobile-card-label">{t('insurance.policyNumber')}</span>
+                                                        <span className="ops-mobile-card-code">{policy.policyNumber}</span>
+                                                    </div>
+                                                    <div className="ops-mobile-card-row">
+                                                        <span className="ops-mobile-card-label">{t('insurance.coverageType')}</span>
                                                         <Badge variant={getCoverageVariant(policy.coverageType)} size="sm">
                                                             {t(`insurance.type_${policy.coverageType}`)}
                                                         </Badge>
-                                                    </td>
-                                                    <td className="ops-amount-bold">{formatCurrency(policy.maxCoverage)}</td>
-                                                    <td>
-                                                        <Badge variant={isActive ? 'success' : 'error'} size="sm">
-                                                            {isActive ? t('insurance.active') : t('insurance.expired')}
-                                                        </Badge>
-                                                    </td>
-                                                </motion.tr>
-                                            );
-                                        })}
-                                    </motion.tbody>
-                                </table>
-                            </div>
+                                                    </div>
+                                                    <div className="ops-mobile-card-row">
+                                                        <span className="ops-mobile-card-label">{t('insurance.maxCoverage')}</span>
+                                                        <span className="ops-mobile-card-amount">{formatCurrency(policy.maxCoverage)}</span>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        );
+                                    })}
+                                </div>
+                            </>
                         )}
                     </CardBody>
                 </Card>
@@ -214,7 +249,8 @@ export default function OpsInsurance() {
                             { value: 'expired', label: t('insurance.status_expired') },
                         ]} />
                     </div>
-                    <div className="ops-table-wrapper">
+                    {/* Desktop Table */}
+                    <div className="ops-table-wrapper ops-desktop-only">
                         <table className="ops-table">
                             <thead>
                                 <tr>
@@ -239,6 +275,29 @@ export default function OpsInsurance() {
                                 ))}
                             </motion.tbody>
                         </table>
+                    </div>
+                    {/* Mobile Cards */}
+                    <div className="ops-mobile-card-list ops-mobile-only-block">
+                        {filteredBookingInsurance.map((bi) => (
+                            <div key={bi.bookingId} className="ops-mobile-card">
+                                <div className="ops-mobile-card-header">
+                                    <span className="ops-mobile-card-code">{bi.bookingId}</span>
+                                    <Badge variant={getClaimStatusVariant(bi.status)} size="sm">
+                                        {t(`insurance.status_${bi.status}`)}
+                                    </Badge>
+                                </div>
+                                <div className="ops-mobile-card-body">
+                                    <div className="ops-mobile-card-row">
+                                        <span className="ops-mobile-card-label">{t('insurance.policyId')}</span>
+                                        <span>{bi.policyId}</span>
+                                    </div>
+                                    <div className="ops-mobile-card-row">
+                                        <span className="ops-mobile-card-label">{t('insurance.claimAmountLabel')}</span>
+                                        <span className="ops-mobile-card-amount">{bi.claimAmount ? formatCurrency(bi.claimAmount) : '-'}</span>
+                                    </div>
+                                </div>
+                            </div>
+                        ))}
                     </div>
                 </CardBody>
             </Card>

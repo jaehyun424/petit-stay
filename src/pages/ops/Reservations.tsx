@@ -34,10 +34,7 @@ export default function OpsReservations() {
     });
   }, [bookings, search, statusFilter]);
 
-  // Reset page when filters change
-  useEffect(() => {
-    setPage(1);
-  }, [search, statusFilter]);
+  useEffect(() => { setPage(1); }, [search, statusFilter]);
 
   const totalPages = Math.max(1, Math.ceil(filtered.length / PAGE_SIZE));
   const paged = filtered.slice((page - 1) * PAGE_SIZE, page * PAGE_SIZE);
@@ -63,12 +60,8 @@ export default function OpsReservations() {
     return (
       <div className="ops-page animate-fade-in">
         <Skeleton width="240px" height="2rem" />
-        <div style={{ marginTop: 'var(--space-6)' }}>
-          <Skeleton height="48px" />
-        </div>
-        <div style={{ marginTop: 'var(--space-4)' }}>
-          <Skeleton height="400px" />
-        </div>
+        <div style={{ marginTop: 'var(--space-6)' }}><Skeleton height="48px" /></div>
+        <div style={{ marginTop: 'var(--space-4)' }}><Skeleton height="400px" /></div>
       </div>
     );
   }
@@ -108,73 +101,121 @@ export default function OpsReservations() {
         </CardBody>
       </Card>
 
-      <Card>
-        <CardBody>
-          <div className="ops-table-wrapper">
-            <table className="ops-table">
-              <thead>
-                <tr>
-                  <th style={{ width: 40 }}>
-                    <button className="ops-checkbox-btn" onClick={toggleSelectAll} aria-label="Select all">
-                      <CheckSquare size={16} strokeWidth={selectedIds.size === paged.length && paged.length > 0 ? 2.5 : 1.5} />
-                    </button>
-                  </th>
-                  <th>{t('hotel.bookingCode')}</th>
-                  <th>{t('hotel.guestRoom')}</th>
-                  <th>{t('auth.sitter')}</th>
-                  <th>{t('hotel.status')}</th>
-                  <th>{t('hotel.amount')}</th>
-                </tr>
-              </thead>
-              <motion.tbody initial="hidden" animate="show" variants={staggerContainer}>
-                {paged.length === 0 && (
-                  <tr><td colSpan={6}>
-                    <EmptyState
-                      icon={<Calendar size={32} strokeWidth={1.5} />}
-                      title={t('ops.noReservations')}
-                      description={t('ops.noReservationsDesc')}
-                    />
-                  </td></tr>
-                )}
-                {paged.map((booking) => (
-                  <motion.tr
-                    key={booking.id}
-                    variants={staggerItem}
-                    className={`ops-table-row-hover ${selectedIds.has(booking.id) ? 'ops-row-selected' : ''}`}
-                  >
-                    <td>
-                      <button className="ops-checkbox-btn" onClick={() => toggleSelect(booking.id)} aria-label="Select row">
-                        <CheckSquare size={16} strokeWidth={selectedIds.has(booking.id) ? 2.5 : 1.5} />
-                      </button>
-                    </td>
-                    <td>
-                      <span className="booking-code">{booking.confirmationCode}</span>
-                      <br /><span className="text-xs text-muted">{booking.date} {booking.time}</span>
-                    </td>
-                    <td>{booking.parent.name}<br /><span className="text-xs text-muted">{t('common.room')} {booking.room}</span></td>
-                    <td>
-                      {booking.sitter ? (
+      {paged.length === 0 ? (
+        <Card>
+          <CardBody>
+            <EmptyState
+              icon={<Calendar size={32} strokeWidth={1.5} />}
+              title={t('ops.noReservations')}
+              description={t('ops.noReservationsDesc')}
+            />
+          </CardBody>
+        </Card>
+      ) : (
+        <>
+          {/* Desktop Table */}
+          <Card className="ops-desktop-only">
+            <CardBody>
+              <div className="ops-table-wrapper">
+                <table className="ops-table">
+                  <thead>
+                    <tr>
+                      <th style={{ width: 40 }}>
+                        <button className="ops-checkbox-btn" onClick={toggleSelectAll} aria-label="Select all">
+                          <CheckSquare size={16} strokeWidth={selectedIds.size === paged.length && paged.length > 0 ? 2.5 : 1.5} />
+                        </button>
+                      </th>
+                      <th>{t('hotel.bookingCode')}</th>
+                      <th>{t('hotel.guestRoom')}</th>
+                      <th>{t('auth.sitter')}</th>
+                      <th>{t('hotel.status')}</th>
+                      <th>{t('hotel.amount')}</th>
+                    </tr>
+                  </thead>
+                  <motion.tbody initial="hidden" animate="show" variants={staggerContainer}>
+                    {paged.map((booking) => (
+                      <motion.tr
+                        key={booking.id}
+                        variants={staggerItem}
+                        className={`ops-table-row-hover ${selectedIds.has(booking.id) ? 'ops-row-selected' : ''}`}
+                      >
+                        <td>
+                          <button className="ops-checkbox-btn" onClick={() => toggleSelect(booking.id)} aria-label="Select row">
+                            <CheckSquare size={16} strokeWidth={selectedIds.has(booking.id) ? 2.5 : 1.5} />
+                          </button>
+                        </td>
+                        <td>
+                          <span className="booking-code">{booking.confirmationCode}</span>
+                          <br /><span className="text-xs text-muted">{booking.date} {booking.time}</span>
+                        </td>
+                        <td>{booking.parent.name}<br /><span className="text-xs text-muted">{t('common.room')} {booking.room}</span></td>
+                        <td>
+                          {booking.sitter ? (
+                            <div className="sitter-cell">
+                              <Avatar name={booking.sitter.name} size="sm" />
+                              <span>{booking.sitter.name}</span>
+                              <TierBadge tier={booking.sitter.tier} />
+                            </div>
+                          ) : <span className="text-muted">{t('ops.unassigned')}</span>}
+                        </td>
+                        <td><StatusBadge status={booking.status} /></td>
+                        <td>{formatCurrency(booking.totalAmount)}</td>
+                      </motion.tr>
+                    ))}
+                  </motion.tbody>
+                </table>
+              </div>
+              {totalPages > 1 && (
+                <div style={{ marginTop: 'var(--space-4)' }}>
+                  <Pagination currentPage={page} totalPages={totalPages} onPageChange={setPage} />
+                </div>
+              )}
+            </CardBody>
+          </Card>
+
+          {/* Mobile Card List */}
+          <motion.div className="ops-mobile-card-list ops-mobile-only-block" initial="hidden" animate="show" variants={staggerContainer}>
+            {paged.map((booking) => (
+              <motion.div key={booking.id} variants={staggerItem}>
+                <div className={`ops-mobile-card ${selectedIds.has(booking.id) ? 'ops-mobile-card-selected' : ''}`}>
+                  <div className="ops-mobile-card-header">
+                    <span className="ops-mobile-card-code">{booking.confirmationCode}</span>
+                    <StatusBadge status={booking.status} />
+                  </div>
+                  <div className="ops-mobile-card-body">
+                    <div className="ops-mobile-card-row">
+                      <span className="ops-mobile-card-label">{t('hotel.guestRoom')}</span>
+                      <span>{booking.parent.name} / {t('common.room')} {booking.room}</span>
+                    </div>
+                    <div className="ops-mobile-card-row">
+                      <span className="ops-mobile-card-label">{t('common.date')}</span>
+                      <span>{booking.date} {booking.time}</span>
+                    </div>
+                    {booking.sitter && (
+                      <div className="ops-mobile-card-row">
+                        <span className="ops-mobile-card-label">{t('auth.sitter')}</span>
                         <div className="sitter-cell">
                           <Avatar name={booking.sitter.name} size="sm" />
                           <span>{booking.sitter.name}</span>
                           <TierBadge tier={booking.sitter.tier} />
                         </div>
-                      ) : <span className="text-muted">{t('ops.unassigned')}</span>}
-                    </td>
-                    <td><StatusBadge status={booking.status} /></td>
-                    <td>{formatCurrency(booking.totalAmount)}</td>
-                  </motion.tr>
-                ))}
-              </motion.tbody>
-            </table>
-          </div>
-          {totalPages > 1 && (
-            <div style={{ marginTop: 'var(--space-4)' }}>
-              <Pagination currentPage={page} totalPages={totalPages} onPageChange={setPage} />
-            </div>
-          )}
-        </CardBody>
-      </Card>
+                      </div>
+                    )}
+                  </div>
+                  <div className="ops-mobile-card-footer">
+                    <span className="ops-mobile-card-amount">{formatCurrency(booking.totalAmount)}</span>
+                  </div>
+                </div>
+              </motion.div>
+            ))}
+            {totalPages > 1 && (
+              <div style={{ marginTop: 'var(--space-4)' }}>
+                <Pagination currentPage={page} totalPages={totalPages} onPageChange={setPage} />
+              </div>
+            )}
+          </motion.div>
+        </>
+      )}
     </div>
   );
 }

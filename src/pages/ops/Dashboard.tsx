@@ -114,7 +114,8 @@ export default function OpsDashboard() {
             <CardTitle>{t('ops.hotelManagement')}</CardTitle>
           </CardHeader>
           <CardBody>
-            <div className="ops-table-wrapper">
+            {/* Desktop Table */}
+            <div className="ops-table-wrapper ops-desktop-only">
               <table className="ops-table">
                 <thead>
                   <tr>
@@ -133,6 +134,26 @@ export default function OpsDashboard() {
                   ))}
                 </tbody>
               </table>
+            </div>
+            {/* Mobile Cards */}
+            <div className="ops-mobile-card-list ops-mobile-only-block">
+              {hotels.map((hotel) => (
+                <div key={hotel.id} className="ops-mobile-card">
+                  <div className="ops-mobile-card-header">
+                    <span className="ops-mobile-card-title">{hotel.name}</span>
+                  </div>
+                  <div className="ops-mobile-card-body">
+                    <div className="ops-mobile-card-row">
+                      <span className="ops-mobile-card-label">{t('ops.monthlyBookings')}</span>
+                      <span>{hotel.bookingsThisMonth}</span>
+                    </div>
+                    <div className="ops-mobile-card-row">
+                      <span className="ops-mobile-card-label">{t('ops.monthlyRevenue')}</span>
+                      <span className="ops-mobile-card-amount">{formatCurrency(hotel.revenue)}</span>
+                    </div>
+                  </div>
+                </div>
+              ))}
             </div>
           </CardBody>
         </Card>

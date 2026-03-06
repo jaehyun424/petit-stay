@@ -30,7 +30,6 @@ export default function OpsHotelManagement() {
   const [searchQuery, setSearchQuery] = useState('');
   const [tierFilter, setTierFilter] = useState('');
 
-  // Stable SLA scores per hotel (avoid Math.random in render)
   const slaScoresRef = useRef<Record<string, number>>({});
   const getSlaScore = (hotelId: string) => {
     if (!(hotelId in slaScoresRef.current)) {
@@ -122,55 +121,103 @@ export default function OpsHotelManagement() {
         </CardBody>
       </Card>
 
-      <Card>
-        <CardBody>
-          {filteredHotels.length === 0 ? (
+      {filteredHotels.length === 0 ? (
+        <Card>
+          <CardBody>
             <EmptyState
               icon={<Building2 size={32} strokeWidth={1.5} />}
               title={t('ops.noHotels')}
               description={t('ops.noHotelsDesc')}
             />
-          ) : (
-          <div className="ops-table-wrapper">
-            <table className="ops-table">
-              <thead>
-                <tr>
-                  <th>{t('common.name')}</th>
-                  <th>{t('ops.tier')}</th>
-                  <th>{t('ops.contractInfo')}</th>
-                  <th>{t('ops.monthlyBookings')}</th>
-                  <th>{t('ops.monthlyRevenue')}</th>
-                  <th>{t('ops.commissionRate')}</th>
-                  <th>{t('ops.slaScore')}</th>
-                  <th></th>
-                </tr>
-              </thead>
-              <motion.tbody initial="hidden" animate="show" variants={staggerContainer}>
-                {filteredHotels.map((hotel) => {
-                  const slaScore = getSlaScore(hotel.id);
-                  return (
-                    <motion.tr key={hotel.id} variants={staggerItem} className="ops-table-row-hover">
-                      <td><span className="ops-hotel-name">{hotel.name}</span></td>
-                      <td><Badge variant={hotel.tier === 'luxury' ? 'gold' : 'primary'} size="sm">{hotel.tier}</Badge></td>
-                      <td><Badge variant="success" size="sm">{t('ops.activeContract')}</Badge></td>
-                      <td>{hotel.bookingsThisMonth}</td>
-                      <td>{formatCurrency(hotel.revenue)}</td>
-                      <td>15%</td>
-                      <td>
+          </CardBody>
+        </Card>
+      ) : (
+        <>
+          {/* Desktop Table */}
+          <Card className="ops-desktop-only">
+            <CardBody>
+              <div className="ops-table-wrapper">
+                <table className="ops-table">
+                  <thead>
+                    <tr>
+                      <th>{t('common.name')}</th>
+                      <th>{t('ops.tier')}</th>
+                      <th>{t('ops.contractInfo')}</th>
+                      <th>{t('ops.monthlyBookings')}</th>
+                      <th>{t('ops.monthlyRevenue')}</th>
+                      <th>{t('ops.commissionRate')}</th>
+                      <th>{t('ops.slaScore')}</th>
+                      <th></th>
+                    </tr>
+                  </thead>
+                  <motion.tbody initial="hidden" animate="show" variants={staggerContainer}>
+                    {filteredHotels.map((hotel) => {
+                      const slaScore = getSlaScore(hotel.id);
+                      return (
+                        <motion.tr key={hotel.id} variants={staggerItem} className="ops-table-row-hover">
+                          <td><span className="ops-hotel-name">{hotel.name}</span></td>
+                          <td><Badge variant={hotel.tier === 'luxury' ? 'gold' : 'primary'} size="sm">{hotel.tier}</Badge></td>
+                          <td><Badge variant="success" size="sm">{t('ops.activeContract')}</Badge></td>
+                          <td>{hotel.bookingsThisMonth}</td>
+                          <td>{formatCurrency(hotel.revenue)}</td>
+                          <td>15%</td>
+                          <td>
+                            <span style={{ color: slaScore >= 95 ? 'var(--success-500)' : slaScore >= 85 ? 'var(--warning-500)' : 'var(--error-500)', fontWeight: 600 }}>
+                              {slaScore}%
+                            </span>
+                          </td>
+                          <td><Button variant="secondary" size="sm" onClick={() => handleEditClick(hotel)}>{t('ops.editHotel')}</Button></td>
+                        </motion.tr>
+                      );
+                    })}
+                  </motion.tbody>
+                </table>
+              </div>
+            </CardBody>
+          </Card>
+
+          {/* Mobile Card List */}
+          <motion.div className="ops-mobile-card-list ops-mobile-only-block" initial="hidden" animate="show" variants={staggerContainer}>
+            {filteredHotels.map((hotel) => {
+              const slaScore = getSlaScore(hotel.id);
+              return (
+                <motion.div key={hotel.id} variants={staggerItem}>
+                  <div className="ops-mobile-card">
+                    <div className="ops-mobile-card-header">
+                      <span className="ops-mobile-card-title">{hotel.name}</span>
+                      <Badge variant={hotel.tier === 'luxury' ? 'gold' : 'primary'} size="sm">{hotel.tier}</Badge>
+                    </div>
+                    <div className="ops-mobile-card-body">
+                      <div className="ops-mobile-card-row">
+                        <span className="ops-mobile-card-label">{t('ops.monthlyBookings')}</span>
+                        <span>{hotel.bookingsThisMonth}</span>
+                      </div>
+                      <div className="ops-mobile-card-row">
+                        <span className="ops-mobile-card-label">{t('ops.monthlyRevenue')}</span>
+                        <span className="ops-mobile-card-amount">{formatCurrency(hotel.revenue)}</span>
+                      </div>
+                      <div className="ops-mobile-card-row">
+                        <span className="ops-mobile-card-label">{t('ops.slaScore')}</span>
                         <span style={{ color: slaScore >= 95 ? 'var(--success-500)' : slaScore >= 85 ? 'var(--warning-500)' : 'var(--error-500)', fontWeight: 600 }}>
                           {slaScore}%
                         </span>
-                      </td>
-                      <td><Button variant="secondary" size="sm" onClick={() => handleEditClick(hotel)}>{t('ops.editHotel')}</Button></td>
-                    </motion.tr>
-                  );
-                })}
-              </motion.tbody>
-            </table>
-          </div>
-          )}
-        </CardBody>
-      </Card>
+                      </div>
+                      <div className="ops-mobile-card-row">
+                        <span className="ops-mobile-card-label">{t('ops.commissionRate')}</span>
+                        <span>15%</span>
+                      </div>
+                    </div>
+                    <div className="ops-mobile-card-footer">
+                      <Badge variant="success" size="sm">{t('ops.activeContract')}</Badge>
+                      <Button variant="secondary" size="sm" onClick={() => handleEditClick(hotel)}>{t('ops.editHotel')}</Button>
+                    </div>
+                  </div>
+                </motion.div>
+              );
+            })}
+          </motion.div>
+        </>
+      )}
 
       {/* Edit Hotel Modal */}
       <Modal

@@ -737,3 +737,416 @@
   border-radius: 4px;
   background: linear-gradient(90deg, var(--glass-bg), rgba(99, 102, 241, 0.75));
 }
+
+/* ============================================
+   Mobile Card System
+   Unified with Hotel/Guest/Sitter modules
+   ============================================ */
+
+/* Desktop/Mobile visibility toggles */
+.ops-desktop-only { display: block; }
+.ops-mobile-only-block { display: none; }
+
+@media (max-width: 768px) {
+  .ops-desktop-only { display: none !important; }
+  .ops-mobile-only-block { display: block !important; }
+}
+
+/* Mobile Card List */
+.ops-mobile-card-list {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+/* Mobile Card — matches Hotel/Guest/Sitter card patterns */
+.ops-mobile-card {
+  background: var(--bg-card);
+  border: 1px solid var(--cream-200);
+  border-radius: var(--radius-xl);
+  padding: 1rem 1.25rem;
+  box-shadow: 0 2px 12px rgba(0, 0, 0, 0.06);
+  transition: all 0.2s ease;
+  cursor: pointer;
+}
+
+.ops-mobile-card:active {
+  transform: scale(0.99);
+}
+
+.ops-mobile-card-selected {
+  border-color: var(--gold-300);
+  background: var(--gold-100);
+}
+
+.ops-mobile-card-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 0.75rem;
+  padding-bottom: 0.75rem;
+  border-bottom: 1px solid var(--cream-200);
+}
+
+.ops-mobile-card-code {
+  font-family: monospace;
+  font-weight: 600;
+  font-size: 0.8125rem;
+  color: var(--primary-600);
+}
+
+.ops-mobile-card-title {
+  font-weight: 600;
+  font-size: 0.9375rem;
+  color: var(--text-primary);
+  line-height: 1.4;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+.ops-mobile-card-body {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  margin-bottom: 0.75rem;
+}
+
+.ops-mobile-card-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 0.875rem;
+  color: var(--text-primary);
+  gap: 0.5rem;
+}
+
+.ops-mobile-card-label {
+  font-size: 0.75rem;
+  color: var(--text-tertiary);
+  text-transform: uppercase;
+  letter-spacing: 0.03em;
+  flex-shrink: 0;
+}
+
+.ops-mobile-card-amount {
+  font-weight: 700;
+  color: var(--gold-600);
+}
+
+.ops-mobile-card-sub {
+  font-size: 0.75rem;
+  color: var(--text-tertiary);
+}
+
+.ops-mobile-card-footer {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding-top: 0.75rem;
+  border-top: 1px solid var(--cream-200);
+  gap: 0.5rem;
+}
+
+.ops-mobile-card-meta {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  flex-wrap: wrap;
+}
+
+/* Dark mode for mobile cards */
+:root[data-theme="dark"] .ops-mobile-card {
+  background: var(--bg-card);
+  border-color: var(--border-light);
+  box-shadow: 0 2px 12px rgba(0, 0, 0, 0.3);
+}
+
+:root[data-theme="dark"] .ops-mobile-card-header {
+  border-bottom-color: var(--border-light);
+}
+
+:root[data-theme="dark"] .ops-mobile-card-footer {
+  border-top-color: var(--border-light);
+}
+
+:root[data-theme="dark"] .ops-mobile-card-selected {
+  border-color: var(--gold-500);
+  background: rgba(197, 160, 89, 0.1);
+}
+
+/* ============================================
+   Enhanced Mobile Responsive
+   ============================================ */
+
+@media (max-width: 768px) {
+  /* Page title */
+  .ops-dashboard .page-title,
+  .ops-page .page-title {
+    font-size: 1.75rem;
+  }
+
+  .ops-dashboard .page-header,
+  .ops-page .page-header {
+    margin-bottom: var(--space-5);
+    padding-bottom: var(--space-4);
+  }
+
+  /* Stats grid: 2 columns on tablet */
+  .ops-stats-grid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 0.75rem;
+  }
+
+  .ops-stat-card {
+    padding: var(--space-3) var(--space-4);
+    min-height: 72px;
+  }
+
+  .ops-stat-value {
+    font-size: 1.125rem;
+  }
+
+  /* Summary bar: 2 columns */
+  .ops-summary-bar {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 0.75rem;
+  }
+
+  .ops-summary-item {
+    padding: 1rem 0.75rem;
+  }
+
+  .ops-summary-value {
+    font-size: 1.25rem;
+  }
+
+  /* SLA grid: 2 columns */
+  .ops-sla-grid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 0.75rem;
+  }
+
+  .ops-sla-item {
+    padding: 0.75rem;
+  }
+
+  .ops-sla-value {
+    font-size: 1.25rem;
+  }
+
+  /* Availability grid */
+  .ops-availability-grid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 0.75rem;
+  }
+
+  .ops-availability-count {
+    font-size: 1.5rem;
+  }
+
+  /* Card grid for sitters */
+  .ops-card-grid {
+    grid-template-columns: 1fr;
+    gap: 0.75rem;
+  }
+
+  /* Alert items - wrap on mobile */
+  .ops-alert-item {
+    flex-wrap: wrap;
+    gap: 0.5rem;
+  }
+
+  .ops-alert-meta {
+    width: 100%;
+  }
+
+  /* Session items */
+  .ops-session-item {
+    padding: 0.75rem;
+  }
+
+  /* Filters */
+  .ops-dashboard .filters-row,
+  .ops-page .filters-row {
+    grid-template-columns: 1fr;
+    gap: 0.75rem;
+  }
+
+  .filters-row-3 {
+    grid-template-columns: 1fr !important;
+  }
+
+  /* Heatmap scroll hint */
+  .ops-heatmap-wrapper {
+    position: relative;
+  }
+
+  /* Reports page header button */
+  .page-header .btn {
+    width: 100%;
+  }
+}
+
+@media (max-width: 480px) {
+  /* Page title even smaller */
+  .ops-dashboard .page-title,
+  .ops-page .page-title {
+    font-size: 1.5rem;
+  }
+
+  /* Stats: 1 column */
+  .ops-stats-grid {
+    grid-template-columns: 1fr;
+    gap: 0.625rem;
+  }
+
+  .ops-stat-card {
+    padding: var(--space-3);
+    min-height: 60px;
+  }
+
+  /* Summary: keep 2 columns but tighter */
+  .ops-summary-bar {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 0.5rem;
+  }
+
+  .ops-summary-item {
+    padding: 0.75rem 0.5rem;
+  }
+
+  .ops-summary-value {
+    font-size: 1.125rem;
+  }
+
+  /* SLA: 1 column */
+  .ops-sla-grid {
+    grid-template-columns: 1fr;
+  }
+
+  /* Availability: 2 columns still works */
+  .ops-availability-grid {
+    gap: 0.5rem;
+  }
+
+  .ops-availability-count {
+    font-size: 1.25rem;
+  }
+
+  /* Mobile card adjustments */
+  .ops-mobile-card {
+    padding: 0.875rem 1rem;
+  }
+
+  .ops-mobile-card-row {
+    font-size: 0.8125rem;
+  }
+
+  /* Sitter card adjustments */
+  .ops-sitter-stats {
+    flex-wrap: wrap;
+    gap: 0.5rem;
+  }
+}
+
+@media (max-width: 320px) {
+  .ops-dashboard .page-title,
+  .ops-page .page-title {
+    font-size: 1.25rem;
+  }
+
+  .ops-summary-bar {
+    grid-template-columns: 1fr;
+  }
+
+  .ops-mobile-card {
+    padding: 0.75rem;
+  }
+}
+
+/* ============================================
+   "More" Menu (Bottom Nav)
+   ============================================ */
+.bottom-nav-more-wrapper {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.ops-more-menu {
+  position: absolute;
+  bottom: calc(100% + 8px);
+  right: -8px;
+  min-width: 180px;
+  background: var(--bg-card);
+  border: 1px solid var(--cream-200);
+  border-radius: var(--radius-xl);
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.12);
+  padding: 0.5rem;
+  z-index: 100;
+  animation: ops-more-menu-in 0.15s ease-out;
+}
+
+@keyframes ops-more-menu-in {
+  from {
+    opacity: 0;
+    transform: translateY(8px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.ops-more-menu-item {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  padding: 0.75rem 1rem;
+  border-radius: var(--radius-lg);
+  color: var(--text-secondary);
+  text-decoration: none;
+  font-size: 0.875rem;
+  font-weight: 500;
+  transition: all 0.15s ease;
+  min-height: 44px;
+}
+
+.ops-more-menu-item:hover {
+  background: var(--cream-50);
+  color: var(--text-primary);
+}
+
+.ops-more-menu-item-active {
+  background: var(--gold-100);
+  color: var(--gold-600);
+  font-weight: 600;
+}
+
+.ops-more-menu-icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 24px;
+  height: 24px;
+  flex-shrink: 0;
+}
+
+:root[data-theme="dark"] .ops-more-menu {
+  background: var(--bg-card);
+  border-color: var(--border-light);
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.4);
+}
+
+:root[data-theme="dark"] .ops-more-menu-item:hover {
+  background: var(--bg-secondary);
+}
+
+:root[data-theme="dark"] .ops-more-menu-item-active {
+  background: rgba(197, 160, 89, 0.15);
+  color: var(--gold-400);
+}

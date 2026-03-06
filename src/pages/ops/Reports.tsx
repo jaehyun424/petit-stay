@@ -286,7 +286,8 @@ export default function OpsReports() {
                     <CardTitle>{t('ops.revenueBreakdown')}</CardTitle>
                 </CardHeader>
                 <CardBody>
-                    <div className="ops-table-wrapper">
+                    {/* Desktop Table */}
+                    <div className="ops-table-wrapper ops-desktop-only">
                         <table className="ops-table">
                             <thead>
                                 <tr>
@@ -321,6 +322,38 @@ export default function OpsReports() {
                                 </tr>
                             </tbody>
                         </table>
+                    </div>
+                    {/* Mobile Cards */}
+                    <div className="ops-mobile-card-list ops-mobile-only-block">
+                        {hotels.map((hotel) => (
+                            <div key={hotel.id} className="ops-mobile-card">
+                                <div className="ops-mobile-card-header">
+                                    <span className="ops-mobile-card-title">{hotel.name}</span>
+                                </div>
+                                <div className="ops-mobile-card-body">
+                                    <div className="ops-mobile-card-row">
+                                        <span className="ops-mobile-card-label">{t('ops.revenue')}</span>
+                                        <span>{formatCurrency(hotel.revenue)}</span>
+                                    </div>
+                                    <div className="ops-mobile-card-row">
+                                        <span className="ops-mobile-card-label">{t('ops.commission')}</span>
+                                        <span>{formatCurrency(hotel.commission)}</span>
+                                    </div>
+                                    <div className="ops-mobile-card-row">
+                                        <span className="ops-mobile-card-label">{t('ops.net')}</span>
+                                        <span className="ops-mobile-card-amount">{formatCurrency(hotel.revenue - hotel.commission)}</span>
+                                    </div>
+                                </div>
+                            </div>
+                        ))}
+                        <div className="ops-mobile-card" style={{ borderTop: '2px solid var(--cream-300)' }}>
+                            <div className="ops-mobile-card-body">
+                                <div className="ops-mobile-card-row">
+                                    <span style={{ fontWeight: 700 }}>{t('ops.total')}</span>
+                                    <span className="ops-mobile-card-amount">{formatCurrency(totalRevenue - totalCommission)}</span>
+                                </div>
+                            </div>
+                        </div>
                     </div>
                 </CardBody>
             </Card>
