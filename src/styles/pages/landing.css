@@ -159,6 +159,10 @@
   color: var(--text-primary);
 }
 
+.landing-nav-mobile-toggle.is-open {
+  display: none;
+}
+
 .landing-nav-mobile-overlay {
   position: fixed;
   inset: 0;

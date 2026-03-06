@@ -77,11 +77,15 @@ export default function OpsIssues() {
 
   const formatDate = (d: unknown): string => {
     if (!d) return '-';
-    if (d instanceof Date) return d.toLocaleDateString();
-    if (typeof d === 'object' && d !== null && 'toDate' in d) {
-      return (d as { toDate: () => Date }).toDate().toLocaleDateString();
-    }
-    return String(d);
+    try {
+      if (d instanceof Date) return d.toLocaleDateString();
+      if (typeof d === 'object' && d !== null && 'toDate' in d) {
+        return (d as { toDate: () => Date }).toDate().toLocaleDateString();
+      }
+      if (typeof d === 'string') return new Date(d).toLocaleDateString();
+      if (typeof d === 'number') return new Date(d).toLocaleDateString();
+    } catch { /* ignore */ }
+    return '-';
   };
 
   return (

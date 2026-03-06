@@ -7,9 +7,9 @@ export const IMAGES = {
   landing: {
     hero: 'https://images.unsplash.com/photo-1602002418816-5c0aeef426aa?w=1920&q=80',
     feature: {
-      safety: 'https://images.unsplash.com/photo-1576765608535-5f04d1e3f289?w=800&q=80',
-      monitoring: 'https://images.unsplash.com/photo-1587654780291-39c9404d7dd0?w=800&q=80',
-      hotel: 'https://images.unsplash.com/photo-1503454537195-1dcabb73ffb9?w=800&q=80',
+      safety: 'https://images.unsplash.com/photo-1565843708714-52ecf69ab81f?w=800&q=80',
+      monitoring: 'https://images.unsplash.com/photo-1544776193-352d25ca82cd?w=800&q=80',
+      hotel: 'https://images.unsplash.com/photo-1484480974693-6ca0a78fb36b?w=800&q=80',
       nightCare: 'https://images.unsplash.com/photo-1590490360182-c33d57733427?w=800&q=80',
     },
   },

@@ -328,7 +328,7 @@ export default function Profile() {
                             <span className="menu-btn-icon" aria-hidden="true"><FileText size={20} strokeWidth={1.75} /></span>
                             <span className="menu-btn-text">{t('profile.documents')}</span>
                         </button>
-                        <button className="menu-btn" onClick={() => success(t('profile.helpLabel'), t('profile.supportEmail'))}>
+                        <button className="menu-btn" onClick={() => navigate('/help')}>
                             <span className="menu-btn-icon" aria-hidden="true"><HelpCircle size={20} strokeWidth={1.75} /></span>
                             <span className="menu-btn-text">{t('profile.helpLabel')}</span>
                         </button>

@@ -102,11 +102,11 @@ export function LandingNav() {
 
         {/* Mobile toggle */}
         <button
-          className="landing-nav-mobile-toggle"
+          className={`landing-nav-mobile-toggle ${mobileOpen ? 'is-open' : ''}`}
           onClick={() => setMobileOpen(!mobileOpen)}
           aria-label={t('aria.toggleMenu')}
         >
-          {mobileOpen ? <X size={24} /> : <Menu size={24} />}
+          <Menu size={24} />
         </button>
       </div>
 
