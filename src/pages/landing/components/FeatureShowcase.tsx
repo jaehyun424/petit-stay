@@ -21,8 +21,8 @@ const features = [
     icon: <ClipboardList size={28} strokeWidth={1.5} />,
     titleKey: 'feature3Title',
     descKey: 'feature3Desc',
-    image: 'https://images.unsplash.com/photo-1484480974693-6ca0a78fb36b?w=800&q=80',
-    imageAlt: 'Professional childcare checklist and SOP',
+    image: 'https://images.unsplash.com/photo-1742844552264-71e01c8dd7c0?w=800&q=80',
+    imageAlt: 'Elegant five-star hotel lobby with sunlit columns and polished floors',
   },
   {
     icon: <Moon size={28} strokeWidth={1.5} />,
