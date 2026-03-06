@@ -4,9 +4,28 @@
   margin: 0 auto;
 }
 
-/* Page header uses common styles from hotel-layout.css */
+/* Page header: serif title matching Guest/Sitter pattern */
+.bookings-page .page-header {
+  gap: var(--space-4);
+  margin-bottom: var(--space-6);
+  border-bottom: 1px solid var(--border-color);
+  padding-bottom: var(--space-4);
+}
 
-.bookings-page .mb-6 { margin-bottom: 2rem; }
+.bookings-page .page-title {
+  font-family: var(--font-serif);
+  font-size: 1.5rem;
+  font-weight: 600;
+  color: var(--text-primary);
+}
+
+.bookings-page .page-subtitle {
+  font-size: var(--text-sm);
+  color: var(--text-secondary);
+  margin-top: 0.25rem;
+}
+
+.bookings-page .mb-6 { margin-bottom: var(--space-6); }
 
 /* Filters */
 .filters-row {
@@ -20,11 +39,11 @@
 }
 
 .filters-row > *:last-child {
-  width: 240px;
+  width: 15rem;
   flex-shrink: 0;
 }
 
-@media (max-width: 640px) {
+@media (max-width: 480px) {
   .filters-row {
     flex-direction: column;
     align-items: stretch;
@@ -49,11 +68,11 @@
   padding: var(--space-3) var(--space-4);
   background: var(--cream-100);
   border-bottom: 2px solid var(--cream-200);
-  font-size: 0.875rem;
+  font-size: var(--text-xs);
   font-weight: 600;
-  text-transform: none;
-  letter-spacing: 0.06em;
-  color: var(--charcoal-500);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: var(--text-tertiary);
   text-align: left;
   white-space: nowrap;
   vertical-align: middle;
@@ -64,7 +83,7 @@
 }
 
 .bookings-table tbody .table-row-clickable {
-  border-bottom: 1px solid var(--cream-200);
+  border-bottom: 1px solid var(--border-color);
   cursor: pointer;
   transition: background 0.2s;
 }
@@ -82,12 +101,12 @@
   padding: var(--space-3) var(--space-4);
   vertical-align: middle;
   line-height: 1.4;
-  font-size: 0.875rem;
+  font-size: var(--text-sm);
 }
 
 .booking-mobile-body,
 .booking-mobile-header .booking-code {
-  font-size: 0.875rem;
+  font-size: var(--text-sm);
 }
 
 .bookings-table td:last-child {
@@ -97,12 +116,12 @@
 .children-badges {
   display: flex;
   flex-wrap: wrap;
-  gap: 0.25rem;
+  gap: var(--space-1);
 }
 
 .booking-item,
 .booking-row {
-  font-size: 0.875rem;
+  font-size: var(--text-sm);
 }
 
 .bookings-page .booking-code {
@@ -115,20 +134,20 @@
 }
 
 .booking-date {
-  font-size: 0.875rem;
+  font-size: var(--text-sm);
   color: var(--charcoal-600);
   display: block;
   white-space: nowrap;
 }
 
 .booking-time {
-  font-size: 0.75rem;
+  font-size: var(--text-xs);
   color: var(--charcoal-400);
   display: block;
 }
 
 .room-number {
-  font-size: 0.875rem;
+  font-size: var(--text-sm);
   color: var(--charcoal-600);
   font-weight: 500;
   display: block;
@@ -145,11 +164,11 @@
 .sitter-cell {
   display: flex;
   align-items: center;
-  gap: 0.75rem;
+  gap: var(--space-3);
 }
 
 .bookings-page .sitter-name {
-  font-size: 0.875rem;
+  font-size: var(--text-sm);
   font-weight: 500;
   color: var(--charcoal-900);
 }
@@ -173,17 +192,23 @@
   .bookings-mobile {
     display: flex;
     flex-direction: column;
-    gap: 0.75rem;
+    gap: var(--space-4);
   }
 }
 
 .booking-mobile-card {
   background: var(--bg-card);
-  border: 1px solid var(--cream-200);
-  border-radius: var(--radius-lg);
-  padding: 1rem 1.25rem;
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius-xl);
+  padding: var(--space-4);
   cursor: pointer;
   transition: all 0.3s;
+}
+
+@media (min-width: 768px) {
+  .booking-mobile-card {
+    padding: var(--space-5);
+  }
 }
 
 .booking-mobile-card:hover {
@@ -195,16 +220,16 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
-  margin-bottom: 0.5rem;
+  margin-bottom: var(--space-2);
 }
 
 .booking-mobile-body {
   display: flex;
   flex-direction: column;
-  gap: 0.25rem;
-  font-size: 0.875rem;
+  gap: var(--space-1);
+  font-size: var(--text-sm);
   color: var(--charcoal-600);
-  margin-bottom: 0.75rem;
+  margin-bottom: var(--space-3);
 }
 
 .booking-mobile-footer {
@@ -231,32 +256,32 @@
 }
 
 .detail-section h4 {
-  font-size: 0.75rem;
+  font-size: var(--text-xs);
   font-weight: 700;
-  color: var(--charcoal-400);
-  text-transform: none;
-  letter-spacing: 0.1em;
-  margin-bottom: 1rem;
+  color: var(--text-tertiary);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  margin-bottom: var(--space-3);
 }
 
 .detail-section p {
   color: var(--charcoal-700);
-  margin-bottom: 0.5rem;
-  font-size: 0.95rem;
+  margin-bottom: var(--space-2);
+  font-size: var(--text-sm);
 }
 
 .detail-section strong {
   color: var(--charcoal-900);
   font-weight: 600;
-  margin-right: 0.5rem;
+  margin-right: var(--space-2);
 }
 
 /* Manual entry for ScanCheckIn */
 .manual-entry {
   display: flex;
   flex-direction: column;
-  gap: 1rem;
-  padding: 1rem 0;
+  gap: var(--space-4);
+  padding: var(--space-4) 0;
 }
 
 /* Modal form stacks */
@@ -301,6 +326,12 @@
   color: var(--text-secondary);
 }
 
+.bookings-page .sitter-option-badges {
+  display: flex;
+  align-items: center;
+  gap: var(--space-1);
+}
+
 .bookings-page .no-sitters-message {
   text-align: center;
   color: var(--text-tertiary);
@@ -309,16 +340,16 @@
 
 /* Guest Link Modal */
 .guest-link-desc {
-  font-size: 0.875rem;
+  font-size: var(--text-sm);
   color: var(--text-secondary);
 }
 
 .guest-link-box {
-  padding: 0.75rem;
+  padding: var(--space-3);
   background: var(--bg-secondary, #f5f0eb);
   border-radius: var(--radius-md);
   word-break: break-all;
-  font-size: 0.8125rem;
+  font-size: var(--text-sm);
   font-family: var(--font-mono, monospace);
 }
 
@@ -337,14 +368,14 @@
 
 /* Page header responsive uses common styles from hotel-layout.css */
 
-/* Mobile card gap + touch target */
-@media (max-width: 1024px) {
-  .bookings-mobile {
-    gap: var(--space-4);
+/* Mobile touch targets */
+@media (max-width: 480px) {
+  .booking-mobile-card {
+    padding: var(--space-3);
   }
 
-  .booking-mobile-card {
+  .booking-mobile-card,
+  .bookings-page .btn {
     min-height: 48px;
-    padding: var(--space-4);
   }
 }

@@ -542,7 +542,7 @@ export default function Bookings() {
                                 <div className="sitter-option-name">{sitter.name}</div>
                                 <div className="sitter-option-detail">{sitter.languages.join(', ')}</div>
                             </div>
-                            <div style={{ display: 'flex', alignItems: 'center', gap: '4px' }}>
+                            <div className="sitter-option-badges">
                                 <TierBadge tier={sitter.tier} />
                                 {sitter.hotelVerified && <Badge variant="success" size="sm">{t('hotel.hotelVerified')}</Badge>}
                             </div>

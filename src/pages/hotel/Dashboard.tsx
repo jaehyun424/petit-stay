@@ -312,7 +312,7 @@ export default function Dashboard() {
       </motion.div>
 
       {/* This Week Summary + Chart */}
-      <div className="dashboard-grid" style={{ marginBottom: 'var(--space-6)' }}>
+      <div className="dashboard-grid" style={{ marginBottom: 'var(--space-5)' }}>
         {/* Weekly Bookings Chart */}
         <Card className="animate-fade-in-up stagger-1">
           <CardHeader action={

@@ -4,24 +4,42 @@
   margin: 0 auto;
 }
 
-/* Tier Filter Tabs */
+/* Page header: serif title matching Guest/Sitter pattern */
+.sitter-management-page .page-header {
+  gap: var(--space-4);
+  margin-bottom: var(--space-6);
+  border-bottom: 1px solid var(--border-color);
+  padding-bottom: var(--space-4);
+}
+
+.sitter-management-page .page-title {
+  font-family: var(--font-serif);
+  font-size: 1.5rem;
+  font-weight: 600;
+  color: var(--text-primary);
+}
+
+.sitter-management-page .page-subtitle {
+  font-size: var(--text-sm);
+  color: var(--text-secondary);
+  margin-top: 0.25rem;
+}
+
+/* Tier Filter Tabs — unified pill pattern */
 .sitter-filter-tabs {
   display: flex;
   gap: var(--space-2);
   margin-bottom: var(--space-6);
-  padding: var(--space-1);
-  background: var(--glass-bg);
-  border-radius: var(--radius-lg);
-  width: fit-content;
+  flex-wrap: wrap;
 }
 
 .sitter-filter-tab {
   display: flex;
   align-items: center;
   gap: var(--space-2);
-  padding: var(--space-2) var(--space-4);
-  border: none;
-  border-radius: var(--radius-md);
+  padding: 0.5rem 1rem;
+  border: 1px solid var(--border-color);
+  border-radius: 999px;
   background: transparent;
   color: var(--text-secondary);
   font-size: var(--text-sm);
@@ -29,17 +47,18 @@
   cursor: pointer;
   transition: all 0.2s;
   font-family: inherit;
+  min-height: 40px;
 }
 
 .sitter-filter-tab:hover {
   color: var(--text-primary);
-  background: rgba(0, 0, 0, 0.03);
+  background: var(--glass-bg);
 }
 
 .sitter-filter-tab-active {
-  background: var(--bg-card);
-  color: var(--gold-600);
-  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.08);
+  background: var(--gold-500);
+  color: white;
+  border-color: var(--gold-500);
 }
 
 .sitter-filter-count {
@@ -48,16 +67,16 @@
   justify-content: center;
   min-width: 20px;
   height: 20px;
-  padding: 0 6px;
-  border-radius: 10px;
+  padding: 0 var(--space-1);
+  border-radius: var(--radius-full, 999px);
   background: var(--glass-bg);
   font-size: var(--text-xs);
   font-weight: var(--font-semibold);
 }
 
 .sitter-filter-tab-active .sitter-filter-count {
-  background: rgba(197, 160, 89, 0.1);
-  color: var(--gold-600);
+  background: rgba(255, 255, 255, 0.2);
+  color: white;
 }
 
 /* Sitter Available Hours in profile modal */
@@ -69,8 +88,8 @@
 
 .sitters-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(340px, 1fr));
-  gap: var(--space-6);
+  grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+  gap: var(--space-5);
   align-items: stretch;
 }
 
@@ -80,6 +99,7 @@
   height: 100%;
   display: flex;
   flex-direction: column;
+  padding: var(--space-4);
 }
 
 .sitter-card:hover {
@@ -154,6 +174,10 @@
   display: flex;
   gap: var(--space-3);
   margin-top: auto;
+}
+
+.sitter-actions .btn {
+  min-height: 44px;
 }
 
 /* Verified badge (replaces Tailwind utility classes) */
@@ -240,6 +264,18 @@
   padding: var(--space-4);
 }
 
+/* Tablet breakpoint */
+@media (max-width: 768px) {
+  .sitters-grid {
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    gap: var(--space-4);
+  }
+
+  .sitter-management-page .page-title {
+    font-size: 1.35rem;
+  }
+}
+
 /* Mobile breakpoint */
 @media (max-width: 480px) {
   .sitter-filter-tabs {
@@ -249,6 +285,7 @@
   .sitter-filter-tab {
     flex: 1;
     justify-content: center;
+    min-height: 44px;
   }
 
   .sitters-grid {
@@ -256,8 +293,16 @@
     gap: var(--space-4);
   }
 
+  .sitter-card {
+    padding: var(--space-3);
+  }
+
   .modal-profile-grid {
     grid-template-columns: 1fr;
+  }
+
+  .sitter-management-page .page-title {
+    font-size: 1.25rem;
   }
 
   .sitter-management-page .sitter-name {
@@ -269,9 +314,21 @@
     gap: var(--space-2);
   }
 
+  .sitter-actions .btn {
+    min-height: 48px;
+  }
+
   .booking-option-row {
     flex-direction: column;
     align-items: flex-start;
     gap: var(--space-2);
+    min-height: 48px;
+  }
+}
+
+/* Desktop card padding */
+@media (min-width: 768px) {
+  .sitter-card {
+    padding: var(--space-5);
   }
 }
