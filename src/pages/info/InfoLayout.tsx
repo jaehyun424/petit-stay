@@ -17,6 +17,9 @@ export function InfoLayout({ title, subtitle, children }: InfoLayoutProps) {
     window.scrollTo(0, 0);
   }, [pathname]);
 
+  // Detect if children use section-based layout for CSS fallback
+  const hasSections = pathname === '/about' || pathname === '/careers';
+
   return (
     <div className="info-page">
       <LandingNav />
@@ -24,7 +27,7 @@ export function InfoLayout({ title, subtitle, children }: InfoLayoutProps) {
         <h1>{title}</h1>
         <p>{subtitle}</p>
       </div>
-      <div className="info-content">
+      <div className={`info-content${hasSections ? ' info-content--sections' : ''}`}>
         {children}
       </div>
       <LandingFooter />

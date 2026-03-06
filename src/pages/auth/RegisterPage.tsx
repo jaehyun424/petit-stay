@@ -186,8 +186,8 @@ export default function RegisterPage() {
                         animate="show"
                     >
                         <motion.div className="text-center mb-4" variants={fadeUp}>
-                            <h2 className="text-2xl font-serif text-charcoal-900">{t('auth.registerTitle')}</h2>
-                            <p className="text-sm text-charcoal-500">{t('auth.registerSubtitle')}</p>
+                            <h2 className="text-2xl font-serif mb-1">{t('auth.registerTitle')}</h2>
+                            <p className="text-charcoal-500 text-sm">{t('auth.registerSubtitle')}</p>
                         </motion.div>
 
                         <form onSubmit={handleSubmit} className="flex flex-col gap-4">
@@ -290,10 +290,10 @@ export default function RegisterPage() {
                                 />
                             </motion.div>
 
-                            <motion.div className="mt-2" variants={fadeUp}>
+                            <motion.div className="mt-4" variants={fadeUp}>
                                 <Button
                                     type="submit"
-                                    variant="gold"
+                                    variant="primary"
                                     fullWidth
                                     isLoading={isLoading}
                                     disabled={isLoading}
