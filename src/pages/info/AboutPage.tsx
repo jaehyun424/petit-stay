@@ -36,18 +36,6 @@ export default function AboutPage() {
         <p>{t('info.about.storyDesc2')}</p>
       </section>
 
-      {/* How We Work Section */}
-      <section className="info-section">
-        <h2>{t('info.about.howWeWorkTitle')}</h2>
-        <p>{t('info.about.howWeWorkDesc')}</p>
-        <ul>
-          <li>{t('info.about.bullet1')}</li>
-          <li>{t('info.about.bullet2')}</li>
-          <li>{t('info.about.bullet3')}</li>
-          <li>{t('info.about.bullet4')}</li>
-        </ul>
-      </section>
-
       {/* Values Grid Section - distinct background */}
       <section className="info-section info-section-alt">
         <h2>{t('info.about.valuesTitle')}</h2>
@@ -75,11 +63,6 @@ export default function AboutPage() {
         <p>{t('info.about.whereDesc')}</p>
       </section>
 
-      {/* Team Section - distinct background */}
-      <section className="info-section info-section-alt">
-        <h2>{t('info.about.teamTitle')}</h2>
-        <p>{t('info.about.teamDesc')}</p>
-      </section>
     </InfoLayout>
   );
 }
