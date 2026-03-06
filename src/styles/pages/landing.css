@@ -1286,6 +1286,15 @@
   color: var(--text-primary);
 }
 
+.landing-nav .language-switcher button:hover {
+  color: var(--charcoal-900);
+  background: rgba(255, 255, 255, 0.9);
+}
+
+.landing-nav-scrolled .language-switcher button:hover {
+  background: var(--cream-100);
+}
+
 .landing-nav .language-dropdown {
   background: white;
   color: var(--text-primary);
@@ -1314,4 +1323,11 @@
 
 [data-theme="dark"] .landing-nav-mobile-scroll .language-switcher {
   background: var(--charcoal-800);
+}
+
+/* Mobile menu text visibility fix */
+.landing-nav-mobile {
+  max-height: 100vh;
+  max-height: 100dvh;
+  overflow-y: auto;
 }
