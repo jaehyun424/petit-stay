@@ -111,17 +111,28 @@ export default function ActiveSession() {
         setActivityNote('');
     }, [sessionId, activityNote, t, success, error]);
 
-    const handleAddPhoto = async () => {
-        if (DEMO_MODE) {
-            success(t('activeSession.photoAdded'), t('activeSession.photoUploaded'));
-            return;
-        }
+    const [photoPreview, setPhotoPreview] = useState<string | null>(null);
+
+    const handleAddPhoto = () => {
         fileInputRef.current?.click();
     };
 
     const handleFileSelected = async (e: React.ChangeEvent<HTMLInputElement>) => {
         const file = e.target.files?.[0];
-        if (!file || !sessionId) return;
+        if (!file) return;
+
+        if (DEMO_MODE) {
+            const reader = new FileReader();
+            reader.onloadend = () => {
+                setPhotoPreview(reader.result as string);
+                success(t('activeSession.photoAdded'), t('activeSession.photoUploaded'));
+            };
+            reader.readAsDataURL(file);
+            e.target.value = '';
+            return;
+        }
+
+        if (!sessionId) return;
         try {
             const photoUrl = await storageService.uploadActivityPhoto(sessionId, file);
             await activityService.logActivity({
@@ -130,6 +141,7 @@ export default function ActiveSession() {
                 description: t('activeSession.photoLogDescription'),
                 mediaUrl: photoUrl,
             });
+            setPhotoPreview(photoUrl);
             success(t('activeSession.photoAdded'), t('activeSession.photoUploaded'));
         } catch {
             error(t('activeSession.uploadFailed'), t('activeSession.uploadFailedDesc'));
@@ -257,6 +269,9 @@ export default function ActiveSession() {
                     onChange={handleFileSelected}
                     aria-label={t('activeSession.uploadPhoto')}
                 />
+                {photoPreview && (
+                    <img src={photoPreview} alt="Activity photo" style={{ width: '100%', maxWidth: 200, borderRadius: 'var(--radius-md)', marginTop: 'var(--space-2)' }} />
+                )}
             </div>
             </div>
 

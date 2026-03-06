@@ -585,6 +585,27 @@
     bottom: 70px;
     padding: var(--space-3) var(--space-4);
   }
+
+  .booking-form-card {
+    padding: var(--space-4);
+  }
+
+  .booking-form-card input,
+  .booking-form-card select {
+    width: 100%;
+    min-height: 44px;
+    font-size: 16px; /* iOS zoom prevention */
+  }
+
+  .booking-actions {
+    flex-direction: column;
+    gap: var(--space-2);
+  }
+
+  .booking-actions .btn {
+    width: 100%;
+    min-height: 48px;
+  }
 }
 
 /* Desktop: wider form layout */

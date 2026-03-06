@@ -87,21 +87,10 @@
 
 .upcoming-card {
   margin-bottom: 0;
-  border: 1px solid var(--gold-300);
-  background: linear-gradient(135deg, var(--gold-100) 0%, var(--bg-card) 60%);
-  position: relative;
-  overflow: hidden;
-  box-shadow: 0 4px 16px rgba(197, 160, 89, 0.12);
-}
-
-.upcoming-card::before {
-  content: '';
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 4px;
-  height: 100%;
-  background: linear-gradient(to bottom, var(--gold-400), var(--gold-600));
+  background: var(--bg-card);
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius-xl);
+  box-shadow: var(--shadow-sm);
 }
 
 .upcoming-header {
@@ -236,8 +225,8 @@
 
 /* Dark mode overrides */
 :root[data-theme="dark"] .upcoming-card {
-  background: linear-gradient(to bottom right, var(--sidebar-bg-start), var(--bg-card));
-  border-color: var(--gold-600);
+  background: var(--bg-card);
+  border-color: var(--border-color);
 }
 
 /* Dashboard Stats */
