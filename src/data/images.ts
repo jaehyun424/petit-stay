@@ -7,10 +7,10 @@ export const IMAGES = {
   landing: {
     hero: 'https://images.unsplash.com/photo-1602002418816-5c0aeef426aa?w=1920&q=80',
     feature: {
-      safety: 'https://images.unsplash.com/photo-1454165804606-c3d57bc86b40?w=800&q=80',
-      monitoring: 'https://images.unsplash.com/photo-1516627145497-ae6968895b74?w=800&q=80',
-      hotel: 'https://images.unsplash.com/photo-1566073771259-6a8506099945?w=800&q=80',
-      nightCare: 'https://images.unsplash.com/photo-1414235077428-338989a2e8c0?w=800&q=80',
+      safety: 'https://images.unsplash.com/photo-1576765608535-5f04d1e3f289?w=800&q=80',
+      monitoring: 'https://images.unsplash.com/photo-1587654780291-39c9404d7dd0?w=800&q=80',
+      hotel: 'https://images.unsplash.com/photo-1503454537195-1dcabb73ffb9?w=800&q=80',
+      nightCare: 'https://images.unsplash.com/photo-1590490360182-c33d57733427?w=800&q=80',
     },
   },
   solutions: {

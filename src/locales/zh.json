@@ -754,7 +754,7 @@
     "manualCheckIn": "手动签到",
     "manualSubtitle": "手动输入预约确认码",
     "confirmationCode": "确认码",
-    "codePlaceholder": "例：KCP-2025-0042",
+    "codePlaceholder": "例：KCP-2026-0042",
     "lookUpBooking": "查询预约",
     "scanner": "扫描器",
     "pointCamera": "将摄像头对准客人的QR码",
@@ -844,8 +844,8 @@
     "cardNumberPlaceholder": "**** **** **** ****",
     "expiryPlaceholder": "MM/YY",
     "cardHolderPlaceholder": "持卡人姓名",
-    "hotelPartnerName": "君悦酒店 - 2024",
-    "backgroundValidUntil": "有效期至2025年12月"
+    "hotelPartnerName": "君悦酒店 - 2026",
+    "backgroundValidUntil": "有效期至2026年12月"
   },
   "notifications": {
     "inbox": "通知收件箱",

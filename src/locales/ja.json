@@ -754,7 +754,7 @@
     "manualCheckIn": "手動チェックイン",
     "manualSubtitle": "予約確認コードを手動で入力してください",
     "confirmationCode": "確認コード",
-    "codePlaceholder": "例：KCP-2025-0042",
+    "codePlaceholder": "例：KCP-2026-0042",
     "lookUpBooking": "予約を検索",
     "scanner": "スキャナー",
     "pointCamera": "ゲストのQRコードにカメラを向けてください",
@@ -844,8 +844,8 @@
     "cardNumberPlaceholder": "**** **** **** ****",
     "expiryPlaceholder": "MM/YY",
     "cardHolderPlaceholder": "カード名義人",
-    "hotelPartnerName": "グランドハイアット - 2024",
-    "backgroundValidUntil": "2025年12月まで有効"
+    "hotelPartnerName": "グランドハイアット - 2026",
+    "backgroundValidUntil": "2026年12月まで有効"
   },
   "notifications": {
     "inbox": "通知インボックス",

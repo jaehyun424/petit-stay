@@ -754,7 +754,7 @@
     "manualCheckIn": "수동 체크인",
     "manualSubtitle": "예약 확인 코드를 수동으로 입력하세요",
     "confirmationCode": "확인 코드",
-    "codePlaceholder": "예: KCP-2025-0042",
+    "codePlaceholder": "예: KCP-2026-0042",
     "lookUpBooking": "예약 조회",
     "scanner": "스캐너",
     "pointCamera": "투숙객의 QR 코드에 카메라를 향하세요",
@@ -844,8 +844,8 @@
     "cardNumberPlaceholder": "**** **** **** ****",
     "expiryPlaceholder": "MM/YY",
     "cardHolderPlaceholder": "카드 소유자 이름",
-    "hotelPartnerName": "그랜드 하얏트 - 2024",
-    "backgroundValidUntil": "2025년 12월까지 유효"
+    "hotelPartnerName": "그랜드 하얏트 - 2026",
+    "backgroundValidUntil": "2026년 12월까지 유효"
   },
   "notifications": {
     "inbox": "알림 인박스",

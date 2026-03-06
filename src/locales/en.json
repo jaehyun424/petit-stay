@@ -754,7 +754,7 @@
     "manualCheckIn": "Manual Check-In",
     "manualSubtitle": "Enter the booking confirmation code manually",
     "confirmationCode": "Confirmation Code",
-    "codePlaceholder": "e.g., KCP-2025-0042",
+    "codePlaceholder": "e.g., KCP-2026-0042",
     "lookUpBooking": "Look Up Booking",
     "scanner": "Scanner",
     "pointCamera": "Point camera at the guest's QR code",
@@ -844,8 +844,8 @@
     "cardNumberPlaceholder": "**** **** **** ****",
     "expiryPlaceholder": "MM/YY",
     "cardHolderPlaceholder": "Card holder name",
-    "hotelPartnerName": "Grand Hyatt - 2024",
-    "backgroundValidUntil": "Valid until Dec 2025"
+    "hotelPartnerName": "Grand Hyatt - 2026",
+    "backgroundValidUntil": "Valid until Dec 2026"
   },
   "notifications": {
     "inbox": "Notification Inbox",

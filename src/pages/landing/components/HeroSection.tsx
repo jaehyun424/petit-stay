@@ -6,7 +6,7 @@ import { useRef, useState, useEffect } from 'react';
 
 const HERO_VIDEO = 'https://videos.pexels.com/video-files/7884081/7884081-uhd_2560_1440_25fps.mp4';
 const HERO_POSTER = 'https://images.pexels.com/videos/7884081/pexels-photo-7884081.jpeg?auto=compress&cs=tinysrgb&w=1920';
-const HERO_MOBILE_IMG = 'https://images.pexels.com/photos/7884081/pexels-photo-7884081.jpeg?auto=compress&cs=tinysrgb&w=800';
+const HERO_MOBILE_IMG = 'https://images.unsplash.com/photo-1602002418816-5c0aeef426aa?w=800&q=80';
 
 export function HeroSection() {
   const { t } = useTranslation();

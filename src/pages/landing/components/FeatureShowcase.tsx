@@ -7,8 +7,8 @@ const features = [
     icon: <Shield size={28} strokeWidth={1.5} />,
     titleKey: 'feature1Title',
     descKey: 'feature1Desc',
-    image: 'https://images.unsplash.com/photo-1531983412531-1f49a365ffed?w=800&q=80',
-    imageAlt: 'Family protection and insurance coverage',
+    image: 'https://images.unsplash.com/photo-1576765608535-5f04d1e3f289?w=800&q=80',
+    imageAlt: 'Child safety and protection at hotel',
   },
   {
     icon: <CheckCircle size={28} strokeWidth={1.5} />,
@@ -21,14 +21,14 @@ const features = [
     icon: <ClipboardList size={28} strokeWidth={1.5} />,
     titleKey: 'feature3Title',
     descKey: 'feature3Desc',
-    image: 'https://images.unsplash.com/photo-1434030216411-0b793f4b4173?w=800&q=80',
-    imageAlt: 'Structured childcare activities and checklist',
+    image: 'https://images.unsplash.com/photo-1503454537195-1dcabb73ffb9?w=800&q=80',
+    imageAlt: 'Structured childcare activities for children',
   },
   {
     icon: <Moon size={28} strokeWidth={1.5} />,
     titleKey: 'feature4Title',
     descKey: 'feature4Desc',
-    image: 'https://images.unsplash.com/photo-1414235077428-338989a2e8c0?w=800&q=80',
+    image: 'https://images.unsplash.com/photo-1590490360182-c33d57733427?w=800&q=80',
     imageAlt: 'Premium hotel evening and night care service',
   },
 ];
