@@ -335,28 +335,83 @@
         flex: 1;
         text-align: center;
         min-height: 48px;
+        font-size: var(--text-xs);
     }
 
     .rpt-stat-card {
         padding: var(--space-3);
+        min-height: auto;
+    }
+
+    .rpt-stat-card-value {
+        font-size: var(--text-xl);
     }
 
     .rpt-recharts-container {
         min-height: 200px;
+        margin-left: calc(-1 * var(--space-2));
+        margin-right: calc(-1 * var(--space-2));
     }
 
     .rpt-chart-summary {
         flex-wrap: wrap;
-        gap: var(--space-4);
+        gap: var(--space-3);
     }
 
     .rpt-header-actions {
         flex-direction: column;
         gap: var(--space-2);
+        width: 100%;
+    }
+
+    .rpt-header-actions .btn {
+        min-height: 48px;
+        width: 100%;
+        justify-content: center;
     }
 
     .rpt-sla-item {
         padding: var(--space-3) var(--space-2);
+    }
+
+    .rpt-sla-value {
+        font-size: var(--text-xl);
+    }
+
+    .rpt-table thead th,
+    .rpt-table tbody td {
+        padding: var(--space-2) var(--space-3);
+        font-size: var(--text-xs);
+    }
+}
+
+/* Ultra-narrow breakpoint */
+@media (max-width: 320px) {
+    .rpt-stats-grid {
+        gap: var(--space-2);
+    }
+
+    .rpt-stat-card {
+        padding: var(--space-2);
+    }
+
+    .rpt-stat-card-value {
+        font-size: var(--text-lg);
+    }
+
+    .rpt-stat-card-icon {
+        width: 28px;
+        height: 28px;
+        margin-bottom: var(--space-2);
+    }
+
+    .rpt-period-tab {
+        min-height: 40px;
+        padding: 0.375rem 0.625rem;
+    }
+
+    .rpt-sla-grid {
+        gap: var(--space-2);
     }
 }
 

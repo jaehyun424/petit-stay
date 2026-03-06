@@ -324,16 +324,60 @@
   }
 
   .settings-page .page-title {
-    font-size: 1.25rem;
+    font-size: var(--text-xl);
   }
 
   .settings-actions {
     padding: var(--space-3) var(--space-4);
+    flex-direction: column;
   }
 
   .settings-actions .btn {
     min-height: 48px;
+    width: 100%;
+    justify-content: center;
+  }
+
+  .toggle-option {
+    padding: var(--space-2) var(--space-3);
+  }
+
+  .toggle-option span {
+    font-size: var(--text-xs);
+  }
+
+  .form-stack {
+    gap: var(--space-3);
   }
 
   .branding-color-row { grid-template-columns: 1fr; }
+
+  .branding-logo-row {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: var(--space-2);
+  }
+}
+
+/* Ultra-narrow breakpoint */
+@media (max-width: 320px) {
+  .settings-page .card {
+    padding: var(--space-2);
+  }
+
+  .settings-page .page-title {
+    font-size: var(--text-lg);
+  }
+
+  .settings-actions {
+    padding: var(--space-2) var(--space-3);
+  }
+
+  .settings-grid {
+    gap: var(--space-4);
+  }
+
+  .notification-settings {
+    gap: var(--space-2);
+  }
 }

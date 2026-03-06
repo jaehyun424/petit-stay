@@ -300,11 +300,10 @@
   flex: 1;
 }
 
-/* Mobile layout */
-@media (max-width: 480px) {
+/* Tablet breakpoint */
+@media (max-width: 768px) {
   .live-monitor-page .session-card {
-    padding: var(--space-3);
-    font-size: var(--text-sm);
+    padding: var(--space-4);
   }
   .live-monitor-page .page-header {
     flex-direction: column;
@@ -316,25 +315,71 @@
   }
   .live-monitor-page .session-actions .btn {
     min-height: 48px;
+    width: 100%;
+    justify-content: center;
+  }
+  .live-monitor-page .session-header {
+    flex-direction: column;
+    gap: var(--space-3);
+  }
+  .live-monitor-page .session-time {
+    align-items: flex-start;
+    text-align: left;
+    flex-direction: row;
+    gap: var(--space-3);
   }
   .detail-modal-grid {
     grid-template-columns: 1fr;
   }
 }
 
-@media (min-width: 481px) and (max-width: 768px) {
+/* Mobile breakpoint */
+@media (max-width: 480px) {
   .live-monitor-page .session-card {
-    padding: var(--space-4);
+    padding: var(--space-3);
+    font-size: var(--text-sm);
   }
-  .live-monitor-page .page-header {
-    flex-direction: column;
+  .live-monitor-page .page-title {
+    font-size: var(--text-xl);
+    flex-wrap: wrap;
+    gap: var(--space-2);
+  }
+  .live-indicator {
+    font-size: 0.625rem;
+  }
+  .vitals-row {
+    padding: var(--space-2) var(--space-3);
+    gap: var(--space-2) var(--space-4);
+  }
+  .vital {
+    font-size: var(--text-xs);
+  }
+  .activity-item {
+    padding: var(--space-2) 0;
+  }
+  .activity-time {
+    width: 42px;
+    font-size: 0.625rem;
+  }
+  .live-monitor-page .session-time .elapsed {
+    font-size: var(--text-xl);
+  }
+}
+
+/* Ultra-narrow breakpoint */
+@media (max-width: 320px) {
+  .live-monitor-page .session-card {
+    padding: var(--space-2);
+  }
+  .live-monitor-page .page-title {
+    font-size: var(--text-lg);
+  }
+  .sessions-grid {
     gap: var(--space-3);
   }
-  .live-monitor-page .session-actions {
-    flex-direction: column;
-  }
-  .live-monitor-page .session-actions .btn {
-    min-height: 48px;
+  .child-tag {
+    font-size: var(--text-xs);
+    padding: 2px var(--space-2);
   }
 }
 

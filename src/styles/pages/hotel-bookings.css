@@ -368,7 +368,20 @@
 
 /* Page header responsive uses common styles from hotel-layout.css */
 
-/* Mobile touch targets */
+/* Tablet breakpoint */
+@media (max-width: 768px) {
+  .bookings-page .page-header {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .bookings-page .page-header .btn {
+    width: 100%;
+    justify-content: center;
+  }
+}
+
+/* Mobile breakpoint */
 @media (max-width: 480px) {
   .booking-mobile-card {
     padding: var(--space-3);
@@ -377,5 +390,43 @@
   .booking-mobile-card,
   .bookings-page .btn {
     min-height: 48px;
+  }
+
+  .bookings-mobile {
+    gap: var(--space-3);
+  }
+
+  .booking-mobile-header {
+    flex-wrap: wrap;
+    gap: var(--space-2);
+  }
+
+  .booking-mobile-footer {
+    flex-wrap: wrap;
+    gap: var(--space-2);
+  }
+
+  .detail-section p {
+    word-break: break-word;
+  }
+
+  .guest-link-box {
+    font-size: var(--text-xs);
+    padding: var(--space-2);
+  }
+}
+
+/* Ultra-narrow breakpoint */
+@media (max-width: 320px) {
+  .booking-mobile-card {
+    padding: var(--space-2);
+  }
+
+  .bookings-mobile {
+    gap: var(--space-2);
+  }
+
+  .booking-code {
+    font-size: var(--text-xs) !important;
   }
 }

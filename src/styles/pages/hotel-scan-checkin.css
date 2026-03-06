@@ -192,7 +192,7 @@
   }
 
   .scan-page .page-title {
-    font-size: 1.25rem;
+    font-size: var(--text-xl);
   }
 
   .scan-card {
@@ -229,6 +229,43 @@
   .scan-icon {
     width: 80px;
     height: 80px;
+  }
+
+  .scan-result {
+    padding: var(--space-6);
+  }
+}
+
+/* Ultra-narrow breakpoint */
+@media (max-width: 320px) {
+  .scan-page .page-title {
+    font-size: var(--text-lg);
+  }
+
+  .scan-card {
+    padding: var(--space-2);
+  }
+
+  .scan-idle {
+    padding: var(--space-4);
+  }
+
+  .scan-icon {
+    width: 64px;
+    height: 64px;
+  }
+
+  .scan-corners {
+    width: 150px;
+    height: 150px;
+  }
+
+  .scan-result {
+    padding: var(--space-4);
+  }
+
+  .scan-result h3 {
+    font-size: var(--text-lg);
   }
 }
 

@@ -348,11 +348,30 @@
   padding: var(--space-4);
 }
 
-/* Responsive Dashboard Header */
-@media (max-width: 480px) {
+/* Tablet breakpoint */
+@media (max-width: 768px) {
   .dashboard-header {
     flex-direction: column;
     align-items: flex-start;
+    gap: var(--space-3);
+  }
+
+  .dashboard-header-actions {
+    width: 100%;
+  }
+
+  .safety-banner-content {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: var(--space-2);
+  }
+}
+
+/* Mobile breakpoint */
+@media (max-width: 480px) {
+  .dashboard-header {
+    margin-bottom: var(--space-4);
+    padding-bottom: var(--space-3);
   }
 
   .dashboard-title {
@@ -361,10 +380,17 @@
 
   .dashboard-header-actions {
     width: 100%;
+    flex-direction: column;
   }
 
   .dashboard-header-actions .btn {
     min-height: 48px;
+    width: 100%;
+    justify-content: center;
+  }
+
+  .safety-banner {
+    padding: var(--space-3);
   }
 
   .booking-item {
@@ -386,6 +412,51 @@
     min-height: 48px;
     width: 100%;
     justify-content: center;
+  }
+
+  .booking-item-details {
+    flex-direction: column;
+    gap: var(--space-1);
+  }
+
+  .week-summary-item {
+    padding: var(--space-2) var(--space-3);
+  }
+
+  .activity-timeline-item {
+    padding: var(--space-2) 0;
+  }
+
+  .dashboard-chart-container {
+    margin-left: calc(-1 * var(--space-2));
+    margin-right: calc(-1 * var(--space-2));
+  }
+}
+
+/* Ultra-narrow breakpoint */
+@media (max-width: 320px) {
+  .dashboard-title {
+    font-size: var(--text-lg);
+  }
+
+  .stat-card {
+    padding: var(--space-2);
+  }
+
+  .stat-card-value {
+    font-size: var(--text-xl);
+  }
+
+  .stats-grid {
+    gap: var(--space-2);
+  }
+
+  .booking-item {
+    padding: var(--space-2);
+  }
+
+  .week-summary-value {
+    font-size: var(--text-base);
   }
 }
 
