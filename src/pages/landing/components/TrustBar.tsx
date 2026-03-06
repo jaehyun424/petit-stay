@@ -3,8 +3,8 @@ import { ScrollReveal } from './ScrollReveal';
 import { AnimatedCounter } from '../../../components/common/AnimatedCounter';
 
 const stats = [
-  { key: 'hotels', target: 8, suffix: '+' },
-  { key: 'families', target: 100, suffix: '+' },
+  { key: 'hotels', target: 30, suffix: '+' },
+  { key: 'families', target: 5000, suffix: '+' },
   { key: 'sessions', target: 50, suffix: '+' },
   { key: 'satisfaction', target: 100, suffix: '%' },
 ];

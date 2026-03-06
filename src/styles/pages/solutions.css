@@ -300,15 +300,18 @@
 /* Pricing hint */
 .solutions-pricing-hint {
   text-align: center;
-  padding: var(--space-6);
+  padding: var(--space-8) var(--space-6);
   border: 1px solid var(--border-color);
   border-radius: var(--radius-xl);
   background: var(--bg-card);
 }
 
 .solutions-pricing-hint p {
-  font-size: var(--text-sm);
+  font-size: var(--text-base);
   color: var(--text-secondary);
+  line-height: 1.6;
+  word-break: keep-all;
+  overflow-wrap: break-word;
 }
 
 .solutions-pricing-hint strong {
@@ -319,10 +322,10 @@
 .solutions-pricing-list {
   list-style: none;
   padding: 0;
-  margin: var(--space-4) auto 0;
+  margin: var(--space-6) auto 0;
   display: flex;
   flex-direction: column;
-  gap: var(--space-3);
+  gap: var(--space-4);
   max-width: 400px;
   text-align: left;
 }
@@ -330,9 +333,11 @@
 .solutions-pricing-list li {
   display: flex;
   align-items: center;
-  gap: var(--space-2);
+  gap: var(--space-3);
   font-size: var(--text-sm);
   color: var(--text-primary);
+  min-height: 44px;
+  padding: var(--space-2) 0;
 }
 
 .solutions-pricing-list li svg {
@@ -383,6 +388,20 @@
 
   .solutions-cta {
     margin: var(--space-6) var(--space-4);
-    padding: var(--space-8) var(--space-4);
+    padding: var(--space-10) var(--space-4);
+  }
+
+  .solutions-cta h2 {
+    font-size: clamp(1.25rem, 5vw, 1.75rem);
+  }
+
+  .solutions-cta-btn {
+    min-height: 48px;
+    padding: var(--space-3) var(--space-8);
+  }
+
+  .solutions-stats {
+    grid-template-columns: repeat(2, 1fr);
+    gap: var(--space-6) var(--space-4);
   }
 }

@@ -10,8 +10,6 @@ const testimonials = [
   { nameKey: 'testimonial3Name', roleKey: 'testimonial3Role', quoteKey: 'testimonial3Quote', rating: 5, initials: 'LC' },
 ];
 
-const TESTIMONIAL_BG = 'https://images.unsplash.com/photo-1540541338287-41700207dee6?w=1920&q=80';
-
 export function TestimonialSection() {
   const { t } = useTranslation();
   const [current, setCurrent] = useState(0);
@@ -27,15 +25,7 @@ export function TestimonialSection() {
   const next = () => setCurrent((c) => (c + 1) % testimonials.length);
 
   return (
-    <section id="testimonials" className="testimonial-section section-padded section-dark testimonial-with-bg">
-      <img
-        className="testimonial-bg-image"
-        src={TESTIMONIAL_BG}
-        alt=""
-        loading="lazy"
-        aria-hidden="true"
-      />
-      <div className="testimonial-bg-overlay" />
+    <section id="testimonials" className="testimonial-section section-padded section-dark testimonial-solid-bg">
 
       <div className="testimonial-inner">
         <ScrollReveal>

@@ -31,6 +31,16 @@ export function LandingNav() {
     return () => document.removeEventListener('mousedown', handleClickOutside);
   }, []);
 
+  // Lock body scroll when mobile menu is open
+  useEffect(() => {
+    if (mobileOpen) {
+      document.body.style.overflow = 'hidden';
+    } else {
+      document.body.style.overflow = '';
+    }
+    return () => { document.body.style.overflow = ''; };
+  }, [mobileOpen]);
+
   const scrollTo = (id: string) => {
     setMobileOpen(false);
     setSolutionsOpen(false);
@@ -100,32 +110,52 @@ export function LandingNav() {
         </button>
       </div>
 
-      {/* Mobile menu */}
+      {/* Mobile menu overlay + drawer */}
       {mobileOpen && (
-        <motion.div
-          className="landing-nav-mobile"
-          initial={{ opacity: 0, height: 0 }}
-          animate={{ opacity: 1, height: 'auto' }}
-          exit={{ opacity: 0, height: 0 }}
-        >
-          <button onClick={() => scrollTo('features')}>{t('landing.navFeatures')}</button>
-          <div className="landing-nav-mobile-solutions">
-            <span className="landing-nav-mobile-solutions-label">{t('solutions.navSolutions')}</span>
-            <Link to="/solutions/hotels" onClick={() => setMobileOpen(false)}>
-              {t('solutions.navForHotels')}
-            </Link>
-            <Link to="/solutions/families" onClick={() => setMobileOpen(false)}>
-              {t('solutions.navForFamilies')}
-            </Link>
-            <Link to="/solutions/specialists" onClick={() => setMobileOpen(false)}>
-              {t('solutions.navForSpecialists')}
-            </Link>
-          </div>
-          <button onClick={() => scrollTo('how-it-works')}>{t('landing.navHowItWorks')}</button>
-          <button onClick={() => scrollTo('testimonials')}>{t('landing.navReviews')}</button>
-          <LanguageSwitcher />
-          <Link to="/login" className="landing-nav-cta">{t('landing.navSignIn')}</Link>
-        </motion.div>
+        <>
+          <div className="landing-nav-mobile-overlay" onClick={() => setMobileOpen(false)} />
+          <motion.div
+            className="landing-nav-mobile"
+            initial={{ opacity: 0, x: '100%' }}
+            animate={{ opacity: 1, x: 0 }}
+            exit={{ opacity: 0, x: '100%' }}
+            transition={{ duration: 0.3, ease: [0.25, 0.46, 0.45, 0.94] as [number, number, number, number] }}
+          >
+            <div className="landing-nav-mobile-header">
+              <BrandLogo size="sm" showName />
+              <button
+                className="landing-nav-mobile-close"
+                onClick={() => setMobileOpen(false)}
+                aria-label="Close menu"
+              >
+                <X size={24} />
+              </button>
+            </div>
+            <div className="landing-nav-mobile-scroll">
+              <button onClick={() => scrollTo('features')}>{t('landing.navFeatures')}</button>
+              <div className="landing-nav-mobile-solutions">
+                <span className="landing-nav-mobile-solutions-label">{t('solutions.navSolutions')}</span>
+                <Link to="/solutions/hotels" onClick={() => setMobileOpen(false)}>
+                  {t('solutions.navForHotels')}
+                </Link>
+                <Link to="/solutions/families" onClick={() => setMobileOpen(false)}>
+                  {t('solutions.navForFamilies')}
+                </Link>
+                <Link to="/solutions/specialists" onClick={() => setMobileOpen(false)}>
+                  {t('solutions.navForSpecialists')}
+                </Link>
+              </div>
+              <button onClick={() => scrollTo('how-it-works')}>{t('landing.navHowItWorks')}</button>
+              <button onClick={() => scrollTo('testimonials')}>{t('landing.navReviews')}</button>
+              <LanguageSwitcher />
+            </div>
+            <div className="landing-nav-mobile-footer">
+              <Link to="/login" className="landing-nav-cta" onClick={() => setMobileOpen(false)}>
+                {t('landing.navSignIn')}
+              </Link>
+            </div>
+          </motion.div>
+        </>
       )}
     </motion.nav>
   );

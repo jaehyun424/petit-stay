@@ -2,10 +2,11 @@ import { useTranslation } from 'react-i18next';
 import { Link } from 'react-router-dom';
 import { motion, useScroll, useTransform } from 'framer-motion';
 import { ArrowRight, Play } from 'lucide-react';
-import { useRef } from 'react';
+import { useRef, useState, useEffect } from 'react';
 
 const HERO_VIDEO = 'https://videos.pexels.com/video-files/7884081/7884081-uhd_2560_1440_25fps.mp4';
 const HERO_POSTER = 'https://images.pexels.com/videos/7884081/pexels-photo-7884081.jpeg?auto=compress&cs=tinysrgb&w=1920';
+const HERO_MOBILE_IMG = 'https://images.pexels.com/photos/7884081/pexels-photo-7884081.jpeg?auto=compress&cs=tinysrgb&w=800';
 
 export function HeroSection() {
   const { t } = useTranslation();
@@ -13,22 +14,38 @@ export function HeroSection() {
   const { scrollYProgress } = useScroll({ target: ref, offset: ['start start', 'end start'] });
   const y = useTransform(scrollYProgress, [0, 1], [0, 200]);
   const opacity = useTransform(scrollYProgress, [0, 0.7], [1, 0]);
+  const [isMobile, setIsMobile] = useState(false);
+
+  useEffect(() => {
+    const check = () => setIsMobile(window.innerWidth < 768);
+    check();
+    window.addEventListener('resize', check);
+    return () => window.removeEventListener('resize', check);
+  }, []);
 
   return (
     <section ref={ref} className="hero-section section-fullscreen">
-      {/* Video background with parallax */}
+      {/* Video/Image background with parallax */}
       <motion.div className="hero-video-wrap" style={{ y }}>
-        <video
-          className="video-bg"
-          autoPlay
-          muted
-          loop
-          playsInline
-          preload="none"
-          poster={HERO_POSTER}
-        >
-          <source src={HERO_VIDEO} type="video/mp4" />
-        </video>
+        {isMobile ? (
+          <img
+            className="video-bg hero-mobile-img"
+            src={HERO_MOBILE_IMG}
+            alt="Family with child in hotel"
+          />
+        ) : (
+          <video
+            className="video-bg"
+            autoPlay
+            muted
+            loop
+            playsInline
+            preload="none"
+            poster={HERO_POSTER}
+          >
+            <source src={HERO_VIDEO} type="video/mp4" />
+          </video>
+        )}
       </motion.div>
       <div className="video-overlay video-overlay-dark" />
 

@@ -33,11 +33,16 @@ export function LanguageSwitcher() {
     const getDropdownPosition = useCallback(() => {
         if (!buttonRef.current) return { top: 0, left: 0 };
         const rect = buttonRef.current.getBoundingClientRect();
-        const dropdownWidth = 160;
-        const wouldOverflowRight = rect.left + dropdownWidth > window.innerWidth;
+        const dropdownWidth = 180;
+        const margin = 12;
+        let left = rect.left;
+        if (left + dropdownWidth > window.innerWidth - margin) {
+            left = window.innerWidth - dropdownWidth - margin;
+        }
+        if (left < margin) left = margin;
         return {
-            top: rect.bottom + 6,
-            left: wouldOverflowRight ? rect.right - dropdownWidth : rect.left,
+            top: rect.bottom + 8,
+            left,
         };
     }, []);
 
