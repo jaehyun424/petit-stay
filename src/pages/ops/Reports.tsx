@@ -126,7 +126,7 @@ export default function OpsReports() {
         return (
             <div className="ops-page animate-fade-in">
                 <Skeleton width="240px" height="2rem" />
-                <div className="ops-grid-2" style={{ marginTop: 'var(--space-6)' }}>
+                <div className="ops-grid-2">
                     <Skeleton height="340px" />
                     <Skeleton height="340px" />
                 </div>
@@ -210,7 +210,7 @@ export default function OpsReports() {
             </div>
 
             {/* Sitter Utilization + Demand Heatmap */}
-            <div className="ops-grid-2" style={{ marginTop: 'var(--space-6)' }}>
+            <div className="ops-grid-2">
                 {/* Sitter Utilization */}
                 <Card>
                     <CardHeader>

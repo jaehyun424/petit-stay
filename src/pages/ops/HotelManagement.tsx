@@ -61,7 +61,7 @@ export default function OpsHotelManagement() {
     return (
       <div className="ops-page animate-fade-in">
         <Skeleton width="240px" height="2rem" />
-        <div className="ops-sla-grid mb-6" style={{ marginTop: 'var(--space-6)' }}>
+        <div className="ops-sla-grid">
           {[1, 2, 3, 4].map((i) => <Skeleton key={i} height="80px" />)}
         </div>
         <Skeleton height="400px" />

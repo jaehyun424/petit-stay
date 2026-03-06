@@ -61,10 +61,10 @@ export default function OpsInsurance() {
         return (
             <div className="ops-dashboard animate-fade-in">
                 <Skeleton width="260px" height="2rem" />
-                <div className="ops-stats-grid" style={{ marginTop: 'var(--space-6)' }}>
+                <div className="ops-stats-grid">
                     {[1, 2, 3, 4].map((i) => <Skeleton key={i} height="100px" />)}
                 </div>
-                <div className="ops-grid-2" style={{ marginTop: 'var(--space-4)' }}>
+                <div className="ops-grid-2">
                     <Skeleton height="300px" />
                     <Skeleton height="300px" />
                 </div>
@@ -240,7 +240,7 @@ export default function OpsInsurance() {
                     </CardTitle>
                 </CardHeader>
                 <CardBody>
-                    <div style={{ marginBottom: 'var(--space-4)', maxWidth: 240 }}>
+                    <div style={{ marginBottom: 'var(--space-4)' }}>
                         <Select value={claimStatusFilter} onChange={(e) => setClaimStatusFilter(e.target.value)} options={[
                             { value: '', label: t('ops.allStatuses') },
                             { value: 'active', label: t('insurance.status_active') },

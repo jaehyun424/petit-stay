@@ -163,7 +163,7 @@ export default function OpsSitterManagement() {
     return (
       <div className="ops-page animate-fade-in">
         <Skeleton width="240px" height="2rem" />
-        <div className="ops-stats-grid" style={{ marginTop: 'var(--space-6)' }}>
+        <div className="ops-stats-grid">
           {[1, 2, 3, 4].map((i) => <Skeleton key={i} height="80px" />)}
         </div>
         <Skeleton height="400px" />

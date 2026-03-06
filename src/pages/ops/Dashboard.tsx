@@ -69,7 +69,7 @@ export default function OpsDashboard() {
         </div>
       </div>
 
-      {/* Stats Grid */}
+      {/* Stats */}
       <motion.div className="ops-stats-grid" initial="hidden" animate="show" variants={staggerContainer}>
         {statCards.map((stat, i) => (
           <motion.div key={i} className={`ops-stat-card ops-stat-${stat.color}`} variants={staggerItem}>

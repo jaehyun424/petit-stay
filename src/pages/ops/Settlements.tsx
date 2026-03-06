@@ -60,10 +60,10 @@ export default function OpsSettlements() {
     return (
       <div className="ops-page animate-fade-in">
         <Skeleton width="240px" height="2rem" />
-        <div className="ops-summary-bar" style={{ marginTop: 'var(--space-6)' }}>
+        <div className="ops-summary-bar">
           {[1, 2, 3, 4].map((i) => <Skeleton key={i} height="80px" />)}
         </div>
-        <div style={{ marginTop: 'var(--space-4)' }}><Skeleton height="400px" /></div>
+        <Skeleton height="400px" />
       </div>
     );
   }

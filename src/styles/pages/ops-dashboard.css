@@ -1,6 +1,6 @@
 /* ============================================
    Petit Stay - Ops Pages Styles
-   Hotel Design Consistency (Quiet Luxury)
+   Unified with Guest/Specialist mobile patterns
    ============================================ */
 
 /* Stats Grid */
@@ -8,7 +8,7 @@
   display: grid;
   grid-template-columns: repeat(4, 1fr);
   gap: var(--space-4);
-  margin-bottom: var(--space-8);
+  margin-bottom: var(--space-6);
   align-items: stretch;
 }
 
@@ -73,23 +73,10 @@
   margin-bottom: var(--space-6);
 }
 
-@media (max-width: 768px) {
-  .ops-grid-2 { grid-template-columns: 1fr; }
-  .ops-stats-grid, [class*="stats-grid"] { grid-template-columns: 1fr 1fr; gap: 12px; }
-  .ops-sla-grid { grid-template-columns: repeat(2, 1fr); }
-  .ops-availability-grid { grid-template-columns: repeat(2, 1fr); }
-  .ops-dashboard h1 { font-size: 1.5rem; }
-  .ops-section-card { padding: 12px; }
-}
-
-@media (max-width: 480px) {
-  .ops-stats-grid { grid-template-columns: 1fr; }
-  .ops-sla-grid { grid-template-columns: 1fr; }
-}
-
 /* Tables */
 .ops-table-wrapper {
   overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
 }
 
 .ops-table {
@@ -276,17 +263,21 @@
 /* Page */
 .ops-page {
   padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-5);
 }
 
-/* Section spacing within ops pages */
-.ops-page > * + *,
-.ops-dashboard > * + * {
-  margin-top: var(--space-5);
+.ops-dashboard {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-5);
 }
 
-.ops-page > .page-header + *,
-.ops-dashboard > .page-header + * {
-  margin-top: 0;
+/* Remove old margin-based spacing — now using gap on .ops-page / .ops-dashboard */
+.ops-page > .page-header,
+.ops-dashboard > .page-header {
+  margin-bottom: 0;
 }
 
 .ops-table-card + .ops-table-card,
@@ -300,10 +291,9 @@
   display: flex;
   justify-content: space-between;
   align-items: flex-end;
-  margin-bottom: var(--space-8);
   flex-wrap: wrap;
-  gap: var(--space-4);
-  padding-bottom: var(--space-6);
+  gap: var(--space-3);
+  padding-bottom: var(--space-4);
   border-bottom: 1px solid var(--cream-200);
 }
 
@@ -321,7 +311,6 @@
 .ops-page .page-subtitle {
   font-size: 0.875rem;
   color: var(--text-secondary);
-  margin-bottom: var(--space-5);
   line-height: 1.5;
 }
 
@@ -330,14 +319,6 @@
   display: grid;
   grid-template-columns: 1fr 240px;
   gap: 1rem;
-  margin-bottom: 1rem;
-}
-
-@media (max-width: 640px) {
-  .ops-dashboard .filters-row,
-  .ops-page .filters-row {
-    grid-template-columns: 1fr;
-  }
 }
 
 .ops-dashboard .booking-code,
@@ -390,14 +371,6 @@
   margin-top: 0.125rem;
 }
 
-@media (max-width: 768px) {
-  .ops-summary-bar { grid-template-columns: repeat(2, 1fr); }
-}
-
-@media (max-width: 480px) {
-  .ops-summary-bar { grid-template-columns: 1fr; }
-}
-
 /* Batch Action Bar */
 .ops-batch-bar {
   display: flex;
@@ -442,10 +415,6 @@
 /* 3-column Filter Row */
 .filters-row-3 {
   grid-template-columns: 1fr 200px 200px !important;
-}
-
-@media (max-width: 768px) {
-  .filters-row-3 { grid-template-columns: 1fr !important; }
 }
 
 /* Alert List */
@@ -688,6 +657,7 @@
    ============================================ */
 .ops-heatmap-wrapper {
   overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
 }
 
 .ops-heatmap {
@@ -762,17 +732,12 @@
 
 /* ============================================
    Mobile Card System
-   Unified with Hotel/Guest/Sitter modules
+   Unified with Guest/Specialist patterns
    ============================================ */
 
 /* Desktop/Mobile visibility toggles */
 .ops-desktop-only { display: block; }
 .ops-mobile-only-block { display: none; }
-
-@media (max-width: 768px) {
-  .ops-desktop-only { display: none !important; }
-  .ops-mobile-only-block { display: block !important; }
-}
 
 /* Mobile Card List */
 .ops-mobile-card-list {
@@ -909,42 +874,43 @@
 }
 
 /* ============================================
-   Reports / Charts Mobile
-   ============================================ */
-@media (max-width: 768px) {
-  .ops-grid-2 .card {
-    min-height: auto;
-    padding: var(--space-4);
-  }
-
-  .ops-mobile-card-list {
-    gap: var(--space-3);
-  }
-}
-
-/* ============================================
-   Enhanced Mobile Responsive
+   MOBILE — 768px
    Guest/Specialist quality on mobile
    ============================================ */
 
 @media (max-width: 768px) {
-  /* Page title — serif + premium sizing like Guest */
+  .ops-desktop-only { display: none !important; }
+  .ops-mobile-only-block { display: block !important; }
+
+  /* Page/Dashboard gap layout — tighter on mobile like Guest */
+  .ops-page,
+  .ops-dashboard {
+    gap: var(--space-4);
+  }
+
+  /* Page title — serif + compact like Guest/Specialist */
   .ops-dashboard .page-title,
   .ops-page .page-title {
-    font-size: 1.625rem;
+    font-size: 1.5rem;
   }
 
   .ops-dashboard .page-header,
   .ops-page .page-header {
-    margin-bottom: var(--space-6);
-    padding-bottom: var(--space-5);
-    border-bottom-color: var(--cream-300);
+    padding-bottom: var(--space-3);
+    border-bottom: none;
+    gap: var(--space-2);
   }
 
-  /* Stats grid: 2 columns, premium card feel */
+  .ops-dashboard .page-subtitle,
+  .ops-page .page-subtitle {
+    font-size: 0.8125rem;
+  }
+
+  /* Stats grid: 2 columns, Guest info-card feel */
   .ops-stats-grid {
     grid-template-columns: repeat(2, 1fr);
     gap: 0.75rem;
+    margin-bottom: 0;
   }
 
   .ops-stat-card {
@@ -964,6 +930,13 @@
     height: 36px;
   }
 
+  /* Grid-2 stacks on mobile */
+  .ops-grid-2 {
+    grid-template-columns: 1fr;
+    gap: var(--space-4);
+    margin-bottom: 0;
+  }
+
   /* Summary bar: 2 columns, generous spacing */
   .ops-summary-bar {
     grid-template-columns: repeat(2, 1fr);
@@ -981,7 +954,6 @@
 
   /* SLA grid: 2 columns */
   .ops-sla-grid {
-    grid-template-columns: repeat(2, 1fr);
     gap: 0.75rem;
   }
 
@@ -996,7 +968,6 @@
 
   /* Availability grid */
   .ops-availability-grid {
-    grid-template-columns: repeat(2, 1fr);
     gap: 0.75rem;
   }
 
@@ -1004,13 +975,13 @@
     font-size: 1.5rem;
   }
 
-  /* Card grid for sitters */
+  /* Card grid for sitters: single column */
   .ops-card-grid {
     grid-template-columns: 1fr;
     gap: 0.875rem;
   }
 
-  /* Alert items - wrap on mobile */
+  /* Alert items — wrap on mobile */
   .ops-alert-item {
     flex-wrap: wrap;
     gap: 0.5rem;
@@ -1075,11 +1046,6 @@
     -webkit-tap-highlight-color: transparent;
   }
 
-  /* Heatmap scroll hint */
-  .ops-heatmap-wrapper {
-    position: relative;
-  }
-
   /* Reports page header button */
   .page-header .btn {
     width: 100%;
@@ -1088,20 +1054,53 @@
   /* Pending section heading */
   .ops-pending-heading {
     font-size: var(--text-lg);
-    margin-bottom: var(--space-4);
+    margin-bottom: var(--space-3);
+  }
+
+  /* mb-6 utility reduced on mobile to avoid excess spacing */
+  .mb-6 {
+    margin-bottom: 0;
+  }
+
+  /* Charts: ensure no overflow */
+  .ops-grid-2 .card {
+    min-height: auto;
+    padding: var(--space-4);
+  }
+
+  .ops-mobile-card-list {
+    gap: var(--space-3);
+  }
+
+  /* Heatmap scroll hint */
+  .ops-heatmap-wrapper {
+    position: relative;
+  }
+
+  /* Section gap reduced on mobile */
+  .rpt-section-gap {
+    margin-top: 0;
   }
 }
 
+/* ============================================
+   MOBILE — 480px (small phones)
+   ============================================ */
+
 @media (max-width: 480px) {
+  .ops-page,
+  .ops-dashboard {
+    gap: var(--space-3);
+  }
+
   /* Page title */
   .ops-dashboard .page-title,
   .ops-page .page-title {
     font-size: 1.375rem;
   }
 
-  /* Stats: 2 columns like Guest's info-cards */
+  /* Stats: keep 2 columns like Guest info-cards */
   .ops-stats-grid {
-    grid-template-columns: repeat(2, 1fr);
     gap: 0.625rem;
   }
 
@@ -1116,7 +1115,6 @@
 
   /* Summary: keep 2 columns */
   .ops-summary-bar {
-    grid-template-columns: repeat(2, 1fr);
     gap: 0.625rem;
   }
 
@@ -1128,9 +1126,8 @@
     font-size: 1.125rem;
   }
 
-  /* SLA: 2 columns on 480px, fits fine */
+  /* SLA: 2 columns still works */
   .ops-sla-grid {
-    grid-template-columns: repeat(2, 1fr);
     gap: 0.625rem;
   }
 
@@ -1138,7 +1135,7 @@
     font-size: 1.125rem;
   }
 
-  /* Availability: 2 columns still works */
+  /* Availability */
   .ops-availability-grid {
     gap: 0.625rem;
   }
@@ -1162,6 +1159,10 @@
     gap: 0.5rem;
   }
 }
+
+/* ============================================
+   MOBILE — 320px (iPhone SE / very narrow)
+   ============================================ */
 
 @media (max-width: 320px) {
   .ops-dashboard .page-title,

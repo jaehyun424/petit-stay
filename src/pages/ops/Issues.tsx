@@ -33,12 +33,8 @@ export default function OpsIssues() {
     return (
       <div className="ops-page animate-fade-in">
         <Skeleton width="240px" height="2rem" />
-        <div style={{ marginTop: 'var(--space-6)' }}>
-          <Skeleton height="48px" />
-        </div>
-        <div style={{ marginTop: 'var(--space-4)' }}>
-          <Skeleton height="400px" />
-        </div>
+        <Skeleton height="48px" />
+        <Skeleton height="400px" />
       </div>
     );
   }
