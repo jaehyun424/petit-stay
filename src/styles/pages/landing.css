@@ -1278,20 +1278,20 @@
 /* ----------------------------------------
    Language Switcher on Landing Nav
    ---------------------------------------- */
-.landing-nav .language-switcher button {
+.landing-nav button.language-switcher {
   color: rgba(255, 255, 255, 0.85);
 }
 
-.landing-nav-scrolled .language-switcher button {
+.landing-nav-scrolled button.language-switcher {
   color: var(--text-primary);
 }
 
-.landing-nav .language-switcher button:hover {
+.landing-nav button.language-switcher:hover {
   color: var(--charcoal-900);
   background: rgba(255, 255, 255, 0.9);
 }
 
-.landing-nav-scrolled .language-switcher button:hover {
+.landing-nav-scrolled button.language-switcher:hover {
   background: var(--cream-100);
 }
 

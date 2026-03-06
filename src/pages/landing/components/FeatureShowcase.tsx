@@ -7,15 +7,15 @@ const features = [
     icon: <Shield size={28} strokeWidth={1.5} />,
     titleKey: 'feature1Title',
     descKey: 'feature1Desc',
-    image: 'https://images.unsplash.com/photo-1565843708714-52ecf69ab81f?w=800&q=80',
-    imageAlt: 'Safe and protected child at premium hotel',
+    image: 'https://images.unsplash.com/photo-1756982477320-dac72add2598?w=800&q=80',
+    imageAlt: 'Parent holding child hand at golden sunset, safety and protection',
   },
   {
     icon: <CheckCircle size={28} strokeWidth={1.5} />,
     titleKey: 'feature2Title',
     descKey: 'feature2Desc',
-    image: 'https://images.unsplash.com/photo-1544776193-352d25ca82cd?w=800&q=80',
-    imageAlt: 'Verified childcare professional with child',
+    image: 'https://images.unsplash.com/photo-1714646793093-4d5c598d9ab2?w=800&q=80',
+    imageAlt: 'Professional caregiver reading book to child on floor',
   },
   {
     icon: <ClipboardList size={28} strokeWidth={1.5} />,
@@ -28,8 +28,8 @@ const features = [
     icon: <Moon size={28} strokeWidth={1.5} />,
     titleKey: 'feature4Title',
     descKey: 'feature4Desc',
-    image: 'https://images.unsplash.com/photo-1590490360182-c33d57733427?w=800&q=80',
-    imageAlt: 'Premium hotel evening and night care service',
+    image: 'https://images.unsplash.com/photo-1566665797739-1674de7a421a?w=800&q=80',
+    imageAlt: 'Luxury hotel bedroom with warm evening lighting',
   },
 ];
 
