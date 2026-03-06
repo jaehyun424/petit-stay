@@ -1,12 +1,13 @@
 /* ============================================
-   Petit Stay - Ops Layout (mirrors hotel-layout)
+   Petit Stay - Ops Layout
+   Unified with Parent/Sitter pattern
    ============================================ */
 
 .ops-layout {
   display: flex;
+  flex-direction: column;
   min-height: 100vh;
   min-height: 100dvh;
-  background: linear-gradient(135deg, var(--cream-50) 0%, var(--cream-100) 100%);
 }
 
 .ops-badge {
@@ -21,84 +22,243 @@
   margin-left: 4px;
 }
 
-/* Reuse sidebar styles from hotel-layout.css - the classes are the same */
-
-/* Breadcrumb Navigation */
-.ops-breadcrumb {
+/* Mobile header */
+.ops-header {
   display: flex;
   align-items: center;
-  gap: 0.375rem;
-  font-size: 0.8125rem;
-  color: var(--text-tertiary, #999);
+  justify-content: space-between;
+  padding: var(--space-3) var(--space-4);
+  background: rgba(255, 255, 255, 0.85);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border-bottom: 1px solid rgba(0, 0, 0, 0.03);
+  position: sticky;
+  top: 0;
+  z-index: var(--z-fixed-nav);
 }
 
-.ops-breadcrumb-root {
-  color: var(--text-secondary, #666);
+:root[data-theme="dark"] .ops-header {
+  background: rgba(30, 30, 30, 0.85);
+  border-bottom-color: rgba(255, 255, 255, 0.03);
 }
 
-.ops-breadcrumb-current {
-  color: var(--text-primary, #1a1a1a);
-  font-weight: 600;
+.ops-header-logo {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
 }
 
-@media (max-width: 768px) {
-  .ops-breadcrumb { display: none; }
+.ops-header-right {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+}
+
+/* Desktop header hidden on mobile */
+.ops-desktop-header {
+  display: none;
+}
+
+/* Sidebar hidden on mobile - slides in when hamburger is tapped */
+.ops-sidebar {
+  display: flex;
+  width: 248px;
+  flex-direction: column;
+  position: fixed;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  z-index: var(--z-fixed-nav);
+  background: linear-gradient(180deg, var(--sidebar-bg-start) 0%, var(--sidebar-bg-end) 100%);
+  border-right: 1px solid var(--sidebar-border);
+  color: var(--sidebar-text);
+  box-shadow: 2px 0 12px rgba(0,0,0,0.08);
+  transform: translateX(-100%);
+  transition: transform var(--transition-base);
+}
+
+.ops-sidebar.sidebar-mobile-open {
+  transform: translateX(0);
+}
+
+.ops-mobile-menu-btn {
+  display: flex;
+}
+
+/* Show close button in sidebar below 1024px */
+.ops-layout .mobile-only-btn {
+  display: flex;
+}
+
+/* Override sidebar-overlay to show below 1024px for ops */
+.ops-layout .sidebar-overlay {
+  display: block;
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.6);
+  backdrop-filter: blur(4px);
+  z-index: var(--z-overlay);
+}
+
+/* Main area */
+.ops-main-area {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+}
+
+/* Content */
+.ops-content {
+  flex: 1;
+  padding: var(--space-4);
+  padding-bottom: calc(var(--space-4) + 70px);
+  overflow-y: auto;
 }
 
 /* Ops mobile bottom nav */
 .ops-mobile-only {
-  display: none;
+  display: flex;
 }
 
-@media (max-width: 768px) {
-  .ops-mobile-only {
-    display: flex;
+/* Mobile small screens */
+@media (max-width: 374px) {
+  .ops-content {
+    padding: var(--space-3);
+    padding-bottom: calc(var(--space-3) + 70px);
   }
-  [class*="menu-btn"], [class*="hamburger"], .mobile-menu-toggle {
+  .ops-content .page-title {
+    font-size: 1.25rem;
+  }
+  .bottom-nav-item {
+    padding: var(--space-2) var(--space-2);
+  }
+}
+
+/* ============================================
+   Desktop Layout (>= 1024px): Sidebar + Content
+   ============================================ */
+@media (min-width: 1024px) {
+  .ops-layout {
+    flex-direction: row;
+  }
+
+  /* Show sidebar - Gold Theme (consistent 248px with Parent/Sitter) */
+  .ops-sidebar {
+    display: flex;
+    width: 248px;
+    flex-direction: column;
+    position: fixed;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    z-index: var(--z-fixed-nav);
+    background: linear-gradient(180deg, var(--sidebar-bg-start) 0%, var(--sidebar-bg-end) 100%);
+    border-right: 1px solid var(--sidebar-border);
+    color: var(--sidebar-text);
+    box-shadow: 2px 0 12px rgba(0,0,0,0.08);
+    transform: translateX(0);
+    transition: width var(--transition-base);
+  }
+
+  .ops-sidebar.sidebar-collapsed {
+    width: 80px;
+  }
+
+  .ops-sidebar.sidebar-collapsed .sidebar-nav-label {
+    display: none;
+  }
+
+  .ops-sidebar.sidebar-collapsed .sidebar-nav-item {
+    justify-content: center;
+    padding: 0.875rem 0;
+  }
+
+  /* Hide overlay and close button on desktop */
+  .ops-layout .sidebar-overlay {
+    display: none;
+  }
+
+  .ops-layout .mobile-only-btn {
+    display: none;
+  }
+
+  /* Hide mobile menu button on desktop */
+  .ops-mobile-menu-btn {
+    display: none;
+  }
+
+  /* Hide mobile header, show desktop header */
+  .ops-header {
+    display: none;
+  }
+
+  .ops-desktop-header {
+    display: flex;
+    align-items: center;
+    padding: 0.75rem 2rem;
+    background: rgba(255, 255, 255, 0.85);
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
+    border-bottom: 1px solid rgba(0, 0, 0, 0.03);
+    position: sticky;
+    top: 0;
+    z-index: var(--z-sticky);
+    height: 52px;
+  }
+
+  :root[data-theme="dark"] .ops-desktop-header {
+    background: rgba(37, 37, 37, 0.85);
+    border-bottom-color: rgba(255, 255, 255, 0.03);
+  }
+
+  /* Main area gets margin for sidebar (consistent 248px/80px with Parent/Sitter) */
+  .ops-main-area {
+    margin-left: 248px;
+    transition: margin-left var(--transition-base);
+  }
+
+  .ops-sidebar.sidebar-collapsed ~ .ops-main-area,
+  .ops-layout:has(.ops-sidebar.sidebar-collapsed) .ops-main-area {
+    margin-left: 80px;
+  }
+
+  /* Content - consistent padding with Parent/Sitter */
+  .ops-content {
+    padding: 2.5rem;
+    max-width: 1600px;
+    width: 100%;
+    margin: 0 auto;
+  }
+
+  /* Hide bottom nav on desktop */
+  .ops-mobile-only {
     display: none !important;
   }
-  .header-actions, [class*="header-right"], [class*="header-actions"] {
-    gap: 4px;
-  }
-  [class*="user-name"], [class*="userName"] {
-    display: none;
-  }
-
-  /* Mobile page content padding for bottom nav */
-  .ops-layout .page-content {
-    padding: 1rem;
-    padding-bottom: calc(1rem + 70px);
-    max-width: 100vw;
-    overflow-x: hidden;
-    /* Safe area insets for notched devices, like Guest page */
-    padding-left: max(1rem, env(safe-area-inset-left));
-    padding-right: max(1rem, env(safe-area-inset-right));
-    padding-bottom: max(calc(1rem + 70px), calc(env(safe-area-inset-bottom) + 70px));
-  }
-
-  /* Mobile header adjustments */
-  .ops-layout .main-header {
-    padding: 0.5rem 1rem;
-  }
-
-  .ops-layout .header-user {
-    gap: 0.25rem;
-  }
-
-  /* Hide header logout on mobile (available in sidebar) */
-  .ops-layout .header-user > button:last-child {
-    display: none;
-  }
-
-  /* Prevent horizontal scroll */
-  .ops-layout .main-content {
-    max-width: 100vw;
-    overflow-x: hidden;
-  }
 }
 
+/* Mobile: hide hamburger on <=768, header spacing */
 .ops-layout .header-actions, .ops-layout [class*="header-right"], .ops-layout [class*="header-actions"] {
   display: flex;
   align-items: center;
   gap: 8px;
+}
+
+@media (max-width: 768px) {
+  .ops-layout [class*="menu-btn"], .ops-layout [class*="hamburger"], .ops-layout .mobile-menu-toggle {
+    display: none !important;
+  }
+  .ops-layout .header-actions, .ops-layout [class*="header-right"], .ops-layout [class*="header-actions"] {
+    gap: 4px;
+  }
+  .ops-layout [class*="user-name"], .ops-layout [class*="userName"] {
+    display: none;
+  }
+}
+
+/* Tablet: full-width layout */
+@media (min-width: 768px) and (max-width: 1023px) {
+  .ops-layout {
+    max-width: 100%;
+    margin: 0 auto;
+  }
 }
