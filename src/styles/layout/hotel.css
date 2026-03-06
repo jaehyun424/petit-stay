@@ -1,9 +1,13 @@
 .hotel-layout {
   display: flex;
+  flex-direction: column;
   min-height: 100vh;
   min-height: 100dvh;
-  background-color: var(--cream-100);
 }
+
+/* ============================================
+   Shared Sidebar Styles (used by Hotel, Parent, Sitter, Ops)
+   ============================================ */
 
 /* Sidebar - Gold Theme */
 .sidebar {
@@ -33,43 +37,6 @@
 
 .sidebar-overlay {
   display: none;
-}
-
-@media (max-width: 768px) {
-  .sidebar {
-    transform: translateX(-100%);
-  }
-
-  .sidebar-mobile-open {
-    transform: translateX(0);
-    width: 248px;
-  }
-
-  .sidebar-mobile-open.sidebar-collapsed {
-    width: 248px;
-  }
-
-  .sidebar-mobile-open.sidebar-collapsed .sidebar-nav-label {
-    display: block !important;
-  }
-
-  .sidebar-mobile-open.sidebar-collapsed .sidebar-nav-item {
-    justify-content: flex-start;
-    padding: 0.625rem 1rem;
-  }
-
-  .sidebar-overlay {
-    display: block;
-    position: fixed;
-    inset: 0;
-    background: rgba(0, 0, 0, 0.6);
-    backdrop-filter: blur(4px);
-    z-index: var(--z-overlay);
-  }
-
-  .desktop-only {
-    display: none;
-  }
 }
 
 .sidebar-header {
@@ -118,12 +85,6 @@
 
 .mobile-only-btn {
   display: none;
-}
-
-@media (max-width: 768px) {
-  .mobile-only-btn {
-    display: flex;
-  }
 }
 
 /* Navigation */
@@ -210,61 +171,9 @@
   border-top-color: var(--sidebar-divider);
 }
 
-/* Main Content */
-.main-content {
-  flex: 1;
-  margin-left: 248px;
-  display: flex;
-  flex-direction: column;
-  min-height: 100vh;
-  transition: margin-left var(--transition-base);
-  background-color: var(--cream-100);
-}
-
-.sidebar-collapsed + .main-content,
-.hotel-layout:has(.sidebar-collapsed) .main-content {
-  margin-left: 80px;
-}
-
-@media (max-width: 768px) {
-  .main-content {
-    margin-left: 0;
-  }
-}
-
-/* Header */
-.main-header {
-  display: flex;
-  align-items: center;
-  padding: 0 var(--space-5);
-  background: rgba(255, 255, 255, 0.85);
-  backdrop-filter: blur(16px);
-  -webkit-backdrop-filter: blur(16px);
-  border-bottom: 1px solid rgba(0, 0, 0, 0.04);
-  position: sticky;
-  top: 0;
-  z-index: var(--z-sticky);
-  height: 52px;
-}
-
-:root[data-theme="dark"] .main-header {
-  background: rgba(37, 37, 37, 0.85);
-  border-bottom-color: rgba(255, 255, 255, 0.03);
-}
-
-.mobile-menu-btn {
-  display: none;
-}
-
-.mobile-brand-logo {
-  display: none;
-}
-
-@media (max-width: 768px) {
-  .mobile-brand-logo {
-    display: flex;
-  }
-}
+/* ============================================
+   Shared Header Styles
+   ============================================ */
 
 .desktop-page-title {
   font-family: var(--font-serif);
@@ -304,51 +213,244 @@
   }
 }
 
-/* Page Content */
-.page-content {
+/* ============================================
+   Shared Bottom Nav Styles
+   ============================================ */
+
+/* All bottom-nav shared styles are in components CSS */
+
+/* ============================================
+   Hotel-Specific Layout (matching Parent/Sitter pattern)
+   ============================================ */
+
+/* Mobile header */
+.hotel-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: var(--space-3) var(--space-4);
+  background: rgba(255, 255, 255, 0.85);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border-bottom: 1px solid rgba(0, 0, 0, 0.03);
+  position: sticky;
+  top: 0;
+  z-index: var(--z-fixed-nav);
+}
+
+:root[data-theme="dark"] .hotel-header {
+  background: rgba(30, 30, 30, 0.85);
+  border-bottom-color: rgba(255, 255, 255, 0.03);
+}
+
+.hotel-header-left {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+}
+
+.hotel-header-right {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+}
+
+/* Desktop header hidden on mobile */
+.hotel-desktop-header {
+  display: none;
+}
+
+/* Sidebar hidden on mobile - slides in when hamburger is tapped */
+.hotel-sidebar {
+  display: flex;
+  width: 248px;
+  flex-direction: column;
+  position: fixed;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  z-index: var(--z-fixed-nav);
+  background: linear-gradient(180deg, var(--sidebar-bg-start) 0%, var(--sidebar-bg-end) 100%);
+  border-right: 1px solid var(--sidebar-border);
+  color: var(--sidebar-text);
+  box-shadow: 2px 0 12px rgba(0,0,0,0.08);
+  transform: translateX(-100%);
+  transition: transform var(--transition-base);
+}
+
+.hotel-sidebar.sidebar-mobile-open {
+  transform: translateX(0);
+}
+
+/* Show close button in sidebar below 1024px */
+.hotel-layout .mobile-only-btn {
+  display: flex;
+}
+
+/* Override sidebar-overlay to show below 1024px for hotel */
+.hotel-layout .sidebar-overlay {
+  display: block;
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.6);
+  backdrop-filter: blur(4px);
+  z-index: var(--z-overlay);
+}
+
+/* Main area */
+.hotel-main-area {
+  display: flex;
+  flex-direction: column;
   flex: 1;
-  padding: var(--space-6);
+}
+
+/* Content */
+.hotel-content {
+  flex: 1;
+  padding: var(--space-4);
+  padding-bottom: calc(var(--space-4) + 70px);
   overflow-y: auto;
-  max-width: 1600px;
-  width: 100%;
-  margin: 0 auto;
-}
-
-@media (max-width: 768px) {
-  .page-content {
-    padding: var(--space-4);
-    padding-bottom: calc(var(--space-4) + 70px + env(safe-area-inset-bottom, 0px));
-  }
-}
-
-@media (max-width: 480px) {
-  .page-content {
-    padding: var(--space-3);
-    padding-bottom: calc(var(--space-3) + 70px + env(safe-area-inset-bottom, 0px));
-  }
-}
-
-@media (max-width: 320px) {
-  .page-content {
-    padding: var(--space-2);
-    padding-bottom: calc(var(--space-2) + 70px + env(safe-area-inset-bottom, 0px));
-  }
 }
 
 /* Hotel mobile bottom nav */
 .hotel-mobile-only {
-  display: none;
+  display: flex;
 }
 
-@media (max-width: 768px) {
-  .hotel-mobile-only {
-    display: flex;
+/* Mobile small screens */
+@media (max-width: 374px) {
+  .hotel-content {
+    padding: var(--space-3);
+    padding-bottom: calc(var(--space-3) + 70px);
+  }
+  .hotel-content .page-title {
+    font-size: 1.25rem;
   }
 }
 
-/* ----------------------------------------
+/* Mobile header spacing */
+@media (max-width: 768px) {
+  .hotel-layout [class*="user-name"], .hotel-layout [class*="userName"] {
+    display: none;
+  }
+
+  /* Hide hamburger and sidebar on mobile — bottom nav is sufficient */
+  .hotel-layout .sidebar-toggle,
+  .hotel-layout [class*="hamburger"],
+  .hotel-layout .mobile-menu-toggle {
+    display: none !important;
+  }
+}
+
+/* ============================================
+   Desktop Layout (>= 1024px): Sidebar + Content
+   ============================================ */
+@media (min-width: 1024px) {
+  .hotel-layout {
+    flex-direction: row;
+  }
+
+  /* Show sidebar - Gold Theme (consistent 248px with Parent/Sitter/Ops) */
+  .hotel-sidebar {
+    display: flex;
+    width: 248px;
+    flex-direction: column;
+    position: fixed;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    z-index: var(--z-fixed-nav);
+    background: linear-gradient(180deg, var(--sidebar-bg-start) 0%, var(--sidebar-bg-end) 100%);
+    border-right: 1px solid var(--sidebar-border);
+    color: var(--sidebar-text);
+    box-shadow: 2px 0 12px rgba(0,0,0,0.08);
+    transform: translateX(0);
+    transition: width var(--transition-base);
+  }
+
+  .hotel-sidebar.sidebar-collapsed {
+    width: 80px;
+  }
+
+  .hotel-sidebar.sidebar-collapsed .sidebar-nav-label {
+    display: none;
+  }
+
+  .hotel-sidebar.sidebar-collapsed .sidebar-nav-item {
+    justify-content: center;
+    padding: 0.875rem 0;
+  }
+
+  /* Hide overlay and close button on desktop */
+  .hotel-layout .sidebar-overlay {
+    display: none;
+  }
+
+  .hotel-layout .mobile-only-btn {
+    display: none;
+  }
+
+  /* Hide mobile header, show desktop header */
+  .hotel-header {
+    display: none;
+  }
+
+  .hotel-desktop-header {
+    display: flex;
+    align-items: center;
+    padding: 0.75rem 2rem;
+    background: rgba(255, 255, 255, 0.85);
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
+    border-bottom: 1px solid rgba(0, 0, 0, 0.03);
+    position: sticky;
+    top: 0;
+    z-index: var(--z-sticky);
+    height: 52px;
+  }
+
+  :root[data-theme="dark"] .hotel-desktop-header {
+    background: rgba(37, 37, 37, 0.85);
+    border-bottom-color: rgba(255, 255, 255, 0.03);
+  }
+
+  /* Main area gets margin for sidebar (consistent 248px/80px with Parent/Sitter/Ops) */
+  .hotel-main-area {
+    margin-left: 248px;
+    transition: margin-left var(--transition-base);
+  }
+
+  .hotel-sidebar.sidebar-collapsed ~ .hotel-main-area,
+  .hotel-layout:has(.hotel-sidebar.sidebar-collapsed) .hotel-main-area {
+    margin-left: 80px;
+  }
+
+  /* Content - consistent padding with Parent/Sitter/Ops */
+  .hotel-content {
+    padding: 2.5rem;
+    padding-bottom: 2.5rem;
+    max-width: 1600px;
+    width: 100%;
+    margin: 0 auto;
+  }
+
+  /* Hide bottom nav on desktop */
+  .hotel-mobile-only {
+    display: none !important;
+  }
+}
+
+/* Tablet: full-width layout (consistent with Parent/Sitter) */
+@media (min-width: 768px) and (max-width: 1023px) {
+  .hotel-layout {
+    max-width: 100%;
+    margin: 0 auto;
+  }
+}
+
+/* ============================================
    Common Hotel Page Header Styles
-   ---------------------------------------- */
+   ============================================ */
 .page-header {
   display: flex;
   justify-content: space-between;
@@ -406,7 +508,7 @@
   }
 }
 
-/* Mobile: hide hamburger, header spacing */
+/* Mobile: header spacing */
 .header-actions, [class*="header-right"], [class*="header-actions"] {
   display: flex;
   align-items: center;
@@ -414,14 +516,8 @@
 }
 
 @media (max-width: 768px) {
-  [class*="menu-btn"], [class*="hamburger"], .mobile-menu-toggle {
-    display: none !important;
-  }
   .header-actions, [class*="header-right"], [class*="header-actions"] {
     gap: var(--space-1);
-  }
-  [class*="user-name"], [class*="userName"] {
-    display: none;
   }
 
   /* Mobile bottom nav touch targets */
@@ -429,5 +525,16 @@
   .hotel-mobile-only button {
     min-height: 48px;
     min-width: 48px;
+  }
+}
+
+/* Desktop-only helper */
+.desktop-only {
+  display: flex;
+}
+
+@media (max-width: 1023px) {
+  .desktop-only {
+    display: none;
   }
 }
