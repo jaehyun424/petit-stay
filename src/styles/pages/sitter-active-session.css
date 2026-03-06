@@ -1,5 +1,11 @@
 /* Sitter Active Session Page */
-.active-session { max-width: 480px; margin: 0 auto; }
+.active-session {
+  max-width: 1200px;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-4);
+}
 
 .active-banner {
   display: flex;
@@ -9,7 +15,6 @@
   background: linear-gradient(135deg, rgba(16, 185, 129, 0.15), rgba(16, 185, 129, 0.05));
   border: 1px solid var(--success-500);
   border-radius: var(--radius-xl);
-  margin-bottom: var(--space-4);
 }
 
 .banner-left { display: flex; align-items: center; gap: var(--space-2); }
@@ -57,7 +62,6 @@
   gap: var(--space-2);
   width: 100%;
   padding: var(--space-3) var(--space-4);
-  margin: var(--space-4) 0;
   background: var(--error-bg);
   border: 2px solid var(--error-500);
   border-radius: var(--radius-lg);
@@ -84,7 +88,6 @@
   display: grid;
   grid-template-columns: repeat(3, 1fr);
   gap: var(--space-3);
-  margin-bottom: var(--space-4);
 }
 
 .quick-action-card {
@@ -357,22 +360,32 @@
 }
 
 .session-info-card {
-  margin-bottom: 16px;
   padding: 16px;
 }
 
 .checklist-item {
-  margin-bottom: 12px;
   padding: 12px;
 }
 
 /* Desktop Layout */
 @media (min-width: 1024px) {
-  .active-session {
-    max-width: 640px;
-  }
-
   .active-session .info-grid {
     grid-template-columns: repeat(4, 1fr);
+  }
+
+  .active-session .desktop-two-col {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: var(--space-5);
+    align-items: start;
+  }
+
+  .quick-actions-grid {
+    grid-template-columns: repeat(3, 1fr);
+    gap: var(--space-4);
+  }
+
+  .quick-action-card {
+    padding: var(--space-5) var(--space-3);
   }
 }

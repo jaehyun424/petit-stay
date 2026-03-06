@@ -2,9 +2,12 @@
 
 /* Page Layout */
 .earnings-page {
-    max-width: 600px;
+    max-width: 1200px;
     margin: 0 auto;
     padding-bottom: var(--space-8);
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-4);
 }
 
 /* Header */
@@ -19,7 +22,9 @@
 
 .earnings-page-title {
     font-size: var(--text-2xl);
-    font-weight: var(--font-bold);
+    font-weight: 400;
+    font-family: var(--font-serif);
+    letter-spacing: -0.03em;
 }
 
 .earnings-header-actions {
@@ -109,7 +114,6 @@
 
 /* Summary Card */
 .earnings-summary {
-    margin-bottom: var(--space-4);
 }
 
 .earnings-summary-label {
@@ -126,6 +130,7 @@
     font-weight: var(--font-bold);
     color: var(--gold-text);
     line-height: 1.1;
+    font-family: var(--font-serif);
 }
 
 .earnings-meta {
@@ -164,7 +169,6 @@
     display: grid;
     grid-template-columns: 1fr 1fr;
     gap: var(--space-4);
-    margin-bottom: var(--space-6);
 }
 
 .earnings-page .stat-label {
@@ -191,7 +195,6 @@
 .cumulative-stats {
     display: flex;
     gap: var(--space-4);
-    margin-bottom: var(--space-6);
     padding: var(--space-4);
     background: var(--gradient-gold);
     border-radius: var(--radius-xl);
@@ -233,7 +236,6 @@
 
 /* Chart Card */
 .chart-card {
-    margin-bottom: var(--space-6);
 }
 
 .chart-container {
@@ -306,7 +308,6 @@
 
 /* Hotel Breakdown */
 .breakdown-card {
-    margin-bottom: var(--space-6);
 }
 
 .hotel-breakdown-list {
@@ -381,7 +382,6 @@
 
 /* Payments */
 .payments-card {
-    margin-bottom: var(--space-4);
 }
 
 .payments-header {
@@ -509,7 +509,6 @@
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
   gap: var(--space-4);
-  margin-bottom: var(--space-6);
 }
 
 .earnings-list-item {
@@ -523,11 +522,23 @@
 
 /* Desktop Layout */
 @media (min-width: 1024px) {
-    .earnings-page {
-        max-width: 640px;
-    }
-
     .earnings-page .stats-row {
         grid-template-columns: repeat(4, 1fr);
+    }
+
+    .earnings-page .stat-value {
+        font-size: var(--text-3xl);
+        font-family: var(--font-serif);
+    }
+
+    .earnings-desktop-two-col {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: var(--space-5);
+        align-items: start;
+    }
+
+    .cumulative-stats {
+        flex-direction: row;
     }
 }

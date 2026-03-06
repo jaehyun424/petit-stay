@@ -89,7 +89,6 @@
   flex: 1;
   padding: var(--space-5);
   padding-bottom: calc(var(--space-5) + 70px);
-  overflow-y: auto;
 }
 
 /* Mobile small screens */
@@ -198,7 +197,7 @@
 }
 
 /* Mid-screen content constraint */
-@media (min-width: 769px) {
+@media (min-width: 769px) and (max-width: 1023px) {
   .sitter-content {
     max-width: 1200px;
     margin: 0 auto;

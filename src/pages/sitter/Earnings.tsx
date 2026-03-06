@@ -251,6 +251,8 @@ export default function Earnings() {
                 </div>
             </div>
 
+            {/* Chart + Breakdown — side by side on desktop */}
+            <div className="earnings-desktop-two-col">
             {/* Monthly Earnings Bar Chart */}
             <Card className="chart-card">
                 <CardHeader>
@@ -316,6 +318,7 @@ export default function Earnings() {
                     </div>
                 </CardBody>
             </Card>
+            </div>
 
             {/* Recent Payments with Settlement Status */}
             <Card className="payments-card">

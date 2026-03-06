@@ -172,130 +172,135 @@ export default function Profile() {
                 </CardBody>
             </Card>
 
-            {/* Verification Status */}
-            <Card className="mb-4">
-                <CardBody>
-                    <h3 className="section-title">{t('profile.identityVerification')}</h3>
-                    <div className="verification-grid">
-                        <div className="verify-item verified">
-                            <span className="verify-icon" aria-hidden="true"><Building2 size={16} strokeWidth={1.75} /></span>
-                            <div className="verify-text">
-                                <span className="verify-label">{t('profile.hotelPartnerVerified')}</span>
-                                <span className="verify-sub">{t('profile.hotelPartnerName')}</span>
-                            </div>
-                            <span className="verify-check" aria-label="Verified"><Check size={16} strokeWidth={2.5} /></span>
-                        </div>
-                        <div className="verify-item verified">
-                            <span className="verify-icon" aria-hidden="true"><BadgeCheck size={16} strokeWidth={1.75} /></span>
-                            <div className="verify-text">
-                                <span className="verify-label">{t('profile.govIdChecked')}</span>
-                                <span className="verify-sub">{t('profile.nationalRegistry')}</span>
-                            </div>
-                            <span className="verify-check" aria-label="Verified"><Check size={16} strokeWidth={2.5} /></span>
-                        </div>
-                        <div className="verify-item verified">
-                            <span className="verify-icon" aria-hidden="true"><Scale size={16} strokeWidth={1.75} /></span>
-                            <div className="verify-text">
-                                <span className="verify-label">{t('profile.backgroundClear')}</span>
-                                <span className="verify-sub">{t('profile.backgroundValidUntil')}</span>
-                            </div>
-                            <span className="verify-check" aria-label="Verified"><Check size={16} strokeWidth={2.5} /></span>
-                        </div>
-                    </div>
-                </CardBody>
-            </Card>
-
-            {/* Certifications */}
-            <Card>
-                <CardBody>
-                    <h3 className="section-title">{t('sitterProfile.certifications')}</h3>
-                    <div className="certs-list">
-                        {profile.certifications.map((cert, i) => (
-                            <Badge key={i} variant="success" icon={<Check size={12} strokeWidth={2.5} />}>{cert}</Badge>
-                        ))}
-                    </div>
-                </CardBody>
-            </Card>
-
-            {/* Languages */}
-            <Card>
-                <CardBody>
-                    <h3 className="section-title">
-                        <Globe size={14} strokeWidth={1.75} /> {t('sitterProfile.languages')}
-                    </h3>
-                    <div className="lang-list">
-                        {profile.languages.map((lang, i) => (
-                            <div key={i} className="lang-item">
-                                <span className="lang-flag">{lang.flag}</span>
-                                <span className="lang-name">{lang.name}</span>
-                                <span className="lang-level">{lang.level}</span>
-                            </div>
-                        ))}
-                    </div>
-                </CardBody>
-            </Card>
-
-            {/* Service Regions */}
-            <Card>
-                <CardBody>
-                    <div className="region-header">
-                        <h3 className="section-title">
-                            <MapPin size={14} strokeWidth={1.75} /> {t('sitterProfile.serviceRegions', 'Service Regions')}
-                        </h3>
-                        <Button variant="ghost" size="sm" onClick={() => setShowRegionModal(true)}>
-                            {t('common.edit')}
-                        </Button>
-                    </div>
-                    <div className="region-tags">
-                        {selectedRegions.map((region) => (
-                            <span key={region} className="region-tag">
-                                <MapPin size={10} strokeWidth={2} /> {t(`sitterProfile.${region}`, region)}
-                            </span>
-                        ))}
-                    </div>
-                </CardBody>
-            </Card>
-
-            {/* Reviews */}
-            <Card>
-                <CardBody>
-                    <h3 className="section-title">{t('sitterProfile.reviews')}</h3>
-                    {reviewsLoading ? (
-                        <p className="text-sm text-charcoal-500">{t('profile.loadingReviews')}</p>
-                    ) : reviews.length > 0 ? (
-                        <>
-                            <div className="reviews-summary">
-                                <div className="reviews-score-big">
-                                    <span className="reviews-avg">{averageRating.toFixed(1)}</span>
-                                    <StarRating rating={averageRating} />
+            {/* Verification + Certifications — side by side on desktop */}
+            <div className="profile-desktop-grid">
+                <Card className="mb-4">
+                    <CardBody>
+                        <h3 className="section-title">{t('profile.identityVerification')}</h3>
+                        <div className="verification-grid">
+                            <div className="verify-item verified">
+                                <span className="verify-icon" aria-hidden="true"><Building2 size={16} strokeWidth={1.75} /></span>
+                                <div className="verify-text">
+                                    <span className="verify-label">{t('profile.hotelPartnerVerified')}</span>
+                                    <span className="verify-sub">{t('profile.hotelPartnerName')}</span>
                                 </div>
-                                <span className="reviews-count">{t('sitterProfile.reviewCount', { count: reviews.length })}</span>
+                                <span className="verify-check" aria-label="Verified"><Check size={16} strokeWidth={2.5} /></span>
                             </div>
-                            <div className="reviews-list">
-                                {reviews.slice(0, 5).map((review) => (
-                                    <div key={review.id} className="review-item">
-                                        <div className="review-item-header">
-                                            <StarRating rating={review.rating} size="sm" />
-                                            <span className="review-date">
-                                                {review.createdAt.toLocaleDateString()}
-                                            </span>
-                                        </div>
-                                        {review.comment && (
-                                            <p className="review-comment-text">{review.comment}</p>
-                                        )}
-                                        <span className="review-author">{review.parentName || t('sitterProfile.guestFallback')}</span>
-                                    </div>
-                                ))}
+                            <div className="verify-item verified">
+                                <span className="verify-icon" aria-hidden="true"><BadgeCheck size={16} strokeWidth={1.75} /></span>
+                                <div className="verify-text">
+                                    <span className="verify-label">{t('profile.govIdChecked')}</span>
+                                    <span className="verify-sub">{t('profile.nationalRegistry')}</span>
+                                </div>
+                                <span className="verify-check" aria-label="Verified"><Check size={16} strokeWidth={2.5} /></span>
                             </div>
-                        </>
-                    ) : (
-                        <p className="text-sm text-charcoal-500">{t('profile.noReviewsYet')}</p>
-                    )}
-                </CardBody>
-            </Card>
+                            <div className="verify-item verified">
+                                <span className="verify-icon" aria-hidden="true"><Scale size={16} strokeWidth={1.75} /></span>
+                                <div className="verify-text">
+                                    <span className="verify-label">{t('profile.backgroundClear')}</span>
+                                    <span className="verify-sub">{t('profile.backgroundValidUntil')}</span>
+                                </div>
+                                <span className="verify-check" aria-label="Verified"><Check size={16} strokeWidth={2.5} /></span>
+                            </div>
+                        </div>
+                    </CardBody>
+                </Card>
 
-            {/* Settings */}
-            <Card>
+                {/* Certifications */}
+                <Card>
+                    <CardBody>
+                        <h3 className="section-title">{t('sitterProfile.certifications')}</h3>
+                        <div className="certs-list">
+                            {profile.certifications.map((cert, i) => (
+                                <Badge key={i} variant="success" icon={<Check size={12} strokeWidth={2.5} />}>{cert}</Badge>
+                            ))}
+                        </div>
+                    </CardBody>
+                </Card>
+            </div>
+
+            {/* Languages + Service Regions — side by side on desktop */}
+            <div className="profile-desktop-grid">
+                <Card>
+                    <CardBody>
+                        <h3 className="section-title">
+                            <Globe size={14} strokeWidth={1.75} /> {t('sitterProfile.languages')}
+                        </h3>
+                        <div className="lang-list">
+                            {profile.languages.map((lang, i) => (
+                                <div key={i} className="lang-item">
+                                    <span className="lang-flag">{lang.flag}</span>
+                                    <span className="lang-name">{lang.name}</span>
+                                    <span className="lang-level">{lang.level}</span>
+                                </div>
+                            ))}
+                        </div>
+                    </CardBody>
+                </Card>
+
+                {/* Service Regions */}
+                <Card>
+                    <CardBody>
+                        <div className="region-header">
+                            <h3 className="section-title">
+                                <MapPin size={14} strokeWidth={1.75} /> {t('sitterProfile.serviceRegions', 'Service Regions')}
+                            </h3>
+                            <Button variant="ghost" size="sm" onClick={() => setShowRegionModal(true)}>
+                                {t('common.edit')}
+                            </Button>
+                        </div>
+                        <div className="region-tags">
+                            {selectedRegions.map((region) => (
+                                <span key={region} className="region-tag">
+                                    <MapPin size={10} strokeWidth={2} /> {t(`sitterProfile.${region}`, region)}
+                                </span>
+                            ))}
+                        </div>
+                    </CardBody>
+                </Card>
+            </div>
+
+            {/* Reviews + Settings — side by side on desktop */}
+            <div className="profile-desktop-grid">
+                <Card>
+                    <CardBody>
+                        <h3 className="section-title">{t('sitterProfile.reviews')}</h3>
+                        {reviewsLoading ? (
+                            <p className="text-sm text-charcoal-500">{t('profile.loadingReviews')}</p>
+                        ) : reviews.length > 0 ? (
+                            <>
+                                <div className="reviews-summary">
+                                    <div className="reviews-score-big">
+                                        <span className="reviews-avg">{averageRating.toFixed(1)}</span>
+                                        <StarRating rating={averageRating} />
+                                    </div>
+                                    <span className="reviews-count">{t('sitterProfile.reviewCount', { count: reviews.length })}</span>
+                                </div>
+                                <div className="reviews-list">
+                                    {reviews.slice(0, 5).map((review) => (
+                                        <div key={review.id} className="review-item">
+                                            <div className="review-item-header">
+                                                <StarRating rating={review.rating} size="sm" />
+                                                <span className="review-date">
+                                                    {review.createdAt.toLocaleDateString()}
+                                                </span>
+                                            </div>
+                                            {review.comment && (
+                                                <p className="review-comment-text">{review.comment}</p>
+                                            )}
+                                            <span className="review-author">{review.parentName || t('sitterProfile.guestFallback')}</span>
+                                        </div>
+                                    ))}
+                                </div>
+                            </>
+                        ) : (
+                            <p className="text-sm text-charcoal-500">{t('profile.noReviewsYet')}</p>
+                        )}
+                    </CardBody>
+                </Card>
+
+                {/* Settings */}
+                <Card>
                 <CardBody>
                     <div className="settings-menu" role="navigation" aria-label={t('profile.settings')}>
                         <button className="menu-btn" onClick={toggleTheme}>
@@ -322,6 +327,7 @@ export default function Profile() {
                     </div>
                 </CardBody>
             </Card>
+            </div>
 
             <Button variant="secondary" fullWidth onClick={handleSignOut}>{t('profile.signOut')}</Button>
 

@@ -214,7 +214,9 @@ export default function ActiveSession() {
                 <AlertTriangle size={14} strokeWidth={2} />
             </button>
 
-            {/* Quick Actions */}
+            {/* Quick Actions + Checklist — side by side on desktop */}
+            <div className="desktop-two-col">
+            <div>
             <div className="quick-actions-grid">
                 <button className="quick-action-card" onClick={() => setShowActivityModal(true)}>
                     <span className="quick-action-icon"><ClipboardEdit size={20} strokeWidth={1.75} /></span>
@@ -236,6 +238,7 @@ export default function ActiveSession() {
                     onChange={handleFileSelected}
                     aria-label={t('activeSession.uploadPhoto')}
                 />
+            </div>
             </div>
 
             {/* Checklist with Progress Bar */}
@@ -267,6 +270,7 @@ export default function ActiveSession() {
                     </div>
                 </CardBody>
             </Card>
+            </div>
 
             {/* Activity Timeline */}
             <Card>

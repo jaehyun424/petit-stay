@@ -1,5 +1,11 @@
 /* Sitter Profile Page */
-.sitter-profile { max-width: 480px; margin: 0 auto; }
+.sitter-profile {
+  max-width: 1200px;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-4);
+}
 
 .sitter-profile .profile-header { display: flex; gap: var(--space-4); align-items: center; margin-bottom: var(--space-4); }
 .sitter-profile .profile-info h2 { font-size: var(--text-xl); font-weight: var(--font-bold); }
@@ -343,14 +349,50 @@
 }
 
 .sitter-profile .profile-section {
-  margin-bottom: 24px;
   padding: 16px;
 }
 
 /* Desktop Layout */
 @media (min-width: 1024px) {
-  .sitter-profile {
-    max-width: 600px;
+  .sitter-profile .profile-desktop-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: var(--space-5);
+    align-items: start;
+  }
+
+  .sitter-profile .profile-info h2 {
+    font-size: var(--text-2xl);
+    font-family: var(--font-serif);
+    font-weight: 400;
+    letter-spacing: -0.03em;
+  }
+
+  .pvalue {
+    font-size: var(--text-2xl);
+    font-family: var(--font-serif);
+  }
+
+  .profile-stats {
+    padding: var(--space-5);
+  }
+
+  .verification-grid {
+    gap: var(--space-4);
+  }
+
+  .verify-item {
+    padding: var(--space-4);
+  }
+
+  .menu-btn {
+    padding: var(--space-3) var(--space-4);
+    border-radius: var(--radius-md);
+  }
+
+  .menu-btn:hover {
+    background: var(--glass-bg);
+    transform: translateY(-1px);
   }
 }
 
