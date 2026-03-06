@@ -5,15 +5,15 @@
 .booking-page {
   max-width: 100%;
   margin: 0 auto;
-  padding: var(--space-6) var(--space-4) 7rem;
+  padding: var(--space-4) var(--space-4) 7rem;
 }
 
 .booking-page .page-title {
   font-family: var(--font-serif);
-  font-size: var(--text-3xl);
+  font-size: var(--text-2xl);
   color: var(--charcoal-900);
   text-align: center;
-  margin-bottom: var(--space-8);
+  margin-bottom: var(--space-5);
   font-weight: 400;
   letter-spacing: -0.03em;
 }
@@ -22,8 +22,8 @@
 .progress-steps {
   display: flex;
   justify-content: center;
-  gap: var(--space-8);
-  margin-bottom: var(--space-8);
+  gap: var(--space-6);
+  margin-bottom: var(--space-6);
   position: relative;
 }
 
@@ -266,16 +266,23 @@
 .booking-card {
   background: var(--bg-card) !important;
   border: 1px solid var(--cream-200) !important;
-  box-shadow: var(--shadow-xs) !important;
+  box-shadow: 0 2px 12px rgba(0, 0, 0, 0.06) !important;
   border-radius: var(--radius-xl) !important;
+}
+
+/* Mobile-optimized inputs inside booking */
+.booking-page input,
+.booking-page select {
+  min-height: 48px;
+  font-size: 16px;
 }
 
 .booking-card h2 {
   font-family: var(--font-serif);
-  font-size: var(--text-2xl);
+  font-size: var(--text-xl);
   color: var(--charcoal-900);
   text-align: center;
-  margin-bottom: var(--space-8);
+  margin-bottom: var(--space-5);
   font-weight: 400;
   letter-spacing: -0.03em;
 }
@@ -283,14 +290,14 @@
 .booking-page .form-stack {
   display: flex;
   flex-direction: column;
-  gap: var(--space-6);
-  margin-bottom: var(--space-8);
+  gap: var(--space-4);
+  margin-bottom: var(--space-6);
 }
 
 .time-row {
   display: grid;
   grid-template-columns: 1fr 1fr;
-  gap: var(--space-6);
+  gap: var(--space-4);
 }
 
 @media (max-width: 480px) {
@@ -536,13 +543,13 @@
   }
 
   .booking-page .page-title {
-    font-size: var(--text-2xl);
-    margin-bottom: var(--space-6);
+    font-size: var(--text-xl);
+    margin-bottom: var(--space-4);
   }
 
   .progress-steps {
-    gap: var(--space-4);
-    margin-bottom: var(--space-6);
+    gap: var(--space-3);
+    margin-bottom: var(--space-4);
   }
 
   .progress-steps-5 {
@@ -561,13 +568,13 @@
   }
 
   .booking-card h2 {
-    font-size: var(--text-xl);
-    margin-bottom: var(--space-6);
+    font-size: var(--text-lg);
+    margin-bottom: var(--space-4);
   }
 
   .booking-page .form-stack {
-    gap: var(--space-5);
-    margin-bottom: var(--space-6);
+    gap: var(--space-3);
+    margin-bottom: var(--space-5);
   }
 
   .button-row {

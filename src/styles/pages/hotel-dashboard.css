@@ -41,10 +41,10 @@
   background: var(--bg-card);
   border: 1px solid var(--success-500);
   border-left: 4px solid var(--success-500);
-  border-radius: var(--radius-lg);
+  border-radius: var(--radius-xl);
   padding: 1rem 1.5rem;
   margin-bottom: 2rem;
-  box-shadow: var(--shadow-xs);
+  box-shadow: 0 2px 12px rgba(0, 0, 0, 0.06);
 }
 
 .safety-banner-content {
@@ -65,7 +65,7 @@
 .stats-grid {
   display: grid;
   grid-template-columns: repeat(4, 1fr);
-  gap: 16px;
+  gap: var(--space-4);
   margin-bottom: var(--space-8);
   align-items: stretch;
 }
@@ -86,10 +86,11 @@
   display: flex;
   flex-direction: column;
   gap: var(--space-3);
-  padding: 20px 24px;
+  padding: var(--space-5) var(--space-6);
   background: var(--bg-card);
   border: 1px solid var(--cream-200);
   border-radius: var(--radius-xl);
+  box-shadow: 0 2px 12px rgba(0, 0, 0, 0.06);
   transition: all var(--duration-fast);
   min-height: 140px;
   height: 100%;
@@ -97,7 +98,7 @@
 
 .stat-card:hover {
   transform: translateY(-2px);
-  box-shadow: var(--shadow-sm);
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
   border-color: var(--cream-300);
 }
 
@@ -151,7 +152,7 @@
 .dashboard-grid {
   display: grid;
   grid-template-columns: 1.5fr 1fr;
-  gap: 24px;
+  gap: var(--space-6);
   align-items: stretch;
 }
 
@@ -368,7 +369,7 @@
 /* Clickable stat cards */
 .stat-card-clickable:hover {
   transform: translateY(-2px);
-  box-shadow: var(--shadow-sm);
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
   border-color: var(--cream-300);
 }
 

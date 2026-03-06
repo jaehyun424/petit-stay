@@ -309,7 +309,7 @@ export default function Profile() {
                         <button className="menu-item" onClick={() => setShowPaymentModal(true)}><span aria-hidden="true"><CreditCard size={20} strokeWidth={1.75} /></span> {t('parent.paymentMethods')}</button>
                         <button className="menu-item" onClick={() => navigate('/terms')}><span aria-hidden="true"><FileText size={20} strokeWidth={1.75} /></span> {t('parent.termsOfService')}</button>
                         <button className="menu-item" onClick={() => navigate('/privacy')}><span aria-hidden="true"><Lock size={20} strokeWidth={1.75} /></span> {t('parent.privacyPolicy')}</button>
-                        <button className="menu-item" onClick={() => toast.info(t('parent.help'), t('profile.supportEmail'))}><span aria-hidden="true"><HelpCircle size={20} strokeWidth={1.75} /></span> {t('parent.help')}</button>
+                        <button className="menu-item" onClick={() => navigate('/help')}><span aria-hidden="true"><HelpCircle size={20} strokeWidth={1.75} /></span> {t('parent.help')}</button>
                     </div>
                 </CardBody>
             </Card>

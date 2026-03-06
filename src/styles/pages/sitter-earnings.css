@@ -199,6 +199,7 @@
     background: var(--gradient-gold);
     border-radius: var(--radius-xl);
     border: 1px solid var(--gold-200);
+    box-shadow: 0 2px 12px rgba(0, 0, 0, 0.06);
 }
 
 .cum-stat {

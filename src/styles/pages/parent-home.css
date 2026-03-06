@@ -81,17 +81,17 @@
 .upcoming-card,
 .recent-sessions-card {
   min-height: 200px;
-  border-radius: 12px;
+  border-radius: var(--radius-xl);
   padding: 20px;
 }
 
 .upcoming-card {
-  margin-bottom: 1.5rem;
+  margin-bottom: 0;
   border: 1px solid var(--gold-300);
   background: linear-gradient(135deg, var(--gold-100) 0%, var(--bg-card) 60%);
   position: relative;
   overflow: hidden;
-  box-shadow: var(--shadow-sm);
+  box-shadow: 0 2px 12px rgba(0, 0, 0, 0.06);
 }
 
 .upcoming-card::before {
@@ -162,13 +162,19 @@
 .parent-home-grid {
   display: grid;
   grid-template-columns: 1fr 1fr;
-  gap: 24px;
+  gap: 1.5rem;
 }
 
 @media (max-width: 768px) {
   .parent-home-grid {
     grid-template-columns: 1fr;
+    gap: 1.25rem;
   }
+}
+
+/* Section within grid flows naturally */
+.parent-home-grid > div > .section {
+  margin-top: 0;
 }
 
 /* Recent Sessions */
@@ -183,7 +189,7 @@
   background: var(--cream-50) !important;
   border-color: var(--gold-200) !important;
   transform: translateY(-1px);
-  box-shadow: var(--shadow-xs);
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
 }
 
 .session-info {
@@ -247,9 +253,9 @@
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  min-height: 120px;
-  padding: 20px 24px;
-  gap: var(--space-3);
+  min-height: 100px;
+  padding: 1rem 0.75rem;
+  gap: var(--space-2);
   background: var(--bg-card);
   border: 1px solid var(--cream-200);
   border-radius: var(--radius-xl);
@@ -260,7 +266,7 @@
 
 .stat-card:hover {
   transform: translateY(-1px);
-  box-shadow: var(--shadow-xs);
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
 }
 
 .stat-value {
@@ -309,7 +315,7 @@
 
 .trust-card:hover {
   transform: translateY(-1px);
-  box-shadow: var(--shadow-xs);
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
   border-color: var(--gold-200);
 }
 

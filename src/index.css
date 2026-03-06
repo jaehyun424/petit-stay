@@ -238,6 +238,7 @@ p {
   justify-content: center;
   gap: var(--space-2);
   padding: 0.8rem 1.6rem;
+  min-height: 44px;
   font-family: var(--font-action);
   font-weight: 500;
   font-size: var(--text-sm);
@@ -319,14 +320,14 @@ p {
   background: var(--bg-card);
   border-radius: var(--radius-xl);
   padding: 2.25rem;
-  box-shadow: var(--shadow-xs);
+  box-shadow: 0 2px 12px rgba(0, 0, 0, 0.06);
   border: 1px solid var(--cream-200);
   transition: box-shadow 0.3s ease, transform 0.3s ease, border-color 0.3s ease;
 }
 
 .card-hoverable:hover {
   transform: translateY(-1px);
-  box-shadow: var(--shadow-card-hover);
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
   border-color: var(--cream-300);
 }
 
@@ -428,6 +429,7 @@ p {
 .form-textarea {
   width: 100%;
   padding: 0.75rem 1rem;
+  min-height: 44px;
   font-family: var(--font-sans);
   font-size: var(--text-base);
   color: var(--charcoal-900);
@@ -1432,10 +1434,10 @@ p {
 @media (max-width: 480px) {
   .modal-overlay { align-items: flex-end; padding: 0; }
   .modal.modal-sm,
-  .modal.modal-md { width: 100%; max-width: 100%; border-radius: var(--radius-2xl) var(--radius-2xl) 0 0; margin: 0; }
+  .modal.modal-md { width: 100%; max-width: 100%; border-radius: var(--radius-2xl) var(--radius-2xl) 0 0; margin: 0; padding-bottom: max(0.5rem, env(safe-area-inset-bottom)); }
   .modal.modal-sm .modal-body,
   .modal.modal-md .modal-body { max-height: calc(85vh - 8rem); }
-  .modal.modal-lg { width: 100%; max-width: 100%; border-radius: var(--radius-2xl) var(--radius-2xl) 0 0; margin: 0; }
+  .modal.modal-lg { width: 100%; max-width: 100%; border-radius: var(--radius-2xl) var(--radius-2xl) 0 0; margin: 0; padding-bottom: max(0.5rem, env(safe-area-inset-bottom)); }
   .modal.modal-lg .modal-body { max-height: calc(92vh - 8rem); }
 }
 
