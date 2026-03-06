@@ -387,12 +387,16 @@
   }
 
   .solutions-cta {
-    margin: var(--space-6) var(--space-4);
-    padding: var(--space-10) var(--space-4);
+    margin: var(--space-6) var(--space-4) var(--space-8);
+    padding: var(--space-8) var(--space-4);
   }
 
   .solutions-cta h2 {
     font-size: clamp(1.25rem, 5vw, 1.75rem);
+  }
+
+  .solutions-cta p {
+    margin-bottom: var(--space-5);
   }
 
   .solutions-cta-btn {
@@ -403,5 +407,13 @@
   .solutions-stats {
     grid-template-columns: repeat(2, 1fr);
     gap: var(--space-6) var(--space-4);
+  }
+
+  .solutions-pricing-hint {
+    padding: var(--space-6) var(--space-4);
+  }
+
+  .solutions-section:last-of-type {
+    padding-bottom: var(--space-6);
   }
 }

@@ -1204,13 +1204,14 @@ p {
   display: flex;
   align-items: center;
   justify-content: center;
-  min-width: 2rem;
-  height: 2rem;
+  min-width: 2.25rem;
+  height: 2.25rem;
   padding: 0 0.5rem;
   border: 1px solid var(--cream-200);
   background: white;
   border-radius: var(--radius-md);
   font-size: 0.875rem;
+  font-family: var(--font-sans);
   color: var(--text-secondary);
   cursor: pointer;
   transition: all var(--transition-fast);

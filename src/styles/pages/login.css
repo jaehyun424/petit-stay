@@ -138,6 +138,18 @@
   position: relative;
 }
 
+/* Make register form more compact on mobile */
+@media (max-width: 479px) {
+  .login-page .grid-cols-2 {
+    grid-template-columns: 1fr;
+    gap: 0.5rem;
+  }
+
+  .login-page .gap-4 {
+    gap: 0.5rem;
+  }
+}
+
 .brand-logo-link {
   display: inline-flex;
   align-items: center;
@@ -160,6 +172,16 @@
   max-width: 420px;
   width: 100%;
   margin: 0 auto;
+  background: white;
+  border-radius: var(--radius-xl);
+  padding: 1.5rem;
+  border: 1px solid var(--cream-200);
+}
+
+@media (min-width: 480px) {
+  .form-wrapper {
+    padding: 2rem;
+  }
 }
 
 /* ----------------------------------------
@@ -383,6 +405,11 @@
 :root[data-theme="dark"] .login-form-container {
   background-color: var(--bg-primary);
   box-shadow: none;
+}
+
+:root[data-theme="dark"] .form-wrapper {
+  background: var(--bg-card);
+  border-color: var(--border-color);
 }
 
 :root[data-theme="dark"] .brand-logo-link {

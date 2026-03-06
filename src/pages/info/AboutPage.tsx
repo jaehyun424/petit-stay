@@ -18,12 +18,15 @@ export default function AboutPage() {
   return (
     <InfoLayout title={t('info.about.title')} subtitle={t('info.about.subtitle')}>
       {/* Mission & Vision Section */}
-      <section className="info-section">
-        <h2>{t('info.about.missionTitle')}</h2>
-        <p>{t('info.about.missionDesc')}</p>
-
-        <h2>{t('info.about.visionTitle')}</h2>
-        <p>{t('info.about.visionDesc')}</p>
+      <section className="info-section info-section-split">
+        <div>
+          <h2>{t('info.about.missionTitle')}</h2>
+          <p>{t('info.about.missionDesc')}</p>
+        </div>
+        <div>
+          <h2>{t('info.about.visionTitle')}</h2>
+          <p>{t('info.about.visionDesc')}</p>
+        </div>
       </section>
 
       {/* Story Section - distinct background */}
@@ -66,11 +69,14 @@ export default function AboutPage() {
         </div>
       </section>
 
-      {/* Operations & Team Section */}
+      {/* Operations Section */}
       <section className="info-section">
         <h2>{t('info.about.whereTitle')}</h2>
         <p>{t('info.about.whereDesc')}</p>
+      </section>
 
+      {/* Team Section - distinct background */}
+      <section className="info-section info-section-alt">
         <h2>{t('info.about.teamTitle')}</h2>
         <p>{t('info.about.teamDesc')}</p>
       </section>

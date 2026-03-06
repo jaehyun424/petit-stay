@@ -148,7 +148,7 @@
   border-radius: 8px;
   transition: background 0.2s;
   position: relative;
-  z-index: 101;
+  z-index: 1001;
 }
 
 .landing-nav-mobile-toggle:active {
@@ -831,7 +831,7 @@
 }
 
 .testimonial-solid-bg {
-  background: #0a0a0a;
+  background: #111;
 }
 
 .testimonial-carousel {

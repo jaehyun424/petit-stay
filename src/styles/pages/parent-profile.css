@@ -237,14 +237,19 @@
 @media (max-width: 480px) {
   .profile-page {
     padding: var(--space-4) var(--space-3);
+    gap: var(--space-3);
   }
 
   .profile-header {
-    gap: var(--space-4);
+    gap: var(--space-3);
   }
 
   .profile-info h2 {
     font-size: var(--text-lg);
+  }
+
+  .profile-section {
+    margin-bottom: var(--space-4);
   }
 
   .child-actions {

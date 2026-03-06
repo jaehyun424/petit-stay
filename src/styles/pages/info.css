@@ -57,7 +57,13 @@
    Section-based Layout (text-grid flow fix)
    ---------------------------------------- */
 .info-section {
-  padding: 2rem 1.25rem;
+  padding: 2.5rem 1.25rem;
+}
+
+.info-section-split {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
 }
 
 .info-section-alt {
@@ -333,7 +339,16 @@
   }
 
   .info-section {
-    padding: 2.5rem 2rem;
+    padding: 3rem 2rem;
+  }
+
+  .info-section-split {
+    flex-direction: row;
+    gap: 2rem;
+  }
+
+  .info-section-split > div {
+    flex: 1;
   }
 
   .info-content h2 {
@@ -365,6 +380,6 @@
   }
 
   .info-section {
-    padding: 3rem 2rem;
+    padding: 3.5rem 2rem;
   }
 }

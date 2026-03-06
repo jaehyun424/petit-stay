@@ -80,6 +80,11 @@
   .stats-grid {
     grid-template-columns: 1fr;
   }
+
+  .stat-card {
+    min-height: auto;
+    padding: var(--space-4) var(--space-5);
+  }
 }
 
 .stat-card {
@@ -363,6 +368,12 @@
     padding-top: var(--space-3);
     border-top: 1px solid var(--cream-200);
     width: 100%;
+  }
+
+  .booking-item-sitter .btn {
+    min-height: 44px;
+    width: 100%;
+    justify-content: center;
   }
 }
 
