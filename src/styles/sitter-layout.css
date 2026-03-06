@@ -87,8 +87,8 @@
 
 .sitter-content {
   flex: 1;
-  padding: var(--space-5);
-  padding-bottom: calc(var(--space-5) + 70px);
+  padding: var(--space-4);
+  padding-bottom: calc(var(--space-4) + 70px);
 }
 
 /* Mobile small screens */

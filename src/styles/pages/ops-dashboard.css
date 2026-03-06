@@ -270,6 +270,22 @@
   padding: 0;
 }
 
+/* Section spacing within ops pages */
+.ops-page > * + *,
+.ops-dashboard > * + * {
+  margin-top: var(--space-5);
+}
+
+.ops-page > .page-header + *,
+.ops-dashboard > .page-header + * {
+  margin-top: 0;
+}
+
+.ops-table-card + .ops-table-card,
+.ops-mobile-card + .ops-mobile-card {
+  margin-top: var(--space-3);
+}
+
 /* Shared Page Layout (used across all ops pages) */
 .ops-dashboard .page-header,
 .ops-page .page-header {
@@ -285,18 +301,17 @@
 
 .ops-dashboard .page-title,
 .ops-page .page-title {
-  font-family: var(--font-serif);
-  font-size: 2.5rem;
-  font-weight: 400;
-  letter-spacing: -0.03em;
-  color: var(--charcoal-900);
-  margin-bottom: 0.25rem;
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: var(--text-primary);
+  margin-bottom: var(--space-1);
 }
 
 .ops-dashboard .page-subtitle,
 .ops-page .page-subtitle {
-  color: var(--charcoal-500);
   font-size: 0.875rem;
+  color: var(--text-secondary);
+  margin-bottom: var(--space-5);
 }
 
 .ops-dashboard .filters-row,
@@ -869,6 +884,20 @@
 :root[data-theme="dark"] .ops-mobile-card-selected {
   border-color: var(--gold-500);
   background: rgba(197, 160, 89, 0.1);
+}
+
+/* ============================================
+   Reports / Charts Mobile
+   ============================================ */
+@media (max-width: 768px) {
+  .ops-grid-2 .card {
+    min-height: auto;
+    padding: var(--space-4);
+  }
+
+  .ops-mobile-card-list {
+    gap: var(--space-3);
+  }
 }
 
 /* ============================================

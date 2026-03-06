@@ -319,6 +319,22 @@ p {
 .btn-icon { padding: 0.6rem; border-radius: var(--radius-md); }
 
 /* ----------------------------------------
+   3b. Page Title / Subtitle (unified across all modules)
+   ---------------------------------------- */
+.page-title {
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: var(--text-primary);
+  margin-bottom: var(--space-1);
+}
+
+.page-subtitle {
+  font-size: 0.875rem;
+  color: var(--text-secondary);
+  margin-bottom: var(--space-5);
+}
+
+/* ----------------------------------------
    4. Cards
    ---------------------------------------- */
 .card {

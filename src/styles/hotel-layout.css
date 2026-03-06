@@ -347,17 +347,16 @@
 }
 
 .page-title {
-  font-family: var(--font-serif);
-  font-size: 2.5rem;
-  font-weight: 400;
-  margin-bottom: 0.5rem;
-  color: var(--charcoal-900);
-  letter-spacing: -0.03em;
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: var(--text-primary);
+  margin-bottom: var(--space-1);
 }
 
 .page-subtitle {
-  color: var(--charcoal-600);
-  font-size: 1.125rem;
+  font-size: 0.875rem;
+  color: var(--text-secondary);
+  margin-bottom: var(--space-5);
 }
 
 @media (max-width: 640px) {
@@ -367,7 +366,7 @@
   }
 
   .page-title {
-    font-size: var(--text-2xl);
+    font-size: 1.25rem;
   }
 }
 

@@ -93,8 +93,8 @@
 /* Content */
 .parent-content {
   flex: 1;
-  padding: var(--space-5);
-  padding-bottom: calc(var(--space-5) + 70px);
+  padding: var(--space-4);
+  padding-bottom: calc(var(--space-4) + 70px);
   overflow-y: auto;
 }
 
@@ -103,6 +103,9 @@
   .parent-content {
     padding: var(--space-3);
     padding-bottom: calc(var(--space-3) + 70px);
+  }
+  .parent-content .page-title {
+    font-size: 1.25rem;
   }
   .bottom-nav-item {
     padding: var(--space-2) var(--space-2);
