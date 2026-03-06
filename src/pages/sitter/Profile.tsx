@@ -174,7 +174,7 @@ export default function Profile() {
 
             {/* Verification + Certifications — side by side on desktop */}
             <div className="profile-desktop-grid">
-                <Card className="mb-4">
+                <Card>
                     <CardBody>
                         <h3 className="section-title">{t('profile.identityVerification')}</h3>
                         <div className="verification-grid">

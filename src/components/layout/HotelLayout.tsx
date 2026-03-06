@@ -125,12 +125,9 @@ export function HotelLayout() {
       <main className="main-content">
         {/* Header */}
         <header className="main-header">
-          <IconButton
-            icon={<Menu size={20} strokeWidth={1.75} />}
-            onClick={() => setMobileMenuOpen(true)}
-            aria-label={t('aria.openMenu')}
-            className="mobile-menu-btn"
-          />
+          <div className="mobile-brand-logo">
+            <BrandLogo size="sm" showName />
+          </div>
           <div className="header-spacer" />
           <div className="header-user">
             <LanguageSwitcher />

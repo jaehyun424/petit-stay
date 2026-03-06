@@ -205,20 +205,8 @@
   }
 }
 
-/* Mobile: hide hamburger, header spacing */
-.sitter-layout .header-actions, .sitter-layout [class*="header-right"], .sitter-layout [class*="header-actions"] {
-  display: flex;
-  align-items: center;
-  gap: 8px;
-}
-
+/* Mobile header spacing */
 @media (max-width: 768px) {
-  .sitter-layout [class*="menu-btn"], .sitter-layout [class*="hamburger"], .sitter-layout .mobile-menu-toggle {
-    display: none !important;
-  }
-  .sitter-layout .header-actions, .sitter-layout [class*="header-right"], .sitter-layout [class*="header-actions"] {
-    gap: 4px;
-  }
   .sitter-layout [class*="user-name"], .sitter-layout [class*="userName"] {
     display: none;
   }

@@ -1430,15 +1430,15 @@ p {
 .modal-form-stack { display: flex; flex-direction: column; gap: var(--space-4); }
 .modal-form-stack-sm { display: flex; flex-direction: column; gap: var(--space-3); }
 
-/* Mobile: modal bottom sheet for sm/md sizes */
+/* Mobile: modal centered with proper sizing */
 @media (max-width: 480px) {
-  .modal-overlay { align-items: flex-end; padding: 0; }
+  .modal-overlay { align-items: center; justify-content: center; padding: 1rem; }
   .modal.modal-sm,
-  .modal.modal-md { width: 100%; max-width: 100%; border-radius: var(--radius-2xl) var(--radius-2xl) 0 0; margin: 0; padding-bottom: max(0.5rem, env(safe-area-inset-bottom)); }
+  .modal.modal-md { width: calc(100% - 2rem); max-width: 400px; border-radius: var(--radius-2xl); margin: auto; }
   .modal.modal-sm .modal-body,
-  .modal.modal-md .modal-body { max-height: calc(85vh - 8rem); }
-  .modal.modal-lg { width: 100%; max-width: 100%; border-radius: var(--radius-2xl) var(--radius-2xl) 0 0; margin: 0; padding-bottom: max(0.5rem, env(safe-area-inset-bottom)); }
-  .modal.modal-lg .modal-body { max-height: calc(92vh - 8rem); }
+  .modal.modal-md .modal-body { max-height: calc(80vh - 8rem); }
+  .modal.modal-lg { width: calc(100% - 1rem); max-width: 100%; border-radius: var(--radius-2xl); margin: auto; }
+  .modal.modal-lg .modal-body { max-height: calc(85vh - 8rem); }
 }
 
 /* Button */

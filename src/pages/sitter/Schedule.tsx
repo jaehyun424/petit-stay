@@ -157,22 +157,18 @@ export default function Schedule() {
 
     return (
         <div className="sitter-schedule animate-fade-in">
-            {/* Stats */}
-            <div className="stats-row">
-                <div className="stat-item">
-                    <span className="stat-value">{stats.totalSessions}</span>
-                    <span className="stat-label">{t('hotel.sessions')}</span>
-                </div>
-                <div className="stat-item">
-                    <span className="stat-value">{stats.avgRating}</span>
-                    <span className="stat-label">{t('common.rating')}</span>
-                </div>
-                <div className="stat-item gold">
-                    <TierBadge tier={stats.tier} />
-                </div>
-            </div>
-
-            <SafetyBadge days={stats.safetyDays} />
+            {/* Countdown — most important info first */}
+            {countdown && (
+                <motion.div
+                    className="countdown-banner"
+                    initial={{ opacity: 0, y: -8 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ duration: 0.3 }}
+                >
+                    <Clock size={16} strokeWidth={1.75} />
+                    <span>{t('sitter.nextSessionIn', 'Next session in')} <strong>{countdown}</strong></span>
+                </motion.div>
+            )}
 
             {/* Availability Toggle */}
             <div className="availability-toggle">
@@ -200,19 +196,6 @@ export default function Schedule() {
                     {availabilityEnabled ? <ToggleRight size={28} /> : <ToggleLeft size={28} />}
                 </button>
             </div>
-
-            {/* Countdown */}
-            {countdown && (
-                <motion.div
-                    className="countdown-banner"
-                    initial={{ opacity: 0, y: -8 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    transition={{ duration: 0.3 }}
-                >
-                    <Clock size={16} strokeWidth={1.75} />
-                    <span>{t('sitter.nextSessionIn', 'Next session in')} <strong>{countdown}</strong></span>
-                </motion.div>
-            )}
 
             {/* View Mode Toggle + Today's Schedule Header */}
             <div className="schedule-header-row">
@@ -366,6 +349,24 @@ export default function Schedule() {
                                 </motion.div>
                             ))}
                         </motion.div>
+
+                        {/* Stats + Safety — secondary info at bottom */}
+                        <div className="schedule-stats-footer">
+                            <div className="stats-row">
+                                <div className="stat-item">
+                                    <span className="stat-value">{stats.totalSessions}</span>
+                                    <span className="stat-label">{t('hotel.sessions')}</span>
+                                </div>
+                                <div className="stat-item">
+                                    <span className="stat-value">{stats.avgRating}</span>
+                                    <span className="stat-label">{t('common.rating')}</span>
+                                </div>
+                                <div className="stat-item gold">
+                                    <TierBadge tier={stats.tier} />
+                                </div>
+                            </div>
+                            <SafetyBadge days={stats.safetyDays} />
+                        </div>
                     </motion.div>
                 ) : (
                     <motion.div

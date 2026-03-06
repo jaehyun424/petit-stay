@@ -109,12 +109,9 @@ export function OpsLayout() {
 
       <main className="main-content">
         <header className="main-header">
-          <IconButton
-            icon={<Menu size={20} strokeWidth={1.75} />}
-            onClick={() => setMobileMenuOpen(true)}
-            aria-label={t('aria.openMenu')}
-            className="mobile-menu-btn"
-          />
+          <div className="mobile-brand-logo">
+            <BrandLogo size="sm" showName />
+          </div>
           <nav className="ops-breadcrumb" aria-label="Breadcrumb">
             <span className="ops-breadcrumb-root">{t('ops.title')}</span>
             <ChevronRight size={14} strokeWidth={1.75} />

@@ -4,7 +4,7 @@
   margin: 0 auto;
   display: flex;
   flex-direction: column;
-  gap: var(--space-4);
+  gap: var(--space-5);
 }
 
 .sitter-profile .profile-header { display: flex; gap: var(--space-4); align-items: center; margin-bottom: var(--space-4); }
@@ -355,7 +355,7 @@
 /* Desktop Layout */
 @media (min-width: 1024px) {
   .sitter-profile .profile-desktop-grid {
-    display: grid;
+    display: grid !important;
     grid-template-columns: 1fr 1fr;
     gap: var(--space-5);
     align-items: start;
@@ -396,11 +396,17 @@
   }
 }
 
+/* Profile desktop grid no extra margin for mobile */
+.sitter-profile .profile-desktop-grid {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-5);
+}
+
 /* Mobile breakpoint */
 @media (max-width: 480px) {
   .sitter-profile {
     max-width: 100%;
-    padding: 0 var(--space-3);
   }
 
   .sitter-profile .profile-info h2 {
@@ -416,7 +422,7 @@
   }
 
   .verify-item {
-    padding: var(--space-2);
+    padding: var(--space-3);
     gap: var(--space-2);
   }
 
@@ -426,7 +432,7 @@
   }
 
   .menu-btn {
-    padding: var(--space-2);
+    padding: var(--space-3);
     gap: var(--space-2);
   }
 
@@ -436,10 +442,10 @@
   }
 
   .lang-item {
-    padding: var(--space-2);
+    padding: var(--space-2) var(--space-3);
   }
 
   .region-tags {
-    gap: var(--space-1);
+    gap: var(--space-2);
   }
 }

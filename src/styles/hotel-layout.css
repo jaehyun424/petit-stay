@@ -256,8 +256,12 @@
   display: none;
 }
 
+.mobile-brand-logo {
+  display: none;
+}
+
 @media (max-width: 768px) {
-  .mobile-menu-btn {
+  .mobile-brand-logo {
     display: flex;
   }
 }

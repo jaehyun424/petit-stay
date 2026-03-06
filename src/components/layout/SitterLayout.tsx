@@ -113,14 +113,9 @@ export function SitterLayout() {
 
             {/* Main area */}
             <div className="sitter-main-area">
-                {/* Mobile header - with hamburger menu */}
+                {/* Mobile header */}
                 <header className="sitter-header">
                     <div className="sitter-header-left">
-                        <IconButton
-                            icon={<Menu size={20} strokeWidth={1.75} />}
-                            onClick={() => setMobileMenuOpen(true)}
-                            aria-label={t('aria.openMenu')}
-                        />
                         <BrandLogo size="sm" showName />
                     </div>
                     <div className="sitter-header-right">

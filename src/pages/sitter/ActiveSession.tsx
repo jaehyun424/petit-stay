@@ -234,6 +234,7 @@ export default function ActiveSession() {
                     ref={fileInputRef}
                     type="file"
                     accept="image/*"
+                    capture="environment"
                     style={{ display: 'none' }}
                     onChange={handleFileSelected}
                     aria-label={t('activeSession.uploadPhoto')}
