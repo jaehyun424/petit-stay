@@ -42,10 +42,10 @@ export function SitterLayout() {
     }, [mobileMenuOpen]);
 
     const navItems = [
-        { to: '/sitter', icon: <Calendar size={22} strokeWidth={1.75} />, labelKey: 'nav.schedule', end: true },
-        { to: '/sitter/active', icon: <Clock size={22} strokeWidth={1.75} />, labelKey: 'nav.active' },
-        { to: '/sitter/earnings', icon: <DollarSign size={22} strokeWidth={1.75} />, labelKey: 'nav.earnings' },
-        { to: '/sitter/profile', icon: <User size={22} strokeWidth={1.75} />, labelKey: 'nav.profile' },
+        { to: '/sitter', icon: <Calendar size={20} strokeWidth={1.75} />, labelKey: 'nav.schedule', end: true },
+        { to: '/sitter/active', icon: <Clock size={20} strokeWidth={1.75} />, labelKey: 'nav.active' },
+        { to: '/sitter/earnings', icon: <DollarSign size={20} strokeWidth={1.75} />, labelKey: 'nav.earnings' },
+        { to: '/sitter/profile', icon: <User size={20} strokeWidth={1.75} />, labelKey: 'nav.profile' },
     ];
 
     const handleSignOut = async () => {

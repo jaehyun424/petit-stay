@@ -196,12 +196,11 @@
   }
 }
 
-/* Mid-screen content constraint */
+/* Mid-screen content constraint (consistent with Parent) */
 @media (min-width: 769px) and (max-width: 1023px) {
   .sitter-content {
-    max-width: 1200px;
+    max-width: 100%;
     margin: 0 auto;
-    padding: 24px 32px;
   }
 }
 
@@ -212,16 +211,10 @@
   }
 }
 
-/* Tablet: centered frame */
+/* Tablet: full-width layout (consistent with Parent) */
 @media (min-width: 768px) and (max-width: 1023px) {
   .sitter-layout {
-    max-width: 640px;
+    max-width: 100%;
     margin: 0 auto;
-  }
-
-  .sitter-layout .bottom-nav {
-    max-width: 640px;
-    left: 50%;
-    transform: translateX(-50%);
   }
 }

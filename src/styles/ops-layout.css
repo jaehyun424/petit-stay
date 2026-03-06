@@ -67,7 +67,7 @@
   /* Mobile page content padding for bottom nav */
   .ops-layout .page-content {
     padding: 1rem;
-    padding-bottom: calc(1rem + 80px);
+    padding-bottom: calc(1rem + 70px);
   }
 
   /* Mobile header adjustments */

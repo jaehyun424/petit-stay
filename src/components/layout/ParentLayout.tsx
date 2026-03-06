@@ -41,10 +41,10 @@ export function ParentLayout() {
     }, [mobileMenuOpen]);
 
     const navItems = [
-        { to: '/parent', icon: <Home size={22} strokeWidth={1.75} />, labelKey: 'nav.home', end: true },
-        { to: '/parent/book', icon: <Layers size={22} strokeWidth={1.75} />, labelKey: 'nav.book' },
-        { to: '/parent/history', icon: <Clock size={22} strokeWidth={1.75} />, labelKey: 'nav.history' },
-        { to: '/parent/profile', icon: <User size={22} strokeWidth={1.75} />, labelKey: 'nav.profile' },
+        { to: '/parent', icon: <Home size={20} strokeWidth={1.75} />, labelKey: 'nav.home', end: true },
+        { to: '/parent/book', icon: <Layers size={20} strokeWidth={1.75} />, labelKey: 'nav.book' },
+        { to: '/parent/history', icon: <Clock size={20} strokeWidth={1.75} />, labelKey: 'nav.history' },
+        { to: '/parent/profile', icon: <User size={20} strokeWidth={1.75} />, labelKey: 'nav.profile' },
     ];
 
     const handleSignOut = async () => {
