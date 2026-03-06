@@ -55,62 +55,64 @@ export function LandingNav() {
   };
 
   return (
-    <motion.nav
-      className={`landing-nav ${scrolled ? 'landing-nav-scrolled' : ''}`}
-      initial={{ y: -80 }}
-      animate={{ y: 0 }}
-      transition={{ duration: 0.6, ease: [0.25, 0.46, 0.45, 0.94] as [number, number, number, number] }}
-    >
-      <div className="landing-nav-inner">
-        <Link to="/" className="landing-nav-logo">
-          <BrandLogo size="sm" showName />
-        </Link>
+    <>
+      <motion.nav
+        className={`landing-nav ${scrolled ? 'landing-nav-scrolled' : ''}`}
+        initial={{ y: -80 }}
+        animate={{ y: 0 }}
+        transition={{ duration: 0.6, ease: [0.25, 0.46, 0.45, 0.94] as [number, number, number, number] }}
+      >
+        <div className="landing-nav-inner">
+          <Link to="/" className="landing-nav-logo">
+            <BrandLogo size="sm" showName />
+          </Link>
 
-        {/* Desktop links */}
-        <div className="landing-nav-links">
-          <button onClick={() => scrollTo('features')}>{t('landing.navFeatures')}</button>
+          {/* Desktop links */}
+          <div className="landing-nav-links">
+            <button onClick={() => scrollTo('features')}>{t('landing.navFeatures')}</button>
 
-          {/* Solutions dropdown */}
-          <div className="landing-nav-dropdown-wrap" ref={dropdownRef}>
-            <button
-              className="landing-nav-dropdown-trigger"
-              onClick={() => setSolutionsOpen(!solutionsOpen)}
-              aria-expanded={solutionsOpen}
-            >
-              {t('solutions.navSolutions')} <ChevronDown size={14} />
-            </button>
-            {solutionsOpen && (
-              <div className="landing-nav-dropdown">
-                <Link to="/solutions/hotels" onClick={() => setSolutionsOpen(false)}>
-                  {t('solutions.navForHotels')}
-                </Link>
-                <Link to="/solutions/families" onClick={() => setSolutionsOpen(false)}>
-                  {t('solutions.navForFamilies')}
-                </Link>
-                <Link to="/solutions/specialists" onClick={() => setSolutionsOpen(false)}>
-                  {t('solutions.navForSpecialists')}
-                </Link>
-              </div>
-            )}
+            {/* Solutions dropdown */}
+            <div className="landing-nav-dropdown-wrap" ref={dropdownRef}>
+              <button
+                className="landing-nav-dropdown-trigger"
+                onClick={() => setSolutionsOpen(!solutionsOpen)}
+                aria-expanded={solutionsOpen}
+              >
+                {t('solutions.navSolutions')} <ChevronDown size={14} />
+              </button>
+              {solutionsOpen && (
+                <div className="landing-nav-dropdown">
+                  <Link to="/solutions/hotels" onClick={() => setSolutionsOpen(false)}>
+                    {t('solutions.navForHotels')}
+                  </Link>
+                  <Link to="/solutions/families" onClick={() => setSolutionsOpen(false)}>
+                    {t('solutions.navForFamilies')}
+                  </Link>
+                  <Link to="/solutions/specialists" onClick={() => setSolutionsOpen(false)}>
+                    {t('solutions.navForSpecialists')}
+                  </Link>
+                </div>
+              )}
+            </div>
+
+            <button onClick={() => scrollTo('how-it-works')}>{t('landing.navHowItWorks')}</button>
+            <button onClick={() => scrollTo('testimonials')}>{t('landing.navReviews')}</button>
+            <LanguageSwitcher />
+            <Link to="/login" className="landing-nav-cta">{t('landing.navSignIn')}</Link>
           </div>
 
-          <button onClick={() => scrollTo('how-it-works')}>{t('landing.navHowItWorks')}</button>
-          <button onClick={() => scrollTo('testimonials')}>{t('landing.navReviews')}</button>
-          <LanguageSwitcher />
-          <Link to="/login" className="landing-nav-cta">{t('landing.navSignIn')}</Link>
+          {/* Mobile toggle */}
+          <button
+            className={`landing-nav-mobile-toggle ${mobileOpen ? 'is-open' : ''}`}
+            onClick={() => setMobileOpen(!mobileOpen)}
+            aria-label={t('aria.toggleMenu')}
+          >
+            <Menu size={24} />
+          </button>
         </div>
+      </motion.nav>
 
-        {/* Mobile toggle */}
-        <button
-          className={`landing-nav-mobile-toggle ${mobileOpen ? 'is-open' : ''}`}
-          onClick={() => setMobileOpen(!mobileOpen)}
-          aria-label={t('aria.toggleMenu')}
-        >
-          <Menu size={24} />
-        </button>
-      </div>
-
-      {/* Mobile menu overlay + drawer */}
+      {/* Mobile menu overlay + drawer — must be outside nav to avoid backdrop-filter containing block */}
       {mobileOpen && (
         <>
           <div className="landing-nav-mobile-overlay" onClick={() => setMobileOpen(false)} />
@@ -157,6 +159,6 @@ export function LandingNav() {
           </motion.div>
         </>
       )}
-    </motion.nav>
+    </>
   );
 }
