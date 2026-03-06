@@ -216,7 +216,7 @@ export default function OpsIssues() {
                 <div className="ops-sla-label">{t('ops.child')}</div>
               </div>
               <div className="ops-sla-item">
-                <div className="ops-sla-value" style={{ fontSize: '1rem' }}>{selectedIncident.reportedAt.toLocaleDateString()}</div>
+                <div className="ops-sla-value" style={{ fontSize: '1rem' }}>{selectedIncident.reportedAt?.toLocaleDateString?.() || '-'}</div>
                 <div className="ops-sla-label">{t('ops.reportedAt')}</div>
               </div>
               <div className="ops-sla-item">
