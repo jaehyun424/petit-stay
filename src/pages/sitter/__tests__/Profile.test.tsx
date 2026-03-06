@@ -1,7 +1,7 @@
 // @ts-nocheck
 import { describe, it, expect, vi } from 'vitest';
 
-vi.mock('../../../hooks/useSitters', () => ({
+vi.mock('../../../hooks/sitter/useSitters', () => ({
     useSitterProfile: () => ({
         profile: {
             name: 'Kim Minjung',
@@ -21,7 +21,7 @@ vi.mock('../../../hooks/useSitters', () => ({
     }),
 }));
 
-vi.mock('../../../hooks/useReviews', () => ({
+vi.mock('../../../hooks/children/useReviews', () => ({
     useReviews: () => ({
         reviews: [
             { id: 'r1', rating: 5, comment: 'Excellent care for our children', createdAt: new Date('2026-02-20'), parentName: 'Sarah Johnson' },

@@ -9,7 +9,7 @@ import { Card, CardBody } from '../../components/common/Card';
 import { Button } from '../../components/common/Button';
 import { EmptyState } from '../../components/common/EmptyState';
 import { useAuth } from '../../contexts/AuthContext';
-import { useNotifications } from '../../hooks/useNotifications';
+import { useNotifications } from '../../hooks/common/useNotifications';
 import '../../styles/pages/notification-inbox.css';
 
 type FilterType = 'all' | 'bookings' | 'sessions' | 'emergency';

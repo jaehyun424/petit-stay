@@ -10,7 +10,7 @@ vi.mock('../../../components/common/AnimatedCounter', () => ({
 import Dashboard from '../Dashboard';
 
 // Mock hooks used by Dashboard
-vi.mock('../../../hooks/useBookings', () => ({
+vi.mock('../../../hooks/booking/useBookings', () => ({
     useHotelBookings: () => ({
         bookings: [
             {
@@ -50,7 +50,7 @@ vi.mock('../../../hooks/useBookings', () => ({
     }),
 }));
 
-vi.mock('../../../hooks/useSessions', () => ({
+vi.mock('../../../hooks/session/useSessions', () => ({
     useHotelSessions: () => ({
         sessions: [
             {
@@ -71,7 +71,7 @@ vi.mock('../../../hooks/useSessions', () => ({
     }),
 }));
 
-vi.mock('../../../hooks/useSitters', () => ({
+vi.mock('../../../hooks/sitter/useSitters', () => ({
     useHotelSitters: () => ({
         sitters: [
             { id: '1', name: 'Kim Minjung', tier: 'gold', rating: 4.9, sessionsCompleted: 247, languages: ['Korean', 'English'], certifications: ['CPR'], availability: 'Available', hourlyRate: 45000, safetyDays: 365 },

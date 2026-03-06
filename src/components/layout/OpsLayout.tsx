@@ -18,8 +18,8 @@ import { LanguageSwitcher } from '../common/LanguageSwitcher';
 import { NotificationBell } from '../common/NotificationBell';
 import { PageTransition } from '../common/PageTransition';
 import { AnimatePresence } from 'framer-motion';
-import '../../styles/hotel-layout.css';
-import '../../styles/ops-layout.css';
+import '../../styles/layout/hotel.css';
+import '../../styles/layout/ops.css';
 
 export function OpsLayout() {
   const { user, signOut } = useAuth();

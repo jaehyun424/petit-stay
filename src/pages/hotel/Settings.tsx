@@ -13,10 +13,10 @@ import { Modal } from '../../components/common/Modal';
 import ErrorBanner from '../../components/common/ErrorBanner';
 import { BrandPreview } from '../../components/common/BrandPreview';
 import { useAuth } from '../../contexts/AuthContext';
-import { useHotel } from '../../hooks/useHotel';
+import { useHotel } from '../../hooks/hotel/useHotel';
 import { useToast } from '../../contexts/ToastContext';
 import { useTheme } from '../../contexts/ThemeContext';
-import { DEMO_MODE } from '../../hooks/useDemo';
+import { DEMO_MODE } from '../../hooks/common/useDemo';
 import {
   DEFAULT_BRANDING,
   APPROVED_FONTS,

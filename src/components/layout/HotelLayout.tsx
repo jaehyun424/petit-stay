@@ -11,7 +11,7 @@ import {
 } from 'lucide-react';
 import { useAuth } from '../../contexts/AuthContext';
 import { useTheme } from '../../contexts/ThemeContext';
-import { useWhiteLabel } from '../../hooks/useWhiteLabel';
+import { useWhiteLabel } from '../../hooks/hotel/useWhiteLabel';
 import { IconButton } from '../common/Button';
 import { Avatar } from '../common/Avatar';
 import { BrandLogo } from '../common/BrandLogo';
@@ -19,7 +19,7 @@ import { LanguageSwitcher } from '../common/LanguageSwitcher';
 import { NotificationBell } from '../common/NotificationBell';
 import { PageTransition } from '../common/PageTransition';
 import { AnimatePresence } from 'framer-motion';
-import '../../styles/hotel-layout.css';
+import '../../styles/layout/hotel.css';
 
 // ----------------------------------------
 // Component

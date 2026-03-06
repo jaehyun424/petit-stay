@@ -7,7 +7,7 @@ import { useParams, useSearchParams } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import { motion, AnimatePresence } from 'framer-motion';
 import { AlertCircle } from 'lucide-react';
-import { useGuestToken } from '../../hooks/useGuestToken';
+import { useGuestToken } from '../../hooks/guest/useGuestToken';
 import { StepIndicator } from './components/StepIndicator';
 import { ReservationInfo } from './components/ReservationInfo';
 import { ConsentForm } from './components/ConsentForm';
@@ -16,7 +16,7 @@ import { ConfirmationStep } from './components/ConfirmationStep';
 import { FeedbackStep } from './components/FeedbackStep';
 import { LanguageSwitcher } from '../../components/common/LanguageSwitcher';
 import { BrandLogo } from '../../components/common/BrandLogo';
-import { useWhiteLabel } from '../../hooks/useWhiteLabel';
+import { useWhiteLabel } from '../../hooks/hotel/useWhiteLabel';
 import '../../styles/pages/guest.css';
 
 const EASE_OUT: [number, number, number, number] = [0.25, 0.46, 0.45, 0.94];

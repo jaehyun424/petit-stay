@@ -5,7 +5,7 @@
 import { useState, useRef } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Button } from '../common/Button';
-import { DEMO_MODE } from '../../hooks/useDemo';
+import { DEMO_MODE } from '../../hooks/common/useDemo';
 import { storageService } from '../../services/storage';
 
 export interface UploadedDocument {

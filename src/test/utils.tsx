@@ -52,7 +52,7 @@ vi.mock('../services/storage', () => ({
 }));
 
 // Mock useDemo
-vi.mock('../hooks/useDemo', () => ({
+vi.mock('../hooks/common/useDemo', () => ({
     DEMO_MODE: true,
 }));
 
@@ -116,7 +116,7 @@ vi.mock('../contexts/AuthContext', () => ({
 }));
 
 // Mock useNotifications
-vi.mock('../hooks/useNotifications', () => ({
+vi.mock('../hooks/common/useNotifications', () => ({
     useNotifications: () => ({
         notifications: [],
         unreadCount: 0,

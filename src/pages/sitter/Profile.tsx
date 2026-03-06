@@ -17,8 +17,8 @@ import { DocumentUploader, type UploadedDocument } from '../../components/sitter
 import { useAuth } from '../../contexts/AuthContext';
 import { useToast } from '../../contexts/ToastContext';
 import { useTheme } from '../../contexts/ThemeContext';
-import { useSitterProfile } from '../../hooks/useSitters';
-import { useReviews } from '../../hooks/useReviews';
+import { useSitterProfile } from '../../hooks/sitter/useSitters';
+import { useReviews } from '../../hooks/children/useReviews';
 import { StarRating } from '../../components/common/ReviewForm';
 import { DEMO_SITTER_AVAILABILITY, DEMO_SITTER_DOCUMENTS } from '../../data/demo';
 import type { WeeklyAvailability } from '../../types';

@@ -6,7 +6,7 @@ vi.mock('react-router-dom', async () => {
     return { ...actual, useParams: () => ({ bookingId: 'test-booking-1' }), useNavigate: () => vi.fn() };
 });
 
-vi.mock('../../../hooks/useBookings', () => ({
+vi.mock('../../../hooks/booking/useBookings', () => ({
     useParentBookings: () => ({
         upcomingBooking: null,
         recentSessions: [],

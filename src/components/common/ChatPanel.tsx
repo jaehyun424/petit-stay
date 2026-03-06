@@ -7,7 +7,7 @@ import { useState, useRef, useEffect, useCallback } from 'react';
 import { useTranslation } from 'react-i18next';
 import { CheckCheck } from 'lucide-react';
 import { useAuth } from '../../contexts/AuthContext';
-import { useMessaging } from '../../hooks/useMessaging';
+import { useMessaging } from '../../hooks/common/useMessaging';
 import type { Message } from '../../services/messaging';
 import '../../styles/components/chat-panel.css';
 

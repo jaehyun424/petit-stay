@@ -4,7 +4,7 @@ import { Copy, Smartphone } from 'lucide-react';
 import { BookingQR } from '../../components/common/BookingQR';
 import { Button } from '../../components/common/Button';
 import { useAuth } from '../../contexts/AuthContext';
-import { useParentBookings } from '../../hooks/useBookings';
+import { useParentBookings } from '../../hooks/booking/useBookings';
 import { useToast } from '../../contexts/ToastContext';
 import { Skeleton } from '../../components/common/Skeleton';
 

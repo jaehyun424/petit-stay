@@ -13,7 +13,7 @@ import { Select } from '../../components/common/Input';
 import { AnimatedCounter } from '../../components/common/AnimatedCounter';
 import { EmptyState } from '../../components/common/EmptyState';
 import { Skeleton } from '../../components/common/Skeleton';
-import { useInsurance } from '../../hooks/useInsurance';
+import { useInsurance } from '../../hooks/ops/useInsurance';
 import { formatCurrency } from '../../utils/format';
 import '../../styles/pages/ops-dashboard.css';
 

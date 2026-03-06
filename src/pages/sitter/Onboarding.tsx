@@ -13,7 +13,7 @@ import {
   useSitterOnboarding,
   QUIZ_QUESTIONS,
   type BasicInfoData,
-} from '../../hooks/useSitterOnboarding';
+} from '../../hooks/sitter/useSitterOnboarding';
 import type { OnboardingDocument } from '../../types';
 import '../../styles/pages/sitter-onboarding.css';
 

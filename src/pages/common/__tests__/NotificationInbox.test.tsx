@@ -5,7 +5,7 @@ import NotificationInbox from '../NotificationInbox';
 
 // We need to re-mock useNotifications AFTER test/utils sets its mock
 // Use vi.mocked approach
-import * as useNotificationsModule from '../../../hooks/useNotifications';
+import * as useNotificationsModule from '../../../hooks/common/useNotifications';
 
 const mockMarkAsRead = vi.fn();
 const mockMarkAllAsRead = vi.fn();

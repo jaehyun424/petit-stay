@@ -1,7 +1,7 @@
 // @ts-nocheck
 import { describe, it, expect, vi } from 'vitest';
 
-vi.mock('../../../hooks/useChildren', () => ({
+vi.mock('../../../hooks/children/useChildren', () => ({
     useChildren: () => ({
         children: [
             { id: 'child-1', name: 'Emma', age: 5, gender: 'female', allergies: ['peanuts'] },

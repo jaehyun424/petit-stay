@@ -14,7 +14,7 @@ import { EmptyState } from '../../components/common/EmptyState';
 import { AnimatedCounter } from '../../components/common/AnimatedCounter';
 import { Skeleton, CardSkeleton } from '../../components/common/Skeleton';
 import { useAuth } from '../../contexts/AuthContext';
-import { useParentBookings } from '../../hooks/useBookings';
+import { useParentBookings } from '../../hooks/booking/useBookings';
 import '../../styles/pages/parent-home.css';
 
 

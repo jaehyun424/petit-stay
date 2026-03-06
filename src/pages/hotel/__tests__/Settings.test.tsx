@@ -3,7 +3,7 @@ import { describe, it, expect, vi } from 'vitest';
 
 const mockUpdateHotel = vi.fn(() => Promise.resolve());
 
-vi.mock('../../../hooks/useHotel', () => ({
+vi.mock('../../../hooks/hotel/useHotel', () => ({
     useHotel: () => ({
         hotel: {
             id: 'hotel-grand-hyatt',

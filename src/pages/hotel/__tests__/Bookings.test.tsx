@@ -1,7 +1,7 @@
 // @ts-nocheck
 import { describe, it, expect, vi } from 'vitest';
 
-vi.mock('../../../hooks/useBookings', () => ({
+vi.mock('../../../hooks/booking/useBookings', () => ({
     useHotelBookings: () => ({
         bookings: [
             {
@@ -36,7 +36,7 @@ vi.mock('../../../hooks/useBookings', () => ({
     }),
 }));
 
-vi.mock('../../../hooks/useSitters', () => ({
+vi.mock('../../../hooks/sitter/useSitters', () => ({
     useHotelSitters: () => ({
         sitters: [],
         isLoading: false,

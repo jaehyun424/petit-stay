@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Check, ChevronDown, ChevronUp } from 'lucide-react';
-import { DEMO_MODE } from '../../../hooks/useDemo';
+import { DEMO_MODE } from '../../../hooks/common/useDemo';
 import { guestService } from '../../../services/firestore';
 
 interface ConsentFormProps {

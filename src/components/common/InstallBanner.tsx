@@ -3,7 +3,7 @@ import { useState, useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Download, X } from 'lucide-react';
-import { useInstallPrompt } from '../../hooks/useInstallPrompt';
+import { useInstallPrompt } from '../../hooks/common/useInstallPrompt';
 
 const DISMISS_KEY = 'petit-stay-install-dismissed';
 const DISMISS_DURATION = 7 * 24 * 60 * 60 * 1000; // 7 days

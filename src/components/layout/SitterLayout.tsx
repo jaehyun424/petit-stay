@@ -16,8 +16,8 @@ import { LanguageSwitcher } from '../common/LanguageSwitcher';
 import { NotificationBell } from '../common/NotificationBell';
 import { PageTransition } from '../common/PageTransition';
 import { AnimatePresence } from 'framer-motion';
-import '../../styles/sitter-layout.css';
-import '../../styles/hotel-layout.css';
+import '../../styles/layout/sitter.css';
+import '../../styles/layout/hotel.css';
 
 function getPageTitle(pathname: string, t: (key: string) => string): string {
     if (pathname === '/sitter') return t('nav.schedule');

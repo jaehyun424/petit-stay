@@ -1,5 +1,5 @@
 import { renderHook, act, waitFor } from '@testing-library/react';
-import { useChildren } from '../useChildren';
+import { useChildren } from '../children/useChildren';
 
 // In test mode, DEMO_MODE is true (from setup.ts)
 

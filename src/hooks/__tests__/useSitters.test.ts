@@ -1,5 +1,5 @@
 import { renderHook, waitFor } from '@testing-library/react';
-import { useHotelSitters, useSitterStats, useSitterProfile } from '../useSitters';
+import { useHotelSitters, useSitterStats, useSitterProfile } from '../sitter/useSitters';
 
 // In test mode, DEMO_MODE is true (from setup.ts)
 

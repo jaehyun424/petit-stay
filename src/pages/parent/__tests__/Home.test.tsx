@@ -7,7 +7,7 @@ vi.mock('../../../components/common/AnimatedCounter', () => ({
     ),
 }));
 
-vi.mock('../../../hooks/useBookings', () => ({
+vi.mock('../../../hooks/booking/useBookings', () => ({
     useParentBookings: () => ({
         upcomingBooking: {
             id: 'booking-upcoming',
@@ -30,7 +30,7 @@ vi.mock('../../../hooks/useBookings', () => ({
     }),
 }));
 
-vi.mock('../../../hooks/useChildren', () => ({
+vi.mock('../../../hooks/children/useChildren', () => ({
     useChildren: () => ({
         children: [
             { id: 'child-1', name: 'Emma', age: 5, gender: 'female', allergies: [] },
@@ -45,7 +45,7 @@ vi.mock('../../../hooks/useChildren', () => ({
 
 import { render, screen } from '../../../test/utils';
 import Home from '../Home';
-import * as useBookingsModule from '../../../hooks/useBookings';
+import * as useBookingsModule from '../../../hooks/booking/useBookings';
 
 describe('Parent Home', () => {
     it('renders greeting', () => {

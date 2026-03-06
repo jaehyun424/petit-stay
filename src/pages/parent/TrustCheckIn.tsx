@@ -10,7 +10,7 @@ import { SignaturePad } from '../../components/common/SignaturePad';
 import type { SignaturePadRef } from '../../components/common/SignaturePad';
 import { useToast } from '../../contexts/ToastContext';
 import { useAuth } from '../../contexts/AuthContext';
-import { DEMO_MODE } from '../../hooks/useDemo';
+import { DEMO_MODE } from '../../hooks/common/useDemo';
 import { storageService } from '../../services/storage';
 import { bookingService, sessionService } from '../../services/firestore';
 import '../../styles/pages/parent-trust-checkin.css';

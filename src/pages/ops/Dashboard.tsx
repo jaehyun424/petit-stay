@@ -13,7 +13,7 @@ import { AnimatedCounter } from '../../components/common/AnimatedCounter';
 import { Avatar } from '../../components/common/Avatar';
 import { EmptyState } from '../../components/common/EmptyState';
 import { Skeleton } from '../../components/common/Skeleton';
-import { useOpsData } from '../../hooks/useOpsData';
+import { useOpsData } from '../../hooks/ops/useOpsData';
 import { formatCurrency } from '../../utils/format';
 import '../../styles/pages/ops-dashboard.css';
 

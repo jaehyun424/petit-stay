@@ -5,7 +5,7 @@ import { useTranslation } from 'react-i18next';
 import { motion } from 'framer-motion';
 import { staggerContainer, staggerItem } from '../../utils/animations';
 import { useAuth } from '../../contexts/AuthContext';
-import { useSitterStats } from '../../hooks/useSitters';
+import { useSitterStats } from '../../hooks/sitter/useSitters';
 import { TrendingUp, Award, Clock as ClockIcon, Filter, CheckCircle, AlertCircle, ArrowUpRight } from 'lucide-react';
 import { Card, CardHeader, CardTitle, CardBody } from '../../components/common/Card';
 import { Button } from '../../components/common/Button';

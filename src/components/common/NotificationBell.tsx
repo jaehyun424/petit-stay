@@ -7,8 +7,8 @@ import { useNavigate } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import { Bell } from 'lucide-react';
 import { useAuth } from '../../contexts/AuthContext';
-import { useNotifications } from '../../hooks/useNotifications';
-import '../../styles/notification-bell.css';
+import { useNotifications } from '../../hooks/common/useNotifications';
+import '../../styles/components/notification-bell.css';
 
 // Map notification types to navigation paths
 function getNotificationPath(type: string, role?: string): string | null {

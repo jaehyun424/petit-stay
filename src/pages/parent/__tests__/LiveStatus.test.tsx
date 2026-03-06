@@ -6,7 +6,7 @@ vi.mock('react-router-dom', async () => {
     return { ...actual, useParams: () => ({ id: 'test-booking-1' }) };
 });
 
-vi.mock('../../../hooks/useSessions', () => ({
+vi.mock('../../../hooks/session/useSessions', () => ({
     useLiveStatus: () => ({
         logs: [
             { id: 'log-1', timestamp: new Date(), type: 'status', content: 'Started arts & crafts' },
@@ -23,7 +23,7 @@ vi.mock('../../../hooks/useSessions', () => ({
     }),
 }));
 
-vi.mock('../../../hooks/useBookings', () => ({
+vi.mock('../../../hooks/booking/useBookings', () => ({
     useParentBookings: () => ({
         upcomingBooking: null,
         recentSessions: [],
@@ -38,7 +38,7 @@ vi.mock('../../../components/parent/ActivityFeed', () => ({
     ),
 }));
 
-vi.mock('../../../hooks/useMessaging', () => ({
+vi.mock('../../../hooks/common/useMessaging', () => ({
     useMessaging: () => ({
         messages: [],
         sendMessage: vi.fn(),

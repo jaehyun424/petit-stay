@@ -1,7 +1,7 @@
 // @ts-nocheck
 import { describe, it, expect, vi } from 'vitest';
 
-vi.mock('../../../hooks/useBookings', () => ({
+vi.mock('../../../hooks/booking/useBookings', () => ({
     useHotelBookings: () => ({
         bookings: [
             { id: 'b1', status: 'completed', confirmationCode: 'KCP-001' },
@@ -14,7 +14,7 @@ vi.mock('../../../hooks/useBookings', () => ({
     }),
 }));
 
-vi.mock('../../../hooks/useSessions', () => ({
+vi.mock('../../../hooks/session/useSessions', () => ({
     useHotelSessions: () => ({
         sessions: [],
         isLoading: false,
@@ -23,7 +23,7 @@ vi.mock('../../../hooks/useSessions', () => ({
     }),
 }));
 
-vi.mock('../../../hooks/useSitters', () => ({
+vi.mock('../../../hooks/sitter/useSitters', () => ({
     useHotelSitters: () => ({
         sitters: [
             { id: 's1', name: 'Kim Minjung', tier: 'gold', rating: 4.9, sessionsCompleted: 247, safetyDays: 365 },

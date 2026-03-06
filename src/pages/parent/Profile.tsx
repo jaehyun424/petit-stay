@@ -13,7 +13,7 @@ import { EmptyState } from '../../components/common/EmptyState';
 import { Skeleton } from '../../components/common/Skeleton';
 import { PaymentMethodCardDisplay } from '../../components/common/PaymentMethodCard';
 import { useAuth } from '../../contexts/AuthContext';
-import { useChildren } from '../../hooks/useChildren';
+import { useChildren } from '../../hooks/children/useChildren';
 import ErrorBanner from '../../components/common/ErrorBanner';
 import { useToast } from '../../contexts/ToastContext';
 import { useTheme } from '../../contexts/ThemeContext';

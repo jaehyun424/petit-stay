@@ -1,5 +1,5 @@
 import { renderHook, waitFor } from '@testing-library/react';
-import { useHotelBookings, useParentBookings, useSitterBookings } from '../useBookings';
+import { useHotelBookings, useParentBookings, useSitterBookings } from '../booking/useBookings';
 
 // In test mode, DEMO_MODE is true (from setup.ts)
 

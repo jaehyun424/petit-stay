@@ -1,7 +1,7 @@
 // @ts-nocheck
 import { describe, it, expect, vi } from 'vitest';
 
-vi.mock('../../../hooks/useSitters', () => ({
+vi.mock('../../../hooks/sitter/useSitters', () => ({
     useSitterStats: () => ({
         stats: {
             totalSessions: 247,
@@ -13,7 +13,7 @@ vi.mock('../../../hooks/useSitters', () => ({
     }),
 }));
 
-vi.mock('../../../hooks/useBookings', () => ({
+vi.mock('../../../hooks/booking/useBookings', () => ({
     useSitterBookings: () => ({
         todaySessions: [
             {

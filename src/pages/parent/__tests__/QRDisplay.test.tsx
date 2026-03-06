@@ -8,7 +8,7 @@ vi.mock('react-router-dom', async () => {
 
 import { render, screen } from '../../../test/utils';
 import QRDisplay from '../QRDisplay';
-import * as useBookingsModule from '../../../hooks/useBookings';
+import * as useBookingsModule from '../../../hooks/booking/useBookings';
 
 describe('QRDisplay - No booking', () => {
     beforeEach(() => {

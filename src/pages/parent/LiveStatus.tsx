@@ -14,7 +14,7 @@ import { ActivityFeed } from '../../components/parent/ActivityFeed';
 import type { ActivityLog } from '../../components/parent/ActivityFeed';
 import { ChatPanel } from '../../components/common/ChatPanel';
 import { useAuth } from '../../contexts/AuthContext';
-import { useLiveStatus } from '../../hooks/useSessions';
+import { useLiveStatus } from '../../hooks/session/useSessions';
 import ErrorBanner from '../../components/common/ErrorBanner';
 import '../../styles/pages/parent-live-status.css';
 

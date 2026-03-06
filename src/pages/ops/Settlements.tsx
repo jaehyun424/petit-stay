@@ -9,7 +9,7 @@ import { Button } from '../../components/common/Button';
 import { Select } from '../../components/common/Input';
 import { ConfirmDialog } from '../../components/common/ConfirmDialog';
 import { EmptyState } from '../../components/common/EmptyState';
-import { useSettlements } from '../../hooks/useSettlements';
+import { useSettlements } from '../../hooks/ops/useSettlements';
 import ErrorBanner from '../../components/common/ErrorBanner';
 import { Skeleton } from '../../components/common/Skeleton';
 import { formatCurrency } from '../../utils/format';

@@ -12,7 +12,7 @@ import {
 import { Card, CardHeader, CardTitle, CardBody } from '../../components/common/Card';
 import { Button } from '../../components/common/Button';
 import { EmptyState } from '../../components/common/EmptyState';
-import { useOpsData } from '../../hooks/useOpsData';
+import { useOpsData } from '../../hooks/ops/useOpsData';
 import { Skeleton } from '../../components/common/Skeleton';
 import { formatCurrency } from '../../utils/format';
 import '../../styles/pages/ops-dashboard.css';

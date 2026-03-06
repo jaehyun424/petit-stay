@@ -1,7 +1,7 @@
 // @ts-nocheck
 import { describe, it, expect, vi } from 'vitest';
 
-vi.mock('../../../hooks/useIncidents', () => ({
+vi.mock('../../../hooks/ops/useIncidents', () => ({
     useHotelIncidents: () => ({
         incidents: [
             {
@@ -23,7 +23,7 @@ vi.mock('../../../hooks/useIncidents', () => ({
     }),
 }));
 
-vi.mock('../../../hooks/useBookings', () => ({
+vi.mock('../../../hooks/booking/useBookings', () => ({
     useHotelBookings: () => ({
         bookings: [],
         stats: { todayBookings: 5, activeNow: 2, completedToday: 3, todayRevenue: 1500000, safetyDays: 127, pendingBookings: 1 },
@@ -33,7 +33,7 @@ vi.mock('../../../hooks/useBookings', () => ({
     }),
 }));
 
-vi.mock('../../../hooks/useHotel', () => ({
+vi.mock('../../../hooks/hotel/useHotel', () => ({
     useHotel: () => ({
         hotel: {
             id: 'hotel-grand-hyatt',
@@ -47,7 +47,7 @@ vi.mock('../../../hooks/useHotel', () => ({
     }),
 }));
 
-vi.mock('../../../hooks/useAuditLog', () => ({
+vi.mock('../../../hooks/ops/useAuditLog', () => ({
     useAllAuditLogs: () => ({
         entries: [],
         isLoading: false,

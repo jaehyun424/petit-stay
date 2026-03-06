@@ -14,8 +14,8 @@ import { EmptyState } from '../../components/common/EmptyState';
 import { Skeleton, SkeletonText } from '../../components/common/Skeleton';
 import { useAuth } from '../../contexts/AuthContext';
 import { useToast } from '../../contexts/ToastContext';
-import { useSitterBookings } from '../../hooks/useBookings';
-import { useSitterStats } from '../../hooks/useSitters';
+import { useSitterBookings } from '../../hooks/booking/useBookings';
+import { useSitterStats } from '../../hooks/sitter/useSitters';
 import '../../styles/pages/sitter-schedule.css';
 
 function useCountdown(todaySessions: { time: string; status: string }[]) {

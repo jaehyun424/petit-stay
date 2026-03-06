@@ -1,7 +1,7 @@
 import { render, screen, fireEvent, waitFor } from '../../../test/utils';
 
 // Mock hooks before importing the component
-vi.mock('../../../hooks/useChildren', () => ({
+vi.mock('../../../hooks/children/useChildren', () => ({
     useChildren: () => ({
         children: [
             { id: 'child-1', name: 'Emma', age: 5, allergies: [], gender: 'female' },
@@ -11,7 +11,7 @@ vi.mock('../../../hooks/useChildren', () => ({
     }),
 }));
 
-vi.mock('../../../hooks/useHotel', () => ({
+vi.mock('../../../hooks/hotel/useHotel', () => ({
     useHotels: () => ({
         hotels: [
             { value: 'grand-hyatt', label: 'Grand Hyatt Seoul' },

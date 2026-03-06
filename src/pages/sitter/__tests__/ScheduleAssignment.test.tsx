@@ -4,14 +4,14 @@ import { describe, it, expect, vi } from 'vitest';
 const mockAccept = vi.fn();
 const mockReject = vi.fn();
 
-vi.mock('../../../hooks/useSitters', () => ({
+vi.mock('../../../hooks/sitter/useSitters', () => ({
     useSitterStats: () => ({
         stats: { totalSessions: 100, avgRating: 4.5, tier: 'silver', safetyDays: 200 },
         isLoading: false,
     }),
 }));
 
-vi.mock('../../../hooks/useBookings', () => ({
+vi.mock('../../../hooks/booking/useBookings', () => ({
     useSitterBookings: () => ({
         todaySessions: [
             {

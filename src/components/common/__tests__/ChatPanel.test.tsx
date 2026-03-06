@@ -10,7 +10,7 @@ const mockOpenConversation = vi.fn();
 const mockSetTyping = vi.fn();
 const mockMarkAsRead = vi.fn();
 
-vi.mock('../../../hooks/useMessaging', () => ({
+vi.mock('../../../hooks/common/useMessaging', () => ({
     useMessaging: () => ({
         messages: [
             {

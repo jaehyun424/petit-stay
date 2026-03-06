@@ -1,7 +1,7 @@
 import { useState, useMemo } from 'react';
 import { useTranslation } from 'react-i18next';
 import { PriceBreakdown } from '../../../components/common/PriceBreakdown';
-import { DEMO_MODE } from '../../../hooks/useDemo';
+import { DEMO_MODE } from '../../../hooks/common/useDemo';
 import { guestService } from '../../../services/firestore';
 import { calculatePrice } from '../../../services/pricingEngine';
 import type { PricingInput } from '../../../services/pricingEngine';

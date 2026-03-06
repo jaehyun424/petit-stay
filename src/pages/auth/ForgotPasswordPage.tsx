@@ -12,7 +12,7 @@ import { Button } from '../../components/common/Button';
 import { Input } from '../../components/common/Input';
 import { BrandLogo } from '../../components/common/BrandLogo';
 import { LanguageSwitcher } from '../../components/common/LanguageSwitcher';
-import { DEMO_MODE } from '../../hooks/useDemo';
+import { DEMO_MODE } from '../../hooks/common/useDemo';
 import { sendPasswordResetEmail } from 'firebase/auth';
 import { auth } from '../../services/firebase';
 import { IMAGES } from '../../data/images';

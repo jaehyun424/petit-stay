@@ -1,7 +1,7 @@
 // @ts-nocheck
 import { describe, it, expect, vi } from 'vitest';
 
-vi.mock('../../../hooks/useBookings', () => ({
+vi.mock('../../../hooks/booking/useBookings', () => ({
     useParentBookings: () => ({
         upcomingBooking: null,
         recentSessions: [],
@@ -16,7 +16,7 @@ vi.mock('../../../hooks/useBookings', () => ({
     }),
 }));
 
-vi.mock('../../../hooks/useReviews', () => ({
+vi.mock('../../../hooks/children/useReviews', () => ({
     useReviews: () => ({
         reviews: [],
         averageRating: 0,
@@ -27,7 +27,7 @@ vi.mock('../../../hooks/useReviews', () => ({
 
 import { render, screen, fireEvent, waitFor } from '../../../test/utils';
 import History from '../History';
-import * as useBookingsModule from '../../../hooks/useBookings';
+import * as useBookingsModule from '../../../hooks/booking/useBookings';
 
 describe('Parent History', () => {
     it('renders booking history title', () => {

@@ -1,7 +1,7 @@
 // @ts-nocheck
 import { describe, it, expect, vi } from 'vitest';
 
-vi.mock('../../../hooks/useSessions', () => ({
+vi.mock('../../../hooks/session/useSessions', () => ({
     useHotelSessions: () => ({
         sessions: [
             {

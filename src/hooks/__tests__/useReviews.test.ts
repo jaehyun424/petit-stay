@@ -1,5 +1,5 @@
 import { renderHook, act, waitFor } from '@testing-library/react';
-import { useReviews } from '../useReviews';
+import { useReviews } from '../children/useReviews';
 
 // In test mode, DEMO_MODE is true (from setup.ts)
 

@@ -1,5 +1,5 @@
 import { renderHook, waitFor } from '@testing-library/react';
-import { useHotelSessions, useLiveStatus, useActiveSession } from '../useSessions';
+import { useHotelSessions, useLiveStatus, useActiveSession } from '../session/useSessions';
 
 // In test mode, DEMO_MODE is true (from setup.ts)
 

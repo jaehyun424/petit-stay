@@ -9,7 +9,7 @@ import { Button } from '../../components/common/Button';
 import { Input, Select } from '../../components/common/Input';
 import { Modal } from '../../components/common/Modal';
 import { EmptyState } from '../../components/common/EmptyState';
-import { useOpsData } from '../../hooks/useOpsData';
+import { useOpsData } from '../../hooks/ops/useOpsData';
 import { useToast } from '../../contexts/ToastContext';
 import { Skeleton } from '../../components/common/Skeleton';
 import '../../styles/pages/ops-dashboard.css';

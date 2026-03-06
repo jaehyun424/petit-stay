@@ -10,7 +10,7 @@ import { Modal } from '../../components/common/Modal';
 import { Input, Select } from '../../components/common/Input';
 import { EmptyState } from '../../components/common/EmptyState';
 import { AnimatedCounter } from '../../components/common/AnimatedCounter';
-import { useOpsData } from '../../hooks/useOpsData';
+import { useOpsData } from '../../hooks/ops/useOpsData';
 import { useToast } from '../../contexts/ToastContext';
 import { Skeleton } from '../../components/common/Skeleton';
 import { formatCurrency } from '../../utils/format';

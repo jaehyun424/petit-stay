@@ -4,7 +4,7 @@ import { render, screen, waitFor, fireEvent } from '../../../test/utils';
 
 // Mock useGuestToken
 const mockUseGuestToken = vi.fn();
-vi.mock('../../../hooks/useGuestToken', () => ({
+vi.mock('../../../hooks/guest/useGuestToken', () => ({
   useGuestToken: (...args: unknown[]) => mockUseGuestToken(...args),
 }));
 

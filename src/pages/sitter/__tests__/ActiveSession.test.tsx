@@ -2,7 +2,7 @@ import { render, screen, fireEvent, waitFor } from '../../../test/utils';
 import ActiveSession from '../ActiveSession';
 
 // Mock hooks used by ActiveSession
-vi.mock('../../../hooks/useSessions', () => ({
+vi.mock('../../../hooks/session/useSessions', () => ({
     useActiveSession: () => ({
         sessionInfo: {
             room: '1102',
@@ -22,7 +22,7 @@ vi.mock('../../../hooks/useSessions', () => ({
     }),
 }));
 
-vi.mock('../../../hooks/useDemo', () => ({
+vi.mock('../../../hooks/common/useDemo', () => ({
     DEMO_MODE: true,
 }));
 

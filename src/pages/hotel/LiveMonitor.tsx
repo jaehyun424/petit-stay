@@ -18,7 +18,7 @@ import { Skeleton, SkeletonCircle, SkeletonText } from '../../components/common/
 import ErrorBanner from '../../components/common/ErrorBanner';
 import { useAuth } from '../../contexts/AuthContext';
 import { useToast } from '../../contexts/ToastContext';
-import { useHotelSessions } from '../../hooks/useSessions';
+import { useHotelSessions } from '../../hooks/session/useSessions';
 import type { DemoActiveSession } from '../../data/demo';
 import '../../styles/pages/hotel-live-monitor.css';
 

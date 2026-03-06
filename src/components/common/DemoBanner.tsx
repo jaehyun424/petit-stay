@@ -5,7 +5,7 @@
 import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { X } from 'lucide-react';
-import { DEMO_MODE } from '../../hooks/useDemo';
+import { DEMO_MODE } from '../../hooks/common/useDemo';
 
 export function DemoBanner() {
     const { t } = useTranslation();
