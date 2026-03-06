@@ -7,14 +7,14 @@ const features = [
     icon: <Shield size={28} strokeWidth={1.5} />,
     titleKey: 'feature1Title',
     descKey: 'feature1Desc',
-    image: 'https://images.unsplash.com/photo-1516627145497-ae6968895b74?w=800&q=80',
+    image: 'https://images.unsplash.com/photo-1450101499163-c8848c66ca85?w=800&q=80',
     imageAlt: 'Professional childcare and insurance coverage',
   },
   {
     icon: <CheckCircle size={28} strokeWidth={1.5} />,
     titleKey: 'feature2Title',
     descKey: 'feature2Desc',
-    image: 'https://images.unsplash.com/photo-1602002418082-a4443e081dd1?w=800&q=80',
+    image: 'https://images.unsplash.com/photo-1573497019940-1c28c88b4f3e?w=800&q=80',
     imageAlt: 'Verified professional sitter with family',
   },
   {
@@ -28,7 +28,7 @@ const features = [
     icon: <Moon size={28} strokeWidth={1.5} />,
     titleKey: 'feature4Title',
     descKey: 'feature4Desc',
-    image: 'https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?w=800&q=80',
+    image: 'https://images.unsplash.com/photo-1414235077428-338989a2e8c0?w=800&q=80',
     imageAlt: 'Premium hotel evening and night care service',
   },
 ];

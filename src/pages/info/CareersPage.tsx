@@ -2,7 +2,7 @@ import { useTranslation, Trans } from 'react-i18next';
 import { motion } from 'framer-motion';
 import { InfoLayout } from './InfoLayout';
 
-const jobs = [1, 2, 3, 4, 5, 6] as const;
+const jobs = [1, 2, 3, 4, 5] as const;
 const benefits = [1, 2, 3, 4, 5, 6] as const;
 const processSteps = [1, 2, 3, 4] as const;
 

@@ -830,7 +830,7 @@
 }
 
 .cta-section-gradient {
-  background: linear-gradient(135deg, #1a1a2e 0%, #16213e 50%, #0f3460 100%);
+  background: linear-gradient(135deg, var(--charcoal-950) 0%, var(--charcoal-900) 50%, #2a2a3e 100%);
 }
 
 .cta-content {
@@ -1107,4 +1107,25 @@
     flex-shrink: 0;
     min-width: 100%;
   }
+}
+
+/* ----------------------------------------
+   Language Switcher on Landing Nav
+   ---------------------------------------- */
+.landing-nav .language-switcher button {
+  color: rgba(255, 255, 255, 0.85);
+}
+
+.landing-nav-scrolled .language-switcher button {
+  color: var(--text-primary);
+}
+
+.landing-nav .language-dropdown {
+  background: white;
+  color: var(--text-primary);
+}
+
+[data-theme="dark"] .landing-nav .language-dropdown {
+  background: var(--bg-card);
+  color: var(--text-primary);
 }

@@ -16,7 +16,7 @@ const steps = [
     titleKey: 'step2Title',
     descKey: 'step2Desc',
     number: '02',
-    image: 'https://images.unsplash.com/photo-1587616211892-f743fcca64f9?w=800&q=80',
+    image: 'https://images.unsplash.com/photo-1531983412531-1f49a365ffed?w=800&q=80',
     imageAlt: 'Professional sitter assigned to family',
   },
   {

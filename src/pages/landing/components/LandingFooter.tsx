@@ -38,7 +38,7 @@ export function LandingFooter() {
       </div>
 
       <div className="landing-footer-bottom">
-        <p>&copy; 2026 Petit Stay Inc. Tokyo &middot; Seoul</p>
+        <p>&copy; 2026 Petit Stay Inc. Seoul</p>
       </div>
     </footer>
   );

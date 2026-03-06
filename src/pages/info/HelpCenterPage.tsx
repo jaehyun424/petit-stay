@@ -1,7 +1,7 @@
 import { useTranslation, Trans } from 'react-i18next';
 import { InfoLayout } from './InfoLayout';
 
-const faqKeys = [1, 2, 4, 5, 7, 8, 9, 10] as const;
+const faqKeys = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10] as const;
 
 export default function HelpCenterPage() {
   const { t } = useTranslation();

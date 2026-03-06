@@ -4,13 +4,14 @@ import { useTranslation } from 'react-i18next';
 import { motion } from 'framer-motion';
 import {
   Award, Calendar, GraduationCap, DollarSign, ArrowRight,
+  BadgeCheck, Briefcase, Languages,
 } from 'lucide-react';
 import { LandingNav } from '../landing/components/LandingNav';
 import { LandingFooter } from '../landing/components/LandingFooter';
 import { ScrollReveal } from '../landing/components/ScrollReveal';
 import '../../styles/pages/solutions.css';
 
-const HERO_IMG = 'https://images.unsplash.com/photo-1587654780291-39c9404d7dd0?w=1200&q=80';
+const HERO_IMG = 'https://images.unsplash.com/photo-1580894732444-8ecded7900cd?w=1200&q=80';
 
 const fadeUp = {
   hidden: { opacity: 0, y: 20 },
@@ -100,11 +101,16 @@ export default function ForSpecialistsPage() {
           </div>
         </ScrollReveal>
         <div className="solutions-cards solutions-cards--3">
-          {(['solutions.specReq1', 'solutions.specReq2', 'solutions.specReq3'] as const).map((key, i) => (
-            <ScrollReveal key={key} delay={i * 0.1}>
+          {([
+            { key: 'solutions.specReq1', icon: <BadgeCheck size={24} /> },
+            { key: 'solutions.specReq2', icon: <Briefcase size={24} /> },
+            { key: 'solutions.specReq3', icon: <Languages size={24} /> },
+          ] as const).map((item, i) => (
+            <ScrollReveal key={item.key} delay={i * 0.1}>
               <div className="solutions-card solutions-card--uniform">
-                <h3>{t(`${key}Title`)}</h3>
-                <p>{t(`${key}Desc`)}</p>
+                <div className="solutions-card-icon">{item.icon}</div>
+                <h3>{t(`${item.key}Title`)}</h3>
+                <p>{t(`${item.key}Desc`)}</p>
               </div>
             </ScrollReveal>
           ))}
