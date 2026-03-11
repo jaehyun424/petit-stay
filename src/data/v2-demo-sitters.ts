@@ -19,6 +19,37 @@ export interface DemoSitter {
   certified: boolean;
 }
 
+// Extended profile data for /sitters/:id detail page
+export interface SitterProfileDetail extends DemoSitter {
+  ageGroup: string;
+  introVideo: boolean;
+  languageLevels: { lang: string; level: 'L1' | 'L2' | 'L3' }[];
+  experienceYears: number;
+  ageExperience: { range: string; level: 'none' | 'basic' | 'experienced' }[];
+  services: string[];
+  nightAvailable: boolean;
+  availability: { day: string; slots: string[] }[];
+  stats: {
+    responseRate: number;
+    acceptRate: number;
+    cancelRate: number;
+    rebookRate: number;
+  };
+  verifications: {
+    backgroundCheck: boolean;
+    cpr: boolean;
+    reference: boolean;
+    videoIntro: boolean;
+  };
+  reviews: {
+    parentName: string;
+    rating: number;
+    comment: string;
+    commentKo: string;
+    date: string;
+  }[];
+}
+
 export const demoSitters: DemoSitter[] = [
   {
     id: 'sitter-001',
@@ -157,3 +188,254 @@ export const demoSitters: DemoSitter[] = [
     certified: false,
   },
 ];
+
+// Detailed profile data keyed by sitter ID
+export const sitterProfiles: Record<string, SitterProfileDetail> = {
+  'sitter-001': {
+    ...demoSitters[0],
+    ageGroup: '20s',
+    introVideo: false,
+    languageLevels: [
+      { lang: 'English', level: 'L3' },
+      { lang: 'Korean', level: 'L3' },
+      { lang: 'Japanese', level: 'L2' },
+    ],
+    experienceYears: 5,
+    ageExperience: [
+      { range: '0-2', level: 'basic' },
+      { range: '3-5', level: 'experienced' },
+      { range: '6-8', level: 'experienced' },
+    ],
+    services: ['play', 'meal', 'sleep', 'safety'],
+    nightAvailable: true,
+    availability: [
+      { day: 'Mon', slots: ['18:00-22:00'] },
+      { day: 'Tue', slots: ['18:00-22:00'] },
+      { day: 'Thu', slots: ['18:00-23:00'] },
+      { day: 'Fri', slots: ['17:00-23:00'] },
+      { day: 'Sat', slots: ['16:00-23:00'] },
+    ],
+    stats: { responseRate: 98, acceptRate: 94, cancelRate: 2, rebookRate: 45 },
+    verifications: { backgroundCheck: true, cpr: true, reference: true, videoIntro: false },
+    reviews: [
+      { parentName: 'Sarah M.', rating: 5, comment: 'Yuna was absolutely wonderful with our 4-year-old. She arrived on time and had creative activities prepared. Our daughter didn\'t want her to leave!', commentKo: '유나 씨가 4살 딸아이를 정말 잘 돌봐줬어요. 시간도 정확했고 놀이도 준비해왔어요.', date: '2026-03-01' },
+      { parentName: 'Kenji T.', rating: 5, comment: 'Perfect experience. Yuna spoke Japanese fluently which made our kids feel comfortable right away. Professional and warm.', commentKo: '완벽한 경험이었어요. 일본어도 잘해서 아이들이 바로 편안해했어요.', date: '2026-02-22' },
+      { parentName: 'Emily R.', rating: 5, comment: 'Second time booking Yuna. She remembered our son\'s favorite games. Truly caring sitter.', commentKo: '두 번째 예약이에요. 아들이 좋아하는 놀이도 기억하고 있었어요.', date: '2026-02-15' },
+      { parentName: 'David L.', rating: 4, comment: 'Great sitter overall. Kids loved her. Would definitely book again.', commentKo: '전반적으로 훌륭한 시터에요. 아이들이 좋아했어요.', date: '2026-02-08' },
+    ],
+  },
+  'sitter-002': {
+    ...demoSitters[1],
+    ageGroup: '20s',
+    introVideo: false,
+    languageLevels: [
+      { lang: 'English', level: 'L3' },
+      { lang: 'Korean', level: 'L3' },
+    ],
+    experienceYears: 3,
+    ageExperience: [
+      { range: '0-2', level: 'none' },
+      { range: '3-5', level: 'experienced' },
+      { range: '6-8', level: 'basic' },
+    ],
+    services: ['play', 'meal', 'safety'],
+    nightAvailable: false,
+    availability: [
+      { day: 'Mon', slots: ['18:00-21:00'] },
+      { day: 'Wed', slots: ['18:00-22:00'] },
+      { day: 'Fri', slots: ['18:00-22:00'] },
+      { day: 'Sat', slots: ['17:00-22:00'] },
+    ],
+    stats: { responseRate: 95, acceptRate: 88, cancelRate: 4, rebookRate: 38 },
+    verifications: { backgroundCheck: true, cpr: false, reference: true, videoIntro: false },
+    reviews: [
+      { parentName: 'Amy K.', rating: 5, comment: 'Minji did amazing arts & crafts with our kids. They were so proud of what they made!', commentKo: '민지 씨가 미술 놀이를 정말 잘 해줬어요. 아이들이 만든 작품을 자랑했어요.', date: '2026-02-28' },
+      { parentName: 'Tom W.', rating: 5, comment: 'Very responsible and punctual. Our 5-year-old had a great time.', commentKo: '책임감 있고 시간도 잘 지켜요. 5살 아이가 즐거워했어요.', date: '2026-02-18' },
+      { parentName: 'Lisa P.', rating: 4, comment: 'Good experience. Minji was patient and kind with our shy daughter.', commentKo: '좋은 경험이었어요. 낯가리는 딸에게 인내심 있게 대해줬어요.', date: '2026-02-05' },
+    ],
+  },
+  'sitter-003': {
+    ...demoSitters[2],
+    ageGroup: '30s',
+    introVideo: true,
+    languageLevels: [
+      { lang: 'Japanese', level: 'L3' },
+      { lang: 'English', level: 'L2' },
+      { lang: 'Korean', level: 'L1' },
+    ],
+    experienceYears: 7,
+    ageExperience: [
+      { range: '0-2', level: 'experienced' },
+      { range: '3-5', level: 'experienced' },
+      { range: '6-8', level: 'experienced' },
+    ],
+    services: ['play', 'meal', 'sleep', 'safety'],
+    nightAvailable: true,
+    availability: [
+      { day: 'Mon', slots: ['18:00-23:00'] },
+      { day: 'Tue', slots: ['18:00-23:00'] },
+      { day: 'Wed', slots: ['18:00-23:00'] },
+      { day: 'Thu', slots: ['18:00-23:00'] },
+      { day: 'Fri', slots: ['17:00-23:00'] },
+      { day: 'Sat', slots: ['16:00-23:00'] },
+      { day: 'Sun', slots: ['16:00-22:00'] },
+    ],
+    stats: { responseRate: 100, acceptRate: 96, cancelRate: 0, rebookRate: 52 },
+    verifications: { backgroundCheck: true, cpr: true, reference: true, videoIntro: true },
+    reviews: [
+      { parentName: 'Yuki S.', rating: 5, comment: 'Saki-san is the best! Our children adored her. As a Japanese family, having a native speaker was invaluable.', commentKo: '사키 씨가 최고에요! 일본어 원어민이라 아이들이 편안해했어요.', date: '2026-03-05' },
+      { parentName: 'Robert H.', rating: 5, comment: 'Incredibly professional. Saki had everything organized and our kids were asleep on schedule.', commentKo: '정말 전문적이에요. 모든 게 체계적이고 아이들도 제시간에 잠들었어요.', date: '2026-02-25' },
+      { parentName: 'Mika A.', rating: 5, comment: 'Third time booking. Saki is part of our Seoul travel routine now. Calm, reliable, wonderful.', commentKo: '세 번째 예약이에요. 서울 여행 때 꼭 찾게 되는 시터에요.', date: '2026-02-12' },
+    ],
+  },
+  'sitter-004': {
+    ...demoSitters[3],
+    ageGroup: '20s',
+    introVideo: false,
+    languageLevels: [
+      { lang: 'English', level: 'L2' },
+      { lang: 'Korean', level: 'L3' },
+      { lang: 'Chinese', level: 'L2' },
+    ],
+    experienceYears: 2,
+    ageExperience: [
+      { range: '0-2', level: 'none' },
+      { range: '3-5', level: 'experienced' },
+      { range: '6-8', level: 'basic' },
+    ],
+    services: ['play', 'meal', 'safety'],
+    nightAvailable: false,
+    availability: [
+      { day: 'Tue', slots: ['18:00-21:00'] },
+      { day: 'Thu', slots: ['18:00-21:00'] },
+      { day: 'Sat', slots: ['17:00-22:00'] },
+    ],
+    stats: { responseRate: 90, acceptRate: 82, cancelRate: 6, rebookRate: 28 },
+    verifications: { backgroundCheck: true, cpr: true, reference: false, videoIntro: false },
+    reviews: [
+      { parentName: 'Wei C.', rating: 5, comment: 'Haeun was great with our shy 4-year-old. Speaking Chinese really helped.', commentKo: '하은 씨가 낯가리는 4살 아이를 잘 다뤄줬어요.', date: '2026-02-20' },
+      { parentName: 'Jane F.', rating: 4, comment: 'Kind and patient. Good experience for our family.', commentKo: '친절하고 인내심 있었어요. 좋은 경험이었습니다.', date: '2026-02-10' },
+    ],
+  },
+  'sitter-005': {
+    ...demoSitters[4],
+    ageGroup: '20s',
+    introVideo: false,
+    languageLevels: [
+      { lang: 'English', level: 'L2' },
+      { lang: 'Korean', level: 'L3' },
+    ],
+    experienceYears: 1,
+    ageExperience: [
+      { range: '0-2', level: 'none' },
+      { range: '3-5', level: 'basic' },
+      { range: '6-8', level: 'experienced' },
+    ],
+    services: ['play', 'safety'],
+    nightAvailable: false,
+    availability: [
+      { day: 'Mon', slots: ['18:00-21:00'] },
+      { day: 'Wed', slots: ['18:00-21:00'] },
+      { day: 'Sat', slots: ['16:00-22:00'] },
+      { day: 'Sun', slots: ['16:00-21:00'] },
+    ],
+    stats: { responseRate: 88, acceptRate: 78, cancelRate: 8, rebookRate: 22 },
+    verifications: { backgroundCheck: true, cpr: false, reference: false, videoIntro: false },
+    reviews: [
+      { parentName: 'Mark J.', rating: 5, comment: 'Jiwon brought so much energy! Our 7-year-old had a blast playing together.', commentKo: '지원 씨가 에너지 넘쳤어요! 7살 아이가 정말 즐거워했어요.', date: '2026-02-15' },
+      { parentName: 'Karen B.', rating: 4, comment: 'Fun and creative sitter. Great with older kids.', commentKo: '재미있고 창의적인 시터에요. 큰 아이랑 잘 맞아요.', date: '2026-01-28' },
+    ],
+  },
+  'sitter-006': {
+    ...demoSitters[5],
+    ageGroup: '20s',
+    introVideo: true,
+    languageLevels: [
+      { lang: 'Chinese', level: 'L3' },
+      { lang: 'English', level: 'L3' },
+      { lang: 'Korean', level: 'L2' },
+    ],
+    experienceYears: 4,
+    ageExperience: [
+      { range: '0-2', level: 'basic' },
+      { range: '3-5', level: 'experienced' },
+      { range: '6-8', level: 'experienced' },
+    ],
+    services: ['play', 'meal', 'sleep', 'safety'],
+    nightAvailable: true,
+    availability: [
+      { day: 'Mon', slots: ['18:00-23:00'] },
+      { day: 'Wed', slots: ['18:00-23:00'] },
+      { day: 'Fri', slots: ['17:00-23:00'] },
+      { day: 'Sat', slots: ['16:00-23:00'] },
+      { day: 'Sun', slots: ['16:00-22:00'] },
+    ],
+    stats: { responseRate: 97, acceptRate: 92, cancelRate: 1, rebookRate: 48 },
+    verifications: { backgroundCheck: true, cpr: true, reference: true, videoIntro: true },
+    reviews: [
+      { parentName: 'Lin W.', rating: 5, comment: 'Mei Lin was perfect for our Mandarin-speaking family. Hotel experience really shows.', commentKo: '메이린 씨가 중국어 가족에게 딱이에요. 호텔 경력이 느껴졌어요.', date: '2026-03-02' },
+      { parentName: 'James P.', rating: 5, comment: 'Outstanding professionalism. Kids were happy and safe the whole evening.', commentKo: '전문성이 뛰어나요. 아이들이 저녁 내내 행복하고 안전했어요.', date: '2026-02-22' },
+      { parentName: 'Hui Z.', rating: 5, comment: 'Booked twice during our Seoul trip. Mei Lin is reliable and warm.', commentKo: '서울 여행 중 두 번 예약했어요. 신뢰가 가고 따뜻해요.', date: '2026-02-14' },
+      { parentName: 'Rachel G.', rating: 4, comment: 'Very good experience. Mei Lin handled bedtime routine beautifully.', commentKo: '매우 좋은 경험이에요. 수면 루틴도 잘 해줬어요.', date: '2026-02-02' },
+    ],
+  },
+  'sitter-007': {
+    ...demoSitters[6],
+    ageGroup: '30s',
+    introVideo: false,
+    languageLevels: [
+      { lang: 'Korean', level: 'L3' },
+      { lang: 'English', level: 'L2' },
+      { lang: 'Japanese', level: 'L2' },
+    ],
+    experienceYears: 6,
+    ageExperience: [
+      { range: '0-2', level: 'experienced' },
+      { range: '3-5', level: 'experienced' },
+      { range: '6-8', level: 'basic' },
+    ],
+    services: ['play', 'meal', 'sleep', 'safety'],
+    nightAvailable: true,
+    availability: [
+      { day: 'Tue', slots: ['18:00-23:00'] },
+      { day: 'Wed', slots: ['18:00-23:00'] },
+      { day: 'Thu', slots: ['18:00-23:00'] },
+      { day: 'Sat', slots: ['16:00-23:00'] },
+    ],
+    stats: { responseRate: 96, acceptRate: 91, cancelRate: 3, rebookRate: 42 },
+    verifications: { backgroundCheck: true, cpr: true, reference: true, videoIntro: false },
+    reviews: [
+      { parentName: 'Naomi K.', rating: 5, comment: 'Sooyeon\'s kindergarten background really shows. Our 3-year-old fell asleep perfectly.', commentKo: '수연 씨의 유치원 경력이 느껴져요. 3살 아이가 잘 잠들었어요.', date: '2026-03-03' },
+      { parentName: 'Chris D.', rating: 5, comment: 'Best bedtime routine ever. Both kids were asleep within 20 minutes.', commentKo: '수면 루틴이 최고에요. 두 아이 모두 20분 만에 잠들었어요.', date: '2026-02-20' },
+      { parentName: 'Yuko M.', rating: 4, comment: 'Very experienced sitter. Calm and reassuring presence.', commentKo: '경험 많은 시터에요. 차분하고 안심이 되었어요.', date: '2026-02-08' },
+    ],
+  },
+  'sitter-008': {
+    ...demoSitters[7],
+    ageGroup: '20s',
+    introVideo: false,
+    languageLevels: [
+      { lang: 'Japanese', level: 'L3' },
+      { lang: 'English', level: 'L2' },
+    ],
+    experienceYears: 1,
+    ageExperience: [
+      { range: '0-2', level: 'none' },
+      { range: '3-5', level: 'basic' },
+      { range: '6-8', level: 'basic' },
+    ],
+    services: ['play', 'safety'],
+    nightAvailable: false,
+    availability: [
+      { day: 'Fri', slots: ['18:00-21:00'] },
+      { day: 'Sat', slots: ['16:00-22:00'] },
+      { day: 'Sun', slots: ['16:00-21:00'] },
+    ],
+    stats: { responseRate: 85, acceptRate: 75, cancelRate: 10, rebookRate: 18 },
+    verifications: { backgroundCheck: true, cpr: false, reference: false, videoIntro: false },
+    reviews: [
+      { parentName: 'Takeshi N.', rating: 5, comment: 'Emma was so creative with storytelling. Our daughter loved it!', commentKo: '에마 씨가 동화를 정말 재미있게 들려줬어요. 딸이 좋아했어요.', date: '2026-02-18' },
+      { parentName: 'Sandra L.', rating: 4, comment: 'Friendly and fun. Great first experience with Petit Stay.', commentKo: '친절하고 재미있었어요. Petit Stay 첫 이용인데 좋았어요.', date: '2026-02-05' },
+    ],
+  },
+};
