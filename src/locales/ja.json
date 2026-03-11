@@ -1723,5 +1723,29 @@
     "weeklyRevenue": "週間売上",
     "avgPerDay": "1日あたり平均売上",
     "sittersAvailable": "現在対応可能なシッター"
+  },
+  "search": {
+    "title": "シッターを探す",
+    "date": "日付",
+    "time": "時間帯",
+    "childAge": "お子さまの年齢",
+    "yearsOld": "歳",
+    "yearsOldShort": "歳",
+    "language": "言語",
+    "allLangs": "すべて",
+    "priceRange": "時給",
+    "certifiedOnly": "認定シッターのみ",
+    "filters": "フィルター",
+    "sortBy": "並び順",
+    "sortRecommended": "おすすめ順",
+    "sortRating": "評価順",
+    "sortPriceLow": "料金が安い順",
+    "sortReviews": "レビュー数順",
+    "resultCount": "{{count}}名のシッター",
+    "noResults": "シッターが見つかりません",
+    "emptyMessage": "条件に合うシッターが見つかりません。フィルターを調整してください。",
+    "resetFilters": "フィルターをリセット",
+    "viewProfile": "プロフィールを見る",
+    "perHour": "時間"
   }
 }

@@ -1724,5 +1724,29 @@
     "weeklyRevenue": "weekly revenue",
     "avgPerDay": "avg. revenue per day",
     "sittersAvailable": "sitters available now"
+  },
+  "search": {
+    "title": "Find a Sitter",
+    "date": "Date",
+    "time": "Time",
+    "childAge": "Child's Age",
+    "yearsOld": "years old",
+    "yearsOldShort": "yrs",
+    "language": "Language",
+    "allLangs": "All",
+    "priceRange": "Hourly Rate",
+    "certifiedOnly": "Certified Only",
+    "filters": "Filters",
+    "sortBy": "Sort",
+    "sortRecommended": "Recommended",
+    "sortRating": "Highest Rated",
+    "sortPriceLow": "Lowest Price",
+    "sortReviews": "Most Reviews",
+    "resultCount": "{{count}} sitters available",
+    "noResults": "No sitters found",
+    "emptyMessage": "No sitters match your filters. Try adjusting your search.",
+    "resetFilters": "Reset Filters",
+    "viewProfile": "View Profile",
+    "perHour": "hr"
   }
 }

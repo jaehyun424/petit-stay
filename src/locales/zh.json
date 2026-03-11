@@ -1723,5 +1723,29 @@
     "weeklyRevenue": "周收入",
     "avgPerDay": "日均收入",
     "sittersAvailable": "当前可用的看护人"
+  },
+  "search": {
+    "title": "寻找看护人",
+    "date": "日期",
+    "time": "时间段",
+    "childAge": "孩子年龄",
+    "yearsOld": "岁",
+    "yearsOldShort": "岁",
+    "language": "语言",
+    "allLangs": "全部",
+    "priceRange": "时薪",
+    "certifiedOnly": "仅认证看护人",
+    "filters": "筛选",
+    "sortBy": "排序",
+    "sortRecommended": "推荐",
+    "sortRating": "评分最高",
+    "sortPriceLow": "价格最低",
+    "sortReviews": "评价最多",
+    "resultCount": "{{count}}位看护人",
+    "noResults": "未找到看护人",
+    "emptyMessage": "没有符合条件的看护人，请调整筛选条件。",
+    "resetFilters": "重置筛选",
+    "viewProfile": "查看资料",
+    "perHour": "小时"
   }
 }

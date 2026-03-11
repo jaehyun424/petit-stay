@@ -1724,5 +1724,29 @@
     "weeklyRevenue": "주간 매출",
     "avgPerDay": "일 평균 매출",
     "sittersAvailable": "현재 가용 시터"
+  },
+  "search": {
+    "title": "시터 찾기",
+    "date": "날짜",
+    "time": "시간대",
+    "childAge": "아이 나이",
+    "yearsOld": "세",
+    "yearsOldShort": "세",
+    "language": "언어",
+    "allLangs": "전체",
+    "priceRange": "시급",
+    "certifiedOnly": "인증 시터만",
+    "filters": "필터",
+    "sortBy": "정렬",
+    "sortRecommended": "추천순",
+    "sortRating": "평점순",
+    "sortPriceLow": "가격 낮은순",
+    "sortReviews": "리뷰 많은순",
+    "resultCount": "시터 {{count}}명",
+    "noResults": "시터가 없습니다",
+    "emptyMessage": "조건에 맞는 시터가 없습니다. 필터를 조정해보세요.",
+    "resetFilters": "필터 초기화",
+    "viewProfile": "프로필 보기",
+    "perHour": "시간"
   }
 }
