@@ -1,6 +1,7 @@
 import { useTranslation } from 'react-i18next';
 import { Link } from 'react-router-dom';
 import { BrandLogo } from '../../../components/common/BrandLogo';
+import { LanguageSwitcher } from '../../../components/common/LanguageSwitcher';
 
 export function LandingFooter() {
   const { t } = useTranslation();
@@ -13,14 +14,17 @@ export function LandingFooter() {
             <BrandLogo size="sm" showName />
           </span>
           <p className="landing-footer-tagline">{t('landing.footerTagline')}</p>
+          <div className="landing-footer-lang">
+            <LanguageSwitcher />
+          </div>
         </div>
 
         <div className="landing-footer-links">
           <div className="landing-footer-col">
-            <h4>{t('solutions.navSolutions')}</h4>
-            <Link to="/solutions/hotels">{t('solutions.navForHotels')}</Link>
-            <Link to="/solutions/families">{t('solutions.navForFamilies')}</Link>
-            <Link to="/solutions/specialists">{t('solutions.navForSpecialists')}</Link>
+            <h4>{t('landing.footerService')}</h4>
+            <Link to="/search">{t('landing.footerSearch')}</Link>
+            <Link to="/register?role=sitter">{t('landing.footerSitterRegister')}</Link>
+            <Link to="/register?role=partner">{t('landing.footerPartnerRegister')}</Link>
           </div>
           <div className="landing-footer-col">
             <h4>{t('landing.footerCompany')}</h4>

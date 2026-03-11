@@ -1,111 +1,130 @@
+import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { Link } from 'react-router-dom';
-import { motion, useScroll, useTransform } from 'framer-motion';
-import { ArrowRight, Play } from 'lucide-react';
-import { useRef, useState, useEffect } from 'react';
-
-const HERO_VIDEO = 'https://videos.pexels.com/video-files/7884081/7884081-uhd_2560_1440_25fps.mp4';
-const HERO_POSTER = 'https://images.pexels.com/videos/7884081/pexels-photo-7884081.jpeg?auto=compress&cs=tinysrgb&w=1920';
-const HERO_MOBILE_IMG = 'https://images.unsplash.com/photo-1602002418816-5c0aeef426aa?w=800&q=80';
+import { useNavigate } from 'react-router-dom';
+import { motion } from 'framer-motion';
+import { Search, Calendar, Clock, MapPin, Users } from 'lucide-react';
 
 export function HeroSection() {
   const { t } = useTranslation();
-  const ref = useRef<HTMLElement>(null);
-  const { scrollYProgress } = useScroll({ target: ref, offset: ['start start', 'end start'] });
-  const y = useTransform(scrollYProgress, [0, 1], [0, 200]);
-  const opacity = useTransform(scrollYProgress, [0, 0.7], [1, 0]);
-  const [isMobile, setIsMobile] = useState(false);
+  const navigate = useNavigate();
+  const [date, setDate] = useState('');
+  const [time, setTime] = useState('18:00');
+  const [childAge, setChildAge] = useState('');
+  const [area, setArea] = useState('gangnam');
 
-  useEffect(() => {
-    const check = () => setIsMobile(window.innerWidth < 768);
-    check();
-    window.addEventListener('resize', check);
-    return () => window.removeEventListener('resize', check);
-  }, []);
+  const handleSearch = (e: React.FormEvent) => {
+    e.preventDefault();
+    const params = new URLSearchParams();
+    if (date) params.set('date', date);
+    if (time) params.set('time', time);
+    if (childAge) params.set('age', childAge);
+    if (area) params.set('area', area);
+    navigate(`/search?${params.toString()}`);
+  };
+
+  // Tomorrow's date as min
+  const tomorrow = new Date();
+  tomorrow.setDate(tomorrow.getDate() + 1);
+  const minDate = tomorrow.toISOString().split('T')[0];
 
   return (
-    <section ref={ref} className="hero-section section-fullscreen">
-      {/* Video/Image background with parallax */}
-      <motion.div className="hero-video-wrap" style={{ y }}>
-        {isMobile ? (
-          <img
-            className="video-bg hero-mobile-img"
-            src={HERO_MOBILE_IMG}
-            alt="Family with child in hotel"
-          />
-        ) : (
-          <video
-            className="video-bg"
-            autoPlay
-            muted
-            loop
-            playsInline
-            preload="none"
-            poster={HERO_POSTER}
-          >
-            <source src={HERO_VIDEO} type="video/mp4" />
-          </video>
-        )}
-      </motion.div>
-      <div className="video-overlay video-overlay-dark" />
+    <section className="v2-hero">
+      <div className="v2-hero-bg" />
 
-      {/* Content */}
-      <motion.div className="hero-content" style={{ opacity }}>
-        <motion.span
-          className="hero-eyebrow"
+      <motion.div
+        className="v2-hero-content"
+        initial={{ opacity: 0, y: 30 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.8, delay: 0.2 }}
+      >
+        <span className="v2-hero-eyebrow">{t('landing.heroEyebrow')}</span>
+        <h1 className="v2-hero-title">{t('landing.heroTitle')}</h1>
+        <p className="v2-hero-subtitle">{t('landing.heroSubtitle')}</p>
+
+        <motion.form
+          className="v2-search-bar"
+          onSubmit={handleSearch}
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.6, delay: 0.3 }}
+          transition={{ duration: 0.6, delay: 0.6 }}
         >
-          {t('landing.heroEyebrow')}
-        </motion.span>
+          <div className="v2-search-fields">
+            <div className="v2-search-field">
+              <Calendar size={18} className="v2-search-icon" />
+              <input
+                type="date"
+                value={date}
+                onChange={(e) => setDate(e.target.value)}
+                min={minDate}
+                placeholder={t('landing.searchDate')}
+                aria-label={t('landing.searchDate')}
+              />
+            </div>
 
-        <motion.h1
-          className="hero-title"
-          initial={{ opacity: 0, y: 30 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8, delay: 0.5 }}
-        >
-          {t('landing.heroTitle')}
-        </motion.h1>
+            <div className="v2-search-field">
+              <Clock size={18} className="v2-search-icon" />
+              <select
+                value={time}
+                onChange={(e) => setTime(e.target.value)}
+                aria-label={t('landing.searchTime')}
+              >
+                <option value="18:00">18:00</option>
+                <option value="18:30">18:30</option>
+                <option value="19:00">19:00</option>
+                <option value="19:30">19:30</option>
+                <option value="20:00">20:00</option>
+                <option value="20:30">20:30</option>
+                <option value="21:00">21:00</option>
+              </select>
+            </div>
+
+            <div className="v2-search-field">
+              <Users size={18} className="v2-search-icon" />
+              <select
+                value={childAge}
+                onChange={(e) => setChildAge(e.target.value)}
+                aria-label={t('landing.searchAge')}
+              >
+                <option value="">{t('landing.searchAgePlaceholder')}</option>
+                <option value="3">3</option>
+                <option value="4">4</option>
+                <option value="5">5</option>
+                <option value="6">6</option>
+                <option value="7">7</option>
+                <option value="8">8</option>
+              </select>
+            </div>
+
+            <div className="v2-search-field">
+              <MapPin size={18} className="v2-search-icon" />
+              <select
+                value={area}
+                onChange={(e) => setArea(e.target.value)}
+                aria-label={t('landing.searchArea')}
+              >
+                <option value="gangnam">{t('landing.areaGangnam')}</option>
+                <option value="jongno">{t('landing.areaJongno')}</option>
+                <option value="mapo">{t('landing.areaMapo')}</option>
+                <option value="yongsan">{t('landing.areaYongsan')}</option>
+                <option value="songpa">{t('landing.areaSongpa')}</option>
+              </select>
+            </div>
+          </div>
+
+          <button type="submit" className="v2-search-btn">
+            <Search size={20} />
+            <span>{t('landing.searchBtn')}</span>
+          </button>
+        </motion.form>
 
         <motion.p
-          className="hero-subtitle"
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.6, delay: 0.8 }}
+          className="v2-hero-note"
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ delay: 1.0 }}
         >
-          {t('landing.heroSubtitle')}
+          {t('landing.heroNote')}
         </motion.p>
-
-        <motion.div
-          className="hero-actions"
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.6, delay: 1.0 }}
-        >
-          <Link to="/register" className="hero-btn-primary">
-            {t('landing.heroGetStarted')}
-            <ArrowRight size={18} />
-          </Link>
-          <button
-            className="hero-btn-secondary"
-            onClick={() => document.getElementById('features')?.scrollIntoView({ behavior: 'smooth' })}
-          >
-            <Play size={16} />
-            {t('landing.heroLearnMore')}
-          </button>
-        </motion.div>
-      </motion.div>
-
-      {/* Scroll indicator */}
-      <motion.div
-        className="hero-scroll-indicator"
-        initial={{ opacity: 0 }}
-        animate={{ opacity: 1 }}
-        transition={{ delay: 1.5 }}
-      >
-        <div className="scroll-line" />
       </motion.div>
     </section>
   );

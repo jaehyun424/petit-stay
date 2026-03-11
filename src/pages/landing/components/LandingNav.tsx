@@ -1,8 +1,8 @@
-import { useState, useEffect, useRef } from 'react';
+import { useState, useEffect } from 'react';
 import { Link, useNavigate, useLocation } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import { motion } from 'framer-motion';
-import { Menu, X, ChevronDown } from 'lucide-react';
+import { Menu, X } from 'lucide-react';
 import { LanguageSwitcher } from '../../../components/common/LanguageSwitcher';
 import { BrandLogo } from '../../../components/common/BrandLogo';
 
@@ -12,23 +12,11 @@ export function LandingNav() {
   const location = useLocation();
   const [scrolled, setScrolled] = useState(false);
   const [mobileOpen, setMobileOpen] = useState(false);
-  const [solutionsOpen, setSolutionsOpen] = useState(false);
-  const dropdownRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 60);
     window.addEventListener('scroll', onScroll, { passive: true });
     return () => window.removeEventListener('scroll', onScroll);
-  }, []);
-
-  useEffect(() => {
-    const handleClickOutside = (e: MouseEvent) => {
-      if (dropdownRef.current && !dropdownRef.current.contains(e.target as Node)) {
-        setSolutionsOpen(false);
-      }
-    };
-    document.addEventListener('mousedown', handleClickOutside);
-    return () => document.removeEventListener('mousedown', handleClickOutside);
   }, []);
 
   // Lock body scroll when mobile menu is open
@@ -43,7 +31,6 @@ export function LandingNav() {
 
   const scrollTo = (id: string) => {
     setMobileOpen(false);
-    setSolutionsOpen(false);
     if (location.pathname !== '/') {
       navigate('/');
       setTimeout(() => {
@@ -69,34 +56,8 @@ export function LandingNav() {
 
           {/* Desktop links */}
           <div className="landing-nav-links">
-            <button onClick={() => scrollTo('features')}>{t('landing.navFeatures')}</button>
-
-            {/* Solutions dropdown */}
-            <div className="landing-nav-dropdown-wrap" ref={dropdownRef}>
-              <button
-                className="landing-nav-dropdown-trigger"
-                onClick={() => setSolutionsOpen(!solutionsOpen)}
-                aria-expanded={solutionsOpen}
-              >
-                {t('solutions.navSolutions')} <ChevronDown size={14} />
-              </button>
-              {solutionsOpen && (
-                <div className="landing-nav-dropdown">
-                  <Link to="/solutions/hotels" onClick={() => setSolutionsOpen(false)}>
-                    {t('solutions.navForHotels')}
-                  </Link>
-                  <Link to="/solutions/families" onClick={() => setSolutionsOpen(false)}>
-                    {t('solutions.navForFamilies')}
-                  </Link>
-                  <Link to="/solutions/specialists" onClick={() => setSolutionsOpen(false)}>
-                    {t('solutions.navForSpecialists')}
-                  </Link>
-                </div>
-              )}
-            </div>
-
             <button onClick={() => scrollTo('how-it-works')}>{t('landing.navHowItWorks')}</button>
-            <button onClick={() => scrollTo('testimonials')}>{t('landing.navReviews')}</button>
+            <button onClick={() => scrollTo('sitters')}>{t('landing.navReviews')}</button>
             <LanguageSwitcher />
             <Link to="/login" className="landing-nav-cta">{t('landing.navSignIn')}</Link>
           </div>
@@ -134,21 +95,9 @@ export function LandingNav() {
               </button>
             </div>
             <div className="landing-nav-mobile-scroll">
-              <button onClick={() => scrollTo('features')}>{t('landing.navFeatures')}</button>
-              <div className="landing-nav-mobile-solutions">
-                <span className="landing-nav-mobile-solutions-label">{t('solutions.navSolutions')}</span>
-                <Link to="/solutions/hotels" onClick={() => setMobileOpen(false)}>
-                  {t('solutions.navForHotels')}
-                </Link>
-                <Link to="/solutions/families" onClick={() => setMobileOpen(false)}>
-                  {t('solutions.navForFamilies')}
-                </Link>
-                <Link to="/solutions/specialists" onClick={() => setMobileOpen(false)}>
-                  {t('solutions.navForSpecialists')}
-                </Link>
-              </div>
               <button onClick={() => scrollTo('how-it-works')}>{t('landing.navHowItWorks')}</button>
-              <button onClick={() => scrollTo('testimonials')}>{t('landing.navReviews')}</button>
+              <button onClick={() => scrollTo('sitters')}>{t('landing.navReviews')}</button>
+              <button onClick={() => scrollTo('testimonials')}>{t('landing.testimonialsEyebrow')}</button>
               <LanguageSwitcher />
             </div>
             <div className="landing-nav-mobile-footer">
