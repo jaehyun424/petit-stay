@@ -139,7 +139,7 @@ export default function ForHotelsPage() {
         <div className="solutions-cta">
           <h2>{t('solutions.hotelCtaTitle')}</h2>
           <p>{t('solutions.hotelCtaSubtitle')}</p>
-          <Link to="/register?role=hotel_staff" className="solutions-cta-btn">
+          <Link to="/register?role=partner" className="solutions-cta-btn">
             {t('solutions.hotelCtaBtn')} <ArrowRight size={18} />
           </Link>
         </div>

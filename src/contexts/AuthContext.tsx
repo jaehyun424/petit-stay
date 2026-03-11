@@ -1,6 +1,6 @@
 // ============================================
-// Petit Stay - Authentication Context
-// Real Firebase Auth Integration
+// Petit Stay V2 - Authentication Context
+// Roles: parent | sitter | partner | admin
 // ============================================
 
 import React, { createContext, useContext, useEffect, useState, useCallback } from 'react';
@@ -18,28 +18,12 @@ import { doc, getDoc, setDoc, serverTimestamp } from 'firebase/firestore';
 import { auth, db } from '../services/firebase';
 import type { User, UserRole } from '../types';
 
-// Demo mode flag: enabled when Firebase is not properly initialized or explicitly set.
+// Demo mode flag
 const isMockAuth = !auth || !auth.app;
 const DEMO_MODE = import.meta.env.VITE_DEMO_MODE === 'true' || isMockAuth;
 
-// Demo users for testing (only used when DEMO_MODE is true)
+// Demo users (V2 roles: parent, sitter, partner)
 const DEMO_USERS: Record<string, User> = {
-    'hotel': {
-        id: 'demo-hotel-1',
-        email: 'hotel@demo.com',
-        role: 'hotel_staff',
-        hotelId: 'hotel-grand-hyatt',
-        profile: {
-            firstName: 'Hotel',
-            lastName: 'Manager',
-            phone: '+82-2-797-1234',
-            phoneVerified: true,
-            preferredLanguage: 'en',
-        },
-        notifications: { push: true, email: true, sms: false },
-        createdAt: new Date(),
-        lastLoginAt: new Date(),
-    },
     'parent': {
         id: 'demo-parent-1',
         email: 'parent@demo.com',
@@ -63,7 +47,6 @@ const DEMO_USERS: Record<string, User> = {
         id: 'demo-sitter-1',
         email: 'sitter@demo.com',
         role: 'sitter',
-        hotelId: 'hotel-grand-hyatt',
         profile: {
             firstName: 'Minjung',
             lastName: 'Kim',
@@ -78,14 +61,15 @@ const DEMO_USERS: Record<string, User> = {
         createdAt: new Date(),
         lastLoginAt: new Date(),
     },
-    'admin': {
-        id: 'demo-admin-1',
-        email: 'admin@demo.com',
-        role: 'admin',
+    'partner': {
+        id: 'demo-partner-1',
+        email: 'partner@demo.com',
+        role: 'partner',
+        hotelId: 'hotel-grand-hyatt',
         profile: {
-            firstName: 'Admin',
-            lastName: 'Ops',
-            phone: '+82-2-000-0000',
+            firstName: 'Hotel',
+            lastName: 'Partner',
+            phone: '+82-2-797-1234',
             phoneVerified: true,
             preferredLanguage: 'en',
         },
@@ -108,7 +92,7 @@ interface AuthContextType {
     signOut: () => Promise<void>;
     resetPassword: (email: string) => Promise<void>;
     updateUserProfile: (data: Partial<User['profile']>) => Promise<void>;
-    demoLogin: (role: 'hotel' | 'parent' | 'sitter' | 'admin') => void;
+    demoLogin: (role: 'parent' | 'sitter' | 'partner') => void;
 }
 
 interface SignUpProfile {
@@ -165,8 +149,7 @@ export function AuthProvider({ children }: AuthProviderProps) {
     // Listen to auth state changes
     useEffect(() => {
         if (DEMO_MODE) {
-            // Demo mode: check localStorage
-            const savedRole = localStorage.getItem('demo-user-role') as 'hotel' | 'parent' | 'sitter' | 'admin' | null;
+            const savedRole = localStorage.getItem('demo-user-role') as 'parent' | 'sitter' | 'partner' | null;
             if (savedRole && DEMO_USERS[savedRole]) {
                 setUser(DEMO_USERS[savedRole]);
             }
@@ -174,7 +157,6 @@ export function AuthProvider({ children }: AuthProviderProps) {
             return;
         }
 
-        // Real Firebase auth
         const unsubscribe = onAuthStateChanged(auth, async (fbUser) => {
             setFirebaseUser(fbUser);
 
@@ -182,7 +164,6 @@ export function AuthProvider({ children }: AuthProviderProps) {
                 const userData = await fetchUserData(fbUser);
                 setUser(userData);
 
-                // Update last login time
                 if (userData) {
                     await setDoc(
                         doc(db, 'users', fbUser.uid),
@@ -200,8 +181,8 @@ export function AuthProvider({ children }: AuthProviderProps) {
         return () => unsubscribe();
     }, [fetchUserData]);
 
-    // Demo login (for testing)
-    const demoLogin = useCallback((role: 'hotel' | 'parent' | 'sitter' | 'admin') => {
+    // Demo login
+    const demoLogin = useCallback((role: 'parent' | 'sitter' | 'partner') => {
         if (!DEMO_MODE) {
             console.warn('Demo login is only available in demo mode');
             return;
@@ -219,21 +200,19 @@ export function AuthProvider({ children }: AuthProviderProps) {
         try {
             if (DEMO_MODE) {
                 await new Promise((r) => setTimeout(r, 500));
-                if (email.includes('admin')) demoLogin('admin');
-                else if (email.includes('hotel')) demoLogin('hotel');
+                if (email.includes('partner')) demoLogin('partner');
                 else if (email.includes('sitter')) demoLogin('sitter');
                 else demoLogin('parent');
                 return;
             }
 
-            // Real Firebase sign in
             await signInWithEmailAndPassword(auth, email, password);
         } finally {
             setIsLoading(false);
         }
     }, [demoLogin]);
 
-    // Sign up with email/password
+    // Sign up
     const signUp = useCallback(async (
         email: string,
         password: string,
@@ -263,15 +242,12 @@ export function AuthProvider({ children }: AuthProviderProps) {
                 return;
             }
 
-            // Real Firebase sign up
             const { user: fbUser } = await createUserWithEmailAndPassword(auth, email, password);
 
-            // Update Firebase profile
             await updateProfile(fbUser, {
                 displayName: `${profile.firstName} ${profile.lastName}`,
             });
 
-            // Create user document in Firestore
             const userData = {
                 email,
                 role,
@@ -291,7 +267,6 @@ export function AuthProvider({ children }: AuthProviderProps) {
                 lastLoginAt: serverTimestamp(),
             };
 
-            // Add role-specific fields
             if (role === 'parent') {
                 Object.assign(userData, {
                     parentInfo: {
@@ -327,7 +302,6 @@ export function AuthProvider({ children }: AuthProviderProps) {
     const resetPassword = useCallback(async (email: string) => {
         if (DEMO_MODE) {
             await new Promise((r) => setTimeout(r, 500));
-            // Demo mode: no actual email sent
             return;
         }
         await sendPasswordResetEmail(auth, email);
@@ -407,8 +381,8 @@ export function useRequireAuth(allowedRoles?: UserRole[]) {
     };
 }
 
-export function useHotelAuth() {
-    return useRequireAuth(['hotel_staff', 'admin']);
+export function usePartnerAuth() {
+    return useRequireAuth(['partner']);
 }
 
 export function useParentAuth() {

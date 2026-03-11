@@ -1,5 +1,6 @@
 // ============================================
-// Petit Stay - Main App Router
+// Petit Stay V2 - Main App Router
+// C2C babysitting marketplace
 // ============================================
 
 import React, { Suspense, lazy, useEffect } from 'react';
@@ -8,10 +9,6 @@ import { AuthProvider, useAuth } from './contexts/AuthContext';
 import { ThemeProvider } from './contexts/ThemeContext';
 import { ToastProvider } from './contexts/ToastContext';
 import { ErrorBoundary } from './components/common/ErrorBoundary';
-import { HotelLayout } from './components/layout/HotelLayout';
-import { ParentLayout } from './components/layout/ParentLayout';
-import { SitterLayout } from './components/layout/SitterLayout';
-import { OpsLayout } from './components/layout/OpsLayout';
 import { DemoBanner } from './components/common/DemoBanner';
 import { InstallBanner } from './components/common/InstallBanner';
 import { BrandLogo } from './components/common/BrandLogo';
@@ -28,47 +25,34 @@ const LoginPage = lazy(() => import('./pages/auth/LoginPage'));
 const RegisterPage = lazy(() => import('./pages/auth/RegisterPage'));
 const ForgotPasswordPage = lazy(() => import('./pages/auth/ForgotPasswordPage'));
 
-// Hotel Console
-const HotelDashboard = lazy(() => import('./pages/hotel/Dashboard'));
-const HotelBookings = lazy(() => import('./pages/hotel/Bookings'));
-const HotelLiveMonitor = lazy(() => import('./pages/hotel/LiveMonitor'));
-const HotelSitters = lazy(() => import('./pages/hotel/SitterManagement'));
-const HotelReports = lazy(() => import('./pages/hotel/Reports'));
-const HotelSafety = lazy(() => import('./pages/hotel/SafetyDashboard'));
-const HotelSettings = lazy(() => import('./pages/hotel/Settings'));
-const HotelScanCheckIn = lazy(() => import('./pages/hotel/ScanCheckIn'));
+// V2 Public — Booking funnel
+const SearchPage = lazy(() => import('./pages/v2/SearchPage'));
+const SitterProfilePage = lazy(() => import('./pages/v2/SitterProfilePage'));
+const BookingPage = lazy(() => import('./pages/v2/BookingPage'));
+const CheckoutPage = lazy(() => import('./pages/v2/CheckoutPage'));
+const BookingDetailPage = lazy(() => import('./pages/v2/BookingDetailPage'));
+const ReviewPage = lazy(() => import('./pages/v2/ReviewPage'));
 
-// Parent App
-const ParentHome = lazy(() => import('./pages/parent/Home'));
-const ParentBooking = lazy(() => import('./pages/parent/Booking'));
-const ParentTrustCheckIn = lazy(() => import('./pages/parent/TrustCheckIn'));
-const ParentLiveStatus = lazy(() => import('./pages/parent/LiveStatus'));
-const ParentHistory = lazy(() => import('./pages/parent/History'));
-const ParentProfile = lazy(() => import('./pages/parent/Profile'));
-const ParentQRDisplay = lazy(() => import('./pages/parent/QRDisplay'));
+// V2 Sitter Dashboard
+const SitterDashboard = lazy(() => import('./pages/v2/sitter/SitterDashboard'));
+const SitterProfileEdit = lazy(() => import('./pages/v2/sitter/SitterProfileEdit'));
+const SitterPricing = lazy(() => import('./pages/v2/sitter/SitterPricing'));
+const SitterAvailability = lazy(() => import('./pages/v2/sitter/SitterAvailability'));
+const SitterRequests = lazy(() => import('./pages/v2/sitter/SitterRequests'));
+const SitterActiveSession = lazy(() => import('./pages/v2/sitter/SitterActiveSession'));
+const SitterEarnings = lazy(() => import('./pages/v2/sitter/SitterEarnings'));
+const SitterMyReviews = lazy(() => import('./pages/v2/sitter/SitterMyReviews'));
 
-// Sitter App
-const SitterSchedule = lazy(() => import('./pages/sitter/Schedule'));
-const SitterActiveSession = lazy(() => import('./pages/sitter/ActiveSession'));
-const SitterEarnings = lazy(() => import('./pages/sitter/Earnings'));
-const SitterProfile = lazy(() => import('./pages/sitter/Profile'));
-const SitterOnboarding = lazy(() => import('./pages/sitter/Onboarding'));
+// V2 Partner Console
+const PartnerDashboard = lazy(() => import('./pages/v2/partner/PartnerDashboard'));
+const PartnerQR = lazy(() => import('./pages/v2/partner/PartnerQR'));
+const PartnerBookings = lazy(() => import('./pages/v2/partner/PartnerBookings'));
+const PartnerReports = lazy(() => import('./pages/v2/partner/PartnerReports'));
 
-// Guest (no auth required)
-const GuestPage = lazy(() => import('./pages/guest/GuestPage'));
-
-// Ops Console
-const OpsDashboard = lazy(() => import('./pages/ops/Dashboard'));
-const OpsReservations = lazy(() => import('./pages/ops/Reservations'));
-const OpsSitters = lazy(() => import('./pages/ops/SitterManagement'));
-const OpsHotels = lazy(() => import('./pages/ops/HotelManagement'));
-const OpsSettlements = lazy(() => import('./pages/ops/Settlements'));
-const OpsIssues = lazy(() => import('./pages/ops/Issues'));
-const OpsInsurance = lazy(() => import('./pages/ops/Insurance'));
-const OpsReports = lazy(() => import('./pages/ops/Reports'));
-
-// Common
-const NotificationInbox = lazy(() => import('./pages/common/NotificationInbox'));
+// Solutions Pages
+const ForHotelsPage = lazy(() => import('./pages/solutions/ForHotelsPage'));
+const ForFamiliesPage = lazy(() => import('./pages/solutions/ForFamiliesPage'));
+const ForSpecialistsPage = lazy(() => import('./pages/solutions/ForSpecialistsPage'));
 
 // Info Pages
 const AboutPage = lazy(() => import('./pages/info/AboutPage'));
@@ -77,11 +61,6 @@ const PressPage = lazy(() => import('./pages/info/PressPage'));
 const HelpCenterPage = lazy(() => import('./pages/info/HelpCenterPage'));
 const PrivacyPage = lazy(() => import('./pages/info/PrivacyPage'));
 const TermsPage = lazy(() => import('./pages/info/TermsPage'));
-
-// Solutions Pages
-const ForHotelsPage = lazy(() => import('./pages/solutions/ForHotelsPage'));
-const ForFamiliesPage = lazy(() => import('./pages/solutions/ForFamiliesPage'));
-const ForSpecialistsPage = lazy(() => import('./pages/solutions/ForSpecialistsPage'));
 
 // 404
 const NotFound = lazy(() => import('./pages/NotFound'));
@@ -103,7 +82,7 @@ function PageLoader() {
 // ----------------------------------------
 interface ProtectedRouteProps {
   children: React.ReactNode;
-  allowedRoles?: ('parent' | 'sitter' | 'hotel_staff' | 'admin')[];
+  allowedRoles?: ('parent' | 'sitter' | 'partner' | 'admin')[];
 }
 
 function ProtectedRoute({ children, allowedRoles }: ProtectedRouteProps) {
@@ -118,11 +97,9 @@ function ProtectedRoute({ children, allowedRoles }: ProtectedRouteProps) {
   }
 
   if (allowedRoles && user && !allowedRoles.includes(user.role)) {
-    // Redirect to appropriate dashboard based on role
     const roleRedirects: Record<string, string> = {
-      hotel_staff: '/hotel',
-      admin: '/ops',
-      parent: '/parent',
+      partner: '/partner',
+      parent: '/',
       sitter: '/sitter',
     };
     return <Navigate to={roleRedirects[user.role] || '/login'} replace />;
@@ -150,88 +127,37 @@ function AppRoutes() {
     <Suspense fallback={<PageLoader />}>
       <ScrollToTop />
       <Routes>
-        {/* Auth Routes */}
+        {/* Landing */}
+        <Route path="/" element={<LandingPage />} />
+
+        {/* Auth */}
         <Route path="/login" element={<LoginPage />} />
         <Route path="/register" element={<RegisterPage />} />
         <Route path="/forgot-password" element={<ForgotPasswordPage />} />
 
-        {/* Hotel Console Routes */}
-        <Route
-          path="/hotel"
-          element={
-            <ProtectedRoute allowedRoles={['hotel_staff', 'admin']}>
-              <HotelLayout />
-            </ProtectedRoute>
-          }
-        >
-          <Route index element={<HotelDashboard />} />
-          <Route path="bookings" element={<HotelBookings />} />
-          <Route path="live" element={<HotelLiveMonitor />} />
-          <Route path="sitters" element={<HotelSitters />} />
-          <Route path="reports" element={<HotelReports />} />
-          <Route path="safety" element={<HotelSafety />} />
-          <Route path="settings" element={<HotelSettings />} />
-          <Route path="scan" element={<HotelScanCheckIn />} />
-          <Route path="notifications" element={<NotificationInbox />} />
-        </Route>
+        {/* Public — Booking funnel */}
+        <Route path="/search" element={<SearchPage />} />
+        <Route path="/sitters/:id" element={<SitterProfilePage />} />
+        <Route path="/book/:sitterId" element={<BookingPage />} />
+        <Route path="/checkout/:bookingId" element={<CheckoutPage />} />
+        <Route path="/booking/:id" element={<BookingDetailPage />} />
+        <Route path="/review/:bookingId" element={<ReviewPage />} />
 
-        {/* Parent App Routes */}
-        <Route
-          path="/parent"
-          element={
-            <ProtectedRoute allowedRoles={['parent']}>
-              <ParentLayout />
-            </ProtectedRoute>
-          }
-        >
-          <Route index element={<ParentHome />} />
-          <Route path="book" element={<ParentBooking />} />
-          <Route path="trust-checkin/:bookingId" element={<ParentTrustCheckIn />} />
-          <Route path="live/:bookingId" element={<ParentLiveStatus />} />
-          <Route path="history" element={<ParentHistory />} />
-          <Route path="profile" element={<ParentProfile />} />
-          <Route path="qr/:bookingId" element={<ParentQRDisplay />} />
-          <Route path="notifications" element={<NotificationInbox />} />
-        </Route>
+        {/* Sitter Dashboard */}
+        <Route path="/sitter" element={<ProtectedRoute allowedRoles={['sitter']}><SitterDashboard /></ProtectedRoute>} />
+        <Route path="/sitter/profile" element={<ProtectedRoute allowedRoles={['sitter']}><SitterProfileEdit /></ProtectedRoute>} />
+        <Route path="/sitter/pricing" element={<ProtectedRoute allowedRoles={['sitter']}><SitterPricing /></ProtectedRoute>} />
+        <Route path="/sitter/availability" element={<ProtectedRoute allowedRoles={['sitter']}><SitterAvailability /></ProtectedRoute>} />
+        <Route path="/sitter/requests" element={<ProtectedRoute allowedRoles={['sitter']}><SitterRequests /></ProtectedRoute>} />
+        <Route path="/sitter/active" element={<ProtectedRoute allowedRoles={['sitter']}><SitterActiveSession /></ProtectedRoute>} />
+        <Route path="/sitter/earnings" element={<ProtectedRoute allowedRoles={['sitter']}><SitterEarnings /></ProtectedRoute>} />
+        <Route path="/sitter/reviews" element={<ProtectedRoute allowedRoles={['sitter']}><SitterMyReviews /></ProtectedRoute>} />
 
-        {/* Sitter App Routes */}
-        <Route
-          path="/sitter"
-          element={
-            <ProtectedRoute allowedRoles={['sitter']}>
-              <SitterLayout />
-            </ProtectedRoute>
-          }
-        >
-          <Route index element={<SitterSchedule />} />
-          <Route path="active" element={<SitterActiveSession />} />
-          <Route path="earnings" element={<SitterEarnings />} />
-          <Route path="profile" element={<SitterProfile />} />
-          <Route path="onboarding" element={<SitterOnboarding />} />
-          <Route path="notifications" element={<NotificationInbox />} />
-        </Route>
-
-        {/* Guest Page (no auth required, token-based) */}
-        <Route path="/guest/:reservationId" element={<GuestPage />} />
-
-        {/* Ops Console Routes */}
-        <Route
-          path="/ops"
-          element={
-            <ProtectedRoute allowedRoles={['admin']}>
-              <OpsLayout />
-            </ProtectedRoute>
-          }
-        >
-          <Route index element={<OpsDashboard />} />
-          <Route path="reservations" element={<OpsReservations />} />
-          <Route path="sitters" element={<OpsSitters />} />
-          <Route path="hotels" element={<OpsHotels />} />
-          <Route path="settlements" element={<OpsSettlements />} />
-          <Route path="issues" element={<OpsIssues />} />
-          <Route path="insurance" element={<OpsInsurance />} />
-          <Route path="reports" element={<OpsReports />} />
-        </Route>
+        {/* Partner Console */}
+        <Route path="/partner" element={<ProtectedRoute allowedRoles={['partner']}><PartnerDashboard /></ProtectedRoute>} />
+        <Route path="/partner/qr" element={<ProtectedRoute allowedRoles={['partner']}><PartnerQR /></ProtectedRoute>} />
+        <Route path="/partner/bookings" element={<ProtectedRoute allowedRoles={['partner']}><PartnerBookings /></ProtectedRoute>} />
+        <Route path="/partner/reports" element={<ProtectedRoute allowedRoles={['partner']}><PartnerReports /></ProtectedRoute>} />
 
         {/* Solutions Pages */}
         <Route path="/solutions/hotels" element={<ForHotelsPage />} />
@@ -246,8 +172,7 @@ function AppRoutes() {
         <Route path="/privacy" element={<PrivacyPage />} />
         <Route path="/terms" element={<TermsPage />} />
 
-        {/* Landing Page */}
-        <Route path="/" element={<LandingPage />} />
+        {/* 404 */}
         <Route path="*" element={<NotFound />} />
       </Routes>
     </Suspense>

@@ -1,29 +1,23 @@
 {
-  "name": "Petit Stay - Premium Hotel Childcare",
+  "name": "Petit Stay",
   "short_name": "Petit Stay",
-  "description": "Trusted childcare for luxury hotels. Certified sitters, real-time monitoring, instant booking, and QR check-in.",
+  "description": "Find trusted babysitters in Seoul. Verified multilingual sitters for traveling families.",
   "start_url": "/",
   "display": "standalone",
-  "theme_color": "#1a1a2e",
-  "background_color": "#FBFBF9",
+  "theme_color": "#F9F9F7",
+  "background_color": "#F9F9F7",
   "orientation": "portrait-primary",
   "scope": "/",
-  "categories": ["business", "lifestyle"],
+  "categories": ["lifestyle"],
   "shortcuts": [
     {
-      "name": "Dashboard",
-      "short_name": "Dashboard",
-      "url": "/hotel/dashboard",
+      "name": "Find Sitters",
+      "short_name": "Search",
+      "url": "/search",
       "icons": [{ "src": "/icons/icon-192.svg", "sizes": "192x192" }]
     },
     {
-      "name": "Guest Check-in",
-      "short_name": "Guest",
-      "url": "/guest",
-      "icons": [{ "src": "/icons/icon-192.svg", "sizes": "192x192" }]
-    },
-    {
-      "name": "Sitter Portal",
+      "name": "Sitter Dashboard",
       "short_name": "Sitter",
       "url": "/sitter",
       "icons": [{ "src": "/icons/icon-192.svg", "sizes": "192x192" }]

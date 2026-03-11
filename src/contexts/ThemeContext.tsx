@@ -1,13 +1,14 @@
 // ============================================
-// Petit Stay - Theme Context
+// Petit Stay V2 - Theme Context
+// Light mode only
 // ============================================
 
-import React, { createContext, useContext, useEffect, useState, useCallback } from 'react';
+import React, { createContext, useContext, useEffect } from 'react';
 
 // ----------------------------------------
 // Types
 // ----------------------------------------
-type Theme = 'light' | 'dark';
+type Theme = 'light';
 
 interface ThemeContextType {
     theme: Theme;
@@ -21,11 +22,6 @@ interface ThemeProviderProps {
 }
 
 // ----------------------------------------
-// Constants
-// ----------------------------------------
-const THEME_STORAGE_KEY = 'petitstay-theme';
-
-// ----------------------------------------
 // Context
 // ----------------------------------------
 const ThemeContext = createContext<ThemeContextType | undefined>(undefined);
@@ -34,53 +30,16 @@ const ThemeContext = createContext<ThemeContextType | undefined>(undefined);
 // Provider
 // ----------------------------------------
 export function ThemeProvider({ children }: ThemeProviderProps) {
-    const [theme, setThemeState] = useState<Theme>(() => {
-        try {
-            const stored = localStorage.getItem(THEME_STORAGE_KEY) as Theme | null;
-            if (stored) return stored;
-            if (window.matchMedia?.('(prefers-color-scheme: dark)').matches) {
-                return 'dark';
-            }
-        } catch {
-            // localStorage unavailable (private browsing, etc.)
-        }
-        return 'dark'; // Default to dark for luxury feel
-    });
-
-    // Apply theme to document
+    // Always light
     useEffect(() => {
-        document.documentElement.setAttribute('data-theme', theme);
-        localStorage.setItem(THEME_STORAGE_KEY, theme);
-    }, [theme]);
-
-    // Listen for system preference changes
-    useEffect(() => {
-        const mediaQuery = window.matchMedia('(prefers-color-scheme: dark)');
-
-        const handleChange = (e: MediaQueryListEvent) => {
-            const stored = localStorage.getItem(THEME_STORAGE_KEY);
-            if (!stored) {
-                setThemeState(e.matches ? 'dark' : 'light');
-            }
-        };
-
-        mediaQuery.addEventListener('change', handleChange);
-        return () => mediaQuery.removeEventListener('change', handleChange);
-    }, []);
-
-    const toggleTheme = useCallback(() => {
-        setThemeState((prev) => (prev === 'dark' ? 'light' : 'dark'));
-    }, []);
-
-    const setTheme = useCallback((newTheme: Theme) => {
-        setThemeState(newTheme);
+        document.documentElement.setAttribute('data-theme', 'light');
     }, []);
 
     const value: ThemeContextType = {
-        theme,
-        toggleTheme,
-        setTheme,
-        isDark: theme === 'dark',
+        theme: 'light',
+        toggleTheme: () => {},
+        setTheme: () => {},
+        isDark: false,
     };
 
     return (

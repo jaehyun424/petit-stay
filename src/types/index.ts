@@ -5,7 +5,7 @@
 // ----------------------------------------
 // User & Authentication Types
 // ----------------------------------------
-export type UserRole = 'parent' | 'sitter' | 'hotel_staff' | 'admin';
+export type UserRole = 'parent' | 'sitter' | 'partner' | 'admin';
 
 export interface User {
   id: string;

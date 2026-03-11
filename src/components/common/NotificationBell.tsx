@@ -12,21 +12,21 @@ import '../../styles/components/notification-bell.css';
 
 // Map notification types to navigation paths
 function getNotificationPath(type: string, role?: string): string | null {
-    const rolePrefix = role === 'hotel_staff' ? '/hotel' : role === 'sitter' ? '/sitter' : '/parent';
+    const rolePrefix = role === 'partner' ? '/partner' : role === 'sitter' ? '/sitter' : '/';
     switch (type) {
         case 'booking_created':
         case 'booking_confirmed':
         case 'booking_cancelled':
-            return role === 'hotel_staff' ? '/hotel/bookings' : '/parent/history';
+            return role === 'partner' ? '/partner/bookings' : '/booking';
         case 'sitter_assigned':
             return `${rolePrefix}`;
         case 'care_started':
         case 'care_completed':
-            return role === 'parent' ? '/parent/live-status' : role === 'hotel_staff' ? '/hotel/live' : '/sitter/session';
+            return role === 'sitter' ? '/sitter/active' : '/booking';
         case 'emergency':
-            return role === 'hotel_staff' ? '/hotel/safety' : `${rolePrefix}`;
+            return `${rolePrefix}`;
         case 'review_received':
-            return role === 'sitter' ? '/sitter/profile' : `${rolePrefix}`;
+            return role === 'sitter' ? '/sitter/reviews' : `${rolePrefix}`;
         case 'payment_received':
             return role === 'sitter' ? '/sitter/earnings' : `${rolePrefix}`;
         default:
@@ -140,7 +140,7 @@ export function NotificationBell() {
                             className="notification-view-all"
                             onClick={() => {
                                 setIsOpen(false);
-                                const rolePrefix = user?.role === 'hotel_staff' ? '/hotel' : user?.role === 'sitter' ? '/sitter' : '/parent';
+                                const rolePrefix = user?.role === 'partner' ? '/partner' : user?.role === 'sitter' ? '/sitter' : '/';
                                 navigate(`${rolePrefix}/notifications`);
                             }}
                         >

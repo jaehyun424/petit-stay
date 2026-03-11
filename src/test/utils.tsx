@@ -94,8 +94,8 @@ vi.mock('../contexts/AuthContext', () => ({
         isAuthenticated: true,
         isAuthorized: true,
     }),
-    useHotelAuth: () => ({
-        user: { ...defaultMockUser, role: 'hotel_staff', hotelId: 'hotel-grand-hyatt' },
+    usePartnerAuth: () => ({
+        user: { ...defaultMockUser, role: 'partner', hotelId: 'hotel-grand-hyatt' },
         isLoading: false,
         isAuthenticated: true,
         isAuthorized: true,

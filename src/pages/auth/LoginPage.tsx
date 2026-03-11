@@ -91,11 +91,9 @@ export default function LoginPage() {
       await signIn(email, password);
       success(t('auth.welcomeBackToast'), t('auth.accessGranted'));
 
-      if (email.includes('admin')) navigate('/ops');
-      else if (email.includes('hotel')) navigate('/hotel');
-      else if (email.includes('parent')) navigate('/parent');
+      if (email.includes('partner')) navigate('/partner');
       else if (email.includes('sitter')) navigate('/sitter');
-      else navigate('/hotel');
+      else navigate('/');
     } catch (err: unknown) {
       error(t('auth.accessDenied'), mapFirebaseError(err, t));
     } finally {

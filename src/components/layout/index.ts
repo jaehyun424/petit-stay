@@ -1,8 +1,4 @@
 // ============================================
-// Petit Stay - Layout Components Export
+// Petit Stay V2 - Layout Components Export
+// V1 layouts moved to src/pages/_legacy/layouts/
 // ============================================
-
-export { HotelLayout } from './HotelLayout';
-export { ParentLayout } from './ParentLayout';
-export { SitterLayout } from './SitterLayout';
-

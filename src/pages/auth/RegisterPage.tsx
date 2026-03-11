@@ -51,9 +51,9 @@ export default function RegisterPage() {
     const { success, error } = useToast();
     const { t, i18n } = useTranslation();
 
-    // Support ?role=parent|sitter|hotel_staff URL param
+    // Support ?role=parent|sitter|partner URL param
     const roleParam = searchParams.get('role');
-    const validRoles = ['parent', 'sitter', 'hotel_staff'];
+    const validRoles = ['parent', 'sitter', 'partner'];
     const defaultRole = (roleParam && validRoles.includes(roleParam) ? roleParam : 'parent') as UserRole;
 
     const LANGUAGE_OPTIONS = [
@@ -93,7 +93,7 @@ export default function RegisterPage() {
     const ROLE_OPTIONS = [
         { value: 'parent', label: t('auth.guestFamily') },
         { value: 'sitter', label: t('auth.childcareSpecialist') },
-        { value: 'hotel_staff', label: t('auth.hotelPartner') },
+        { value: 'partner', label: t('auth.hotelPartner') },
     ];
 
     const validate = () => {
@@ -123,9 +123,9 @@ export default function RegisterPage() {
             success(t('auth.accountCreated'), t('auth.welcomeToNetwork'));
 
             const roleRedirects: Record<string, string> = {
-                parent: '/parent',
+                parent: '/',
                 sitter: '/sitter',
-                hotel_staff: '/hotel',
+                partner: '/partner',
             };
             navigate(roleRedirects[formData.role] || '/login');
         } catch (err: unknown) {
