@@ -1060,4 +1060,5 @@
   .st-stat-box { flex-direction: row; justify-content: space-between; text-align: left; }
   .st-earnings-amount { font-size: 1.75rem; }
   .st-chart { height: 100px; }
+  .st-tab { font-size: 0.6rem; }
 }

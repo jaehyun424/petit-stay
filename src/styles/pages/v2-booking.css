@@ -687,4 +687,9 @@
   .bk-child-card {
     padding: 1rem;
   }
+
+  .bk-step-label {
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
 }
