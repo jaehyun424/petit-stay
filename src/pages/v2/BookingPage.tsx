@@ -86,7 +86,14 @@ export default function BookingPage() {
 
   const handleSubmit = () => {
     const bookingId = `BK-${Date.now()}`;
-    navigate(`/checkout/${bookingId}`);
+    navigate(`/checkout/${bookingId}`, {
+      state: {
+        sitterId,
+        schedule,
+        children,
+        emergency,
+      },
+    });
   };
 
   const stepLabels = isKo
