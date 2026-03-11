@@ -1,19 +1,44 @@
 import { useTranslation, Trans } from 'react-i18next';
 import { InfoLayout } from './InfoLayout';
 
-const faqKeys = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10] as const;
+const parentFaqKeys = [1, 2, 3, 4, 5] as const;
+const sitterFaqKeys = [1, 2, 3, 4] as const;
+const partnerFaqKeys = [1, 2, 3] as const;
 
 export default function HelpCenterPage() {
   const { t } = useTranslation();
 
   return (
     <InfoLayout title={t('info.help.title')} subtitle={t('info.help.subtitle')}>
-      <h2>{t('info.help.faqTitle')}</h2>
+      {/* Parent FAQ */}
+      <h2>{t('info.help.faqParentTitle')}</h2>
       <div className="info-faq">
-        {faqKeys.map((n) => (
-          <details key={n}>
-            <summary>{t(`info.help.q${n}`)}</summary>
-            <p>{t(`info.help.a${n}`)}</p>
+        {parentFaqKeys.map((n) => (
+          <details key={`p${n}`}>
+            <summary>{t(`info.help.pq${n}`)}</summary>
+            <p>{t(`info.help.pa${n}`)}</p>
+          </details>
+        ))}
+      </div>
+
+      {/* Sitter FAQ */}
+      <h2>{t('info.help.faqSitterTitle')}</h2>
+      <div className="info-faq">
+        {sitterFaqKeys.map((n) => (
+          <details key={`s${n}`}>
+            <summary>{t(`info.help.sq${n}`)}</summary>
+            <p>{t(`info.help.sa${n}`)}</p>
+          </details>
+        ))}
+      </div>
+
+      {/* Partner FAQ */}
+      <h2>{t('info.help.faqPartnerTitle')}</h2>
+      <div className="info-faq">
+        {partnerFaqKeys.map((n) => (
+          <details key={`t${n}`}>
+            <summary>{t(`info.help.tq${n}`)}</summary>
+            <p>{t(`info.help.ta${n}`)}</p>
           </details>
         ))}
       </div>
